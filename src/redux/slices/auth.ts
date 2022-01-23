@@ -9,6 +9,8 @@ interface State {
   user: any;
   isAuthenticated: boolean;
   authLoading: boolean;
+  showLoginForm: boolean;
+  showRegisterForm: boolean;
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
 }
@@ -17,6 +19,8 @@ const initialState: State = {
   user: null,
   isAuthenticated: false,
   authLoading: true,
+  showLoginForm: false,
+  showRegisterForm: false,
   status: "idle",
   error: null,
 };
@@ -47,8 +51,10 @@ export const logout = createAsyncThunk("/user/logout", async () => {
 
 export const loadUser = createAsyncThunk("/user/loaduser", async () => {
   try {
-    const response = await axios.get(`${apiUrl}/auth/loaduser`);
-    return response.data;
+    // const response = await axios.get(`${apiUrl}/auth/loaduser`);
+    // return response.data;
+    console.log("load user");
+    return null;
   } catch (error) {
     console.log(error);
   }
@@ -66,6 +72,20 @@ export const register = createAsyncThunk(
     } catch (error) {
       console.log(error);
     }
+  }
+);
+
+export const toggleModalLogin = createAsyncThunk(
+  "showLoginForm",
+  (toggle: boolean) => {
+    return toggle;
+  }
+);
+
+export const toggleModalRegister = createAsyncThunk(
+  "showRegisterForm",
+  (toggle: boolean) => {
+    return toggle;
   }
 );
 
@@ -98,6 +118,12 @@ const atuhSlice = createSlice({
       state.status = "succeeded";
       state.user = action.payload;
       state.isAuthenticated = true;
+    },
+    [toggleModalLogin.fulfilled.toString()]: (state, action) => {
+      state.showLoginForm = !action.payload;
+    },
+    [toggleModalRegister.fulfilled.toString()]: (state, action) => {
+      state.showRegisterForm = !action.payload;
     },
   },
 });

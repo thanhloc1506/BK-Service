@@ -1,12 +1,22 @@
-import React from "react";
-import "./App.css";
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "./redux/store";
+import Homepage from "./views/Homepage";
 
-function App() {
+const App: React.FC = () => {
+  useEffect(() => {
+    console.log("hello App");
+  }, []);
   return (
-    <div className="App">
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-    </div>
+    <Provider store={store}>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Homepage />} />
+        </Routes>
+      </Router>
+    </Provider>
   );
-}
+};
 
 export default App;

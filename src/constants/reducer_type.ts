@@ -1,0 +1,3 @@
+export const SHOW_LOGIN_FORM = "SHOW_LOGIN_FORM";
+
+export const SHOW_REGISTER_FORM = "SHOW_REGISTER_FORM";
