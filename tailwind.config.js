@@ -611,6 +611,7 @@ module.exports = {
     margin: ({ theme }) => ({
       auto: 'auto',
       '22': '5.5rem',
+      '34': '8.5rem',
       ...theme('spacing'),
     }),
     maxHeight: ({ theme }) => ({
@@ -915,7 +916,8 @@ module.exports = {
       min: 'min-content',
       max: 'max-content',
       fit: 'fit-content',
-      '1100': '1100px'
+      '1100': '1100px',
+      '120': '32rem',
     }),
     willChange: {
       auto: 'auto',
@@ -954,5 +956,6 @@ module.exports = {
   plugins: [
     require('tailwindcss'),
     require('autoprefixer'),
+    require('tailwind-scrollbar'),
   ],
 }

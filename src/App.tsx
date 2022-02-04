@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import Homepage from "./views/Homepage";
+import DetailService from "./views/DetailService";
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -13,6 +14,7 @@ const App: React.FC = () => {
       <Router>
         <Routes>
           <Route path="/" element={<Homepage />} />
+          <Route path="/detailService" element={<DetailService />} />
         </Routes>
       </Router>
     </Provider>
