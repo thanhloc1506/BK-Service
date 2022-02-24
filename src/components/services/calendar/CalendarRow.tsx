@@ -69,7 +69,7 @@ const CalendarRow: React.FC<CalendarRowProps> = ({
               key={i}
               className="relative py-3 px-2 md:px-3  hover:text-blue-500 text-center text-gray-800"
             >
-              <span className="p-1 rounded-full border-green-400 border-2">
+              <span className="p-1 rounded-full border-blue-400 border-2">
                 {i + (7 * row - firstDay)}
               </span>
             </td>

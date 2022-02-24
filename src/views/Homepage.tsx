@@ -23,9 +23,7 @@ const Homepage: React.FC = () => {
         </div>
         <div className="col-span-4 mt-34 ml-20">
           <div className="grid grid-cols-3 gap-8 h-full">
-            <div onClick={() => navigate("/detailService")}>
-              <SingleCard />
-            </div>
+            <SingleCard />
             <SingleCard />
             <SingleCard />
             <SingleCard />

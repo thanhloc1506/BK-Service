@@ -78,7 +78,7 @@ const RegisterForm: React.FC = () => {
                       <div className="col-span-2 bg-white rounded-l-5xl">
                         <div className="mt-20">
                           <div className="flex justify-center">
-                            <p className="text-4xl mr-40">Dang ky</p>
+                            <p className="text-4xl mr-40">Đăng ký</p>
                           </div>
                           <Formik
                             initialValues={{ username: "", password: "" }}
@@ -153,19 +153,19 @@ const RegisterForm: React.FC = () => {
                                   type="submit"
                                   className="bg-blue-500 w-80 ml-8 p-2 text-white rounded-md overflow-hidden"
                                 >
-                                  Dang ky
+                                  Đăng ký
                                 </button>
                               </div>
                             </Form>
                           </Formik>
 
                           <div className="flex justify-center mt-6 ml-20">
-                            <p className="inline-block">Chua co tai khoan?</p>
+                            <p className="inline-block">Đã có tài khoản?</p>
                             <p
                               className="inline-block ml-2 text-blue-400"
                               onClick={navigate}
                             >
-                              Dang ky ngay
+                              Đăng nhập ngay
                             </p>
                           </div>
                         </div>
