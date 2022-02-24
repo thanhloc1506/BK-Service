@@ -19,3 +19,6 @@ input[type="radio"]:checked + label span {
 input[type="radio"]:checked + label {
   color: #3490dc;
 }
+html, body, #root, body > #root > div{
+  height: 100%;
+}
