@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { loadUser } from "../../redux/slices/auth";
 import Loading from "../../views/Loading";
+import Homepage from "../../views/Homepage";
 
 interface IProps {
   path: string;
@@ -15,6 +16,8 @@ const ProtectedRoute = ({ children }: any) => {
 
   const dispatch = useDispatch();
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     dispatch(loadUser());
   }, [dispatch]);
@@ -22,7 +25,8 @@ const ProtectedRoute = ({ children }: any) => {
   if (auth.authLoading) {
     return <Loading />;
   } else {
-    return children;
+    if (auth.isAuthenticated) return children;
+    return <Homepage />;
   }
 };
 
