@@ -22,7 +22,7 @@ const Post: React.FC<IPost> = ({
   return (
     <>
       <div className="w-full h-fit px-20 flex justify-center">
-        <div className="w-full shadow-lg pt-3">
+        <div className="w-full shadow-lg pt-3  border-2 border-gray-100">
           <div className="grid grid-cols-2 border-b-2 border-b-gray-100 pb-2">
             <span className="flex ml-5">
               <div className="w-12 h-12 bg-gray-200 rounded-full"></div>

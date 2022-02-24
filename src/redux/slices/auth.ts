@@ -29,11 +29,12 @@ export const login = createAsyncThunk(
   "/user/login",
   async (loginForm: LoginForm) => {
     try {
-      const response = await axios.post(`${apiUrl}/auth/login`, loginForm);
-      localStorage.setItem("Authorization", response.data.id);
-      setAuthToken(response.data.accessToken);
+      // const response = await axios.post(`${apiUrl}/auth/login`, loginForm);
+      // localStorage.setItem("Authorization", response.data.id);
+      // setAuthToken(response.data.accessToken);
 
-      return response.data;
+      // return response.data;
+      return true;
     } catch (error) {
       console.log(error);
     }
@@ -54,7 +55,7 @@ export const loadUser = createAsyncThunk("/user/loaduser", async () => {
     // const response = await axios.get(`${apiUrl}/auth/loaduser`);
     // return response.data;
     console.log("load user");
-    return null;
+    return true;
   } catch (error) {
     console.log(error);
   }
@@ -96,6 +97,7 @@ const atuhSlice = createSlice({
   extraReducers: {
     [login.fulfilled.toString()]: (state, action) => {
       state.status = "succeeded";
+      state.isAuthenticated = true;
     },
     [login.rejected.toString()]: (state, action) => {
       state.status = "failed";

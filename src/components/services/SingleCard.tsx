@@ -1,8 +1,10 @@
 import React from "react";
 import service from "../../assets/service/service.png";
 import rating from "../../assets/service/rating.png";
+import { useNavigate } from "react-router-dom";
 
 const SingleCard: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <>
       <div className="w-72 h-96 bg-white border-2 border-blue-200 rounded">
@@ -69,8 +71,11 @@ const SingleCard: React.FC = () => {
           </div>
 
           <div className="col-span-2 flex justify-center mt-2">
-            <button className="bg-blue-500 h-10 w-fit px-5 rounded-md overflow-hidden text-white font-light">
-              Chinh sua
+            <button
+              className="bg-blue-500 h-10 w-fit px-5 rounded-md overflow-hidden text-white font-light"
+              onClick={() => navigate("/detailService")}
+            >
+              Truy cap
             </button>
           </div>
         </div>

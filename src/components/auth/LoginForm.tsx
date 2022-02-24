@@ -3,16 +3,26 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/bg/login.png";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { toggleModalLogin, toggleModalRegister } from "../../redux/slices/auth";
+import {
+  login,
+  toggleModalLogin,
+  toggleModalRegister,
+} from "../../redux/slices/auth";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { Dialog, Transition } from "@headlessui/react";
+import { LoginForm as ILoginForm } from "../../redux/types";
 
 const LoginForm: React.FC = () => {
   const authState = useSelector((state: RootState) => state.user);
 
   const dispatch = useDispatch();
 
-  const onClickLogin = () => {
+  const onClickLogin = (loginForm: ILoginForm) => {
+    dispatch(login(loginForm));
+    toggleForm();
+  };
+
+  const toggleForm = () => {
     dispatch(toggleModalLogin(authState.showLoginForm));
   };
 
@@ -27,7 +37,7 @@ const LoginForm: React.FC = () => {
         as="div"
         className="fixed z-10 inset-0 overflow-y-auto"
         initialFocus={cancelButtonRef}
-        onClose={onClickLogin}
+        onClose={toggleForm}
       >
         <div className="flex mt-28 justify-center text-center">
           <Transition.Child
@@ -77,13 +87,12 @@ const LoginForm: React.FC = () => {
                       <div className="col-span-2 bg-white rounded-l-5xl">
                         <div className="mt-40">
                           <div className="flex justify-center">
-                            <p className="text-4xl mr-28">Dang nhap</p>
+                            <p className="text-4xl mr-28">Đăng nhập</p>
                           </div>
                           <Formik
                             initialValues={{ username: "", password: "" }}
                             onSubmit={(values) => {
-                              alert(JSON.stringify(values, null, 2));
-                              onClickLogin();
+                              onClickLogin(values);
                             }}
                           >
                             <Form>
@@ -122,7 +131,7 @@ const LoginForm: React.FC = () => {
                                   type="submit"
                                   className="bg-blue-500 w-80 ml-8 p-2 text-white rounded-md overflow-hidden"
                                 >
-                                  Dang ky
+                                  Đăng nhập
                                 </button>
                               </div>
                             </Form>
@@ -134,7 +143,7 @@ const LoginForm: React.FC = () => {
                               className="inline-block ml-2 text-blue-400"
                               onClick={navigate}
                             >
-                              Dang ky ngay
+                              Đăng ký ngay
                             </p>
                           </div>
                         </div>

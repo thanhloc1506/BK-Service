@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import service from "../../assets/service/service.png";
 import Breakcumb from "../layouts/Breakcumb";
 import ButtonFollow from "../layouts/ButtonFollow";
 
 const HeaderDeatail: React.FC = () => {
+  const [isFollow, setIsFollow] = useState(false);
+
+  const toggleFollow = () => {
+    setIsFollow(!isFollow);
+  };
   return (
     <>
       <div className="grid grid-cols-3">
@@ -22,13 +27,13 @@ const HeaderDeatail: React.FC = () => {
                 <p className="font-bold text-xl">Sua chua dien thoai</p>
               </div>
             </div>
-            <div className="flex justify-center">
-              <ButtonFollow isFollow={true} />
+            <div className="flex justify-center" onClick={toggleFollow}>
+              <ButtonFollow isFollow={isFollow} />
             </div>
           </div>
           <div className="grid grid-cols-8 border-b-2 border-b-gray-100 pb-2">
             <div className="flex justify-start ml-10 mt-2">
-              <div className="bg-blue-400 rounded-full overflow-hidden h-14 w-14">
+              <div className="bg-blue-light rounded-full overflow-hidden h-14 w-14">
                 <p className="flex justify-center mt-3 text-2xl font-bold text-white">
                   9.2
                 </p>
@@ -37,23 +42,23 @@ const HeaderDeatail: React.FC = () => {
             <div className="col-span-5 ml-2">
               <div className="grid grid-cols-5 gap-4">
                 <div className="mt-1">
-                  <p className="text-2xl text-blue-400 font-semibold">9.2</p>
+                  <p className="text-2xl text-blue-light font-semibold">9.2</p>
                   <p className="mt-1">Tieu chi 1</p>
                 </div>
                 <div className="mt-1">
-                  <p className="text-2xl text-blue-400 font-semibold">9.2</p>
+                  <p className="text-2xl text-blue-light font-semibold">9.2</p>
                   <p className="mt-1">Tieu chi 1</p>
                 </div>
                 <div className="mt-1">
-                  <p className="text-2xl text-blue-400 font-semibold">9.2</p>
+                  <p className="text-2xl text-blue-light font-semibold">9.2</p>
                   <p className="mt-1">Tieu chi 1</p>
                 </div>
                 <div className="mt-1">
-                  <p className="text-2xl text-blue-400 font-semibold">9.2</p>
+                  <p className="text-2xl text-blue-light font-semibold">9.2</p>
                   <p className="mt-1">Tieu chi 1</p>
                 </div>
                 <div className="mt-1">
-                  <p className="text-2xl text-blue-400 font-semibold">9.2</p>
+                  <p className="text-2xl text-blue-light font-semibold">9.2</p>
                   <p className="mt-1">Tieu chi 1</p>
                 </div>
               </div>

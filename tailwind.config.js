@@ -3,6 +3,16 @@ module.exports = {
   presets: [],
   darkMode: 'media', // or 'class'
   theme: {
+    extend: {
+      colors: {
+        'gray-light': '#F5F5F5',
+        'gray-medium': '#EEEEEE',
+        'gray-semi-light': '#EDEDF0',
+        'gray-semi-medium': '#BDC3C7',
+        'blue-light': '#00B9FF',
+        'blue-solid': '#1E90FF',
+      }
+    },
     screens: {
       sm: '640px',
       md: '768px',
@@ -538,7 +548,11 @@ module.exports = {
       max: 'max-content',
       fit: 'fit-content',
       '650': '650px',
-      '750': '750px'
+      '750': '750px',
+      '630': "630px",
+      '120': "120px",
+      '10.5': "2.625rem",
+      '122': "31rem"
     }),
     inset: ({ theme }) => ({
       auto: 'auto',
