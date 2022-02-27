@@ -13,23 +13,27 @@ const Profile: React.FC = () => {
   const userProfileState = useSelector((state: RootState) => state.userProfile);
   return (
     <>
-      <Navbar />
-      <div className="grid grid-cols-5 bg-gray-light">
-        <div className="col-span-1">
-          <SidebarProfile page={userProfileState.page} />
-        </div>
-        <div className="col-span-4">
-          {userProfileState.page === "info" ? (
-            <InfoUser />
-          ) : userProfileState.page === "schedule" ? (
-            <ScheduleService />
-          ) : userProfileState.page === "love" ? (
-            <LoveService />
-          ) : userProfileState.page === "noti" ? (
-            <Notifications />
-          ) : (
-            <History />
-          )}
+      <div className="fixed w-screen">
+        <Navbar />
+      </div>
+      <div className="h-[90vh] pt-[10vh]">
+        <div className="grid grid-cols-5 bg-gray-light">
+          <div className="col-span-1 fixed w-1/5">
+            <SidebarProfile page={userProfileState.page} />
+          </div>
+          <div className="col-span-4 pl-[20%] w-[125%] min-h-[90vh]">
+            {userProfileState.page === "info" ? (
+              <InfoUser />
+            ) : userProfileState.page === "schedule" ? (
+              <ScheduleService />
+            ) : userProfileState.page === "love" ? (
+              <LoveService />
+            ) : userProfileState.page === "noti" ? (
+              <Notifications />
+            ) : (
+              <History />
+            )}
+          </div>
         </div>
       </div>
     </>

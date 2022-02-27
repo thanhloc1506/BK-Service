@@ -13,7 +13,7 @@ export const Admin = () => {
     return (
         <div>
             <Navbar/>
-            <div className={'flex h-full'}>
+            <div className={'flex h-[90vh]'}>
                 <div className={'w-1/5 h-full bg-gray-200'}>
                     <SideBar>
                         <SideBar.Element onClick={() => {

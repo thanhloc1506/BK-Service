@@ -15,7 +15,7 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
   };
   return (
     <div className="bg-white h-[90vh] w-full shadow-sm border-2 border-gray-100">
-      <div className="h-[14vh] border-2 border-gray-100">
+      <div className="h-[12vh] w-full border-b-2 border-b-gray-100">
         <div className="flex justify-start ml-10 mt-8">
           <div className="w-14 h-14 rounded-full bg-gray-500"></div>
           <div>
@@ -28,7 +28,7 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
         <div
           className={`h-[8vh] w-full flex justify-start pt-3.5 ${
             page === "info"
-              ? "bg-gray-100 border-2 border-gray-100 border-l-4 border-l-blue-solid pl-9"
+              ? "bg-gray-100 border-l-4 border-l-blue-solid border-y-2 border-y-gray-100 border-r-2 border-r-gray-100 pl-9"
               : "opacity-40 pl-10"
           }`}
         >
@@ -56,7 +56,7 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
         <div
           className={`h-[8vh] w-full flex justify-start pt-3.5 ${
             page === "schedule"
-              ? "bg-gray-100 border-2 border-gray-200 border-l-4 border-l-blue-solid pl-9"
+              ? "bg-gray-100 border-l-4 border-l-blue-solid border-y-2 border-y-gray-100 border-r-2 border-r-gray-100 pl-9"
               : "opacity-40 pl-10"
           }`}
         >
@@ -86,7 +86,7 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
         <div
           className={`h-[8vh] w-full flex justify-start pt-3.5 ${
             page === "love"
-              ? "bg-gray-100 border-2 border-gray-200 border-l-4 border-l-blue-solid pl-9"
+              ? "bg-gray-100 border-l-4 border-l-blue-solid border-y-2 border-y-gray-100 border-r-2 border-r-gray-100 pl-9"
               : "opacity-40 pl-10"
           }`}
         >
@@ -113,7 +113,7 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
         <div
           className={`h-[8vh] w-full flex justify-start pt-3.5 ${
             page === "noti"
-              ? "bg-gray-100 border-2 border-gray-200 border-l-4 border-l-blue-solid pl-9"
+              ? "bg-gray-100 border-l-4 border-l-blue-solid border-y-2 border-y-gray-100 border-r-2 border-r-gray-100 pl-9"
               : "opacity-40 pl-10"
           }`}
         >
@@ -141,7 +141,7 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
         <div
           className={`h-[8vh] w-full flex justify-start pt-3.5 ${
             page === "history"
-              ? "bg-gray-100 border-2 border-gray-200 border-l-4 border-l-blue-solid pl-9"
+              ? "bg-gray-100 border-l-4 border-l-blue-solid border-y-2 border-y-gray-100 border-r-2 border-r-gray-100 pl-9"
               : "opacity-40 pl-10"
           }`}
         >
