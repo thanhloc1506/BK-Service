@@ -3,7 +3,10 @@ import service from "../../assets/service/service.png";
 import rating from "../../assets/service/rating.png";
 import { useNavigate } from "react-router-dom";
 
-const SingleCard: React.FC = () => {
+interface ICategory {
+  isLoveService?: boolean;
+}
+const SingleCard: React.FC<ICategory> = ({ isLoveService }: ICategory) => {
   const navigate = useNavigate();
   return (
     <>
@@ -30,55 +33,70 @@ const SingleCard: React.FC = () => {
         </div>
         <div className="border-b-2 border-gray-100 mt-3"></div>
         <div className="border-b-2 border-gray-100 mt-12"></div>
-        <div className="grid grid-cols-4 h-16">
-          <div className="flex justify-center h-full mt-5 ml-1">
-            <svg
-              className="h-5 w-5 text-gray-500 align-middle mt-0.5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-              />
-            </svg>
-            <p className="ml-1 font-light">122</p>
+        {isLoveService ? (
+          <div className="grid grid-cols-2 mt-3">
+            <div className="flex justify-center">
+              <button className="text-white bg-blue-solid px-3 py-2 rounded-lg">
+                Xem chi tiết
+              </button>
+            </div>
+            <div className="flex justify-center">
+              <button className="text-white bg-orange-400 px-3 py-2 rounded-lg">
+                Hủy theo dõi
+              </button>
+            </div>
           </div>
-          <div className="flex justify-center h-full mt-5">
-            <svg
-              className="h-5 w-5 text-gray-500 align-middle mt-0.5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
-              />
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
-              />
-            </svg>
-            <p className="ml-1 font-light">90</p>
-          </div>
+        ) : (
+          <div className="grid grid-cols-4 h-16">
+            <div className="flex justify-center h-full mt-5 ml-1">
+              <svg
+                className="h-5 w-5 text-gray-500 align-middle mt-0.5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                />
+              </svg>
+              <p className="ml-1 font-light">122</p>
+            </div>
+            <div className="flex justify-center h-full mt-5">
+              <svg
+                className="h-5 w-5 text-gray-500 align-middle mt-0.5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+                />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
+                />
+              </svg>
+              <p className="ml-1 font-light">90</p>
+            </div>
 
-          <div className="col-span-2 flex justify-center mt-2">
-            <button
-              className="bg-blue-500 h-10 w-fit px-5 rounded-md overflow-hidden text-white font-light"
-              onClick={() => navigate("/detailService")}
-            >
-              Truy cap
-            </button>
+            <div className="col-span-2 flex justify-center mt-2">
+              <button
+                className="bg-blue-500 h-10 w-fit px-5 rounded-md overflow-hidden text-white font-light"
+                onClick={() => navigate("/detailService")}
+              >
+                Truy cap
+              </button>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </>
   );

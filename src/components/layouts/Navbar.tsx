@@ -1,11 +1,11 @@
 import React from "react";
 import logo from "../../assets/bg/logo.png";
 import LoginForm from "../auth/LoginForm";
-import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../../redux/store";
-import {toggleModalLogin, toggleModalRegister} from "../../redux/slices/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { toggleModalLogin, toggleModalRegister } from "../../redux/slices/auth";
 import RegisterForm from "../auth/RegisterForm";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import DropdownBtn from "./DropdownBtn";
 
 const Navbar: React.FC = () => {
@@ -28,17 +28,17 @@ const Navbar: React.FC = () => {
   };
 
   return (
-      <>
-        {/*{authState.showLoginForm ? <LoginForm /> : null}*/}
-        {/*{authState.showRegisterForm ? <RegisterForm /> : null}*/}
-        <RegisterForm/>
-        <LoginForm/>
-        <nav className="grid grid-cols-9 bg-blue-light w-full h-[10vh]">
+    <>
+      {/*{authState.showLoginForm ? <LoginForm /> : null}*/}
+      {/*{authState.showRegisterForm ? <RegisterForm /> : null}*/}
+      <RegisterForm />
+      <LoginForm />
+      <nav className="grid grid-cols-9 bg-blue-light w-full h-[10vh]">
         <span
-            className="col-span-2 flex justify-start p-3 ml-2"
-            onClick={goToHomepage}
+          className="col-span-2 flex justify-start p-3 ml-2 cursor-pointer"
+          onClick={goToHomepage}
         >
-          <img src={logo} alt="logo" className="w-16 h-16 mr-2"/>
+          <img src={logo} alt="logo" className="w-16 h-16 mr-2" />
           <p className="text-white text-4xl flex justify-start pt-3">
             BK Service
           </p>
