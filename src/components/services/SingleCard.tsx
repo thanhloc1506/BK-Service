@@ -5,8 +5,12 @@ import { useNavigate } from "react-router-dom";
 
 interface ICategory {
   isLoveService?: boolean;
+  isEnterprise?: boolean;
 }
-const SingleCard: React.FC<ICategory> = ({ isLoveService }: ICategory) => {
+const SingleCard: React.FC<ICategory> = ({
+  isLoveService,
+  isEnterprise,
+}: ICategory) => {
   const navigate = useNavigate();
   return (
     <>
@@ -86,15 +90,25 @@ const SingleCard: React.FC<ICategory> = ({ isLoveService }: ICategory) => {
               </svg>
               <p className="ml-1 font-light">90</p>
             </div>
-
-            <div className="col-span-2 flex justify-center mt-2">
-              <button
-                className="bg-blue-500 h-10 w-fit px-5 rounded-md overflow-hidden text-white font-light"
-                onClick={() => navigate("/detailService")}
-              >
-                Truy cap
-              </button>
-            </div>
+            {isEnterprise ? (
+              <div className="col-span-2 flex justify-center mt-2">
+                <button
+                  className="bg-blue-500 h-10 w-fit px-5 rounded-md overflow-hidden text-white font-light"
+                  onClick={() => navigate("/detailService")}
+                >
+                  Chỉnh sửa
+                </button>
+              </div>
+            ) : (
+              <div className="col-span-2 flex justify-center mt-2">
+                <button
+                  className="bg-blue-500 h-10 w-fit px-5 rounded-md overflow-hidden text-white font-light"
+                  onClick={() => navigate("/detailService")}
+                >
+                  Truy cap
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>

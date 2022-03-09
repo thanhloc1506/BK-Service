@@ -9,10 +9,11 @@ import { Provider, useSelector } from "react-redux";
 import store, { RootState } from "./redux/store";
 import Homepage from "./views/Homepage";
 import DetailService from "./views/DetailService";
-import {Admin} from "./views/admin/Admin";
+import { Admin } from "./views/admin/Admin";
 import ProtectedRoute from "./components/rounting/ProtectedRoute";
 import Profile from "./views/Profile";
 import Loading from "./views/Loading";
+import EHomepage from "./views/enterprise/EHomePage";
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -33,7 +34,8 @@ const App: React.FC = () => {
               </ProtectedRoute>
             }
           />
-          <Route path = '/admin/*' element={<Admin/>}/>
+          <Route path="/admin/*" element={<Admin />} />
+          <Route path="/enterprise" element={<EHomepage />} />
         </Routes>
       </Router>
     </Provider>

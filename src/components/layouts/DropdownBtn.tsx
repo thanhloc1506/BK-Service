@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
 import { logout } from "../../redux/slices/auth";
 import { useNavigate } from "react-router-dom";
+import { selectPage } from "../../redux/slices/user";
 
 const classNames = (...classes: any) => {
   return classes.filter(Boolean).join(" ");
@@ -21,6 +22,7 @@ const DropdownBtn = () => {
   };
 
   const goToProfile = () => {
+    dispatch(selectPage("info"));
     navigate("/profile");
   };
 

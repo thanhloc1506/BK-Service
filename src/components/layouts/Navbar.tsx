@@ -7,6 +7,7 @@ import { toggleModalLogin, toggleModalRegister } from "../../redux/slices/auth";
 import RegisterForm from "../auth/RegisterForm";
 import { useNavigate } from "react-router-dom";
 import DropdownBtn from "./DropdownBtn";
+import { selectPage } from "../../redux/slices/user";
 
 const Navbar: React.FC = () => {
   const authState = useSelector((state: RootState) => state.user);
@@ -25,6 +26,16 @@ const Navbar: React.FC = () => {
 
   const goToHomepage = () => {
     navigate("/");
+  };
+
+  const goToNoti = () => {
+    dispatch(selectPage("noti"));
+    navigate("/profile");
+  };
+
+  const goToSchedule = () => {
+    dispatch(selectPage("schedule"));
+    navigate("/profile");
   };
 
   return (
@@ -101,7 +112,10 @@ const Navbar: React.FC = () => {
         ) : (
           <div className="col-span-3 grid grid-cols-5">
             <span className="col-span-3 grid grid-cols-2">
-              <span className="col-span-1 pt-5">
+              <span
+                className="col-span-1 pt-5 cursor-pointer"
+                onClick={goToSchedule}
+              >
                 <div className="flex justify-end mr-4">
                   <svg
                     className="h-8 w-8 text-white"
@@ -127,7 +141,10 @@ const Navbar: React.FC = () => {
                   Schedule
                 </p>
               </span>
-              <span className="col-span-1 pt-5">
+              <span
+                className="col-span-1 pt-5 cursor-pointer"
+                onClick={goToNoti}
+              >
                 <div className="flex justify-center ml-3">
                   <svg
                     className="h-8 w-8 text-white"
