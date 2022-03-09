@@ -4,6 +4,9 @@ import SideBar from "../../components/layouts/SideBar";
 import {Link, Route, Routes} from "react-router-dom";
 import {FaChartLine} from "react-icons/fa";
 import {BsListNested} from "react-icons/bs";
+import {Statistic} from "../../components/admin/Statistic";
+import {UserStatistic} from "../../components/admin/UserStatistic";
+import {EnterpriseStatistic} from "../../components/admin/EnterpriseStatistic";
 
 export const Admin = () => {
     const [curIndex, setCurIndex] = useState(0);
@@ -20,7 +23,7 @@ export const Admin = () => {
                     <SideBar>
                         <SideBar.Element onClick={() => {
                         }}>
-                            <Link to={"manage"}>
+                            <Link to={"statistic"}>
                                 <div className={"flex p-4"}>
                                     <FaChartLine className={"mr-5 text-sky-500 text-xl"}/>
                                     <h1 className={"mr-5 text-sky-500"}>Thống kê</h1>
@@ -28,7 +31,7 @@ export const Admin = () => {
                             </Link>
                         </SideBar.Element>
                         <SideBar.Element>
-                            <Link to={"all-service"}>
+                            <Link to={"user-list"}>
                                 <div className={'flex p-4'}>
                                     <BsListNested className={"mr-5 text-sky-500 text-xl"}/>
                                     <h1 className={"mr-5 text-sky-500"}>Danh sách User</h1>
@@ -36,7 +39,7 @@ export const Admin = () => {
                             </Link>
                         </SideBar.Element>
                         <SideBar.Element>
-                            <Link to={"add-service"}>
+                            <Link to={"enterprise-list"}>
                                 <div className={'flex p-4'}>
                                     <BsListNested className={"mr-5 text-sky-500 text-xl"}/>
                                     <h1 className={"mr-5 text-sky-500"}>Danh sách doanh nghiệp </h1>
@@ -47,11 +50,10 @@ export const Admin = () => {
                 </div>
                 <div>
                     <Routes>
-                        <Route path={"/"} element={<h1>manage</h1>}/>
-                        <Route path={"manage"} element={<h1>manage</h1>}/>
-                        <Route path={"all-service"} element={<h1>all-service</h1>}/>
-                        <Route path={"add-service"} element={<h1>add-service</h1>}/>
-                        <Route path={"premium"} element={<h1>premium</h1>}/>
+                        <Route path={"/"} element={<Statistic/>}/>
+                        <Route path={"statistic"} element={<Statistic/>}/>
+                        <Route path={"user-list"} element={<UserStatistic/>}/>
+                        <Route path={"enterprise-list"} element={<EnterpriseStatistic/>}/>
                     </Routes>
                 </div>
             </div>
