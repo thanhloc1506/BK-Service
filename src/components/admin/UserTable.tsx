@@ -2,6 +2,7 @@ import React, {createContext, useEffect, useState} from "react";
 import {BiEdit} from "react-icons/bi";
 import {FiMoreVertical} from "react-icons/fi";
 import {Loading} from "./Loading";
+import {set} from "js-cookie";
 
 const field = {
     field1: "Họ Và Tên",
@@ -55,20 +56,20 @@ export interface ITableContext {
     numOfRow: number;
     numOfCol: number;
     data: Object[];
-    fetchData?: (index: any) => void;
     widthCol?: number;
-    curPage: number;
     totalPage: number;
+    curPage?: number;
+    setCurPage?: (number: number) => void;
 }
 
 export const TablePagingControl = ({numOfPage}: any) => {
     const TablePagingPieces = ({index}: any) => {
         return <TableContext.Consumer>
-            {({fetchData, curPage}) => {
+            {({setCurPage, curPage}) => {
                 return (
                     <button className={`border px-3 py-1 ${index == curPage?'bg-sky-100 text-sky-500':''}`} onClick={() => {
-                        if (fetchData && Number.isInteger(index)) {
-                            fetchData(index)
+                        if (setCurPage && Number.isInteger(index)) {
+                            setCurPage(index)
                         }
                     }}>
                         {index}
@@ -78,7 +79,7 @@ export const TablePagingControl = ({numOfPage}: any) => {
             }
         </TableContext.Consumer>
     }
-    const getArrayIndex = (totalPage: number, curIndex: number) => {
+    const getArrayIndex = (totalPage: number, curIndex: any) => {
         const offSet = Math.floor(curIndex / 10);
         const result = [];
         for (let i = offSet * 10; i < offSet * 10 + 11 && i <= totalPage; i++) {
@@ -103,10 +104,7 @@ const TableContext = createContext<ITableContext>({
     numOfCol: Object.keys(field).length,
     widthCol: 200,
     data: fakeData,
-    fetchData: (index: any) => {
-    },
-    curPage: 1,
-    totalPage: 100
+    totalPage: 100,
 });
 export const TableRow = ({data, isHeader}: IRowData) => {
     return (
@@ -135,7 +133,8 @@ export const TableRow = ({data, isHeader}: IRowData) => {
     )
 }
 
-export const Table = () => {
+export const UserTable = () => {
+    const [curPage, setCurPage]= useState(0);
     const fetchData = async (index: number) => {
         setIsLoading(true);
         setTimeout(() => {
@@ -147,29 +146,29 @@ export const Table = () => {
                     numOfCol: Object.keys(field).length,
                     widthCol: 200,
                     data: fakeData,
-                    curPage: index,
+                    curPage: index
                 }
             });
         }, 2000);
     }
     useEffect(() => {
-        fetchData(1);
-    }, []);
+        fetchData(curPage);
+    }, [curPage]);
     const [isLoading, setIsLoading] = useState(false);
     const [tableInfo, setTableInfo] = useState<ITableContext>({
         numOfCol: 4,
         numOfRow: 0,
         widthCol: 200,
         data: [],
-        fetchData,
-        curPage: 1,
-        totalPage: 20
+        totalPage: 20,
+        curPage: curPage,
+        setCurPage: setCurPage
     })
     if (isLoading) {
         return <Loading show={isLoading}/>
     }
     return (
-        <TableContext.Provider value={tableInfo}>
+        <TableContext.Provider value={{...tableInfo} }>
             <div className={'inline-block'}>
                 <TableRow data={field} isHeader/>
                 {tableInfo.data.map((e: any, index: any) => {

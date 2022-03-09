@@ -5,6 +5,8 @@ import {Link, Route, Routes} from "react-router-dom";
 import {FaChartLine} from "react-icons/fa";
 import {BsListNested} from "react-icons/bs";
 import {Statistic} from "../../components/admin/Statistic";
+import {UserStatistic} from "../../components/admin/UserStatistic";
+import {EnterpriseStatistic} from "../../components/admin/EnterpriseStatistic";
 
 export const Admin = () => {
     const [curIndex, setCurIndex] = useState(0);
@@ -50,8 +52,8 @@ export const Admin = () => {
                     <Routes>
                         <Route path={"/"} element={<Statistic/>}/>
                         <Route path={"statistic"} element={<Statistic/>}/>
-                        <Route path={"user-list"} element={<h1>all-service</h1>}/>
-                        <Route path={"enterprise-list"} element={<h1>add-service</h1>}/>
+                        <Route path={"user-list"} element={<UserStatistic/>}/>
+                        <Route path={"enterprise-list"} element={<EnterpriseStatistic/>}/>
                     </Routes>
                 </div>
             </div>

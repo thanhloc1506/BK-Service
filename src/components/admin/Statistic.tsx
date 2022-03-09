@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Table} from "./Table";
+import {UserTable} from "./UserTable";
 
 const NUM_COUNTING = 20;
 export const StatisticCard = ({icon, label, number}: any) => {
@@ -48,9 +48,7 @@ export const Statistic = () => {
                                    label={'Total Earning'} number={'10000000'}/>
                 </div>
             </div>
-            <div className={'p-4'}>
-                <Table/>
-            </div>
+
         </div>
     )
 }
