@@ -21,7 +21,7 @@ const Profile: React.FC = () => {
           <div className="col-span-1 fixed w-1/5">
             <SidebarProfile page={userProfileState.page} />
           </div>
-          <div className="col-span-4 pl-[20%] w-[125%] min-h-[90vh]">
+          <div className="col-span-4 pl-[25%] w-[125%] min-h-[90vh]">
             {userProfileState.page === "info" ? (
               <InfoUser />
             ) : userProfileState.page === "schedule" ? (

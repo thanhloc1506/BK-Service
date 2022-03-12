@@ -26,7 +26,7 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
       </div>
       <div className="cursor-pointer" onClick={() => onSelectPage("info")}>
         <div
-          className={`h-[6vh] w-full flex justify-start pt-2.5 ${
+          className={`h-[7vh] w-full flex justify-start pt-3 ${
             page === "info"
               ? "bg-gray-100 border-l-4 border-l-blue-solid border-y-2 border-y-gray-100 border-r-2 border-r-gray-100 pl-9"
               : "opacity-40 pl-10"
@@ -54,7 +54,7 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
       </div>
       <div className="cursor-pointer" onClick={() => onSelectPage("schedule")}>
         <div
-          className={`h-[6vh] w-full flex justify-start pt-2.5 ${
+          className={`h-[7vh] w-full flex justify-start pt-3 ${
             page === "schedule"
               ? "bg-gray-100 border-l-4 border-l-blue-solid border-y-2 border-y-gray-100 border-r-2 border-r-gray-100 pl-9"
               : "opacity-40 pl-10"
@@ -84,7 +84,7 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
       </div>
       <div className="cursor-pointer" onClick={() => onSelectPage("love")}>
         <div
-          className={`h-[6vh] w-full flex justify-start pt-2.5 ${
+          className={`h-[7vh] w-full flex justify-start pt-3 ${
             page === "love"
               ? "bg-gray-100 border-l-4 border-l-blue-solid border-y-2 border-y-gray-100 border-r-2 border-r-gray-100 pl-9"
               : "opacity-40 pl-10"
@@ -111,7 +111,7 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
       </div>
       <div className="cursor-pointer" onClick={() => onSelectPage("noti")}>
         <div
-          className={`h-[6vh] w-full flex justify-start pt-2.5 ${
+          className={`h-[7vh] w-full flex justify-start pt-3 ${
             page === "noti"
               ? "bg-gray-100 border-l-4 border-l-blue-solid border-y-2 border-y-gray-100 border-r-2 border-r-gray-100 pl-9"
               : "opacity-40 pl-10"
@@ -139,7 +139,7 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
       </div>
       <div className="cursor-pointer" onClick={() => onSelectPage("history")}>
         <div
-          className={`h-[6vh] w-full flex justify-start pt-2.5 ${
+          className={`h-[7vh] w-full flex justify-start pt-3 ${
             page === "history"
               ? "bg-gray-100 border-l-4 border-l-blue-solid border-y-2 border-y-gray-100 border-r-2 border-r-gray-100 pl-9"
               : "opacity-40 pl-10"

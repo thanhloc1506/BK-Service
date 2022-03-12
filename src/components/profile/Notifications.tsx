@@ -16,7 +16,7 @@ const Notifications = () => {
 
   return (
     <div>
-      <div className="h-12 bg-white py-8 pb-20 pl-32 border-b-2 border-b-gray-200 shadow-sm">
+      <div className="h-12 bg-white py-8 pb-20 pl-20 border-b-2 border-b-gray-200 shadow-sm">
         <p className="text-blue-400 font-medium text-3xl">Thông báo của tôi</p>
       </div>
       <div className="px-64 mt-8">
