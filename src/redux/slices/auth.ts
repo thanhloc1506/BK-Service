@@ -29,12 +29,11 @@ export const login = createAsyncThunk(
   "/user/login",
   async (loginForm: LoginForm) => {
     try {
-      // const response = await axios.post(`${apiUrl}/auth/login`, loginForm);
-      // localStorage.setItem("Authorization", response.data.id);
-      // setAuthToken(response.data.accessToken);
+      const response = await axios.post(`${apiUrl}/login`, loginForm);
+      localStorage.setItem("Authorization", response.data.id);
+      cookies.set("token", response.data.accessToken);
 
-      // return response.data;
-      return true;
+      return response.data;
     } catch (error) {
       console.log(error);
     }
