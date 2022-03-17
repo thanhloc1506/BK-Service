@@ -45,8 +45,8 @@ const Navbar: React.FC = () => {
         {/*{authState.showRegisterForm ? <RegisterForm /> : null}*/}
         <RegisterForm/>
         <LoginForm/>
-        <div className={'fixed z-10'}>
-          <nav className="grid grid-cols-9 bg-blue-light w-full p-1">
+        <div className={'fixed z-10 backdrop-blur w-full'}>
+          <nav className="grid grid-cols-9 bg-blue-light w-full p-1  opacity-80 border-b-2 border-sky-600">
               <span
                   className="col-span-3 flex justify-start p-3 ml-2 cursor-pointer"
                   onClick={goToHomepage}
