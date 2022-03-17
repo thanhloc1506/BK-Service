@@ -30,7 +30,7 @@ export const login = createAsyncThunk(
   async (loginForm: LoginForm) => {
     try {
       const response = await axios.post(`${apiUrl}/login`, loginForm);
-      localStorage.setItem("Authorization", response.data.id);
+
       cookies.set("token", response.data.accessToken);
 
       return response.data;
@@ -42,7 +42,7 @@ export const login = createAsyncThunk(
 
 export const logout = createAsyncThunk("/user/logout", async () => {
   try {
-    await axios.get(`${apiUrl}/auth/logout`);
+    await axios.get(`${apiUrl}/logout`);
     setAuthToken(null);
   } catch (error) {
     console.log(error);
@@ -65,7 +65,7 @@ export const register = createAsyncThunk(
   async (registerForm: any) => {
     try {
       const response = await axios.post(
-        `${apiUrl}/auth/register`,
+        `${apiUrl}/user/register`,
         registerForm
       );
       return response.data;
