@@ -1,19 +1,15 @@
-import React, { useEffect, useState } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  useRoutes,
-} from "react-router-dom";
-import { Provider, useSelector } from "react-redux";
-import store, { RootState } from "./redux/store";
+import React, {useEffect} from "react";
+import {BrowserRouter as Router, Route, Routes,} from "react-router-dom";
+import {Provider} from "react-redux";
+import {persistor, store} from "./redux/store";
 import Homepage from "./views/Homepage";
 import DetailService from "./views/DetailService";
-import { Admin } from "./views/admin/Admin";
+import {Admin} from "./views/admin/Admin";
 import ProtectedRoute from "./components/rounting/ProtectedRoute";
 import Profile from "./views/Profile";
 import Loading from "./views/Loading";
 import EHomepage from "./views/enterprise/EHomePage";
+import {PersistGate} from "redux-persist/integration/react";
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -21,23 +17,25 @@ const App: React.FC = () => {
   }, []);
   return (
     <Provider store={store}>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Homepage />} />
-          <Route path="/detailService" element={<DetailService />} />
-          <Route path="/loading" element={<Loading />} />
-          <Route
-            path="/profile"
-            element={
-              <ProtectedRoute>
-                <Profile />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="/admin/*" element={<Admin />} />
-          <Route path="/enterprise" element={<EHomepage />} />
-        </Routes>
-      </Router>
+      <PersistGate persistor={persistor} loading={null}>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Homepage/>}/>
+            <Route path="/detailService" element={<DetailService/>}/>
+            <Route path="/loading" element={<Loading/>}/>
+            <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute>
+                    <Profile/>
+                  </ProtectedRoute>
+                }
+            />
+            <Route path="/admin/*" element={<Admin/>}/>
+            <Route path="/enterprise" element={<EHomepage/>}/>
+          </Routes>
+        </Router>
+      </PersistGate>
     </Provider>
   );
 };

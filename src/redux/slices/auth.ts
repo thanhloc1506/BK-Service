@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { useDispatch } from "react-redux";
 import { setAuthToken } from "../../utils/setAuthToken";
 import { apiUrl, LoginForm } from "../types";
 import cookies from "js-cookie";
+import axiosClient from "../../apis/axios";
 
 interface State {
   user: any;
@@ -29,13 +29,16 @@ export const login = createAsyncThunk(
   "/user/login",
   async (loginForm: LoginForm) => {
     try {
-      const response = await axios.post(`${apiUrl}/login`, loginForm);
-
+      console.log("long ne");
+      const response = await axios.post(
+        `http://localhost:3007/auth/login`,
+        loginForm
+      );
+      console.log(response);
       cookies.set("token", response.data.accessToken);
-
-      return response.data;
+      return true;
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   }
 );
@@ -53,10 +56,10 @@ export const loadUser = createAsyncThunk("/user/loaduser", async () => {
   try {
     // const response = await axios.get(`${apiUrl}/auth/loaduser`);
     // return response.data;
-    console.log("load user");
     return true;
   } catch (error) {
     console.log(error);
+    throw error;
   }
 });
 
@@ -94,11 +97,16 @@ const atuhSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
+    [login.pending.toString()]: (state, action) => {
+      state.authLoading = true;
+    },
     [login.fulfilled.toString()]: (state, action) => {
+      state.authLoading = false;
       state.status = "succeeded";
       state.isAuthenticated = true;
     },
     [login.rejected.toString()]: (state, action) => {
+      state.authLoading = false;
       state.status = "failed";
       state.error = action.error.message;
     },

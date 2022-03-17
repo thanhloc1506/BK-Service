@@ -23,8 +23,8 @@ const NotiCard: React.FC<INoti> = ({ date, content }: INoti) => {
         <div className="col-span-5 mt-10">
           <p className="text-xl text-[#374273]">{content}</p>
         </div>
-        <div className="w-full flex items-center">
-          <button className="bg-[#FF4757] text-white px-6 py-1.5 rounded-lg text-xl m-auto">
+        <div className={"col-span-1 items-center flex"}>
+          <button className="bg-[#FF4757] text-white w-full px-6 py-3 rounded-lg text-xl mr-5">
             Xóa
           </button>
         </div>
