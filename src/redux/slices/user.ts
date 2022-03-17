@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 type Page = "info" | "schedule" | "love" | "noti" | "history";
 
-interface State {
+export interface State {
   page: Page;
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;

@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-type PageEnterprise = "manage" | "all" | "add" | "premium";
+export type PageEnterprise = "manage" | "all" | "add" | "premium" | string;
 
-interface State {
+export interface State {
   page: PageEnterprise;
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
-}
+};
 
 const initialState: State = {
   page: "manage",

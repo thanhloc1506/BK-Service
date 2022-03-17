@@ -1,14 +1,15 @@
 import React from "react";
 import logo from "../../assets/bg/logo.png";
 import LoginForm from "../auth/LoginForm";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
-import { toggleModalLogin, toggleModalRegister } from "../../redux/slices/auth";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../../redux/store";
+import {toggleModalLogin, toggleModalRegister} from "../../redux/slices/auth";
 import RegisterForm from "../auth/RegisterForm";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import DropdownBtn from "./DropdownBtn";
-import { selectPage } from "../../redux/slices/user";
-import { SearchField } from "./SearchField";
+import {selectPage} from "../../redux/slices/user";
+import {SearchField} from "./SearchField";
+import {SearchResult} from "./SearchResult";
 
 const Navbar: React.FC = () => {
   const authState = useSelector((state: RootState) => state.user);
@@ -56,9 +57,9 @@ const Navbar: React.FC = () => {
               BK Service
             </p>
           </span>
-          <span className="col-span-3">
-            <SearchField />
-          </span>
+          <div className="col-span-3">
+            <SearchField/>
+          </div>
 
           {!authState.isAuthenticated ? (
             <span className={"col-span-3"}>

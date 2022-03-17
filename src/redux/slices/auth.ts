@@ -5,7 +5,7 @@ import { apiUrl, LoginForm } from "../types";
 import cookies from "js-cookie";
 import axiosClient from "../../apis/axios";
 
-interface State {
+export interface State {
   user: any;
   isAuthenticated: boolean;
   authLoading: boolean;

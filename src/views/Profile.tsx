@@ -8,6 +8,7 @@ import ScheduleService from "../components/profile/ScheduleService";
 import LoveService from "../components/profile/LoveService";
 import Notifications from "../components/profile/Notifications";
 import History from "../components/profile/History";
+import {PageEnterprise} from "../redux/slices/enterprise";
 
 const Profile: React.FC = () => {
     const userProfileState = useSelector((state: RootState) => state.userProfile);

@@ -1,31 +1,44 @@
 import thunk from "redux-thunk";
-import {combineReducers, configureStore, createStore} from "@reduxjs/toolkit";
+import {combineReducers, configureStore, createStore, ReducersMapObject} from "@reduxjs/toolkit";
 import authSlice from "./slices/auth";
 import userProfileSlice from "./slices/user";
 import enterpriseSlice from "./slices/enterprise";
+import searchSlice from "./slices/search";
 import { persistStore, persistReducer } from 'redux-persist'
+import {State as SearchState} from './slices/search'
+import {State as AuthState} from './slices/auth'
+import {State as EnterpriseState} from './slices/enterprise';
+import {State as UserState} from './slices/enterprise';
 //@ts-ignore
 import localStorage from 'redux-persist/lib/storage';
-
-const persistConfig = {
+import {PersistConfig} from "redux-persist/es/types";
+interface MyReducer{
+  search: SearchState,
+  user: AuthState,
+  enterprise: EnterpriseState,
+  userProfile: UserState,
+}
+const persistConfig: PersistConfig<any> = {
   key: 'root',
   storage: localStorage,
+  blacklist: ["search"]
 };
 
-const reducer = combineReducers({
+const reducer = combineReducers<MyReducer>({
   user: authSlice,
   userProfile: userProfileSlice,
   enterprise: enterpriseSlice,
-});
+  search: searchSlice
+} as ReducersMapObject<any>);
 // const store = createStore({
 //   reducer: {
 //
 //   },
 //   middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 // });
-export const store = configureStore({
+export const store = configureStore<MyReducer,any, any>({
   reducer: persistReducer(persistConfig, reducer),
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
+  middleware: (getDefaultMiddleware: any) => getDefaultMiddleware(),
 })
 // const persistedReducer = persistReducer(persistConfig, reducer);
 export const persistor = persistStore(store)
