@@ -47,6 +47,7 @@ const App: React.FC = () => {
               draggable
               pauseOnHover
           />
+          <Loading/>
       </PersistGate>
     </Provider>
   );
