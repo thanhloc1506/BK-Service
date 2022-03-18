@@ -30,14 +30,15 @@ export const login = createAsyncThunk(
   async (loginForm: LoginForm) => {
     try {
       console.log("long ne");
-      const response = await axios.post(
-        `http://localhost:3007/auth/login`,
+      const response = await axiosClient.post(
+        `/auth/login`,
         loginForm
       );
       console.log(response);
       cookies.set("token", response.data.accessToken);
       return true;
     } catch (error) {
+      console.log(error)
       throw error;
     }
   }
@@ -45,10 +46,11 @@ export const login = createAsyncThunk(
 
 export const logout = createAsyncThunk("/user/logout", async () => {
   try {
-    await axios.get(`${apiUrl}/logout`);
+    // await axios.get(`${apiUrl}/logout`);
     setAuthToken(null);
+    cookies.remove("token");
   } catch (error) {
-    console.log(error);
+    throw error;
   }
 });
 

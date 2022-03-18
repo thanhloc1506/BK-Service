@@ -5,13 +5,11 @@ import {stat} from "fs";
 export interface State {
     status: "loading" | "complete",
     isShowResult: boolean,
-    cacheResult: Map<string, object>
 }
 
 const initialState: State = {
     status: "complete",
     isShowResult: false,
-    cacheResult: new Map<string, object>()
 };
 
 export const search = createAsyncThunk(
@@ -43,7 +41,6 @@ const searchSlice = createSlice({
         [search.fulfilled.toString()]: (state, action) => {
             const data =action.payload;
             state.status = "complete";
-            state.cacheResult.set(data.searchText, data.data);
         },
         [search.pending.toString()]: (state, action) => {
             state.status="loading";

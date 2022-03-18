@@ -1,9 +1,11 @@
 import axios from "axios";
 import queryString from "query-string";
 import cookies from "js-cookie";
+import {StatusCodes} from "http-status-codes";
+import {toast} from "react-toastify";
 
 const axiosClient = axios.create({
-  baseURL: "https://localhost:3007",
+  baseURL: "http://localhost:3007",
   headers: {
     "content-type": "application/json",
   },
@@ -18,12 +20,21 @@ axiosClient.interceptors.request.use(async (config: any) => {
 
 axiosClient.interceptors.response.use(
   (response) => {
-    if (response && response.data) {
-      return response.data;
-    }
     return response;
   },
   (error) => {
+    if (error.response.status == StatusCodes.UNAUTHORIZED) {
+      toast.error('Lỗi xác thực !', {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      cookies.remove("token");
+    }
     throw error;
   }
 );
