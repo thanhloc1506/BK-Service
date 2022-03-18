@@ -1,6 +1,7 @@
 import {Transition} from "@headlessui/react";
 import React, {Attributes, Fragment} from "react";
 import noti from "../../assets/bg/noti.png";
+import {toast, ToastContainer} from "react-toastify";
 
 interface INoti {
   date: string;
@@ -34,7 +35,17 @@ const NotiCard: React.FC<INoti> = ({date, content, index}: INoti) => {
               <p className="text-xl text-[#374273]">{content}</p>
             </div>
             <div className={"col-span-1 items-center flex"}>
-              <button className="bg-[#FF4757] text-white w-full px-6 py-3 rounded-lg text-xl mr-5">
+              <button className="bg-[#FF4757] text-white w-full px-6 py-3 rounded-lg text-xl mr-5" onClick={()=>{
+                  toast.success('🦄 Wow so easy!', {
+                      position: "bottom-right",
+                      autoClose: 5000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                  });
+              }}>
                 Xóa
               </button>
             </div>
