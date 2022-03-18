@@ -11,6 +11,10 @@ module.exports = {
         'gray-semi-medium': '#BDC3C7',
         'blue-light': '#00B9FF',
         'blue-solid': '#1E90FF',
+      },
+      transitionDuration: {
+        '0': '0ms',
+        '2000': '2000ms',
       }
     },
     screens: {
