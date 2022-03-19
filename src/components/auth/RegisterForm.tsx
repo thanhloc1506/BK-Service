@@ -3,17 +3,27 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/bg/login.png";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { toggleModalLogin, toggleModalRegister } from "../../redux/slices/auth";
+import {
+  register,
+  toggleModalLogin,
+  toggleModalRegister,
+} from "../../redux/slices/auth";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationIcon } from "@heroicons/react/outline";
+import { RegisterForm as IRegisterForm } from "../../redux/types";
 
 const RegisterForm: React.FC = () => {
   const authState = useSelector((state: RootState) => state.user);
 
   const dispatch = useDispatch();
 
-  const onClickRegister = () => {
+  const onClickRegister = (values: IRegisterForm) => {
+    dispatch(register(values));
+    toggleRegisterModal();
+  };
+
+  const toggleRegisterModal = () => {
     dispatch(toggleModalRegister(authState.showRegisterForm));
   };
 
@@ -28,7 +38,7 @@ const RegisterForm: React.FC = () => {
         as="div"
         className="fixed z-10 inset-0 overflow-y-auto"
         initialFocus={cancelButtonRef}
-        onClose={onClickRegister}
+        onClose={toggleRegisterModal}
       >
         <div className="flex mt-28 justify-center text-center min-h-screen">
           <Transition.Child
@@ -81,10 +91,15 @@ const RegisterForm: React.FC = () => {
                             <p className="text-4xl mr-40">Đăng ký</p>
                           </div>
                           <Formik
-                            initialValues={{ username: "", password: "" }}
+                            initialValues={{
+                              username: "",
+                              password: "",
+                              comfirmPassword: "",
+                              email: "",
+                            }}
                             onSubmit={(values) => {
                               alert(JSON.stringify(values, null, 2));
-                              onClickRegister();
+                              onClickRegister(values);
                             }}
                           >
                             <Form>

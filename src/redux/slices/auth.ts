@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { setAuthToken } from "../../utils/setAuthToken";
-import { apiUrl, LoginForm } from "../types";
+import { apiUrl, LoginForm, RegisterForm } from "../types";
 import cookies from "js-cookie";
 import axiosClient from "../../apis/axios";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 
 export interface State {
   user: any;
@@ -30,16 +30,25 @@ export const login = createAsyncThunk(
   "/user/login",
   async (loginForm: LoginForm) => {
     try {
-      console.log("long ne");
-      const response = await axiosClient.post(
-        `/auth/login`,
-        loginForm
-      );
-      console.log(response);
+      const response = await axiosClient.post(`/auth/login`, loginForm);
       cookies.set("token", response.data.accessToken);
-      return true;
+      return response.data;
     } catch (error) {
-      console.log(error)
+      console.log(error);
+      throw error;
+    }
+  }
+);
+
+export const register = createAsyncThunk(
+  "/user/register",
+  async (registerForm: RegisterForm) => {
+    try {
+      const response = await axiosClient.post(`/auth/register`, registerForm);
+      cookies.set("token", response.data.accessToken);
+      return response.data;
+    } catch (error) {
+      console.log(error);
       throw error;
     }
   }
@@ -66,21 +75,6 @@ export const loadUser = createAsyncThunk("/user/loaduser", async () => {
   }
 });
 
-export const register = createAsyncThunk(
-  "/user/register",
-  async (registerForm: any) => {
-    try {
-      const response = await axios.post(
-        `${apiUrl}/user/register`,
-        registerForm
-      );
-      return response.data;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-);
-
 export const toggleModalLogin = createAsyncThunk(
   "showLoginForm",
   (toggle: boolean) => {
@@ -104,7 +98,7 @@ const atuhSlice = createSlice({
       state.authLoading = true;
     },
     [login.fulfilled.toString()]: (state, action) => {
-      toast.success('Đăng nhập thành công !', {
+      toast.success("Đăng nhập thành công !", {
         position: "bottom-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -118,7 +112,7 @@ const atuhSlice = createSlice({
       state.isAuthenticated = true;
     },
     [login.rejected.toString()]: (state, action) => {
-      toast.error('Lỗi xác thực !', {
+      toast.error("Lỗi xác thực !", {
         position: "bottom-right",
         autoClose: 5000,
         hideProgressBar: false,
