@@ -9,6 +9,7 @@ import {useNavigate} from "react-router-dom";
 import DropdownBtn from "./DropdownBtn";
 import {selectPage} from "../../redux/slices/user";
 import {SearchField} from "./SearchField";
+import Loading from "../../views/Loading";
 
 const Navbar: React.FC = () => {
   const authState = useSelector((state: RootState) => state.user);

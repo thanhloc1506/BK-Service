@@ -4,6 +4,7 @@ import { setAuthToken } from "../../utils/setAuthToken";
 import { apiUrl, LoginForm } from "../types";
 import cookies from "js-cookie";
 import axiosClient from "../../apis/axios";
+import {toast} from "react-toastify";
 
 export interface State {
   user: any;
@@ -103,11 +104,29 @@ const atuhSlice = createSlice({
       state.authLoading = true;
     },
     [login.fulfilled.toString()]: (state, action) => {
+      toast.success('Đăng nhập thành công !', {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       state.authLoading = false;
       state.status = "succeeded";
       state.isAuthenticated = true;
     },
     [login.rejected.toString()]: (state, action) => {
+      toast.error('Lỗi xác thực !', {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       state.authLoading = false;
       state.status = "failed";
       state.error = action.error.message;

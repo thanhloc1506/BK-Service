@@ -4,10 +4,11 @@ import {useSelector} from "react-redux";
 import {RootState} from "../redux/store";
 
 const Loading: React.FC = () => {
-  const state =useSelector((state: RootState)=>state.loading)
+  const state =useSelector((state: RootState)=>state.loading);
+  const authState = useSelector((state: RootState)=>state.user);
   return (
       <Transition
-          show={state.loading>0}
+          show={state.loading>0 || authState.authLoading}
           as={Fragment}
           enter="transition ease-out duration-500"
           enterFrom="transform opacity-0 scale-95"
