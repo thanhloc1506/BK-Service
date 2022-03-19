@@ -1,39 +1,36 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import axiosClient from "../../apis/axios";
+import {AxiosResponse} from "axios";
+import {PInSearch} from "../../apis/package/in/PInSearch";
 
-export interface SearchDataResult {
-    searchText: string;
-    data: string
-}
 
 export interface State {
     status: "loading" | "complete",
     isShowResult: boolean,
     currentSearchText: string,
-    dataSearch: SearchDataResult
+    dataSearch: PInSearch.Data | undefined
 }
 
 const initialState: State = {
     status: "complete",
     isShowResult: false,
     currentSearchText: "",
-    dataSearch: {
-        searchText: "",
-        data: ""
-    }
+    dataSearch: undefined
 };
 
 export const search = createAsyncThunk(
     "/search",
     async (text: string) => {
-        console.log("Search....: ", text);
-            return new Promise((resolve: any, reject) => {
-                setTimeout(()=>{
-                    resolve({
-                        searchText: text,
-                        data: text
-                    } as SearchDataResult);
-                }, 1000)
-            })
+         return axiosClient.get('search', {
+            params: {
+                text
+            }
+        }).then((res: AxiosResponse<PInSearch.Data>)=>{
+            return res.data;
+        }).catch((err)=>{
+            throw err;
+         })
+
     }
 );
 
@@ -52,12 +49,17 @@ const searchSlice = createSlice({
         }
     },
     extraReducers: {
-        [search.fulfilled.toString()]: (state, action) => {
+        [search.fulfilled.toString()]: (state, action: PayloadAction<PInSearch.Data>) => {
             const data = action.payload;
             state.status = "complete";
-            console.log("fullfiled ", data)
+            console.log("Quick search: ", data);
             if (data.searchText === state.currentSearchText) {
-                state.dataSearch = data
+                if(data.services.length>0){
+                    state.dataSearch = data
+                }
+                else{
+                    state.dataSearch = undefined;
+                }
             }
         },
         [search.pending.toString()]: (state, action) => {

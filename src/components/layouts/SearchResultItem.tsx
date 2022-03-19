@@ -1,10 +1,12 @@
 import React from "react";
+import {PInSearch} from "../../apis/package/in/PInSearch";
 
 export interface SearchResultItemProp{
-    active?: boolean;
+    data?: PInSearch.Service;
 }
 
-export const SearchResultItem = ({active}: SearchResultItemProp) => {
+export const SearchResultItem = ({data}: SearchResultItemProp) => {
+    // alert(JSON.stringify(data))
     return (
         <div className={`flex p-2 m-2 hover:bg-blue-200 transition-all duration-300 cursor-pointer rounded`}>
             <div className={''}>
@@ -14,10 +16,10 @@ export const SearchResultItem = ({active}: SearchResultItemProp) => {
             </div>
             <div className={'ml-4'}>
                 <div>
-                    <h1 className={'font-bold'}>Title</h1>
+                    <h1 className={'font-bold'}>{data?.name}</h1>
                 </div>
                 <div>
-                    <p>Content....</p>
+                    <p>{data?.email}</p>
                 </div>
                 <div className={'italic text-sm'}>
                     <p>Địa chỉ: </p>
