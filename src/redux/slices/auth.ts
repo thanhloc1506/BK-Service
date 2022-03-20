@@ -125,6 +125,43 @@ const atuhSlice = createSlice({
       state.status = "failed";
       state.error = action.error.message;
     },
+    [register.pending.toString()]: (state, action) => {
+      state.authLoading = true;
+    },
+    [register.fulfilled.toString()]: (state, action) => {
+      toast.success("Đăng ky thành công !", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      state.authLoading = false;
+      state.status = "succeeded";
+      state.isAuthenticated = true;
+    },
+    [register.rejected.toString()]: (state, action) => {
+      toast.error("Lỗi xác thực !", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      state.authLoading = false;
+      state.status = "failed";
+      state.error = action.error.message;
+    },
+    [toggleModalLogin.fulfilled.toString()]: (state, action) => {
+      state.showLoginForm = !action.payload;
+    },
+    [toggleModalRegister.fulfilled.toString()]: (state, action) => {
+      state.showRegisterForm = !action.payload;
+    },
     [loadUser.fulfilled.toString()]: (state, action) => {
       state.status = "succeeded";
       if (action.payload) {
@@ -137,17 +174,6 @@ const atuhSlice = createSlice({
       state.status = "idle";
       state.user = null;
       state.isAuthenticated = false;
-    },
-    [register.fulfilled.toString()]: (state, action) => {
-      state.status = "succeeded";
-      state.user = action.payload;
-      state.isAuthenticated = true;
-    },
-    [toggleModalLogin.fulfilled.toString()]: (state, action) => {
-      state.showLoginForm = !action.payload;
-    },
-    [toggleModalRegister.fulfilled.toString()]: (state, action) => {
-      state.showRegisterForm = !action.payload;
     },
   },
 });
