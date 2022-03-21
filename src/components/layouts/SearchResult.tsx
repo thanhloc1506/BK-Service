@@ -36,9 +36,9 @@ export const SearchResult = ({show}: any) => {
                     <div className={'w-full transition-all duration-300'}>
                         <Menu.Items
                             className="right-0 py-2 w-full mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                            {state.dataSearch ? state.dataSearch.services.map((s) => {
+                            {state.dataSearch ? state.dataSearch.services.map((s, index) => {
                                 return (
-                                    <div>
+                                    <div key={index}>
                                         <Menu.Item>
                                             {({active}) => (
                                                 <SearchResultItem data={s}/>

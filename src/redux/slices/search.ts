@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import axiosClient from "../../apis/axios";
-import {AxiosResponse} from "axios";
+import axios, {AxiosError, AxiosResponse} from "axios";
 import {PInSearch} from "../../apis/package/in/PInSearch";
 
 
@@ -27,8 +27,8 @@ export const search = createAsyncThunk(
             }
         }).then((res: AxiosResponse<PInSearch.Data>)=>{
             return res.data;
-        }).catch((err)=>{
-            throw err;
+        }).catch((error: AxiosError)=>{
+            throw error
          })
 
     }
