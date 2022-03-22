@@ -9,7 +9,7 @@ import { User } from "../../apis/common/User";
 import { PInLogin } from "../../apis/package/in/PInLogin";
 
 export interface State {
-  user: User | undefined;
+  user?: User;
   isAuthenticated: boolean;
   authLoading: boolean;
   showLoginForm: boolean;
@@ -21,7 +21,7 @@ export interface State {
 const initialState: State = {
   user: undefined,
   isAuthenticated: false,
-  authLoading: true,
+  authLoading: false,
   showLoginForm: false,
   showRegisterForm: false,
   status: "idle",
@@ -49,7 +49,9 @@ export const register = createAsyncThunk(
   "/user/register",
   async (registerForm: RegisterForm) => {
     try {
-      const response = await axiosClient.post(`/auth/register`, registerForm);
+      const { confirmPassword, ...dataRegister } = registerForm;
+      console.log(dataRegister);
+      const response = await axiosClient.post(`/user/register`, dataRegister);
       cookies.set("token", response.data.accessToken);
       return response.data;
     } catch (error) {

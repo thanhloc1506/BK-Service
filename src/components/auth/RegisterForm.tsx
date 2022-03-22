@@ -94,7 +94,7 @@ const RegisterForm: React.FC = () => {
                             initialValues={{
                               username: "",
                               password: "",
-                              comfirmPassword: "",
+                              confirmPassword: "",
                               email: "",
                             }}
                             onSubmit={(values) => {
