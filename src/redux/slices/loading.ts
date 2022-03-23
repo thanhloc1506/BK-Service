@@ -1,11 +1,11 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 export interface State {
-    loading: number
+    loading: number,
 }
 
 const initialState: State = {
-    loading: 0
+    loading: 0,
 };
 
 const loadingSlice = createSlice({

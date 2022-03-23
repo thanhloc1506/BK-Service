@@ -1,12 +1,15 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import axios, { AxiosResponse } from "axios";
-import { setAuthToken } from "../../utils/setAuthToken";
-import { apiUrl, LoginForm, RegisterForm } from "../types";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {AxiosResponse} from "axios";
+import {setAuthToken} from "../../utils/setAuthToken";
+import {LoginForm, RegisterForm} from "../types";
 import cookies from "js-cookie";
 import axiosClient from "../../apis/axios";
-import { toast } from "react-toastify";
-import { User } from "../../apis/common/User";
-import { PInLogin } from "../../apis/package/in/PInLogin";
+import {toast} from "react-toastify";
+import {User} from "../../apis/common/User";
+import {PInLogin} from "../../apis/package/in/PInLogin";
+import {socketConnect, socketDisconnect} from "./socket";
+import {PInProfile} from "../../apis/package/in/PInProfile";
+import {hideWaiting, showWaiting} from "./loading";
 
 export interface State {
   user?: User;
@@ -29,20 +32,22 @@ const initialState: State = {
 };
 
 export const login = createAsyncThunk(
-  "/user/login",
-  async (loginForm: LoginForm) => {
-    try {
-      console.log("long ne");
-      const response: AxiosResponse<PInLogin> =
-        await axiosClient.post<PInLogin>(`/auth/login`, loginForm);
-      console.log(response);
-      cookies.set("token", response.data.accessToken);
-      return response;
-    } catch (error) {
-      console.log(error);
-      throw error;
+    "/user/login",
+    async (loginForm: LoginForm, thunkAPI) => {
+      try {
+        console.log("long ne");
+        const response: AxiosResponse<PInLogin> =
+            await axiosClient.post<PInLogin>(`/auth/login`, loginForm);
+        console.log(response);
+        cookies.set("token", response.data.accessToken);
+        const dispatch = thunkAPI.dispatch;
+        dispatch(socketConnect());
+        return response;
+      } catch (error) {
+        console.log(error);
+        throw error;
+      }
     }
-  }
 );
 
 export const register = createAsyncThunk(
@@ -61,24 +66,29 @@ export const register = createAsyncThunk(
   }
 );
 
-export const logout = createAsyncThunk("/user/logout", async () => {
+export const logout = createAsyncThunk("/user/logout", async (_, thunkAPI) => {
   try {
     // await axios.get(`${apiUrl}/logout`);
     setAuthToken(null);
     cookies.remove("token");
+    const dispatch = thunkAPI.dispatch;
+    dispatch(socketDisconnect());
   } catch (error) {
     throw error;
   }
 });
 
-export const loadUser = createAsyncThunk("/user/loaduser", async () => {
+export const loadUser = createAsyncThunk("/user/loadUser", async (_, thunkAPI) => {
+  const dispatch = thunkAPI.dispatch;
+  dispatch(showWaiting());
   try {
-    // const response = await axios.get(`${apiUrl}/auth/loaduser`);
-    // return response.data;
-    return true;
+    const response: AxiosResponse<PInProfile> = await axiosClient.get(`/user/profile`);
+    return response.data;
   } catch (error) {
     console.log(error);
     throw error;
+  } finally {
+    dispatch(hideWaiting());
   }
 });
 
@@ -96,7 +106,7 @@ export const toggleModalRegister = createAsyncThunk(
   }
 );
 
-const atuhSlice = createSlice({
+const authSlice = createSlice({
   name: "user",
   initialState,
   reducers: {},
@@ -105,8 +115,8 @@ const atuhSlice = createSlice({
       state.authLoading = true;
     },
     [login.fulfilled.toString()]: (
-      state,
-      action: PayloadAction<AxiosResponse<PInLogin>>
+        state,
+        action: PayloadAction<AxiosResponse<PInLogin>>
     ) => {
       toast.success(
         `Đăng nhập thành công, Xin chào ${action.payload.data.user.username} !`,
@@ -179,13 +189,15 @@ const atuhSlice = createSlice({
     [toggleModalRegister.fulfilled.toString()]: (state, action) => {
       state.showRegisterForm = !action.payload;
     },
-    [loadUser.fulfilled.toString()]: (state, action) => {
+    [loadUser.fulfilled.toString()]: (state: State, action: PayloadAction<PInProfile>) => {
       state.status = "succeeded";
-      // if (action.payload) {
-      //   state.user = action.payload;
-      //   state.isAuthenticated = true;
-      //   state.authLoading = false;
-      // }
+      state.isAuthenticated = true;
+      state.user = action.payload.user;
+    },
+    [loadUser.rejected.toString()]: (state, action) => {
+      state.status = "failed";
+      state.isAuthenticated = false;
+      state.user = undefined;
     },
     [logout.fulfilled.toString()]: (state, action) => {
       state.status = "idle";
@@ -195,5 +207,5 @@ const atuhSlice = createSlice({
   },
 });
 
-export default atuhSlice.reducer;
-export const {} = atuhSlice.actions;
+export default authSlice.reducer;
+export const {} = authSlice.actions;
