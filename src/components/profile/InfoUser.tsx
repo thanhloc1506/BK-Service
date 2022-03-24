@@ -1,10 +1,25 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../redux/store";
 
 const InfoUser: React.FC = () => {
+  const dispatch = useDispatch();
+  const authState = useSelector((state: RootState) => state.user);
+
   const [modify, setModify] = useState(false);
   const [phone, setPhone] = useState(false);
   const [address, setAddress] = useState(false);
   const [email, setEmail] = useState(false);
+
+  const [userPhone, setUserPhone] = useState(
+    authState.user?.phone || "0123456789"
+  );
+  const [userEmail, setUserEmail] = useState(
+    authState.user?.email || "nguyenvana@gmail.com"
+  );
+  const [userAddress, setUserAddress] = useState(
+    authState.user?.address || "31 Pham Van Dong, p13, Go` Vap"
+  );
 
   const onClickModify = () => {
     setModify(!modify);
@@ -18,6 +33,17 @@ const InfoUser: React.FC = () => {
   const onClickEmail = () => {
     setEmail(!email);
   };
+
+  const onChangePhone = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUserPhone(e.target.value);
+  };
+  const onChangeEmail = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setUserEmail(e.target.value);
+  };
+  const onChangeAddress = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setUserAddress(e.target.value);
+  };
+
   return (
     <div>
       <div className="h-12 bg-white py-8 pb-20 pl-20 border-b-2 border-b-gray-200 shadow-sm">
@@ -141,8 +167,9 @@ const InfoUser: React.FC = () => {
                       ? "text-black text-sm outline-none w-[12vw] bg-white px-1 py-0.5 border-2 border-gray-300 focus:outline-none"
                       : "text-gray-400 w-[12vw] text-sm bg-transparent outline-none"
                   }
-                  value="0123456789"
+                  value={userPhone}
                   disabled={!phone}
+                  onChange={onChangePhone}
                 />
               </div>
             </div>
@@ -215,8 +242,9 @@ const InfoUser: React.FC = () => {
                       ? "text-black text-sm outline-none w-[12vw] bg-white px-1 py-0.5 border-2 border-gray-300 focus:outline-none resize-none"
                       : "text-gray-400 w-[12vw] text-sm bg-transparent h-fit outline-none resize-none"
                   }
-                  value="nguyenvana@gmail.com"
+                  value={userEmail}
                   disabled={!email}
+                  onChange={onChangeEmail}
                 />
               </div>
             </div>
@@ -289,8 +317,9 @@ const InfoUser: React.FC = () => {
                       ? "text-black text-sm outline-none w-[12vw] bg-white px-1 py-0.5 border-2 border-gray-300 focus:outline-none resize-none"
                       : "text-gray-400 text-sm w-[12vw] bg-transparent outline-none resize-none"
                   }
-                  value="31 Pham Van Dong, p13, Go` Vap"
+                  value={userAddress}
                   disabled={!address}
+                  onChange={onChangeAddress}
                 />
               </div>
             </div>
