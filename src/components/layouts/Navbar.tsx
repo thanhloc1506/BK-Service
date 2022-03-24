@@ -62,13 +62,8 @@ const Navbar: React.FC = () => {
           </div>
 
           {!authState.isAuthenticated ? (
-            <span className={"col-span-3"}>
-              <span
-                className={
-                  "grid-cols-4 flex justify-end items-center justify-self-center h-full"
-                }
-              >
-                <span className="col-span-2 px-5">
+            <span className={"col-span-3 px-5 grid grid-cols-3 gap-6"}>
+                <span className="col-start-2 flex justify-end items-center">
                   <p
                     className="text-white font-semibold text-2xl hover:text-blue-500 transition-all duration-500 cursor-pointer"
                     onClick={onClickRegister}
@@ -76,7 +71,7 @@ const Navbar: React.FC = () => {
                     Đăng ký
                   </p>
                 </span>
-                <span className="col-span-2 px-5  ">
+                <span className="col-span-1 flex justify-center items-center">
                   <p
                     className="text-white font-semibold text-2xl hover:text-blue-500 transition-all duration-500 cursor-pointer"
                     onClick={onClickLogin}
@@ -84,16 +79,15 @@ const Navbar: React.FC = () => {
                     Đăng nhập
                   </p>
                 </span>
-              </span>
             </span>
           ) : (
-            <div className="col-span-3 grid grid-cols-5">
+            <div className="col-span-3 grid grid-cols-6 px-5">
               <span className="col-span-3 grid grid-cols-2">
                 <span
-                  className="col-span-1 pt-5 cursor-pointer"
+                  className="col-span-1 cursor-pointer flex justify-center items-center flex-col"
                   onClick={goToSchedule}
                 >
-                  <div className="flex justify-end mr-4">
+                  <div className="flex justify-end">
                     <svg
                       className="h-8 w-8 text-white"
                       width="24"
@@ -119,10 +113,10 @@ const Navbar: React.FC = () => {
                   </p>
                 </span>
                 <span
-                  className="col-span-1 pt-5 cursor-pointer"
+                  className="col-span-1 cursor-pointer flex flex-col justify-center items-center"
                   onClick={goToNoti}
                 >
-                  <div className="flex justify-center ml-3">
+                  <div className="flex justify-center">
                     <svg
                       className="h-8 w-8 text-white"
                       viewBox="0 0 24 24"
@@ -142,10 +136,10 @@ const Navbar: React.FC = () => {
                   </p>
                 </span>
               </span>
-              <span className="col-span-2 pt-5">
+              <span className="col-span-3 flex justify-center items-center">
                 <div className="grid grid-cols-3">
-                  <div className="col-span-1 ml-5 rounded-full w-12 h-12 bg-gray-500"></div>
-                  <div className="col-span-2 mt-2">
+                  <div className="col-span-1 rounded-full w-12 h-12 bg-gray-500"></div>
+                  <div className="col-span-2 flex justify-center items-center">
                     <DropdownBtn />
                   </div>
                 </div>
