@@ -55,9 +55,7 @@ export const register = createAsyncThunk(
   async (registerForm: RegisterForm) => {
     try {
       const { confirmPassword, ...dataRegister } = registerForm;
-      console.log(dataRegister);
       const response = await axiosClient.post(`/user/register`, dataRegister);
-      cookies.set("token", response.data.accessToken);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -167,7 +165,6 @@ const authSlice = createSlice({
       });
       state.authLoading = false;
       state.status = "succeeded";
-      state.isAuthenticated = true;
     },
     [register.rejected.toString()]: (state, action) => {
       toast.error("Lỗi xác thực !", {
