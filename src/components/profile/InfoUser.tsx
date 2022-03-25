@@ -10,6 +10,7 @@ import {toastError, toastSuccess} from "../../utils/toast";
 import {CheckIcon, SelectorIcon} from "@heroicons/react/solid";
 import {AxiosResponse} from "axios";
 import {PInProfile} from "../../apis/package/in/PInProfile";
+import {ModalAddress} from "../common/ModalAddress";
 
 const SEX = [{
     name: "Nam",
@@ -20,9 +21,9 @@ const SEX = [{
 }];
 const InfoUser: React.FC = () => {
     const [modify, setModify] = useState(false);
-    const [phone, setPhone] = useState(false);
-    const [address, setAddress] = useState(false);
-    const [email, setEmail] = useState(false);
+    const [phone, setPhone] = useState<any>({active: false, value: undefined});
+    const [address, setAddress] = useState<any>({active: false, value: undefined});
+    const [email, setEmail] = useState<any>({active: false, value: undefined});
     const inputFile = useRef<HTMLInputElement>(null);
     const [openConfirm, setOpenConfirm] = useState(false);
     const [name, setName] = useState<string>();
@@ -32,7 +33,7 @@ const InfoUser: React.FC = () => {
     const state = useSelector((state: RootState) => state.user);
 
 
-    const onToggleModify = ()=>{
+    const onToggleModify = () => {
         setModify(pre=>!pre);
     }
     const onClickModify = () => {
@@ -57,13 +58,21 @@ const InfoUser: React.FC = () => {
             })
     };
     const onClickPhone = () => {
-        setPhone(!phone);
+        setPhone((pre: any) => {
+            return {...pre, active: !pre.active};
+        });
     };
     const onClickAddress = () => {
-        setAddress(!address);
+        // setAddress(!address);
+        setAddress((pre: any) => {
+            return {...pre, active: !pre.active};
+        })
     };
     const onClickEmail = () => {
-        setEmail(!email);
+        // setEmail(!email);
+        setEmail((pre: any) => {
+            return {...pre, active: !pre.active};
+        })
     };
     const cancleSelectAvatar = () => {
         if (inputFile.current != null) {
@@ -378,20 +387,24 @@ const InfoUser: React.FC = () => {
                             <div className="pl-10">
                                 <input
                                     className={
-                                        phone
+                                        phone.active
                                             ? "text-black text-sm outline-none w-[12vw] bg-white px-1 py-0.5 border-2 border-gray-300 focus:outline-none"
                                             : "text-gray-400 w-[12vw] text-sm bg-transparent outline-none"
                                     }
-                                    value="0123456789"
-                                    disabled={!phone}
+                                    defaultValue={state.user?.phone}
+                                    placeholder={"Số điện thoại"}
+                                    disabled={!phone.active}
+                                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                                        setPhone((pre: any) => ({...pre, value: e.target.value}))
+                                    }}
                                 />
                             </div>
                         </div>
                         <div className="col-span-3 border-b-2 border-b-gray-200 pb-5">
                             <div className="flex justify-end w-full">
-                                {phone ? (
+                                {phone.active ? (
                                     <svg
-                                        className="h-8 w-8 text-gray-400 hover:text-gray-700 mt-3"
+                                        className="h-8 w-8 text-gray-400 hover:text-gray-700 mt-3 cursor-pointer"
                                         width="24"
                                         height="24"
                                         viewBox="0 0 24 24"
@@ -461,20 +474,21 @@ const InfoUser: React.FC = () => {
                             <div className="pl-10">
                 <textarea
                     className={
-                        email
+                        email.active
                             ? "text-black text-sm outline-none w-[12vw] bg-white px-1 py-0.5 border-2 border-gray-300 focus:outline-none resize-none"
                             : "text-gray-400 w-[12vw] text-sm bg-transparent h-fit outline-none resize-none"
                     }
-                    value="nguyenvana@gmail.com"
-                    disabled={!email}
+                    defaultValue={state.user?.email}
+                    placeholder={"Email"}
+                    disabled={!email.active}
                 />
                             </div>
                         </div>
                         <div className="col-span-3 border-b-2 border-b-gray-200 pb-5">
                             <div className="flex justify-end w-full">
-                                {email ? (
+                                {email.active ? (
                                     <svg
-                                        className="h-8 w-8 text-gray-400 hover:text-gray-700 mt-3"
+                                        className="h-8 w-8 text-gray-400 hover:text-gray-700 mt-3 cursor-pointer"
                                         width="24"
                                         height="24"
                                         viewBox="0 0 24 24"
@@ -543,20 +557,26 @@ const InfoUser: React.FC = () => {
                             <div className="pl-10">
                 <textarea
                     className={
-                        address
+                        address.active
                             ? "text-black text-sm outline-none w-[12vw] bg-white px-1 py-0.5 border-2 border-gray-300 focus:outline-none resize-none"
                             : "text-gray-400 text-sm w-[12vw] bg-transparent outline-none resize-none"
                     }
                     value="31 Pham Van Dong, p13, Go` Vap"
-                    disabled={!address}
+                    disabled={!address.active}
                 />
+                                <ModalAddress
+                                    show={address.active}
+                                    setAddress={(value: any) => {
+                                        setAddress((pre: any) => ({...pre, value: value}))
+                                    }}
+                                />
                             </div>
                         </div>
                         <div className="col-span-3 border-b-2 border-b-gray-200 pb-5">
                             <div className="flex justify-end w-full">
-                                {address ? (
+                                {address.active ? (
                                     <svg
-                                        className="h-8 w-8 text-gray-400 hover:text-gray-700 mt-3"
+                                        className="h-8 w-8 text-gray-400 hover:text-gray-700 mt-3 cursor-pointer"
                                         width="24"
                                         height="24"
                                         viewBox="0 0 24 24"

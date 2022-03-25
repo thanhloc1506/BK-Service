@@ -8,4 +8,6 @@ export interface User {
     readonly role: RolesType;
     readonly avatar: string;
     readonly birthday: string;
+    readonly phone: string;
+    readonly address: string[];
 }
