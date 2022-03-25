@@ -4,8 +4,8 @@ export interface User {
     readonly username: string;
     readonly email: string;
     readonly id: string;
-    readonly firstname: string;
-    readonly lastname: string;
+    readonly fullName: string;
     readonly role: RolesType;
     readonly avatar: string;
+    readonly birthday: string;
 }

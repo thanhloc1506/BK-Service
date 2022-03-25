@@ -110,6 +110,9 @@ const authSlice = createSlice({
   reducers: {
     updateAvatar(state: State, action: PayloadAction<string>) {
       state.user = {...state.user, avatar: action.payload} as User;
+    },
+    updateProfile(state: State, action: PayloadAction<any>){
+      state.user = {...state.user, ...action.payload}
     }
   },
   extraReducers: {
@@ -174,4 +177,4 @@ const authSlice = createSlice({
 });
 
 export default authSlice.reducer;
-export const {updateAvatar} = authSlice.actions;
+export const {updateAvatar, updateProfile} = authSlice.actions;
