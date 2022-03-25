@@ -7,4 +7,5 @@ export interface User {
     readonly firstname: string;
     readonly lastname: string;
     readonly role: RolesType;
+    readonly avatar: string;
 }

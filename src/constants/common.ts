@@ -1,0 +1,1 @@
+export const DEFAULT_AVATAR = "https://thuvienplus.com/themes/cynoebook/public/images/default-user-image.png";

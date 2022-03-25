@@ -4,12 +4,12 @@ import {setAuthToken} from "../../utils/setAuthToken";
 import {LoginForm, RegisterForm} from "../types";
 import cookies from "js-cookie";
 import axiosClient from "../../apis/axios";
-import {toast} from "react-toastify";
 import {User} from "../../apis/common/User";
 import {PInLogin} from "../../apis/package/in/PInLogin";
 import {socketConnect, socketDisconnect} from "./socket";
 import {PInProfile} from "../../apis/package/in/PInProfile";
 import {hideWaiting, showWaiting} from "./loading";
+import {toastError, toastSuccess} from "../../utils/toast";
 
 export interface State {
   user?: User;
@@ -107,7 +107,11 @@ export const toggleModalRegister = createAsyncThunk(
 const authSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    updateAvatar(state: State, action: PayloadAction<string>) {
+      state.user = {...state.user, avatar: action.payload} as User;
+    }
+  },
   extraReducers: {
     [login.pending.toString()]: (state, action) => {
       state.authLoading = true;
@@ -116,18 +120,7 @@ const authSlice = createSlice({
         state,
         action: PayloadAction<AxiosResponse<PInLogin>>
     ) => {
-      toast.success(
-        `Đăng nhập thành công, Xin chào ${action.payload.data.user.username} !`,
-        {
-          position: "bottom-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        }
-      );
+      toastSuccess(`Đăng nhập thành công, Xin chào ${action.payload.data.user.username} !`);
       state.authLoading = false;
       state.status = "succeeded";
       state.isAuthenticated = true;
@@ -135,15 +128,7 @@ const authSlice = createSlice({
       console.log("log ne", state.user);
     },
     [login.rejected.toString()]: (state, action) => {
-      toast.error("Lỗi xác thực !", {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toastError("Lỗi xác thực !");
       state.authLoading = false;
       state.status = "failed";
       state.error = action.error.message;
@@ -154,28 +139,12 @@ const authSlice = createSlice({
       state.authLoading = true;
     },
     [register.fulfilled.toString()]: (state, action) => {
-      toast.success("Đăng ky thành công !", {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toastSuccess("Đăng ký thành công !")
       state.authLoading = false;
       state.status = "succeeded";
     },
     [register.rejected.toString()]: (state, action) => {
-      toast.error("Lỗi xác thực !", {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toastError("Lỗi xác thực !");
       state.authLoading = false;
       state.status = "failed";
       state.error = action.error.message;
@@ -205,4 +174,4 @@ const authSlice = createSlice({
 });
 
 export default authSlice.reducer;
-export const {} = authSlice.actions;
+export const {updateAvatar} = authSlice.actions;
