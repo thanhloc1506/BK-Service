@@ -1,16 +1,17 @@
 import {Dialog, Listbox, Transition} from "@headlessui/react";
-import React, {ChangeEvent, Fragment, useRef, useState} from "react";
+import React, {ChangeEvent, Fragment, useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {hideWaiting, showWaiting} from "../../redux/slices/loading";
 import {RootState} from "../../redux/store";
 import axiosClient from "../../apis/axios";
 import {updateAvatar, updateProfile} from "../../redux/slices/auth";
-import {DEFAULT_AVATAR} from "../../constants/common";
+import {ADDRESS_API_URL, DEFAULT_AVATAR} from "../../constants/common";
 import {toastError, toastSuccess} from "../../utils/toast";
 import {CheckIcon, SelectorIcon} from "@heroicons/react/solid";
-import {AxiosResponse} from "axios";
+import axios, {AxiosResponse} from "axios";
 import {PInProfile} from "../../apis/package/in/PInProfile";
 import {ModalAddress} from "../common/ModalAddress";
+import {Address} from "../../apis/common/Address";
 
 const SEX = [{
     name: "Nam",
@@ -19,6 +20,43 @@ const SEX = [{
     name: "Nữ",
     value: 1
 }];
+
+const getAddressContent = async (data: Address | undefined)=>{
+    try{
+        if(!data) return "";
+        const res = await axios.get(ADDRESS_API_URL+"/province/district/" + data.province);
+        const quanList = res.data.results;
+        console.log(quanList)
+        let quan = undefined;
+        for(let i = 0; i<quanList.length; ++i){
+            if(quanList[i].district_id == data.district){
+                quan = quanList[i];
+                break;
+            }
+        }
+        if(!quan) return;
+
+        const resPhuong = await axios.get(ADDRESS_API_URL+"/province/ward/" + quan.district_id);
+        const phuongList = resPhuong.data.results;
+        console.log(phuongList)
+        let phuong = undefined;
+        for(let i = 0; i<phuongList.length; ++i){
+            if(phuongList[i].ward_id == data.village){
+                phuong = phuongList[i];
+                break;
+            }
+        }
+        if(!phuong) return;
+        if(data.detail){
+            return `${data.detail}, ${phuong.ward_name}, ${quan.district_name}`
+        }
+        return `${phuong.ward_name}, ${quan.district_name}`
+    }
+    catch (e){
+        return "";
+    }
+}
+
 const InfoUser: React.FC = () => {
     const [modify, setModify] = useState(false);
     const [phone, setPhone] = useState<any>({active: false, value: undefined});
@@ -90,6 +128,10 @@ const InfoUser: React.FC = () => {
             setOpenConfirm(true);
         }
     }
+
+    useEffect(()=>{
+        getAddressContent(state.user?.address).then((res)=>setAddress((pre:any)=>({...pre, value: res})));
+    }, [state.user?.address])
 
     const _updateAvatar = () => {
         setOpenConfirm(false);
@@ -557,47 +599,22 @@ const InfoUser: React.FC = () => {
                             <div className="pl-10">
                 <textarea
                     className={
-                        address.active
-                            ? "text-black text-sm outline-none w-[12vw] bg-white px-1 py-0.5 border-2 border-gray-300 focus:outline-none resize-none"
-                            : "text-gray-400 text-sm w-[12vw] bg-transparent outline-none resize-none"
+                        "text-gray-400 text-sm w-[12vw] bg-transparent outline-none resize-none"
                     }
-                    value="31 Pham Van Dong, p13, Go` Vap"
-                    disabled={!address.active}
+                    value={address.value}
+                    disabled
                 />
                                 <ModalAddress
                                     show={address.active}
                                     setAddress={(value: any) => {
                                         setAddress((pre: any) => ({...pre, value: value}))
                                     }}
+                                    setShow={(b)=>setAddress((pre: any)=>({...pre, active: b}))}
                                 />
                             </div>
                         </div>
                         <div className="col-span-3 border-b-2 border-b-gray-200 pb-5">
                             <div className="flex justify-end w-full">
-                                {address.active ? (
-                                    <svg
-                                        className="h-8 w-8 text-gray-400 hover:text-gray-700 mt-3 cursor-pointer"
-                                        width="24"
-                                        height="24"
-                                        viewBox="0 0 24 24"
-                                        strokeWidth="1.5"
-                                        stroke="currentColor"
-                                        fill="none"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        onClick={onClickAddress}
-                                    >
-                                        {" "}
-                                        <path stroke="none" d="M0 0h24v24H0z"/>
-                                        {" "}
-                                        <path
-                                            d="M19 18a3.5 3.5 0 0 0 0 -7h-1a5 4.5 0 0 0 -11 -2a4.6 4.4 0 0 0 -2.1 8.4"/>
-                                        {" "}
-                                        <line x1="12" y1="13" x2="12" y2="22"/>
-                                        {" "}
-                                        <polyline points="9 19 12 22 15 19"/>
-                                    </svg>
-                                ) : (
                                     <svg
                                         className="h-8 w-8 text-gray-400 hover:text-gray-700 cursor-pointer mt-3"
                                         viewBox="0 0 24 24"
@@ -617,7 +634,6 @@ const InfoUser: React.FC = () => {
                                         {" "}
                                         <line x1="16" y1="5" x2="19" y2="8"/>
                                     </svg>
-                                )}
                             </div>
                         </div>
                     </div>

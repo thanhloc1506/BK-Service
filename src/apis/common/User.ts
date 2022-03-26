@@ -1,4 +1,5 @@
 import {RolesType} from "./Role";
+import {Address} from "./Address";
 
 export interface User {
     readonly username: string;
@@ -9,5 +10,5 @@ export interface User {
     readonly avatar: string;
     readonly birthday: string;
     readonly phone: string;
-    readonly address: string[];
+    readonly address: Address;
 }
