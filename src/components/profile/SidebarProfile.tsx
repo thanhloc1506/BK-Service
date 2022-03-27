@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { selectPage } from "../../redux/slices/user";
+import {PageEnterprise, selectPageEnterprise} from "../../redux/slices/enterprise";
 
-type Page = "info" | "schedule" | "love" | "noti" | "history";
 
 interface ISelectPage {
   page: string;
@@ -10,12 +9,12 @@ interface ISelectPage {
 
 const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
   const dispatch = useDispatch();
-  const onSelectPage = (value: Page) => {
-    dispatch(selectPage(value));
+  const onSelectPage = (value: PageEnterprise) => {
+    dispatch(selectPageEnterprise(value));
   };
   return (
-    <div className="bg-white h-[90vh] w-full shadow-sm border-2 border-gray-100">
-      <div className="h-[12vh] w-full border-b-2 border-b-gray-100">
+    <div className="bg-white h-full w-full shadow-sm border-right-2 border-gray-100">
+      <div className="h-32 w-full border-b-2 border-b-gray-100">
         <div className="flex justify-start ml-10 mt-8">
           <div className="w-14 h-14 rounded-full bg-gray-500"></div>
           <div>
@@ -24,14 +23,15 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
           </div>
         </div>
       </div>
-      <div className="cursor-pointer" onClick={() => onSelectPage("info")}>
+      <div className="cursor-pointer" onClick={() => onSelectPage("manage")}>
         <div
-          className={`h-[7vh] w-full flex justify-start pt-3 ${
-            page === "info"
-              ? "bg-gray-100 border-l-4 border-l-blue-solid border-y-2 border-y-gray-100 border-r-2 border-r-gray-100 pl-9"
+          className={`h-16 w-full flex justify-start pt-3 relative transition-all duration-300 ${
+            page === "manage"
+              ? "bg-gray-100 pl-10"
               : "opacity-40 pl-10"
           }`}
         >
+          <div className={'w-2 top-0 left-0 h-full absolute h-full bg-blue-500'} hidden={page !== "manage"}/>
           <div className="">
             <svg
               className="h-8 w-8 text-blue-solid"
@@ -48,18 +48,20 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
             </svg>
           </div>
           <div className="mt-1 ml-5">
-            <p className="text-blue-solid text-lg">Thông tin cá nhân</p>
+            <p className="text-blue-solid text-lg">Quản lí</p>
           </div>
         </div>
       </div>
-      <div className="cursor-pointer" onClick={() => onSelectPage("schedule")}>
+      <div className="cursor-pointer" onClick={() => onSelectPage("all")}>
         <div
-          className={`h-[7vh] w-full flex justify-start pt-3 ${
-            page === "schedule"
-              ? "bg-gray-100 border-l-4 border-l-blue-solid border-y-2 border-y-gray-100 border-r-2 border-r-gray-100 pl-9"
-              : "opacity-40 pl-10"
+          className={`h-16 w-full flex justify-start pt-3 relative transition-all duration-300 ${
+            page === "all"
+                ? "bg-gray-100 pl-10"
+                : "opacity-40 pl-10"
           }`}
         >
+          <div className={'w-2 top-0 left-0 h-full absolute h-full bg-blue-500'} hidden={page !== "all"}/>
+
           <div className="">
             <svg
               className="h-8 w-8 text-blue-solid"
@@ -78,18 +80,20 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
             </svg>
           </div>
           <div className="mt-1 ml-5">
-            <p className="text-blue-solid text-lg">Danh sách đặt lịch</p>
+            <p className="text-blue-solid text-lg">Tất cả dịch vụ</p>
           </div>
         </div>
       </div>
-      <div className="cursor-pointer" onClick={() => onSelectPage("love")}>
+      <div className="cursor-pointer" onClick={() => onSelectPage("add")}>
         <div
-          className={`h-[7vh] w-full flex justify-start pt-3 ${
-            page === "love"
-              ? "bg-gray-100 border-l-4 border-l-blue-solid border-y-2 border-y-gray-100 border-r-2 border-r-gray-100 pl-9"
-              : "opacity-40 pl-10"
+          className={`h-16 w-full flex justify-start pt-3 relative transition-all duration-300 ${
+            page === "add"
+                ? "bg-gray-100 pl-10"
+                : "opacity-40 pl-10"
           }`}
         >
+          <div className={'w-2 top-0 left-0 h-full absolute h-full bg-blue-500'} hidden={page !== "add"}/>
+
           <div className="">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -105,18 +109,19 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
             </svg>
           </div>
           <div className="mt-1 ml-5">
-            <p className="text-blue-solid text-lg">Dịch vụ yêu thích</p>
+            <p className="text-blue-solid text-lg">Thêm dịch vụ</p>
           </div>
         </div>
       </div>
-      <div className="cursor-pointer" onClick={() => onSelectPage("noti")}>
+      <div className="cursor-pointer" onClick={() => onSelectPage("premium")}>
         <div
-          className={`h-[7vh] w-full flex justify-start pt-3 ${
-            page === "noti"
-              ? "bg-gray-100 border-l-4 border-l-blue-solid border-y-2 border-y-gray-100 border-r-2 border-r-gray-100 pl-9"
-              : "opacity-40 pl-10"
+          className={`h-16 w-full flex justify-start pt-3 relative transition-all duration-300 ${
+            page === "premium"
+                ? "bg-gray-100 pl-10"
+                : "opacity-40 pl-10"
           }`}
         >
+          <div className={'w-2 top-0 left-0 h-full absolute h-full bg-blue-500'} hidden={page !== "premium"}/>
           <div className="">
             <svg
               className="h-8 w-8 text-blue-solid"
@@ -133,35 +138,7 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
             </svg>
           </div>
           <div className="mt-1 ml-5">
-            <p className="text-blue-solid text-lg">Thông báo của tôi</p>
-          </div>
-        </div>
-      </div>
-      <div className="cursor-pointer" onClick={() => onSelectPage("history")}>
-        <div
-          className={`h-[7vh] w-full flex justify-start pt-3 ${
-            page === "history"
-              ? "bg-gray-100 border-l-4 border-l-blue-solid border-y-2 border-y-gray-100 border-r-2 border-r-gray-100 pl-9"
-              : "opacity-40 pl-10"
-          }`}
-        >
-          <div className="">
-            <svg
-              className="h-8 w-8 text-blue-solid"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              {" "}
-              <circle cx="12" cy="12" r="10" />{" "}
-              <polyline points="12 6 12 12 16 14" />
-            </svg>
-          </div>
-          <div className="mt-1 ml-5">
-            <p className="text-blue-solid text-lg">Lịch sử</p>
+            <p className="text-blue-solid text-lg">Premium</p>
           </div>
         </div>
       </div>

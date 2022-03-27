@@ -7,10 +7,10 @@ import {toggleModalLogin, toggleModalRegister} from "../../redux/slices/auth";
 import RegisterForm from "../auth/RegisterForm";
 import {useNavigate} from "react-router-dom";
 import DropdownBtn from "./DropdownBtn";
-import {selectPage} from "../../redux/slices/user";
 import {SearchField} from "./SearchField";
-import Loading from "../../views/Loading";
-import {DEFAULT_AVATAR} from "../../constants/common";
+import {BsBorderAll} from "react-icons/bs";
+import {SiGoogletagmanager} from "react-icons/si";
+import {selectPageEnterprise} from "../../redux/slices/enterprise";
 
 const Navbar: React.FC = () => {
   const authState = useSelector((state: RootState) => state.user);
@@ -31,15 +31,16 @@ const Navbar: React.FC = () => {
     navigate("/");
   };
 
-  const goToNoti = () => {
-    dispatch(selectPage("noti"));
-    navigate("/profile");
-  };
 
-  const goToSchedule = () => {
-    dispatch(selectPage("schedule"));
+  const gotoAllService=() => {
+    dispatch(selectPageEnterprise("all"));
     navigate("/profile");
-  };
+  }
+
+  const gotoManage = ()=> {
+    dispatch(selectPageEnterprise("manage"));
+    navigate("/profile");
+  }
 
   return (
     <>
@@ -86,54 +87,24 @@ const Navbar: React.FC = () => {
               <span className="col-span-3 grid grid-cols-2">
                 <span
                   className="col-span-1 cursor-pointer flex justify-center items-center flex-col"
-                  onClick={goToSchedule}
+                  onClick={gotoAllService}
                 >
                   <div className="flex justify-end">
-                    <svg
-                      className="h-8 w-8 text-white"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      strokeWidth="2"
-                      stroke="currentColor"
-                      fill="none"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      {" "}
-                      <path stroke="none" d="M0 0h24v24H0z" />{" "}
-                      <rect x="4" y="5" width="16" height="16" rx="2" />{" "}
-                      <line x1="16" y1="3" x2="16" y2="7" />{" "}
-                      <line x1="8" y1="3" x2="8" y2="7" />{" "}
-                      <line x1="4" y1="11" x2="20" y2="11" />{" "}
-                      <rect x="8" y="15" width="2" height="2" />
-                    </svg>
+                    <BsBorderAll className={"text-xl text-white"} strokeWidth={1}/>
                   </div>
                   <p className="text-white mt-1 text-sm font-medium flex justify-end">
-                    Schedule
+                    Dịch vụ
                   </p>
                 </span>
                 <span
                   className="col-span-1 cursor-pointer flex flex-col justify-center items-center"
-                  onClick={goToNoti}
+                  onClick={gotoManage}
                 >
                   <div className="flex justify-center">
-                    <svg
-                      className="h-8 w-8 text-white"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      {" "}
-                      <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />{" "}
-                      <path d="M13.73 21a2 2 0 0 1-3.46 0" />
-                    </svg>
+                    <SiGoogletagmanager className={'text-xl text-white'}/>
                   </div>
                   <p className="text-white mt-1 text-sm font-medium flex justify-center ml-3">
-                    Notifications
+                    Quản lí
                   </p>
                 </span>
               </span>

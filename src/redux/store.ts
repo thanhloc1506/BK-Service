@@ -6,7 +6,6 @@ import {
   ReducersMapObject,
 } from "@reduxjs/toolkit";
 import authSlice from "./slices/auth";
-import userProfileSlice from "./slices/user";
 import enterpriseSlice from "./slices/enterprise";
 import searchSlice from "./slices/search";
 import loadingSlice from "./slices/loading";
@@ -15,7 +14,7 @@ import { persistStore, persistReducer } from "redux-persist";
 import { State as SearchState } from "./slices/search";
 import { State as AuthState } from "./slices/auth";
 import { State as EnterpriseState } from "./slices/enterprise";
-import { State as UserState } from "./slices/enterprise";
+import { State as EnterpriseProfileState } from "./slices/enterprise";
 import { State as LoadingState } from "./slices/loading";
 import { State as SocketState } from "./slices/socket";
 //@ts-ignore
@@ -24,8 +23,7 @@ import { PersistConfig } from "redux-persist/es/types";
 interface MyReducer {
   search: SearchState;
   user: AuthState;
-  enterprise: EnterpriseState;
-  userProfile: UserState;
+  enterpriseProfile: EnterpriseProfileState;
   loading: LoadingState;
   socket: SocketState
 }
@@ -37,8 +35,7 @@ const persistConfig: PersistConfig<any> = {
 
 const reducer = combineReducers<MyReducer>({
   user: authSlice,
-  userProfile: userProfileSlice,
-  enterprise: enterpriseSlice,
+  enterpriseProfile: enterpriseSlice,
   search: searchSlice,
   loading: loadingSlice,
   socket: socketSlice
