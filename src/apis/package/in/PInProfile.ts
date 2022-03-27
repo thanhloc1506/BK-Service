@@ -1,5 +1,5 @@
-import {User} from "../../common/User";
+import {Enterprise} from "../../common/Enterprise";
 
 export interface PInProfile{
-    user: User;
+    enterprise: Enterprise;
 }

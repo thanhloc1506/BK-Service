@@ -4,7 +4,7 @@ import {setAuthToken} from "../../utils/setAuthToken";
 import {LoginForm, RegisterForm} from "../types";
 import cookies from "js-cookie";
 import axiosClient from "../../apis/axios";
-import {User} from "../../apis/common/User";
+import {Enterprise} from "../../apis/common/Enterprise";
 import {PInLogin} from "../../apis/package/in/PInLogin";
 import {socketConnect, socketDisconnect} from "./socket";
 import {PInProfile} from "../../apis/package/in/PInProfile";
@@ -12,7 +12,7 @@ import {hideWaiting, showWaiting} from "./loading";
 import {toastError, toastSuccess} from "../../utils/toast";
 
 export interface State {
-  user?: User;
+  enterprise: Enterprise | undefined;
   isAuthenticated: boolean;
   authLoading: boolean;
   showLoginForm: boolean;
@@ -22,7 +22,7 @@ export interface State {
 }
 
 const initialState: State = {
-  user: undefined,
+  enterprise: undefined,
   isAuthenticated: false,
   authLoading: false,
   showLoginForm: false,
@@ -32,12 +32,12 @@ const initialState: State = {
 };
 
 export const login = createAsyncThunk(
-    "/user/login",
+    "/enterprise/login",
     async (loginForm: LoginForm, thunkAPI) => {
       try {
         console.log("long ne");
         const response: AxiosResponse<PInLogin> =
-            await axiosClient.post<PInLogin>(`/auth/login`, loginForm);
+            await axiosClient.post<PInLogin>(`/auth/login-enterprise`, loginForm);
         console.log(response);
         cookies.set("token", response.data.accessToken);
         const dispatch = thunkAPI.dispatch;
@@ -51,11 +51,11 @@ export const login = createAsyncThunk(
 );
 
 export const register = createAsyncThunk(
-  "/user/register",
+  "/enterprise/register",
   async (registerForm: RegisterForm) => {
     try {
       const { confirmPassword, ...dataRegister } = registerForm;
-      const response = await axiosClient.post(`/user/register`, dataRegister);
+      const response = await axiosClient.post(`/enterprise/register`, dataRegister);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -64,7 +64,7 @@ export const register = createAsyncThunk(
   }
 );
 
-export const logout = createAsyncThunk("/user/logout", async (_, thunkAPI) => {
+export const logout = createAsyncThunk("/enterprise/logout", async (_, thunkAPI) => {
   try {
     // await axios.get(`${apiUrl}/logout`);
     setAuthToken(null);
@@ -76,11 +76,11 @@ export const logout = createAsyncThunk("/user/logout", async (_, thunkAPI) => {
   }
 });
 
-export const loadUser = createAsyncThunk("/user/loadUser", async (_, thunkAPI) => {
+export const loadEnterprise = createAsyncThunk("/enterprise/loadEnterprise", async (_, thunkAPI) => {
   const dispatch = thunkAPI.dispatch;
   dispatch(showWaiting());
   try {
-    const response: AxiosResponse<PInProfile> = await axiosClient.get(`/user/profile`);
+    const response: AxiosResponse<PInProfile> = await axiosClient.get(`/enterprise/`);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -105,14 +105,14 @@ export const toggleModalRegister = createAsyncThunk(
 );
 
 const authSlice = createSlice({
-  name: "user",
+  name: "enterprise",
   initialState,
   reducers: {
     updateAvatar(state: State, action: PayloadAction<string>) {
-      state.user = {...state.user, avatar: action.payload} as User;
+      state.enterprise = {...state.enterprise, avatar: action.payload} as Enterprise;
     },
     updateProfile(state: State, action: PayloadAction<any>){
-      state.user = {...state.user, ...action.payload}
+      state.enterprise = {...state.enterprise, ...action.payload}
     }
   },
   extraReducers: {
@@ -123,20 +123,20 @@ const authSlice = createSlice({
         state,
         action: PayloadAction<AxiosResponse<PInLogin>>
     ) => {
-      toastSuccess(`Đăng nhập thành công, Xin chào ${action.payload.data.user.username} !`);
+      toastSuccess(`Đăng nhập thành công, Xin chào ${action.payload.data.enterprise.username} !`);
       state.authLoading = false;
       state.status = "succeeded";
       state.isAuthenticated = true;
-      state.user = action.payload.data.user;
-      console.log("log ne", state.user);
+      state.enterprise = action.payload.data.enterprise;
+      console.log("log ne", state.enterprise);
     },
-    [login.rejected.toString()]: (state, action) => {
+    [login.rejected.toString()]: (state:State, action) => {
       toastError("Lỗi xác thực !");
       state.authLoading = false;
       state.status = "failed";
       state.error = action.error.message;
       state.isAuthenticated = false;
-      state.user = undefined;
+      state.enterprise = undefined;
     },
     [register.pending.toString()]: (state, action) => {
       state.authLoading = true;
@@ -152,25 +152,25 @@ const authSlice = createSlice({
       state.status = "failed";
       state.error = action.error.message;
     },
-    [toggleModalLogin.fulfilled.toString()]: (state, action) => {
+    [toggleModalLogin.fulfilled.toString()]: (state:State, action) => {
       state.showLoginForm = !action.payload;
     },
-    [toggleModalRegister.fulfilled.toString()]: (state, action) => {
+    [toggleModalRegister.fulfilled.toString()]: (state:State, action) => {
       state.showRegisterForm = !action.payload;
     },
-    [loadUser.fulfilled.toString()]: (state: State, action: PayloadAction<PInProfile>) => {
+    [loadEnterprise.fulfilled.toString()]: (state: State, action: PayloadAction<PInProfile>) => {
       state.status = "succeeded";
       state.isAuthenticated = true;
-      state.user = action.payload.user;
+      state.enterprise = action.payload.enterprise;
     },
-    [loadUser.rejected.toString()]: (state, action) => {
+    [loadEnterprise.rejected.toString()]: (state:State, action) => {
       state.status = "failed";
       state.isAuthenticated = false;
-      state.user = undefined;
+      state.enterprise = undefined;
     },
-    [logout.fulfilled.toString()]: (state, action) => {
+    [logout.fulfilled.toString()]: (state: State, action) => {
       state.status = "idle";
-      state.user = undefined;
+      state.enterprise = undefined;
       state.isAuthenticated = false;
     },
   },

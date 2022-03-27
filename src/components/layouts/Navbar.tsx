@@ -140,7 +140,7 @@ const Navbar: React.FC = () => {
               <span className="col-span-3 flex justify-center items-center">
                 <div className="grid grid-cols-3">
                   <div className="col-span-1 rounded-full w-12 h-12 overflow-hidden ring-2 ring-white">
-                    <img src={authState.user?.avatar? authState.user.avatar : DEFAULT_AVATAR} className={"w-full h-full p-1 rounded-full"}/>
+                    {/*<img src={authState.user?.avatar? authState.user.avatar : DEFAULT_AVATAR} className={"w-full h-full p-1 rounded-full"}/>*/}
                   </div>
                   <div className="col-span-2 flex justify-center items-center">
                     <DropdownBtn />

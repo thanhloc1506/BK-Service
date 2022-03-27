@@ -1,6 +1,6 @@
-import {User} from "../../common/User";
+import {Enterprise} from "../../common/Enterprise";
 
 export interface PInLogin{
     accessToken: string;
-    user: User;
+    enterprise: Enterprise;
 }
