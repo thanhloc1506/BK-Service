@@ -1,14 +1,28 @@
 import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/layouts/Navbar";
 import Pagination from "../components/layouts/Pagination/Pagination";
 import SideBarHomePage from "../components/layouts/SideBarHomePage";
 import SingleCard from "../components/services/SingleCard";
+import { getAllServices } from "../redux/slices/service";
+import { RootState } from "../redux/store";
 
 const Homepage: React.FC = () => {
   useEffect(() => {
     console.log("hello Homepage");
   }, []);
+
+  const serviceState = useSelector((state: RootState) => state.service);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    async function fetchData() {
+      await dispatch(getAllServices());
+    }
+    fetchData();
+  }, [dispatch]);
 
   const navigate = useNavigate();
 
@@ -21,16 +35,20 @@ const Homepage: React.FC = () => {
           <SideBarHomePage />
         </div>
         <div className="col-span-4 mt-34 ml-20">
-          <div className="grid grid-cols-3 gap-8 mb-5">
-            <SingleCard />
-            <SingleCard />
-            <SingleCard />
-            <SingleCard />
-            <SingleCard />
-            <SingleCard />
-            <SingleCard />
-            <SingleCard />
-          </div>
+          {serviceState.serviceLoading ? (
+            "loading..."
+          ) : (
+            <div className="grid grid-cols-3 gap-8 mb-5">
+              <SingleCard serviceId="1" />
+              <SingleCard serviceId="1" />
+              <SingleCard serviceId="1" />
+              <SingleCard serviceId="1" />
+              <SingleCard serviceId="1" />
+              <SingleCard serviceId="1" />
+              <SingleCard serviceId="1" />
+              <SingleCard serviceId="1" />
+            </div>
+          )}
           <div className="flex justify-end pr-20 mt-10">
             <Pagination itemsPerPage={4} />
           </div>

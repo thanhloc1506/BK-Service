@@ -8,6 +8,11 @@ import PreviousButton from "./PreviousButton";
 
 let totalPage = 10;
 
+interface IPagination {
+  itemsPerPage: number;
+  sliceName: "allServices" | "loveServices";
+}
+
 const Pagination = ({ itemsPerPage }: any) => {
   const [pageNumber, setPageNumber] = useState(0);
 

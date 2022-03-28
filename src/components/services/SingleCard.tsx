@@ -6,10 +6,13 @@ import { useNavigate } from "react-router-dom";
 interface ICategory {
   isLoveService?: boolean;
   isEnterprise?: boolean;
+  serviceId: string;
 }
+
 const SingleCard: React.FC<ICategory> = ({
   isLoveService,
   isEnterprise,
+  serviceId,
 }: ICategory) => {
   const navigate = useNavigate();
   return (
@@ -103,7 +106,7 @@ const SingleCard: React.FC<ICategory> = ({
               <div className="col-span-2 flex justify-center mt-2">
                 <button
                   className="bg-blue-500 h-10 w-fit px-5 rounded-md overflow-hidden text-white font-light"
-                  onClick={() => navigate("/detailService")}
+                  onClick={() => navigate(`/detailService/${serviceId}`)}
                 >
                   Truy cap
                 </button>

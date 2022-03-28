@@ -10,22 +10,22 @@ const LoveService = () => {
       <div className="px-10 pt-12 pb-16">
         <div className="grid grid-cols-3 gap-8 h-full">
           <div className="flex justify-center ml-14">
-            <SingleCard isLoveService />
+            <SingleCard serviceId="1" isLoveService />
           </div>
           <div className="flex justify-center ml-14">
-            <SingleCard isLoveService />
+            <SingleCard serviceId="1" isLoveService />
           </div>
           <div className="flex justify-center ml-14">
-            <SingleCard isLoveService />
+            <SingleCard serviceId="1" isLoveService />
           </div>
           <div className="flex justify-center ml-14">
-            <SingleCard isLoveService />
+            <SingleCard serviceId="1" isLoveService />
           </div>
           <div className="flex justify-center ml-14">
-            <SingleCard isLoveService />
+            <SingleCard serviceId="1" isLoveService />
           </div>
           <div className="flex justify-center ml-14">
-            <SingleCard isLoveService />
+            <SingleCard serviceId="1" isLoveService />
           </div>
         </div>
       </div>
