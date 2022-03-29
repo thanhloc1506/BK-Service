@@ -16,7 +16,7 @@ const Dropdown: React.FC<IDropdownItem> = ({ items }: IDropdownItem) => {
     <div className="w-full">
       <Menu as="div" className="relative inline-block text-left">
         <div className="w-full">
-          <Menu.Button className="inline-flex justify-between px-3 w-[15.5rem] border-2 border-slate-200 h-12 py-3 bg-slate-100  text-sm font-medium text-blue-solid focus:outline-none focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
+          <Menu.Button className="inline-flex py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200">
             Linh vuc
             <ChevronDownIcon
               className="-mr-1 ml-1 h-5 w-5"

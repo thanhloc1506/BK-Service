@@ -22,3 +22,10 @@ input[type="radio"]:checked + label {
 /* html, body, #root, body > #root > div{
   height: 100%;
 } */
+
+.input{
+  @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5;
+}
+.card{
+  @apply block p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100
+}

@@ -1,11 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import Dropdown from "../common/Dropdown";
 import TimePicker from "../layouts/TimePicker";
+import {ModalAddress} from "../common/ModalAddress";
+import {Address} from "../../apis/common/Address";
+import {getAddressContent} from "../../utils/getAddressString";
 
 const AddService: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState();
   const [preview, setPreview] = useState();
-
+  const [showModalAddress, setShowModalAddress] = useState(false);
+  const [address, setAddress] = useState<Address>();
+  const [textAddress, setTextAddress] = useState<string>("");
+  useEffect(()=>{
+    getAddressContent(address)
+        .then((addressContent)=>setTextAddress(addressContent||""));
+  }, [address])
   useEffect(() => {
     if (!selectedImage) {
       setPreview(undefined);
@@ -30,136 +39,91 @@ const AddService: React.FC = () => {
     setSelectedImage(undefined);
   };
   return (
-    <div className="bg-gray-light h-fit">
-      <div className="h-12 bg-white py-8 pb-20 pl-20 border-b-2 border-b-gray-200 shadow-sm">
-        <p className="text-blue-400 font-medium text-3xl">Thêm dịch vụ</p>
-      </div>
-      <div className="px-10 pt-12 pb-16">
-        <div className="grid grid-cols-5">
-          <div className="mt-3">
-            <p className="text-blue-400 font-medium text-2xl">Tên dịch vụ</p>
-          </div>
-          <div className="col-span-4">
-            <div className="">
-              <input
+      <div className="bg-gray-light h-fit">
+        <ModalAddress show={showModalAddress} setShow={setShowModalAddress} onChange={(value)=>setAddress(value)}/>
+        <div className="h-12 bg-white py-8 pb-20 pl-20 border-b-2 border-b-gray-200 shadow-sm">
+          <p className="text-blue-400 font-medium text-3xl">Thêm dịch vụ</p>
+        </div>
+        <div className="p-16 w-3/4 bg-white rounded-lg border border-gray-200 shadow-md my-6 m-auto flex flex-col gap-6">
+          <div className="">
+            <label className="block mb-2 text-sm font-medium text-gray-900">Tên dịch
+              vụ</label>
+            <input
                 type="text"
-                className="outline-none w-3/4 h-12 p-5 border-2 border-gray-300 text-lg bg-slate-100"
+                className="input"
+            />
+          </div>
+          <div className="">
+            <label className="block mb-2 text-sm font-medium text-gray-900">Địa chỉ</label>
+            <button className={"py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200"}
+                    onClick={()=>setShowModalAddress(true)}>{textAddress || "Chọn địa chỉ..."}</button>
+          </div>
+          <div className="flex justify-start gap-16 items-center">
+            <div>
+              <label className="block text-sm font-medium text-gray-900">Giờ hoạt động</label>
+              <TimePicker defaultHour={"8"} defaultMin={"0"} defaultAP={"am"}/>
+            </div>
+            <div className={""}>
+              <label className="block text-sm font-medium text-gray-900">Đến</label>
+              <TimePicker defaultHour={"10"} defaultMin={"0"} defaultAP={"pm"}/>
+            </div>
+
+          </div>
+          <div className="flex justify-start items-center gap-16">
+            <div>
+              <label className="block mb-2 text-sm font-medium text-gray-900">Tầm giá</label>
+              <input
+                  type="number"
+                  className="input"
+                  step={1000}
+              />
+            </div>
+
+            <div>
+              <label className="block mb-2 text-sm font-medium text-gray-900">Đến</label>
+              <input
+                  type="number"
+                  className="input"
+                  step={1000}
               />
             </div>
           </div>
-        </div>
-        <div className="grid grid-cols-5 mt-8">
-          <div className="mt-3">
-            <p className="text-blue-400 font-medium text-2xl">Địa chỉ</p>
-          </div>
-          <div className="col-span-4">
+          <div className="">
+            <label className="block mb-2 text-sm font-medium text-gray-900">Lĩnh vực</label>
             <div className="">
-              <input
-                type="text"
-                className="outline-none w-3/4 h-12 p-5 border-2 border-gray-300 text-lg bg-slate-100"
-              />
+              <Dropdown items={["1", "2", "3"]}/>
             </div>
           </div>
-        </div>
-        <div className="grid grid-cols-12 mt-8">
-          <div className="col-span-2 mt-3">
-            <p className="text-blue-400 font-medium text-2xl">Giờ hoạt động</p>
-          </div>
-          <div className="col-span-3 ml-12">
-            <div className="">
-              <TimePicker />
-            </div>
-          </div>
-          <div className="col-span-2 mt-3 ml-20">
-            <p className="text-blue-400 font-medium text-2xl">Đến</p>
-          </div>
-          <div className="col-span-3">
-            <div className="ml-14">
-              <TimePicker />
-            </div>
-          </div>
-        </div>
-        <div className="grid grid-cols-12 mt-8">
-          <div className="col-span-2 mt-3">
-            <p className="text-blue-400 font-medium text-2xl">Tầm giá</p>
-          </div>
-          <div className="col-span-3 ml-12">
-            <div className="">
-              <div>
-                <input
-                  type="text"
-                  className="bg-slate-100 border-2 border-slate-300 h-12 w-5/6 outline-none p-3 text-lg"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="col-span-2 mt-3 ml-20">
-            <p className="text-blue-400 font-medium text-2xl">Đến</p>
-          </div>
-          <div className="col-span-3">
-            <div className="ml-14">
-              <input
-                type="text"
-                className="bg-slate-100 border-2 border-slate-300 h-12 w-5/6 outline-none p-3 text-lg"
-              />
-            </div>
-          </div>
-        </div>
-        <div className="grid grid-cols-12 mt-8">
-          <div className="col-span-2">
-            <p className="text-blue-400 font-medium text-2xl">Lĩnh vực</p>
-          </div>
-          <div className="col-span-3 ml-12">
-            <div className="">
-              <Dropdown items={["1", "2", "3"]} />
-            </div>
-          </div>
-        </div>
-        <div className="grid grid-cols-12 mt-8">
-          <div className="col-span-2">
-            <p className="text-blue-400 font-medium text-2xl">Hình ảnh</p>
-          </div>
-          <div className="col-span-3 ml-12">
+          <div className="">
+            <label className="block mb-2 text-sm font-medium text-gray-900">Hình ảnh</label>
             <div>
               <div className="h-fit w-full bg-transparent">
                 <input
-                  type="file"
-                  className="w-80 h-20"
-                  id="image"
-                  name="image"
-                  onChange={imageChange}
+                    type="file"
+                    className="w-80 h-20"
+                    id="image"
+                    name="image"
+                    onChange={imageChange}
                 />
                 {selectedImage && (
                   <div className="z-20">
                     <img
-                      className="max-h-36 max-w-2xl z-30"
-                      src={preview}
-                      alt="thumb"
+                        className="max-h-36 max-w-2xl z-30"
+                        src={preview}
+                        alt="thumb"
                     />
                   </div>
                 )}
               </div>
             </div>
           </div>
-        </div>
-        <div className="grid grid-cols-12">
-          <div className="col-span-7"></div>
-          <div className="col-span-3">
-            <div className="grid grid-cols-2 gap-4 mt-8">
-              <div>
-                <button className="bg-red-500 py-3 px-9 text-white">
-                  Lam lai
-                </button>
-              </div>
-              <div>
-                <button className="bg-blue-solid py-3 px-3 text-white">
-                  Them dich vu
-                </button>
-              </div>
-            </div>
+          <div>
+            <button
+                className={"text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"}>Đăng
+              kí
+            </button>
           </div>
         </div>
-      </div>
     </div>
   );
 };
