@@ -15,6 +15,13 @@ import { RootState } from "../redux/store";
 const DetailService: React.FC = () => {
   const { serviceId } = useParams();
 
+  console.log(serviceId);
+  const currentServiceId = useSelector(
+    (state: RootState) => state.service.serviceId
+  );
+  if (currentServiceId !== serviceId) {
+  }
+
   useEffect(() => {
     selectService(serviceId as string);
   }, []);
@@ -23,14 +30,18 @@ const DetailService: React.FC = () => {
     (state: RootState) => state.service.singleService
   );
 
+  const followServices = useSelector(
+    (state: RootState) => state.service.followService
+  );
+
   const description =
-    service.description ||
+    service?.description ||
     "The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on";
-  const actions = service.action || [
+  const actions = service?.action || [
     { name: "Thay mat kinh", price: 500000 },
     { name: "Thay man hinh", price: 5000000 },
   ];
-  const posts = service.posts || [
+  const posts = service?.posts || [
     {
       avatar: "",
       fullName: "Tran Van C",
@@ -57,7 +68,13 @@ const DetailService: React.FC = () => {
     <div className="min-h-screen h-fit pb-20">
       <Navbar />
       <div className="pt-24">
-        <HeaderDeatail />
+        <HeaderDeatail
+          name={service[0].name}
+          phone={service[0].phone}
+          address={service[0].address}
+          serviceId={serviceId as string}
+          followServices={followServices}
+        />
       </div>
       <div className="grid grid-cols-3 border-gray-200 border-b-2 pb-5">
         <div className="col-span-2">

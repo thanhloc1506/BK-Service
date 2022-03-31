@@ -10,22 +10,7 @@ const AllServices = () => {
       <div className="px-10 pt-12 pb-16">
         <div className="grid grid-cols-3 gap-8 h-full">
           <div className="flex justify-center ml-14">
-            <SingleCard serviceId="1" isEnterprise />
-          </div>
-          <div className="flex justify-center ml-14">
-            <SingleCard serviceId="1" isEnterprise />
-          </div>
-          <div className="flex justify-center ml-14">
-            <SingleCard serviceId="1" isEnterprise />
-          </div>
-          <div className="flex justify-center ml-14">
-            <SingleCard serviceId="1" isEnterprise />
-          </div>
-          <div className="flex justify-center ml-14">
-            <SingleCard serviceId="1" isEnterprise />
-          </div>
-          <div className="flex justify-center ml-14">
-            <SingleCard serviceId="1" isEnterprise />
+            <SingleCard service={null} isEnterprise />
           </div>
         </div>
       </div>

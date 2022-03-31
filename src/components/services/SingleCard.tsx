@@ -1,31 +1,44 @@
 import React from "react";
-import service from "../../assets/service/service.png";
+import serviceImg from "../../assets/service/service.png";
 import rating from "../../assets/service/rating.png";
 import { useNavigate } from "react-router-dom";
+import { selectService } from "../../redux/slices/service";
+import { useDispatch } from "react-redux";
 
 interface ICategory {
   isLoveService?: boolean;
   isEnterprise?: boolean;
-  serviceId: string;
+  service: any;
 }
 
 const SingleCard: React.FC<ICategory> = ({
   isLoveService,
   isEnterprise,
-  serviceId,
+  service,
 }: ICategory) => {
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+  const goToSingleService = () => {
+    dispatch(selectService(service._id));
+    navigate(`/detailService/${service._id}`);
+  };
   return (
     <>
       <div className="w-72 h-96 bg-white border-2 border-blue-200 rounded">
         <div className="flex justify-center">
-          <img src={service} alt="service" className="w-72 h-40 p-3" />
+          <img src={serviceImg} alt="service" className="w-72 h-40 p-3" />
         </div>
         <div className="grid grid-cols-6">
-          <div className="col-span-4 font-bold px-4">Sua chua dien thoai</div>
+          <div className="col-span-4 font-bold px-4">
+            {service.name.length > 20
+              ? service.name.slice(0, 17) + "..."
+              : service.name}
+          </div>
           <div className="flex justify-end p-1 mr-2 col-span-2">
             <p className="px-2 bg-blue-200 rounded-2xl overflow-hidden text-blue-600 text-xs w-fit h-fit">
-              Sua chua
+              {service.type}
             </p>
           </div>
         </div>
@@ -106,9 +119,9 @@ const SingleCard: React.FC<ICategory> = ({
               <div className="col-span-2 flex justify-center mt-2">
                 <button
                   className="bg-blue-500 h-10 w-fit px-5 rounded-md overflow-hidden text-white font-light"
-                  onClick={() => navigate(`/detailService/${serviceId}`)}
+                  onClick={goToSingleService}
                 >
-                  Truy cap
+                  Truy cập
                 </button>
               </div>
             )}

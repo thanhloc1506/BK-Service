@@ -1,34 +1,70 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import service from "../../assets/service/service.png";
+import { followService, setIsFollow } from "../../redux/slices/service";
 import Breakcumb from "../layouts/Breakcumb";
 import ButtonFollow from "../layouts/ButtonFollow";
 
-const HeaderDeatail: React.FC = () => {
-  const [isFollow, setIsFollow] = useState(false);
+type Address = {
+  province: string;
+  district: string;
+  village: string;
+  detail: string;
+};
 
-  const toggleFollow = () => {
-    setIsFollow(!isFollow);
+interface IHeaderDetail {
+  name: string;
+  phone: number;
+  address: Address;
+  serviceId: string;
+  followServices: any;
+}
+
+const HeaderDeatail: React.FC<IHeaderDetail> = ({
+  name,
+  phone,
+  address,
+  serviceId,
+  followServices,
+}: IHeaderDetail) => {
+  const dispatch = useDispatch();
+
+  let currentFollowService: any;
+  const [Follow, setFollow] = useState(false);
+  useEffect(() => {
+    currentFollowService = followServices?.filter(
+      (service: any) => service._id === serviceId
+    );
+    setFollow(currentFollowService[0] !== undefined);
+    console.log(Follow);
+    dispatch(setIsFollow(Follow));
+  }, []);
+
+  const onClickFollow = async () => {
+    await dispatch(followService(serviceId));
+    setFollow(true);
   };
+
   return (
     <>
       <div className="grid grid-cols-3">
         <div>
           <div className="pt-5 flex justify-end">
-            <img src={service} alt="Service" className="h-72 w-120" />
+            <img src={service} alt="Service" className="h-[35vh] w-[25vw]" />
           </div>
         </div>
         <div className="col-span-2">
           <div className="grid grid-cols-5 border-b-2 border-b-gray-100 pb-5">
             <div className="col-span-4 ml-10">
-              <Breakcumb addresses={["TPHCM", "Quan 10"]} />
+              <Breakcumb addresses={[address.province, address.district]} />
               <div className="flex">
                 <p className="font-bold text-xl">Nguyen Van A</p>
                 <p className="font-bold text-xl mx-3">-</p>
-                <p className="font-bold text-xl">Sua chua dien thoai</p>
+                <p className="font-bold text-xl">{name}</p>
               </div>
             </div>
-            <div className="flex justify-center" onClick={toggleFollow}>
-              <ButtonFollow isFollow={isFollow} />
+            <div className="flex justify-center" onClick={onClickFollow}>
+              <ButtonFollow isFollow={Follow} />
             </div>
           </div>
           <div className="grid grid-cols-8 border-b-2 border-b-gray-100 pb-2">
@@ -66,7 +102,7 @@ const HeaderDeatail: React.FC = () => {
             <div>
               <div className="mt-1 ml-10">
                 <p className="text-2xl font-semibold">122</p>
-                <p className="mt-1">Binh luan</p>
+                <p className="mt-1">Bình luận</p>
               </div>
             </div>
           </div>
@@ -89,7 +125,8 @@ const HeaderDeatail: React.FC = () => {
                 <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 0 1 -2.827 0l-4.244-4.243a8 8 0 1 1 11.314 0z" />
               </svg>
               <p className="text-gray-600 text-xl font-semibold ml-5">
-                268 Ly Thuong Kiet, Quan 10, TP.HCM
+                {address.detail},{address.village},{address.district},
+                {address.province}
               </p>
             </div>
             <div className="flex justify-start ml-12 mt-2">
@@ -108,7 +145,7 @@ const HeaderDeatail: React.FC = () => {
               </svg>
               <div className="flex">
                 <p className="text-green-400 ml-6 font-bold text-xl">
-                  Dang mo cua
+                  Đang mở cửa
                 </p>
                 <p className="text-gray-600 text-xl font-semibold ml-5">
                   08h00 - 22h00

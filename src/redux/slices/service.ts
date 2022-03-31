@@ -9,6 +9,8 @@ export interface State {
   serviceLoading: boolean;
   totalService: number;
   singleService: any;
+  isFollow: boolean;
+  followService: any;
 }
 
 const initialState: State = {
@@ -19,6 +21,8 @@ const initialState: State = {
   totalService: 0,
   serviceId: undefined,
   singleService: undefined,
+  isFollow: false,
+  followService: [],
 };
 
 export const getAllServices = createAsyncThunk("/search", async () => {
@@ -33,8 +37,44 @@ export const getAllServices = createAsyncThunk("/search", async () => {
 
 export const selectService = createAsyncThunk(
   "/select/service",
-  (serviceId: string | number) => {
+  async (serviceId: string | number) => {
     return serviceId;
+  }
+);
+
+export const setIsFollow = createAsyncThunk(
+  "/select/service",
+  async (isFollow: boolean) => {
+    return isFollow;
+  }
+);
+
+export const followService = createAsyncThunk(
+  "/follow/service",
+  async (serviceId: string | number) => {
+    try {
+      console.log(serviceId);
+      const response = await axiosClient.post(`/user/add-favorite`, {
+        serviceId: serviceId,
+      });
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+);
+
+export const getFollowService = createAsyncThunk(
+  "/get/follow/service",
+  async () => {
+    try {
+      const response = await axiosClient.get(`/user/followed-service`);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
   }
 );
 
@@ -53,8 +93,18 @@ const serviceSlice = createSlice({
     [selectService.fulfilled.toString()]: (state, action) => {
       state.serviceId = action.payload;
       state.singleService = state.services?.filter(
-        (service: any) => service.id === action.payload
+        (service: any) => service._id === action.payload
       );
+    },
+    [followService.fulfilled.toString()]: (state, _action) => {
+      state.isFollow = true;
+      console.log(1);
+    },
+    [getFollowService.fulfilled.toString()]: (state, action) => {
+      state.followService = action.payload.services;
+    },
+    [setIsFollow.fulfilled.toString()]: (state, action) => {
+      state.isFollow = action.payload;
     },
   },
 });

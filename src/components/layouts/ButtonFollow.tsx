@@ -5,6 +5,7 @@ interface IFollow {
 }
 
 const ButtonFollow: React.FC<IFollow> = ({ isFollow }: IFollow) => {
+  console.log(isFollow);
   return (
     <div className="mt-6">
       <button

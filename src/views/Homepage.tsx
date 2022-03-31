@@ -5,7 +5,7 @@ import Navbar from "../components/layouts/Navbar";
 import Pagination from "../components/layouts/Pagination/Pagination";
 import SideBarHomePage from "../components/layouts/SideBarHomePage";
 import SingleCard from "../components/services/SingleCard";
-import { getAllServices } from "../redux/slices/service";
+import { getAllServices, getFollowService } from "../redux/slices/service";
 import { RootState } from "../redux/store";
 
 const Homepage: React.FC = () => {
@@ -20,6 +20,8 @@ const Homepage: React.FC = () => {
   useEffect(() => {
     async function fetchData() {
       await dispatch(getAllServices());
+      await dispatch(getFollowService());
+      console.log("heelo");
     }
     fetchData();
   }, [dispatch]);
@@ -39,19 +41,18 @@ const Homepage: React.FC = () => {
             "loading..."
           ) : (
             <div className="grid grid-cols-3 gap-8 mb-5">
-              <SingleCard serviceId="1" />
-              <SingleCard serviceId="1" />
-              <SingleCard serviceId="1" />
-              <SingleCard serviceId="1" />
-              <SingleCard serviceId="1" />
-              <SingleCard serviceId="1" />
-              <SingleCard serviceId="1" />
-              <SingleCard serviceId="1" />
+              {serviceState.services?.map((service: any, index: number) => (
+                <>
+                  <SingleCard service={service} key={index} />
+                </>
+              ))}
             </div>
           )}
-          <div className="flex justify-end pr-20 mt-10">
-            <Pagination itemsPerPage={4} />
-          </div>
+          {serviceState.services.lenght > 9 ? (
+            <div className="flex justify-end pr-20 mt-10">
+              <Pagination itemsPerPage={4} />
+            </div>
+          ) : null}
         </div>
       </div>
     </div>
