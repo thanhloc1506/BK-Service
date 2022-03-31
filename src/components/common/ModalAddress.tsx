@@ -92,9 +92,10 @@ export const ModalAddress = ({show, onChange, setShow}: ModalAddressProps) => {
     // }, [show]);
 
     useEffect(() => {
+        dispatch(showWaiting());
         fetchQuan().then((res) => {
             setDataQuan(res);
-        })
+        }).finally(()=>dispatch(hideWaiting()));
     }, [])
 
     useEffect(() => {
