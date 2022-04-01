@@ -8,8 +8,6 @@ import {ModalConfirm} from "./ModalConfirm";
 import {Address} from "../../apis/common/Address";
 import axiosClient from "../../apis/axios";
 import {hideWaiting, showWaiting} from "../../redux/slices/loading";
-import {toastError, toastSuccess} from "../../utils/toast";
-import {updateProfile} from "../../redux/slices/auth";
 import {PInProfile} from "../../apis/package/in/PInProfile";
 
 interface Quan{
@@ -22,8 +20,9 @@ interface Phuong{
 }
 export interface ModalAddressProps {
     show: boolean;
-    setShow: (b: boolean)=>void;
+    setShow: (b: boolean) => void;
     onChange?: (value: Address) => void;
+    defaultValue?: Address;
 }
 
 const fetchQuan = async () => {
@@ -54,7 +53,7 @@ const apiChangeAddress = async (data: Address)=>{
     }
 }
 
-export const ModalAddress = ({show, onChange, setShow}: ModalAddressProps) => {
+export const ModalAddress = ({show, onChange, setShow, defaultValue}: ModalAddressProps) => {
     const dispatch = useDispatch();
     const [openConfirm, setOpenConfirm] = useState(false);
     // const [isOpen, setOpen] = useState(false);
@@ -64,9 +63,25 @@ export const ModalAddress = ({show, onChange, setShow}: ModalAddressProps) => {
 
     const [dataQuan, setDataQuan] = useState<Array<Quan>>([]);
     const [dataPhuong, setDataPhuong] = useState<Array<Phuong>>([]);
+
+    const [isSyncDefault, setSyncDefault] = useState(false);
     // modal confirm
     const [title, setTitle] = useState("");
 
+    const syncDefaultValue = () => {
+        if(isSyncDefault) return;
+        if (dataQuan && defaultValue) {
+            for (let i = 0; i < dataQuan.length; ++i) {
+                if (dataQuan[i].district_id === defaultValue?.district) {
+                    setQuan(dataQuan[i]);
+                    break;
+                }
+            }
+        }
+    }
+    useEffect(()=>{
+        defaultValue && syncDefaultValue();
+    }, [defaultValue]);
 
     const onConfirmChange = () => {
 
@@ -77,9 +92,9 @@ export const ModalAddress = ({show, onChange, setShow}: ModalAddressProps) => {
         setOpenConfirm(false);
         if (quan && phuong) {
             const data: Address = {
-                province: 79,
-                district: parseInt(quan.district_id),
-                village: parseInt(phuong.ward_id),
+                province: "79",
+                district: quan.district_id,
+                village: phuong.ward_id,
                 detail: detail
             };
             onChange && onChange(data);
@@ -98,10 +113,22 @@ export const ModalAddress = ({show, onChange, setShow}: ModalAddressProps) => {
         }).finally(()=>dispatch(hideWaiting()));
     }, [])
 
+    useEffect(()=>{
+        syncDefaultValue()
+    }, [dataQuan]);
     useEffect(() => {
         if (quan && quan.district_id != "") {
             fetchPhuong(quan.district_id).then(res => {
                 setDataPhuong(res);
+                if(!isSyncDefault){
+                    for(let i=0; i<res.length; i++){
+                        if(res[i].ward_id===defaultValue?.village){
+                            setPhuong(res[i]);
+                            setSyncDefault(true);
+                            return;
+                        }
+                    }
+                }
                 if (res.length > 0) setPhuong(res[0]);
             })
         }
@@ -300,6 +327,7 @@ export const ModalAddress = ({show, onChange, setShow}: ModalAddressProps) => {
                                     <span className={'align-middle self-center'}>Chi tiết </span>
                                     <div className={'w-72'}>
                                         <textarea className={'float-left w-full p-2'}
+                                                  defaultValue={defaultValue?.detail || ""}
                                                   onChange={(e: any) => setDetail(e.target.value)}/>
                                     </div>
 

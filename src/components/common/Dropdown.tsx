@@ -7,14 +7,15 @@ import {PInCategory} from "../../apis/package/in/PInCategory";
 interface IDropdownItem {
   items: PInCategory.Category[] | undefined;
   onChange?: (v: PInCategory.Category | undefined)=>void;
+  defaultValue?: PInCategory.Category;
 }
 
 const classNames = (...classes: any) => {
   return classes.filter(Boolean).join(" ");
 };
 
-const Dropdown: React.FC<IDropdownItem> = ({ items, onChange }: IDropdownItem) => {
-  const [selected, setSelected] = useState<PInCategory.Category>();
+const Dropdown: React.FC<IDropdownItem> = ({ items, onChange, defaultValue }: IDropdownItem) => {
+  const [selected, setSelected] = useState<PInCategory.Category | undefined>( defaultValue);
   useEffect(()=>{
     onChange && onChange(selected);
   }, [selected]);

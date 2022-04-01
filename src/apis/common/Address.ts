@@ -1,6 +1,6 @@
 export interface Address{
-    readonly province: number;
-    readonly district: number;
-    readonly village: number;
+    readonly province: string;
+    readonly district: string;
+    readonly village: string;
     readonly detail: string;
 }
