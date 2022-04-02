@@ -1,11 +1,8 @@
 import React, {useEffect, useState} from "react";
-import SingleCard from "../services/SingleCard";
 import axiosClient from "../../apis/axios";
 import {PInAllServices} from "../../apis/package/in/PInAllServices";
 import Service from "./Service";
 import {ModalEditService} from "./ModalEditService";
-import {Address} from "../../apis/common/Address";
-import {getAddressContent} from "../../utils/getAddressString";
 
 const AllServices = () => {
   const [services, setServices] = useState<PInAllServices.Service[] | undefined>();

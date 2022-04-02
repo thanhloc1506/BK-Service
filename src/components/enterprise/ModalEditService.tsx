@@ -10,6 +10,11 @@ import {hideWaiting, showWaiting} from "../../redux/slices/loading";
 import {ModalAddress} from "../common/ModalAddress";
 import {Address} from "../../apis/common/Address";
 import {getAddressContent} from "../../utils/getAddressString";
+import {ImageControl} from "./ImageControl";
+import {ImageAdd} from "./ImageAdd";
+import cookies, {remove} from "js-cookie";
+import {FileUploaded} from "../../apis/common/FileUploaded";
+import {toastSuccess} from "../../utils/toast";
 
 interface IModalEditService {
     data: PInAllServices.Service | undefined;
@@ -18,41 +23,91 @@ interface IModalEditService {
     setShow?: (b: boolean) => void;
 }
 
+
+interface DataForm {
+    name?: string;
+    email?: string;
+    phone?: string;
+    address?: Address;
+    category?: string;
+    openTime?: string;
+    closeTime?: string;
+    maxPrice?: number;
+    minPrice?: number;
+    imageDelete?: any;
+    imageAdd?: any;
+}
+
+const submitChangeService = (data: PInAllServices.Service | undefined, oldImg: FileUploaded[]|undefined, newImg: File[] | undefined) =>{
+    const formData = new FormData();
+    if(!data) return;
+    data.name && formData.append("name", data.name);
+    data.email && formData.append("email", data.email);
+    data.phone && formData.append("phone", data.phone);
+    data.address && formData.append("address", JSON.stringify(data.address));
+    data.category && formData.append("category", data.category._id);
+    data.openTime && formData.append("openTime", data.openTime);
+    data.closeTime && formData.append("closeTime", data.closeTime);
+    data.maxPrice && formData.append("maxPrice", data.maxPrice.toString());
+    data.minPrice && formData.append("minPrice", data.minPrice.toString());
+
+    let removeImg = data.images?.filter((image)=>{
+        return !oldImg?.includes(image);
+    }).map((e)=>e.key);
+
+    if(removeImg && removeImg.length>0) formData.append("removeImg", JSON.stringify(removeImg));
+    if(newImg && newImg.length>0){
+        newImg.map((e)=>formData.append("images", e));
+    }
+    // data.imageAdd && formData.append("images", data.imageAdd);
+    return axiosClient.put(`/service/${data._id}/modify-service`, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${cookies.get('token')}`
+        }
+    })
+}
+
 export const ModalEditService = ({data, show, setShow}: IModalEditService) => {
     const dispatch = useDispatch();
     const [editData, setEditData] = useState<PInAllServices.Service | undefined>(data);
     const [categories, setCategories] = useState<PInCategory.Category[] | undefined>();
     const [showModalAddress, setShowModalAddress] = useState(false);
     const [address, setAddress] = useState<Address | undefined>();
-    const [textAddress, setTextAddress] = useState<string|undefined>("");
-    useEffect(()=>{
+    const [textAddress, setTextAddress] = useState<string | undefined>("");
+    const [oldImg, setOldImg] = useState<FileUploaded[]| undefined>();
+    const [newImg, setNewImg] = useState<File[]>();
+
+    useEffect(() => {
         //fetch categories
         dispatch(showWaiting());
         axiosClient.get<PInCategory.Data>("/categories")
-            .then((res)=>{
+            .then((res) => {
                 setCategories(res.data.categories);
             })
             .catch()
-            .finally(()=>dispatch(hideWaiting()))
+            .finally(() => dispatch(hideWaiting()))
     }, []);
-   useEffect(()=>{
-       setEditData(data);
-       setAddress(data?.address);
-   }, [data]);
-    useEffect(()=>{
+    useEffect(() => {
+        setEditData(data);
+        setAddress(data?.address);
+        setOldImg(data?.images);
+    }, [data]);
+    useEffect(() => {
         dispatch(showWaiting());
         getAddressContent(address)
-            .then((res)=>{
+            .then((res) => {
                 setTextAddress(res);
             })
-            .finally(()=>dispatch(hideWaiting()));
+            .finally(() => dispatch(hideWaiting()));
     }, [address]);
+
     return (
         <>
             <Transition appear show={show} as={Fragment}>
                 <Dialog
                     as="div"
-                    className="fixed w-full inset-0 z-10 overflow-y-auto"
+                    className="fixed w-full inset-0 z-10"
                     onClose={() => {
                         setShow && setShow(false);
                     }}
@@ -87,7 +142,7 @@ export const ModalEditService = ({data, show, setShow}: IModalEditService) => {
                             leaveTo="opacity-0 scale-95"
                         >
                             <div
-                                className="inline-block w-full max-w-fit p-8 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                                className=" relative inline-block w-1/2 h-[90vh] p-8 my-8 overflow-auto text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
                                 <Dialog.Title
                                     as="h3"
                                     className="text-lg font-medium leading-6 text-gray-900"
@@ -96,7 +151,8 @@ export const ModalEditService = ({data, show, setShow}: IModalEditService) => {
                                 </Dialog.Title>
                                 <div className="mt-2">
                                     {/*content*/}
-                                    <ModalAddress show={showModalAddress} setShow={setShowModalAddress} onChange={setAddress} defaultValue={address}/>
+                                    <ModalAddress show={showModalAddress} setShow={setShowModalAddress}
+                                                  onChange={setAddress} defaultValue={address}/>
                                     <div>
                                         <div className="">
                                             <label className="block mb-2 text-sm font-medium text-gray-900">Tên dịch
@@ -158,8 +214,8 @@ export const ModalEditService = ({data, show, setShow}: IModalEditService) => {
                                                     động</label>
                                                 <TimePicker defaultHour={"8"} defaultMin={"0"} defaultAP={"am"}
                                                             onChange={(value) => {
-                                                                editData && setEditData((pre)=>{
-                                                                    if(pre) return ({...pre, openTime: value});
+                                                                editData && setEditData((pre) => {
+                                                                    if (pre) return ({...pre, openTime: value});
                                                                 })
                                                             }}/>
                                             </div>
@@ -167,8 +223,8 @@ export const ModalEditService = ({data, show, setShow}: IModalEditService) => {
                                                 <label className="block text-sm font-medium text-gray-900">Đến</label>
                                                 <TimePicker defaultHour={"10"} defaultMin={"0"} defaultAP={"pm"}
                                                             onChange={(value: string) => {
-                                                                editData && setEditData((pre)=>{
-                                                                    if(pre) return ({...pre, closeTime: value});
+                                                                editData && setEditData((pre) => {
+                                                                    if (pre) return ({...pre, closeTime: value});
                                                                 })
                                                             }}
                                                 />
@@ -185,8 +241,11 @@ export const ModalEditService = ({data, show, setShow}: IModalEditService) => {
                                                     step={1000}
                                                     defaultValue={editData && editData.minPrice}
                                                     onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                                                        editData && setEditData((pre)=>{
-                                                            if(pre) return ({...pre, openPrice: parseInt(e.target.value)});
+                                                        editData && setEditData((pre) => {
+                                                            if (pre) return ({
+                                                                ...pre,
+                                                                minPrice: parseInt(e.target.value)
+                                                            });
                                                         })
                                                     }}
                                                 />
@@ -201,8 +260,11 @@ export const ModalEditService = ({data, show, setShow}: IModalEditService) => {
                                                     step={1000}
                                                     defaultValue={editData && editData.maxPrice}
                                                     onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                                                        editData && setEditData((pre)=>{
-                                                            if(pre) return ({...pre, closePrice: parseInt(e.target.value)});
+                                                        editData && setEditData((pre) => {
+                                                            if (pre) return ({
+                                                                ...pre,
+                                                                maxPrice: parseInt(e.target.value)
+                                                            });
                                                         })
                                                     }}
                                                 />
@@ -216,24 +278,57 @@ export const ModalEditService = ({data, show, setShow}: IModalEditService) => {
 
                                                     defaultValue={editData?.category}
                                                     items={undefined}
-                                                          onChange={(value) => {
+                                                    onChange={(value) => {
 
-                                                          }}/>
+                                                    }}/>
                                             </div>
                                         </div>
                                         <div className="">
                                             <label className="block mb-2 text-sm font-medium text-gray-900">Hình
                                                 ảnh</label>
-
+                                            <div className={'w-full'}>
+                                                <div className={'my-10 flex flex-wrap justify-center gap-2'}>
+                                                    {oldImg && oldImg.map((data, index) =>
+                                                        <ImageControl key={index} url={data.url} onDelete={() => {
+                                                            setOldImg((pre) => {
+                                                                if(pre) return pre.filter((v) => v != data)
+                                                            })
+                                                        }}/>)}
+                                                    {newImg && newImg.map((data, index) => {
+                                                        return <ImageControl url={URL.createObjectURL(data)}
+                                                                             onDelete={() => {
+                                                                                      setNewImg(pre=>{
+                                                                                          if(pre) return pre.filter((v)=>v!=data);
+                                                                                      })
+                                                                             }}/>
+                                                    })}
+                                                    <ImageAdd onSelectFile={(file: File) => {
+                                                        setNewImg(pre => {
+                                                            if (pre) {
+                                                                return [...pre, file];
+                                                            }
+                                                            return [file];
+                                                        })
+                                                    }}/>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div className={'flex justify-center'}>
                                             <button
                                                 className={"text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-16 py-2.5"}
                                                 onClick={() => {
+                                                    setShow && setShow(false);
+                                                    dispatch(showWaiting());
+                                                    submitChangeService(editData, oldImg, newImg)
+                                                        ?.then((res)=>{
+                                                            toastSuccess("Cập nhật thành công!");
+                                                        })
+                                                        .catch()
+                                                        .finally(()=>dispatch(hideWaiting()))
                                                 }
                                                 }
-                                            >Đăng
-                                                kí
+                                            >
+                                                Chỉnh sửa
                                             </button>
                                         </div>
                                     </div>

@@ -10,6 +10,8 @@ import axiosClient from "../../apis/axios";
 import {PInCategory} from "../../apis/package/in/PInCategory";
 import cookies from "js-cookie";
 import {toastError, toastSuccess} from "../../utils/toast";
+import {ImageControl} from "./ImageControl";
+import {ImageAdd} from "./ImageAdd";
 
 interface DataForm {
     name?: string;
@@ -21,10 +23,10 @@ interface DataForm {
     closeTime?: string;
     maxPrice?: number;
     minPrice?: number;
-    avatar?: any;
+    images?: File[];
 }
 
-const handleAddNewService = async (data: DataForm) => {
+const handleAddNewService = async (data: DataForm, images: File[]|undefined) => {
     const formData = new FormData();
     data.name && formData.append("name", data.name);
     data.email && formData.append("email", data.email);
@@ -35,7 +37,10 @@ const handleAddNewService = async (data: DataForm) => {
     data.closeTime && formData.append("closeTime", data.closeTime);
     data.maxPrice && formData.append("maxPrice", data.maxPrice.toString());
     data.minPrice && formData.append("minPrice", data.minPrice.toString());
-    data.avatar && formData.append("avatar", data.avatar);
+    if(images && images.length>0){
+        images.map((image) =>formData.append("images", image));
+    }
+    // data.avatar && formData.append("avatar", data.avatar);
     return axiosClient.post("/enterprise/new-service", formData, {
         headers: {
             'Content-Type': 'multipart/form-data',
@@ -51,29 +56,18 @@ const handleAddNewService = async (data: DataForm) => {
 
 const AddService: React.FC = () => {
     const dispatch = useDispatch();
-    const [selectedImage, setSelectedImage] = useState();
-    const [preview, setPreview] = useState();
     const [showModalAddress, setShowModalAddress] = useState(false);
     const [address, setAddress] = useState<Address>();
     const [textAddress, setTextAddress] = useState<string>("");
     const [categories, setCategories] = useState<Array<PInCategory.Category>>();
     const [dataForm, setDataForm] = useState<DataForm>({});
-
+    const [newImg, setNewImg] = useState<File[] | undefined>();
     useEffect(() => {
         setDataForm((pre: DataForm) => ({...pre, address: address}));
         getAddressContent(address)
             .then((addressContent) => setTextAddress(addressContent || ""));
     }, [address])
-    useEffect(() => {
-        if (!selectedImage) {
-            setPreview(undefined);
-            return;
-        }
-        const objectUrl = URL.createObjectURL(selectedImage);
-        setPreview(objectUrl as any);
 
-        return () => URL.revokeObjectURL(objectUrl);
-    }, [selectedImage]);
     useEffect(() => {
         dispatch(showWaiting());
         axiosClient.get<PInCategory.Data>("/categories")
@@ -85,19 +79,7 @@ const AddService: React.FC = () => {
                 dispatch(hideWaiting());
             })
     }, []);
-    const imageChange = (e: any) => {
-        if (!e.target.files || e.target.files.lenght === 0) {
-            setSelectedImage(undefined);
-            setDataForm((pre) => ({...pre, avatar: undefined}));
-            return;
-        }
-        setDataForm((pre) => ({...pre, avatar: e.target.files[0]}));
-        setSelectedImage(e.target.files[0]);
-    };
 
-    const removeImage = () => {
-        setSelectedImage(undefined);
-    };
 
     return (
         <div className="bg-gray-light h-fit">
@@ -203,35 +185,36 @@ const AddService: React.FC = () => {
                                   }}/>
                     </div>
                 </div>
-                <div className="">
-                    <label className="block mb-2 text-sm font-medium text-gray-900">Hình ảnh</label>
-                    <div>
-                        <div className="h-fit w-full bg-transparent">
-                            <input
-                                type="file"
-                                className="w-80 h-20"
-                                id="image"
-                                name="image"
-                                onChange={imageChange}
-                            />
-                            {selectedImage && (
-                                <div className="z-20">
-                                    <img
-                                        className="max-h-36 max-w-2xl z-30"
-                                        src={preview}
-                                        alt="thumb"
-                                    />
-                                </div>
-                            )}
+                    <div className="">
+                        <label className="block mb-2 text-sm font-medium text-gray-900">Hình
+                            ảnh</label>
+                        <div className={'w-full'}>
+                            <div className={'my-10 flex flex-wrap justify-center gap-2'}>
+                                {newImg && newImg.map((data, index) => {
+                                    return <ImageControl url={URL.createObjectURL(data)}
+                                                         onDelete={() => {
+                                                             setNewImg(pre=>{
+                                                                 if(pre) return pre.filter((v)=>v!=data);
+                                                             })
+                                                         }}/>
+                                })}
+                                <ImageAdd onSelectFile={(file: File) => {
+                                    setNewImg(pre => {
+                                        if (pre) {
+                                            return [...pre, file];
+                                        }
+                                        return [file];
+                                    })
+                                }}/>
+                            </div>
                         </div>
                     </div>
-                </div>
                 <div className={'flex justify-center'}>
                     <button
                         className={"text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-16 py-2.5"}
                         onClick={() => {
                             dispatch(showWaiting())
-                            handleAddNewService(dataForm)
+                            handleAddNewService(dataForm, newImg)
                                 .then(res => toastSuccess("Thêm dịch vụ thành công!"))
                                 .catch((err) => toastError(err.response.data.message.toString()))
                                 .finally(() => {
