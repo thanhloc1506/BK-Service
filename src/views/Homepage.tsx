@@ -19,7 +19,7 @@ const Homepage: React.FC = () => {
 
   useEffect(() => {
     async function fetchData() {
-      // await dispatch(getAllServices());
+      await dispatch(getAllServices());
       await dispatch(getFollowService());
     }
     fetchData();

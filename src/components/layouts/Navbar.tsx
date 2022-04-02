@@ -1,16 +1,16 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import logo from "../../assets/bg/logo.png";
 import LoginForm from "../auth/LoginForm";
-import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../../redux/store";
-import {toggleModalLogin, toggleModalRegister} from "../../redux/slices/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { toggleModalLogin, toggleModalRegister } from "../../redux/slices/auth";
 import RegisterForm from "../auth/RegisterForm";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import DropdownBtn from "./DropdownBtn";
-import {selectPage} from "../../redux/slices/user";
-import {SearchField} from "./SearchField";
+import { selectPage } from "../../redux/slices/user";
+import { SearchField } from "./SearchField";
 import Loading from "../../views/Loading";
-import {DEFAULT_AVATAR} from "../../constants/common";
+import { DEFAULT_AVATAR } from "../../constants/common";
 
 const Navbar: React.FC = () => {
   const authState = useSelector((state: RootState) => state.user);
@@ -59,27 +59,27 @@ const Navbar: React.FC = () => {
             </p>
           </span>
           <div className="col-span-3">
-            <SearchField/>
+            <SearchField />
           </div>
 
           {!authState.isAuthenticated ? (
             <span className={"col-span-3 px-5 grid grid-cols-3 gap-6"}>
-                <span className="col-start-2 flex justify-end items-center">
-                  <p
-                    className="text-white font-semibold text-2xl hover:text-blue-500 transition-all duration-500 cursor-pointer"
-                    onClick={onClickRegister}
-                  >
-                    Đăng ký
-                  </p>
-                </span>
-                <span className="col-span-1 flex justify-center items-center">
-                  <p
-                    className="text-white font-semibold text-2xl hover:text-blue-500 transition-all duration-500 cursor-pointer"
-                    onClick={onClickLogin}
-                  >
-                    Đăng nhập
-                  </p>
-                </span>
+              <span className="col-start-2 flex justify-end items-center">
+                <p
+                  className="text-white font-semibold text-2xl hover:text-blue-500 transition-all duration-500 cursor-pointer"
+                  onClick={onClickRegister}
+                >
+                  Đăng ký
+                </p>
+              </span>
+              <span className="col-span-1 flex justify-center items-center">
+                <p
+                  className="text-white font-semibold text-2xl hover:text-blue-500 transition-all duration-500 cursor-pointer"
+                  onClick={onClickLogin}
+                >
+                  Đăng nhập
+                </p>
+              </span>
             </span>
           ) : (
             <div className="col-span-3 grid grid-cols-6 px-5">
@@ -140,7 +140,14 @@ const Navbar: React.FC = () => {
               <span className="col-span-3 flex justify-center items-center">
                 <div className="grid grid-cols-3">
                   <div className="col-span-1 rounded-full w-12 h-12 overflow-hidden ring-2 ring-white">
-                    <img src={authState.user?.avatar? authState.user.avatar : DEFAULT_AVATAR} className={"w-full h-full p-1 rounded-full"}/>
+                    <img
+                      src={
+                        authState.user?.avatar
+                          ? authState.user.avatar
+                          : DEFAULT_AVATAR
+                      }
+                      className={"w-full h-full p-1 rounded-full"}
+                    />
                   </div>
                   <div className="col-span-2 flex justify-center items-center">
                     <DropdownBtn />
