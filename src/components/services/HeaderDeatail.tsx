@@ -36,7 +36,6 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
       (service: any) => service._id === serviceId
     );
     setFollow(currentFollowService[0] !== undefined);
-    console.log(Follow);
     dispatch(setIsFollow(Follow));
   }, []);
 

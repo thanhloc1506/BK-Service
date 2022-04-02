@@ -3,8 +3,9 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import "./style/output.css"
-import 'react-toastify/dist/ReactToastify.css'
+import "./style/output.css";
+import "react-toastify/dist/ReactToastify.css";
+import ScollToTop from "./components/rounting/ScollToTop";
 ReactDOM.render(
   <React.StrictMode>
     <App />

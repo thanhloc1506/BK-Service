@@ -12,6 +12,7 @@ import EHomepage from "./views/enterprise/EHomePage";
 import { PersistGate } from "redux-persist/integration/react";
 import { ToastContainer } from "react-toastify";
 import { AuthSync } from "./components/rounting/AuthSync";
+import ScollToTop from "./components/rounting/ScollToTop";
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -22,6 +23,7 @@ const App: React.FC = () => {
       <PersistGate persistor={persistor} loading={null}>
         <AuthSync>
           <Router>
+            <ScollToTop />
             <Routes>
               <Route path="/" element={<Homepage />} />
               <Route

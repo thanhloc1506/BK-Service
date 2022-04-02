@@ -19,9 +19,8 @@ const Homepage: React.FC = () => {
 
   useEffect(() => {
     async function fetchData() {
-      await dispatch(getAllServices());
+      // await dispatch(getAllServices());
       await dispatch(getFollowService());
-      console.log("heelo");
     }
     fetchData();
   }, [dispatch]);
@@ -42,9 +41,9 @@ const Homepage: React.FC = () => {
           ) : (
             <div className="grid grid-cols-3 gap-8 mb-5">
               {serviceState.services?.map((service: any, index: number) => (
-                <>
-                  <SingleCard service={service} key={index} />
-                </>
+                <div key={index}>
+                  <SingleCard service={service} />
+                </div>
               ))}
             </div>
           )}
