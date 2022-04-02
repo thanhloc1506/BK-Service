@@ -20,9 +20,9 @@ const SingleCard: React.FC<ICategory> = ({
 
   const dispatch = useDispatch();
 
-  const goToSingleService = () => {
-    dispatch(selectService(service._id));
-    navigate(`/detailService/${service._id}`);
+  const goToSingleService = async () => {
+    await dispatch(selectService(service._id));
+    await navigate(`/detailService/${service._id}`);
   };
   return (
     <>

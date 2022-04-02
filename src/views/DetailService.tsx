@@ -17,7 +17,7 @@ const DetailService: React.FC = () => {
 
   console.log(serviceId);
   const currentServiceId = useSelector(
-    (state: RootState) => state.service.serviceId
+    (state: RootState) => state.service?.serviceId
   );
   if (currentServiceId !== serviceId) {
   }
@@ -29,9 +29,10 @@ const DetailService: React.FC = () => {
   const service = useSelector(
     (state: RootState) => state.service.singleService
   );
+  console.log(service);
 
   const followServices = useSelector(
-    (state: RootState) => state.service.followService
+    (state: RootState) => state.service?.followService
   );
 
   const description =

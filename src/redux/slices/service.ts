@@ -25,7 +25,7 @@ const initialState: State = {
   followService: [],
 };
 
-export const getAllServices = createAsyncThunk("/search", async () => {
+export const getAllServices = createAsyncThunk("/get/services", async () => {
   try {
     const response = await axiosClient.get(`/search`);
     return response.data;
@@ -36,7 +36,7 @@ export const getAllServices = createAsyncThunk("/search", async () => {
 });
 
 export const selectService = createAsyncThunk(
-  "/select/service",
+  "/select/single/service",
   async (serviceId: string | number) => {
     return serviceId;
   }
@@ -95,6 +95,7 @@ const serviceSlice = createSlice({
       state.singleService = state.services?.filter(
         (service: any) => service._id === action.payload
       );
+      console.log(state.singleService);
     },
     [followService.fulfilled.toString()]: (state, _action) => {
       state.isFollow = true;
