@@ -98,7 +98,6 @@ const RegisterForm: React.FC = () => {
                               email: "",
                             }}
                             onSubmit={(values) => {
-                              alert(JSON.stringify(values, null, 2));
                               onClickRegister(values);
                             }}
                           >

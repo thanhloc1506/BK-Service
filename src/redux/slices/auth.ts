@@ -58,7 +58,8 @@ export const register = createAsyncThunk(
       const response = await axiosClient.post(`/enterprise/register`, dataRegister);
       return response.data;
     } catch (error) {
-      console.log(error);
+      // @ts-ignore
+      console.log(error.response);
       throw error;
     }
   }
