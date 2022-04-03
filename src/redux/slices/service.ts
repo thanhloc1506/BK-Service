@@ -17,7 +17,7 @@ const initialState: State = {
   services: [],
   status: "idle",
   error: null,
-  serviceLoading: false,
+  serviceLoading: true,
   totalService: 0,
   serviceId: undefined,
   singleService: undefined,
@@ -78,6 +78,20 @@ export const getFollowService = createAsyncThunk(
   }
 );
 
+export const getServiceById = createAsyncThunk(
+  "get/service/by/id",
+  async (serviceId: string) => {
+    try {
+      const response = await axiosClient.get(`/service/${serviceId}`);
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+);
+
 const serviceSlice = createSlice({
   name: "serviceProfile",
   initialState,
@@ -90,12 +104,15 @@ const serviceSlice = createSlice({
     [getAllServices.pending.toString()]: (state, _action) => {
       state.serviceLoading = true;
     },
+    [selectService.pending.toString()]: (state, action) => {
+      state.serviceLoading = true;
+    },
     [selectService.fulfilled.toString()]: (state, action) => {
-      console.log(action.payload.services);
       state.serviceId = action.payload.serviceId;
-      state.singleService = action.payload.services?.filter(
-        (service: any) => service._id === action.payload.serviceId
-      );
+      // state.singleService = action.payload.services?.filter(
+      //   (service: any) => service._id === action.payload.serviceId
+      // );
+      // state.serviceLoading = false;
     },
     [followService.fulfilled.toString()]: (state, _action) => {
       state.isFollow = true;
@@ -105,6 +122,13 @@ const serviceSlice = createSlice({
     },
     [setIsFollow.fulfilled.toString()]: (state, action) => {
       state.isFollow = action.payload;
+    },
+    [getServiceById.pending.toString()]: (state, action) => {
+      state.serviceLoading = true;
+    },
+    [getServiceById.fulfilled.toString()]: (state, action) => {
+      state.singleService = action.payload.service;
+      state.serviceLoading = false;
     },
   },
 });

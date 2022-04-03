@@ -2,7 +2,7 @@ import React from "react";
 import serviceImg from "../../assets/service/service.png";
 import rating from "../../assets/service/rating.png";
 import { useNavigate } from "react-router-dom";
-import { selectService } from "../../redux/slices/service";
+import { getServiceById, selectService } from "../../redux/slices/service";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 
@@ -26,7 +26,6 @@ const SingleCard: React.FC<ICategory> = ({
   );
 
   const goToSingleService = async () => {
-    await dispatch(selectService({ serviceId: service._id, services }));
     await navigate(`/detailService/${service._id}`);
   };
   return (

@@ -5,7 +5,6 @@ import Navbar from "../components/layouts/Navbar";
 import Pagination from "../components/layouts/Pagination/Pagination";
 import SideBarHomePage from "../components/layouts/SideBarHomePage";
 import SingleCard from "../components/services/SingleCard";
-import { getAllServices, getFollowService } from "../redux/slices/service";
 import { RootState } from "../redux/store";
 
 const Homepage: React.FC = () => {
@@ -13,20 +12,7 @@ const Homepage: React.FC = () => {
     console.log("hello Homepage");
   }, []);
 
-  const serviceState = useSelector((state: RootState) => state.service);
   const searchState = useSelector((state: RootState) => state.search);
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    async function fetchData() {
-      // await dispatch(getAllServices());
-      await dispatch(getFollowService());
-    }
-    fetchData();
-  }, [dispatch]);
-
-  const navigate = useNavigate();
 
   return (
     <div className="bg-slate-100 min-h-screen h-fit">

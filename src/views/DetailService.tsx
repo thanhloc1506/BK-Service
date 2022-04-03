@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Navbar from "../components/layouts/Navbar";
 import Description from "../components/services/Description";
@@ -9,30 +9,38 @@ import CommentModal from "../components/services/post/CommentModal";
 import Post from "../components/services/post/Post";
 import Schedule from "../components/services/Schedule";
 import Statistical from "../components/services/Statistical";
-import { selectService } from "../redux/slices/service";
+import {
+  getFollowService,
+  getServiceById,
+  selectService,
+} from "../redux/slices/service";
 import { RootState } from "../redux/store";
 
 const DetailService: React.FC = () => {
   const { serviceId } = useParams();
 
-  console.log(serviceId);
   const currentServiceId = useSelector(
     (state: RootState) => state.service?.serviceId
   );
-  if (currentServiceId !== serviceId) {
-  }
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    selectService(serviceId as string);
-  }, []);
+    dispatch(getServiceById(serviceId as string));
+    dispatch(getFollowService());
+    dispatch(selectService(serviceId as string));
+  }, [dispatch]);
 
   const service = useSelector(
     (state: RootState) => state.service.singleService
   );
-  console.log(service);
 
   const followServices = useSelector(
     (state: RootState) => state.service?.followService
+  );
+
+  const serviceLoading = useSelector(
+    (state: RootState) => state.service.serviceLoading
   );
 
   const description =
@@ -68,53 +76,59 @@ const DetailService: React.FC = () => {
   return (
     <div className="min-h-screen h-fit pb-20">
       <Navbar />
-      <div className="pt-24">
-        <HeaderDeatail
-          name={service[0].name}
-          phone={service[0].phone}
-          address={service[0].address}
-          serviceId={serviceId as string}
-          followServices={followServices}
-        />
-      </div>
-      <div className="grid grid-cols-3 border-gray-200 border-b-2 pb-5">
-        <div className="col-span-2">
-          <Description description={description} />
-          <div className="mt-12">
-            <Menu actions={actions} />
+      {serviceLoading ? (
+        "loading..."
+      ) : (
+        <>
+          <div className="pt-24">
+            <HeaderDeatail
+              name={service.name}
+              phone={service.phone}
+              address={service.address}
+              serviceId={serviceId as string}
+              followServices={followServices}
+            />
           </div>
-        </div>
-        <div className="overflow-hidden max-w-screen">
-          <Schedule />
-        </div>
-      </div>
-      <div>
-        <div className="grid grid-cols-3">
-          <div className="col-span-2 mt-5">
-            <div className="ml-10">
-              {posts.map((post: any, index: number) => (
-                <div className="mb-20" key={index}>
-                  <Post
-                    avatar={post.avatar}
-                    content={post.content}
-                    fullName={post.fullName}
-                    like={post.like}
-                    rating={post.rating}
-                    serviceName={post.serviceName}
-                    time={post.time}
-                  />
-                </div>
-              ))}
+          <div className="grid grid-cols-3 border-gray-200 border-b-2 pb-5">
+            <div className="col-span-2">
+              <Description description={description} />
+              <div className="mt-12">
+                <Menu actions={actions} />
+              </div>
+            </div>
+            <div className="overflow-hidden max-w-screen">
+              <Schedule />
             </div>
           </div>
           <div>
-            <Statistical />
-            <div className="mx-24 mt-4">
-              <CommentModal />
+            <div className="grid grid-cols-3">
+              <div className="col-span-2 mt-5">
+                <div className="ml-10">
+                  {posts.map((post: any, index: number) => (
+                    <div className="mb-20" key={index}>
+                      <Post
+                        avatar={post.avatar}
+                        content={post.content}
+                        fullName={post.fullName}
+                        like={post.like}
+                        rating={post.rating}
+                        serviceName={post.serviceName}
+                        time={post.time}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <Statistical />
+                <div className="mx-24 mt-4">
+                  <CommentModal />
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 };
