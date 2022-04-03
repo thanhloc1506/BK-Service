@@ -95,7 +95,7 @@ export const unFollow = createAsyncThunk(
     try {
       const response = axiosClient.post("user/remove-favorite", { serviceId });
       if ((await response).status === 200) {
-        return true;
+        return serviceId;
       }
       return false;
     } catch (error) {
@@ -110,7 +110,7 @@ const serviceSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    [selectService.pending.toString()]: (state, action) => {
+    [selectService.pending.toString()]: (state, _action) => {
       state.serviceLoading = true;
     },
     [selectService.fulfilled.toString()]: (state, action) => {
@@ -130,17 +130,22 @@ const serviceSlice = createSlice({
       state.isFollow = currentFollowService.length === 1;
       state.followLoading = false;
     },
-    [getServiceById.pending.toString()]: (state, action) => {
+    [getServiceById.pending.toString()]: (state, _action) => {
       state.serviceLoading = true;
     },
     [getServiceById.fulfilled.toString()]: (state, action) => {
       state.singleService = action.payload.service;
       state.serviceLoading = false;
     },
-    [unFollow.pending.toString()]: (state, action) => {
+    [unFollow.pending.toString()]: (state, _action) => {
       state.followLoading = true;
     },
     [unFollow.fulfilled.toString()]: (state, action) => {
+      if (action.payload) {
+        state.followService = state.followService.filter(
+          (service: any) => service._id !== action.payload
+        );
+      }
       state.isFollow = false;
       state.followLoading = false;
     },

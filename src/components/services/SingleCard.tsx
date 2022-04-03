@@ -2,7 +2,11 @@ import React from "react";
 import serviceImg from "../../assets/service/service.png";
 import rating from "../../assets/service/rating.png";
 import { useNavigate } from "react-router-dom";
-import { getServiceById, selectService } from "../../redux/slices/service";
+import {
+  getServiceById,
+  selectService,
+  unFollow,
+} from "../../redux/slices/service";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 
@@ -24,6 +28,10 @@ const SingleCard: React.FC<ICategory> = ({
   const services = useSelector(
     (state: RootState) => state.search.dataSearch?.services
   );
+
+  const onClickUnFollow = async () => {
+    await dispatch(unFollow(service._id));
+  };
 
   const goToSingleService = async () => {
     await navigate(`/detailService/${service._id}`);
@@ -60,12 +68,18 @@ const SingleCard: React.FC<ICategory> = ({
         {isLoveService ? (
           <div className="grid grid-cols-2 mt-3">
             <div className="flex justify-center">
-              <button className="text-white bg-blue-solid px-3 py-2 rounded-lg">
+              <button
+                className="text-white bg-blue-solid px-3 py-2 rounded-lg"
+                onClick={goToSingleService}
+              >
                 Xem chi tiết
               </button>
             </div>
             <div className="flex justify-center">
-              <button className="text-white bg-orange-400 px-3 py-2 rounded-lg">
+              <button
+                className="text-white bg-orange-400 px-3 py-2 rounded-lg"
+                onClick={onClickUnFollow}
+              >
                 Hủy theo dõi
               </button>
             </div>
