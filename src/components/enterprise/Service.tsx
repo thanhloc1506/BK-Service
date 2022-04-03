@@ -2,7 +2,8 @@ import React from "react";
 import rating from "../../assets/service/rating.png";
 import {useNavigate} from "react-router-dom";
 import {PInAllServices} from "../../apis/package/in/PInAllServices";
-
+import {Carousel} from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 interface IService {
     data: PInAllServices.Service;
     onBtnClick?: () => void;
@@ -16,7 +17,18 @@ const SingleCard: React.FC<IService> = ({
         <>
             <div className="w-72 h-96 bg-white border-2 border-blue-200 rounded">
                 <div className="flex justify-center">
-                    <img src={data.avatar?.url} alt="service" className="w-72 h-40 p-3"/>
+                    {data.images&&data.images.length>0 ?
+                    <Carousel showThumbs={false} showArrows={false} showIndicators={false} showStatus={false} autoPlay={true} infiniteLoop={true}>
+                        { data.images && (data.images.map((e, index)=>{
+                            return <div key={index}>
+                                <img src={e.url} className={'w-72 h-40'}/>
+                            </div>
+                        }))}
+                    </Carousel>
+                    : (<div>
+                        <img src={'https://paroda.vn/media/2021/08/customer-service.jpg'} className={'w72 h-40'}/>
+                    </div>)}
+                    {/*<img src={data.avatar?.url} alt="service" className="w-72 h-40 p-3"/>*/}
                 </div>
                 <div className="grid grid-cols-6">
                     <div className="col-span-4 font-bold px-4">{data.name}</div>
