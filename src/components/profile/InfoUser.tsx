@@ -39,7 +39,7 @@ const getAddressContent = async (data: Address | undefined) => {
     const quanList = res.data.results;
     let quan = undefined;
     for (let i = 0; i < quanList.length; ++i) {
-      if (quanList[i].district_id === data.district) {
+      if (quanList[i].district_id == data.district) {
         quan = quanList[i];
         break;
       }
@@ -52,7 +52,7 @@ const getAddressContent = async (data: Address | undefined) => {
     const phuongList = resPhuong.data.results;
     let phuong = undefined;
     for (let i = 0; i < phuongList.length; ++i) {
-      if (phuongList[i].ward_id === data.village) {
+      if (phuongList[i].ward_id == data.village) {
         phuong = phuongList[i];
         break;
       }
@@ -185,8 +185,9 @@ const InfoUser: React.FC = () => {
   };
 
   useEffect(() => {
-    getAddressContent(state.user?.address).then((res) =>
-      setAddress((pre: any) => ({ ...pre, value: res }))
+    getAddressContent(state.user?.address).then((res) => {
+          setAddress((pre: any) => ({...pre, value: res}))
+        }
     );
   }, [state.user?.address]);
 
