@@ -41,8 +41,8 @@ export const SearchField = () => {
 
   useEffect(() => {
     const searchDelay = setTimeout(() => {
-      // dispatch(setCurrentSearchText(searchText));
-      // dispatch(search(searchText));
+      dispatch(setCurrentSearchText(searchText));
+      dispatch(search(searchText));
     }, 2000);
     return () => clearTimeout(searchDelay);
   }, [searchText]);

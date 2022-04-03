@@ -80,9 +80,9 @@ export const ModalAddress = ({show, setAddress, setShow}: ModalAddressProps) => 
         dispatch(showWaiting());
         if(quan && phuong) {
             const data: Address = {
-                province: 79,
-                district: parseInt(quan.district_id),
-                village: parseInt(phuong.ward_id),
+                province: "79",
+                district: quan.district_id,
+                village: phuong.ward_id,
                 detail: detail
             };
             console.log("Change address", data);
