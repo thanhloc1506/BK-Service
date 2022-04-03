@@ -14,12 +14,13 @@ const Homepage: React.FC = () => {
   }, []);
 
   const serviceState = useSelector((state: RootState) => state.service);
+  const searchState = useSelector((state: RootState) => state.search);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     async function fetchData() {
-      await dispatch(getAllServices());
+      // await dispatch(getAllServices());
       await dispatch(getFollowService());
     }
     fetchData();
@@ -36,22 +37,27 @@ const Homepage: React.FC = () => {
           <SideBarHomePage />
         </div>
         <div className="col-span-4 mt-34 ml-20">
-          {serviceState.serviceLoading ? (
+          {searchState.status === "loading" ? (
             "loading..."
           ) : (
-            <div className="grid grid-cols-3 gap-8 mb-5">
-              {serviceState.services?.map((service: any, index: number) => (
-                <div key={index}>
-                  <SingleCard service={service} />
+            <>
+              <div className="grid grid-cols-3 gap-8 mb-5">
+                {searchState.dataSearch?.services?.map(
+                  (service: any, index: number) => (
+                    <div key={index}>
+                      <SingleCard service={service} />
+                    </div>
+                  )
+                )}
+              </div>
+              {searchState.dataSearch &&
+              searchState.dataSearch.services.length > 9 ? (
+                <div className="flex justify-end pr-20 mt-10">
+                  <Pagination itemsPerPage={4} />
                 </div>
-              ))}
-            </div>
+              ) : null}
+            </>
           )}
-          {serviceState.services.lenght > 9 ? (
-            <div className="flex justify-end pr-20 mt-10">
-              <Pagination itemsPerPage={4} />
-            </div>
-          ) : null}
         </div>
       </div>
     </div>

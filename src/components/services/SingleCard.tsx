@@ -3,7 +3,8 @@ import serviceImg from "../../assets/service/service.png";
 import rating from "../../assets/service/rating.png";
 import { useNavigate } from "react-router-dom";
 import { selectService } from "../../redux/slices/service";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 interface ICategory {
   isLoveService?: boolean;
@@ -20,8 +21,12 @@ const SingleCard: React.FC<ICategory> = ({
 
   const dispatch = useDispatch();
 
+  const services = useSelector(
+    (state: RootState) => state.search.dataSearch?.services
+  );
+
   const goToSingleService = async () => {
-    await dispatch(selectService(service._id));
+    await dispatch(selectService({ serviceId: service._id, services }));
     await navigate(`/detailService/${service._id}`);
   };
   return (

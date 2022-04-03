@@ -37,13 +37,13 @@ export const getAllServices = createAsyncThunk("/get/services", async () => {
 
 export const selectService = createAsyncThunk(
   "/select/single/service",
-  async (serviceId: string | number) => {
-    return serviceId;
+  async ({ serviceId, services }: any) => {
+    return { serviceId, services };
   }
 );
 
 export const setIsFollow = createAsyncThunk(
-  "/select/service",
+  "/set/follow/service",
   async (isFollow: boolean) => {
     return isFollow;
   }
@@ -91,15 +91,14 @@ const serviceSlice = createSlice({
       state.serviceLoading = true;
     },
     [selectService.fulfilled.toString()]: (state, action) => {
-      state.serviceId = action.payload;
-      state.singleService = state.services?.filter(
-        (service: any) => service._id === action.payload
+      console.log(action.payload.services);
+      state.serviceId = action.payload.serviceId;
+      state.singleService = action.payload.services?.filter(
+        (service: any) => service._id === action.payload.serviceId
       );
-      console.log(state.singleService);
     },
     [followService.fulfilled.toString()]: (state, _action) => {
       state.isFollow = true;
-      console.log(1);
     },
     [getFollowService.fulfilled.toString()]: (state, action) => {
       state.followService = action.payload.services;
