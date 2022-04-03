@@ -19,38 +19,27 @@ import { RootState } from "../redux/store";
 const DetailService: React.FC = () => {
   const { serviceId } = useParams();
 
-  const currentServiceId = useSelector(
-    (state: RootState) => state.service?.serviceId
-  );
-
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getServiceById(serviceId as string));
-    dispatch(getFollowService());
+    const fetchData = async () => {
+      await dispatch(getServiceById(serviceId as string));
+      await dispatch(getFollowService());
+    };
     dispatch(selectService(serviceId as string));
+    fetchData();
   }, [dispatch]);
 
-  const service = useSelector(
-    (state: RootState) => state.service.singleService
-  );
-
-  const followServices = useSelector(
-    (state: RootState) => state.service?.followService
-  );
-
-  const serviceLoading = useSelector(
-    (state: RootState) => state.service.serviceLoading
-  );
+  const serviceState = useSelector((state: RootState) => state.service);
 
   const description =
-    service?.description ||
+    serviceState.singleService?.description ||
     "The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on";
-  const actions = service?.action || [
+  const actions = serviceState.singleService?.action || [
     { name: "Thay mat kinh", price: 500000 },
     { name: "Thay man hinh", price: 5000000 },
   ];
-  const posts = service?.posts || [
+  const posts = serviceState.singleService?.posts || [
     {
       avatar: "",
       fullName: "Tran Van C",
@@ -76,17 +65,17 @@ const DetailService: React.FC = () => {
   return (
     <div className="min-h-screen h-fit pb-20">
       <Navbar />
-      {serviceLoading ? (
+      {serviceState.serviceLoading ? (
         "loading..."
       ) : (
         <>
           <div className="pt-24">
             <HeaderDeatail
-              name={service.name}
-              phone={service.phone}
-              address={service.address}
+              name={serviceState.singleService.name}
+              phone={serviceState.singleService.phone}
+              address={serviceState.singleService.address}
               serviceId={serviceId as string}
-              followServices={followServices}
+              followServices={serviceState.followService}
             />
           </div>
           <div className="grid grid-cols-3 border-gray-200 border-b-2 pb-5">

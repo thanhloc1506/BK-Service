@@ -11,6 +11,7 @@ export interface State {
   singleService: any;
   isFollow: boolean;
   followService: any;
+  followLoading: boolean;
 }
 
 const initialState: State = {
@@ -23,22 +24,13 @@ const initialState: State = {
   singleService: undefined,
   isFollow: false,
   followService: [],
+  followLoading: false,
 };
-
-export const getAllServices = createAsyncThunk("/get/services", async () => {
-  try {
-    const response = await axiosClient.get(`/search`);
-    return response.data;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-});
 
 export const selectService = createAsyncThunk(
   "/select/single/service",
-  async ({ serviceId, services }: any) => {
-    return { serviceId, services };
+  async (serviceId: string) => {
+    return serviceId;
   }
 );
 
@@ -49,11 +41,17 @@ export const setIsFollow = createAsyncThunk(
   }
 );
 
+export const getIsFollow = createAsyncThunk(
+  "get/follow/service",
+  (serviceId: string) => {
+    return serviceId;
+  }
+);
+
 export const followService = createAsyncThunk(
   "/follow/service",
   async (serviceId: string | number) => {
     try {
-      console.log(serviceId);
       const response = await axiosClient.post(`/user/add-favorite`, {
         serviceId: serviceId,
       });
@@ -83,8 +81,23 @@ export const getServiceById = createAsyncThunk(
   async (serviceId: string) => {
     try {
       const response = await axiosClient.get(`/service/${serviceId}`);
-      console.log(response.data);
       return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+);
+
+export const unFollow = createAsyncThunk(
+  "unFollow/Service",
+  async (serviceId: string) => {
+    try {
+      const response = axiosClient.post("user/remove-favorite", { serviceId });
+      if ((await response).status === 200) {
+        return true;
+      }
+      return false;
     } catch (error) {
       console.log(error);
       throw error;
@@ -97,31 +110,25 @@ const serviceSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    [getAllServices.fulfilled.toString()]: (state, action) => {
-      state.serviceLoading = false;
-      state.services = action.payload.services;
-    },
-    [getAllServices.pending.toString()]: (state, _action) => {
-      state.serviceLoading = true;
-    },
     [selectService.pending.toString()]: (state, action) => {
       state.serviceLoading = true;
     },
     [selectService.fulfilled.toString()]: (state, action) => {
-      state.serviceId = action.payload.serviceId;
-      // state.singleService = action.payload.services?.filter(
-      //   (service: any) => service._id === action.payload.serviceId
-      // );
-      // state.serviceLoading = false;
+      state.serviceId = action.payload;
     },
     [followService.fulfilled.toString()]: (state, _action) => {
       state.isFollow = true;
     },
+    [getFollowService.pending.toString()]: (state, _action) => {
+      state.followLoading = true;
+    },
     [getFollowService.fulfilled.toString()]: (state, action) => {
       state.followService = action.payload.services;
-    },
-    [setIsFollow.fulfilled.toString()]: (state, action) => {
-      state.isFollow = action.payload;
+      const currentFollowService = state.followService?.filter(
+        (service: any) => service._id === state.serviceId
+      );
+      state.isFollow = currentFollowService.length === 1;
+      state.followLoading = false;
     },
     [getServiceById.pending.toString()]: (state, action) => {
       state.serviceLoading = true;
@@ -129,6 +136,13 @@ const serviceSlice = createSlice({
     [getServiceById.fulfilled.toString()]: (state, action) => {
       state.singleService = action.payload.service;
       state.serviceLoading = false;
+    },
+    [unFollow.pending.toString()]: (state, action) => {
+      state.followLoading = true;
+    },
+    [unFollow.fulfilled.toString()]: (state, action) => {
+      state.isFollow = false;
+      state.followLoading = false;
     },
   },
 });

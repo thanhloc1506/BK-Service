@@ -15,9 +15,6 @@ import { AuthSync } from "./components/rounting/AuthSync";
 import ScollToTop from "./components/rounting/ScollToTop";
 
 const App: React.FC = () => {
-  useEffect(() => {
-    console.log("hello App");
-  }, []);
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor} loading={null}>

@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import React from "react";
+import { useSelector } from "react-redux";
 import Navbar from "../components/layouts/Navbar";
 import Pagination from "../components/layouts/Pagination/Pagination";
 import SideBarHomePage from "../components/layouts/SideBarHomePage";
@@ -8,10 +7,6 @@ import SingleCard from "../components/services/SingleCard";
 import { RootState } from "../redux/store";
 
 const Homepage: React.FC = () => {
-  useEffect(() => {
-    console.log("hello Homepage");
-  }, []);
-
   const searchState = useSelector((state: RootState) => state.search);
 
   return (

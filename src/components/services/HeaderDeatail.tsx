@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import React from "react";
 import service from "../../assets/service/service.png";
-import { followService, setIsFollow } from "../../redux/slices/service";
 import Breakcumb from "../layouts/Breakcumb";
 import ButtonFollow from "../layouts/ButtonFollow";
 
@@ -27,23 +25,6 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
   serviceId,
   followServices,
 }: IHeaderDetail) => {
-  const dispatch = useDispatch();
-
-  let currentFollowService: any;
-  const [Follow, setFollow] = useState(false);
-  useEffect(() => {
-    currentFollowService = followServices?.filter(
-      (service: any) => service._id === serviceId
-    );
-    setFollow(currentFollowService[0] !== undefined);
-    dispatch(setIsFollow(Follow));
-  }, []);
-
-  const onClickFollow = async () => {
-    await dispatch(followService(serviceId));
-    setFollow(true);
-  };
-
   return (
     <>
       <div className="grid grid-cols-3">
@@ -62,8 +43,8 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
                 <p className="font-bold text-xl">{name}</p>
               </div>
             </div>
-            <div className="flex justify-center" onClick={onClickFollow}>
-              <ButtonFollow isFollow={Follow} />
+            <div className="flex justify-center">
+              <ButtonFollow serviceId={serviceId} />
             </div>
           </div>
           <div className="grid grid-cols-8 border-b-2 border-b-gray-100 pb-2">
