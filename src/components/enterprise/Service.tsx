@@ -15,22 +15,24 @@ const SingleCard: React.FC<IService> = ({
                                         }: IService) => {
     return (
         <>
-            <div className="w-72 h-96 bg-white border-2 border-blue-200 rounded">
-                <div className="flex justify-center">
-                    {data.images&&data.images.length>0 ?
-                    <Carousel showThumbs={false} showArrows={false} showIndicators={false} showStatus={false} autoPlay={true} infiniteLoop={true}>
-                        { data.images && (data.images.map((e, index)=>{
-                            return <div key={index}>
-                                <img src={e.url} className={'w-72 h-40'}/>
-                            </div>
-                        }))}
-                    </Carousel>
-                    : (<div>
-                        <img src={'https://paroda.vn/media/2021/08/customer-service.jpg'} className={'w72 h-40'}/>
-                    </div>)}
-                    {/*<img src={data.avatar?.url} alt="service" className="w-72 h-40 p-3"/>*/}
+            <div className="w-72 h-[28rem] bg-white border-2 border-blue-200 rounded">
+                <div className={'h-[40%] overflow-hidden'}>
+                    <div className="flex justify-center">
+                        {data.images&&data.images.length>0 ?
+                            <Carousel showThumbs={false} showArrows={false} showIndicators={false} showStatus={false} autoPlay={true} infiniteLoop={true}>
+                                { data.images && (data.images.map((e, index)=>{
+                                    return <div key={index}>
+                                        <img src={e.url} className={'w-72 h-40'}/>
+                                    </div>
+                                }))}
+                            </Carousel>
+                            : (<div>
+                                <img src={'https://paroda.vn/media/2021/08/customer-service.jpg'} className={'w72 h-40'}/>
+                            </div>)}
+                        {/*<img src={data.avatar?.url} alt="service" className="w-72 h-40 p-3"/>*/}
+                    </div>
                 </div>
-                <div className="grid grid-cols-6">
+                <div className="grid grid-cols-6 h-[10%] overflow-hidden">
                     <div className="col-span-4 font-bold px-4">{data.name}</div>
                     <div className="flex justify-end p-1 mr-2 col-span-2">
                         <p className="px-2 bg-blue-200 rounded-2xl overflow-hidden text-blue-600 text-xs w-fit h-fit">
@@ -38,16 +40,16 @@ const SingleCard: React.FC<IService> = ({
                         </p>
                     </div>
                 </div>
-                <div className="px-4 py-2 max-h-32 overflow-hidden">
+                <div className="px-4 h-[5%]">
+                    <img src={rating} alt="rating"/>
+                </div>
+                <div className="px-4 py-2 h-[30%] overflow-hidden border-y-2 border-gray-200">
                     <p className="text-sm font-light" dangerouslySetInnerHTML={{__html: data.introduction || ""}}>
                     </p>
                 </div>
-                <div className="px-4">
-                    <img src={rating} alt="rating"/>
-                </div>
-                <div className="border-b-2 border-gray-100 mt-3"></div>
-                <div className="border-b-2 border-gray-100 mt-12"></div>
-                <div className="grid grid-cols-4 h-16">
+                {/*<div className="border-b-2 border-gray-100 mt-3"></div>*/}
+                {/*<div className="border-b-2 border-gray-100 mt-12"></div>*/}
+                <div className="grid grid-cols-4 h-16 row-span-1 h-[25%] overflow-hidden">
                     <div className="flex justify-center h-full mt-5 ml-1">
                         <svg
                             className="h-5 w-5 text-gray-500 align-middle mt-0.5"
