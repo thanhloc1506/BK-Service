@@ -15,6 +15,7 @@ import {ImageAdd} from "./ImageAdd";
 import cookies, {remove} from "js-cookie";
 import {FileUploaded} from "../../apis/common/FileUploaded";
 import {toastSuccess} from "../../utils/toast";
+import {ModalIntroduction} from "./ModalIntroduction";
 
 interface IModalEditService {
     data: PInAllServices.Service | undefined;
@@ -38,7 +39,7 @@ interface DataForm {
     imageAdd?: any;
 }
 
-const submitChangeService = (data: PInAllServices.Service | undefined, oldImg: FileUploaded[]|undefined, newImg: File[] | undefined) =>{
+const submitChangeService = (data: PInAllServices.Service | undefined, oldImg: FileUploaded[]|undefined, newImg: File[] | undefined, intro: string | undefined) =>{
     const formData = new FormData();
     if(!data) return;
     data.name && formData.append("name", data.name);
@@ -50,7 +51,7 @@ const submitChangeService = (data: PInAllServices.Service | undefined, oldImg: F
     data.closeTime && formData.append("closeTime", data.closeTime);
     data.maxPrice && formData.append("maxPrice", data.maxPrice.toString());
     data.minPrice && formData.append("minPrice", data.minPrice.toString());
-
+    intro && formData.append("introduction", intro);
     let removeImg = data.images?.filter((image)=>{
         return !oldImg?.includes(image);
     }).map((e)=>e.key);
@@ -77,7 +78,8 @@ export const ModalEditService = ({data, show, setShow}: IModalEditService) => {
     const [textAddress, setTextAddress] = useState<string | undefined>("");
     const [oldImg, setOldImg] = useState<FileUploaded[]| undefined>();
     const [newImg, setNewImg] = useState<File[]>();
-
+    const [showModalIntro, setShowModalIntro] = useState(false);
+    const [intro, setIntro] = useState("");
     useEffect(() => {
         //fetch categories
         dispatch(showWaiting());
@@ -92,6 +94,7 @@ export const ModalEditService = ({data, show, setShow}: IModalEditService) => {
         setEditData(data);
         setAddress(data?.address);
         setOldImg(data?.images);
+        data?.introduction && setIntro(data?.introduction);
     }, [data]);
     useEffect(() => {
         dispatch(showWaiting());
@@ -153,6 +156,7 @@ export const ModalEditService = ({data, show, setShow}: IModalEditService) => {
                                     {/*content*/}
                                     <ModalAddress show={showModalAddress} setShow={setShowModalAddress}
                                                   onChange={setAddress} defaultValue={address}/>
+                                    <ModalIntroduction show={showModalIntro} setShow={setShowModalIntro} onSave={setIntro} defaultData={intro}/>
                                     <div>
                                         <div className="">
                                             <label className="block mb-2 text-sm font-medium text-gray-900">Tên dịch
@@ -167,6 +171,14 @@ export const ModalEditService = ({data, show, setShow}: IModalEditService) => {
                                                     })
                                                 }}
                                             />
+                                        </div>
+                                        <div className="">
+                                            <label className="block mb-2 text-sm font-medium text-gray-900">Nội dung mô tả</label>
+                                            <button
+                                                className={"py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200"}
+                                                onClick={() => {
+                                                    setShowModalIntro(true);
+                                                }}>{"Chỉnh sửa nội dung mô tả"}</button>
                                         </div>
                                         <div className="">
                                             <label className="block mb-2 text-sm font-medium text-gray-900">Địa
@@ -319,7 +331,7 @@ export const ModalEditService = ({data, show, setShow}: IModalEditService) => {
                                                 onClick={() => {
                                                     setShow && setShow(false);
                                                     dispatch(showWaiting());
-                                                    submitChangeService(editData, oldImg, newImg)
+                                                    submitChangeService(editData, oldImg, newImg, intro)
                                                         ?.then((res)=>{
                                                             toastSuccess("Cập nhật thành công!");
                                                         })

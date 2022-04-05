@@ -38,10 +38,8 @@ const SingleCard: React.FC<IService> = ({
                         </p>
                     </div>
                 </div>
-                <div className="px-4 py-2">
-                    <p className="text-sm font-light">
-                        The Receipe for its success lies in xd's long-term-forcused strategy
-                        on ...
+                <div className="px-4 py-2 max-h-32 overflow-hidden">
+                    <p className="text-sm font-light" dangerouslySetInnerHTML={{__html: data.introduction || ""}}>
                     </p>
                 </div>
                 <div className="px-4">

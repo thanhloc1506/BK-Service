@@ -16,6 +16,7 @@ export namespace PInAllServices{
         readonly minPrice: number;
         readonly category: any;
         readonly images?: FileUploaded[];
+        readonly introduction?: string;
     }
 
     export interface Data {
