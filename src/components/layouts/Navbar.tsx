@@ -11,6 +11,8 @@ import {SearchField} from "./SearchField";
 import {BsBorderAll} from "react-icons/bs";
 import {SiGoogletagmanager} from "react-icons/si";
 import {selectPageEnterprise} from "../../redux/slices/enterprise";
+import {RiNotification2Line, RiNotification3Line} from "react-icons/ri";
+import {ModalNoti} from "../Noti/ModalNoti";
 
 const Navbar: React.FC = () => {
   const authState = useSelector((state: RootState) => state.user);
@@ -86,15 +88,9 @@ const Navbar: React.FC = () => {
             <div className="col-span-3 grid grid-cols-6 px-5">
               <span className="col-span-3 grid grid-cols-2">
                 <span
-                  className="col-span-1 cursor-pointer flex justify-center items-center flex-col"
-                  onClick={gotoAllService}
+                    className="col-span-1 cursor-pointer flex justify-center items-center flex-col"
                 >
-                  <div className="flex justify-end">
-                    <BsBorderAll className={"text-xl text-white"} strokeWidth={1}/>
-                  </div>
-                  <p className="text-white mt-1 text-sm font-medium flex justify-end">
-                    Dịch vụ
-                  </p>
+                <ModalNoti/>
                 </span>
                 <span
                   className="col-span-1 cursor-pointer flex flex-col justify-center items-center"

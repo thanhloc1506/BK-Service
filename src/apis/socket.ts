@@ -1,4 +1,5 @@
 import {io, Socket} from "socket.io-client";
+import cookies from "js-cookie";
 
 const uri = process.env.SOCKET_URI || "localhost:8080";
 
@@ -10,7 +11,9 @@ export class SocketClient {
     }
 
     connect(): Promise<any> {
-        this.socket = io(uri);
+        this.socket = io(uri, {
+            auth: {"bearer": cookies.get("token")}
+        });
         return new Promise((resolve, reject) => {
             this.socket?.on("connect", () => {
                 console.log("Connected to " + uri);
@@ -23,7 +26,7 @@ export class SocketClient {
         })
     }
 
-    registerListener(ev: string, callback: () => void): Promise<any> {
+    registerListener(ev: string, callback: (e: any) => void): Promise<any> {
         return new Promise((resolve, reject) => {
             if(!this.socket){
                 reject();

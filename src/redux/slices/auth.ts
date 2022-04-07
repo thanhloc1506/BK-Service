@@ -6,10 +6,11 @@ import cookies from "js-cookie";
 import axiosClient from "../../apis/axios";
 import {Enterprise} from "../../apis/common/Enterprise";
 import {PInLogin} from "../../apis/package/in/PInLogin";
-import {socketConnect, socketDisconnect} from "./socket";
 import {PInProfile} from "../../apis/package/in/PInProfile";
 import {hideWaiting, showWaiting} from "./loading";
 import {toastError, toastSuccess} from "../../utils/toast";
+import {getNoti} from "./noti";
+import {socket} from "../../apis/socket";
 
 export interface State {
   enterprise: Enterprise | undefined;
@@ -41,7 +42,6 @@ export const login = createAsyncThunk(
         console.log(response);
         cookies.set("token", response.data.accessToken);
         const dispatch = thunkAPI.dispatch;
-        dispatch(socketConnect());
         return response;
       } catch (error) {
         console.log(error);
@@ -71,7 +71,6 @@ export const logout = createAsyncThunk("/enterprise/logout", async (_, thunkAPI)
     setAuthToken(null);
     cookies.remove("token");
     const dispatch = thunkAPI.dispatch;
-    dispatch(socketDisconnect());
   } catch (error) {
     throw error;
   }
@@ -82,6 +81,12 @@ export const loadEnterprise = createAsyncThunk("/enterprise/loadEnterprise", asy
   dispatch(showWaiting());
   try {
     const response: AxiosResponse<PInProfile> = await axiosClient.get(`/enterprise/`);
+    dispatch(getNoti());
+    socket.connect().then(res=>{
+      socket.registerListener("hello", (e)=>{
+        console.log("Long ne", e);
+      })
+    })
     return response.data;
   } catch (error) {
     console.log(error);
