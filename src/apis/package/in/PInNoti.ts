@@ -10,7 +10,7 @@ export namespace PInNotification{
         readonly service: Service
         readonly type: NotiType;
         readonly date: number;
-        readonly hadRead: boolean;
+        hadRead: boolean;
     }
 
     export interface Data{

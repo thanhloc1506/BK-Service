@@ -1,20 +1,22 @@
 import {Popover, Transition} from "@headlessui/react";
 import React, {Fragment, ReactNode, useState} from "react";
 import {RiNotification3Line} from "react-icons/ri";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../redux/store";
 import {PInNotification} from "../../apis/package/in/PInNoti";
 import {NotiType} from "../../apis/common/NotiType";
+import {readAllNoti} from "../../redux/slices/noti";
 
 export const ModalNoti = () => {
     const [showing, setShowing] = useState(false);
+    const state = useSelector((state: RootState)=>state.noti);
     return <Popover className="relative">
         <Popover.Button>
             <div className={""}>
-                      <span className="flex h-3 w-3 absolute right-2 top-0">
+                      <span className={`flex h-3 w-3 absolute right-2 top-0 ${!state.hasNewNoti? "hidden": ""}`}>
                           <span
-                              className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                          <span className="relative inline-flex rounded-full h-3 w-3 bg-yellow-500"></span>
+                              className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"/>
+                          <span className="relative inline-flex rounded-full h-3 w-3 bg-lime-500"/>
                         </span>
                 <div className="flex justify-center">
                     <RiNotification3Line className={"text-xl text-white"} size={28}/>
@@ -33,7 +35,7 @@ export const ModalNoti = () => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
         >
-            <Popover.Overlay className={'fixed inset-0 backdrop-blur z-[20]'}/>
+            <Popover.Overlay className={'fixed inset-0 backdrop-blur z-[20] cursor-default'}/>
         </Transition.Child>
         <Transition
             as={Fragment}
@@ -63,19 +65,29 @@ const getContentNoti = (noti: PInNotification.Notification): ReactNode=>{
     }
 }
 
+const getTimeText = (t: number)=>{
+    const time = t/1000;
+    const curTime = Date.now() / 1000;
+    if ((curTime - time) < 60) return "Vừa xong";
+    if ((curTime - time) < 3600) return `${Math.floor((curTime - time) / 60)} phút trước`
+    if ((curTime - time) < 3600 * 24) return `${Math.floor((curTime - time) / 3600)} giờ trước`
+    return `${Math.floor((curTime - time) / (3600 * 24))} ngày trước`
+}
+
 export const NotiContent = () => {
     const noti = useSelector((state: RootState)=>state.noti)
+    const dispatch = useDispatch();
     return (
         <>
             <div className={'w-[30vw] h-[85vh] bg-white drop-shadow-xl rounded-md translate-x-[-45%] p-4 relative'}>
                 <div className={'absolute top-0 left-0 flex justify-between p-2 items-end mb-3 h-[7vh] w-full p-4'}>
                     <p className={'text-2xl font-medium leading-6 text-gray-900'}>Thông báo</p>
-                    <p>Đánh dấu tất cả là đã đọc</p>
+                    <p className={'italic text-black/30 underline-offset-1'} onClick={()=>dispatch(readAllNoti())}>Đánh dấu tất cả là đã đọc</p>
                 </div>
 
                 <div className={'divide-y mt-[7vh] h-[75vh] overflow-auto'}>
                     {noti.notiData.map((n, index)=>{
-                        return <NotiItem  content={getContentNoti(n)} img={n.user.avatar.url} time={"2h ago"} key={index} hadRead={n.hadRead}/>
+                        return <NotiItem  content={getContentNoti(n)} img={n.user.avatar.url} time={getTimeText(n.date)} key={index} hadRead={n.hadRead}/>
                     })}
                 </div>
             </div>

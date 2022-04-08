@@ -9,8 +9,9 @@ import {PInLogin} from "../../apis/package/in/PInLogin";
 import {PInProfile} from "../../apis/package/in/PInProfile";
 import {hideWaiting, showWaiting} from "./loading";
 import {toastError, toastSuccess} from "../../utils/toast";
-import {getNoti} from "./noti";
+import {addNewNoti, getNoti} from "./noti";
 import {socket} from "../../apis/socket";
+import {PInNotification} from "../../apis/package/in/PInNoti";
 
 export interface State {
   enterprise: Enterprise | undefined;
@@ -83,8 +84,9 @@ export const loadEnterprise = createAsyncThunk("/enterprise/loadEnterprise", asy
     const response: AxiosResponse<PInProfile> = await axiosClient.get(`/enterprise/`);
     dispatch(getNoti());
     socket.connect().then(res=>{
-      socket.registerListener("hello", (e)=>{
-        console.log("Long ne", e);
+      socket.registerListener("noti", (e: PInNotification.Notification)=>{
+        console.log("Da nhan", e);
+        dispatch(addNewNoti(e));
       })
     })
     return response.data;

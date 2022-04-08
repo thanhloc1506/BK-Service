@@ -29,20 +29,36 @@ export const getNoti = createAsyncThunk(
     }
 );
 
+export const readAllNoti = createAsyncThunk(
+    "/read-all-noti",
+    async ()=>{
+        return axiosClient.post('/enterprise/readAllNoti');
+    }
+)
+
 const notiSlice = createSlice({
     name: "noti",
     initialState,
-    reducers: {},
+    reducers: {
+        addNewNoti: function (state: State, action: PayloadAction<PInNotification.Notification>){
+            state.notiData.unshift(action.payload);
+            state.hasNewNoti = true;
+        }
+    },
     extraReducers: {
         [getNoti.fulfilled.toString()]: (state: State, action: PayloadAction<PInNotification.Data>) => {
-            state.notiData = action.payload.noti;
+            state.notiData = action.payload.noti.sort((a, b)=> (b.date - a.date));
             state.hasNewNoti = state.notiData.filter((s)=>!s.hadRead).length>0;
         },
         [getNoti.rejected.toString()]: (state: State, action)=>{
 
+        },
+        [readAllNoti.fulfilled.toString()]: (state: State, action) => {
+            state.notiData.forEach(e=>e.hadRead=true);
+            state.hasNewNoti = false;
         }
     },
 });
 
 export default notiSlice.reducer;
-export const {} = notiSlice.actions;
+export const {addNewNoti} = notiSlice.actions;
