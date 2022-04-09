@@ -8,7 +8,6 @@ import { Admin } from "./views/admin/Admin";
 import ProtectedRoute from "./components/rounting/ProtectedRoute";
 import Profile from "./views/Profile";
 import Loading from "./views/Loading";
-import EHomepage from "./views/enterprise/EHomePage";
 import { PersistGate } from "redux-persist/integration/react";
 import { ToastContainer } from "react-toastify";
 import { AuthSync } from "./components/rounting/AuthSync";
@@ -37,7 +36,6 @@ const App: React.FC = () => {
                 }
               />
               <Route path="/admin/*" element={<Admin />} />
-              <Route path="/enterprise" element={<EHomepage />} />
             </Routes>
           </Router>
         </AuthSync>
