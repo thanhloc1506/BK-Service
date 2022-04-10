@@ -6,6 +6,7 @@ import { RootState } from "../redux/store";
 const Loading: React.FC = () => {
   const state = useSelector((state: RootState) => state.loading);
   const authState = useSelector((state: RootState) => state.user);
+
   return (
     <Transition
       show={state.loading > 0}

@@ -19,7 +19,7 @@ const Homepage: React.FC = () => {
         </div>
         <div className="col-span-4 mt-34 ml-20">
           {searchState.status === "loading" ? (
-            "loading..."
+            ""
           ) : (
             <>
               <div className="grid grid-cols-3 gap-8 mb-5">

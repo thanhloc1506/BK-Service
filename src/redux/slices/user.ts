@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axiosClient from "../../apis/axios";
 
 type Page = "info" | "schedule" | "love" | "noti" | "history";
 

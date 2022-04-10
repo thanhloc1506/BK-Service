@@ -10,6 +10,7 @@ import Post from "../components/services/post/Post";
 import Schedule from "../components/services/Schedule";
 import Statistical from "../components/services/Statistical";
 import {
+  getComments,
   getFollowService,
   getServiceById,
   selectService,
@@ -25,6 +26,7 @@ const DetailService: React.FC = () => {
     const fetchData = async () => {
       await dispatch(getServiceById(serviceId as string));
       await dispatch(getFollowService());
+      await dispatch(getComments(serviceId as string));
     };
     dispatch(selectService(serviceId as string));
     fetchData();
@@ -39,28 +41,16 @@ const DetailService: React.FC = () => {
     { name: "Thay mat kinh", price: 500000 },
     { name: "Thay man hinh", price: 5000000 },
   ];
-  const posts = serviceState.singleService?.posts || [
-    {
-      avatar: "",
-      fullName: "Tran Van C",
-      time: "30/11/2021",
-      like: [""],
-      rating: 9.2,
-      content:
-        "The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on The Receipe for its Success Lies in Xds Long-term-focused Strategy on The Receipe for its Success Lies in Xds Long-term-focused Strategy on The Receipe for i",
-      serviceName: ["Nguyen Van A", "Sua chua dien thoai"],
-    },
-    {
-      avatar: "",
-      fullName: "Tran Van C",
-      time: "30/11/2021",
-      like: [""],
-      rating: 9.2,
-      content:
-        "The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on The Receipe for its Success Lies in Xds Long-term-focused Strategy on The Receipe for its Success Lies in Xds Long-term-focused Strategy on The Receipe for i",
-      serviceName: ["Nguyen Van A", "Sua chua dien thoai"],
-    },
-  ];
+  const post = {
+    avatar: "",
+    fullName: "Tran Van C",
+    time: "30/11/2021",
+    like: [""],
+    rating: 9.2,
+    content:
+      "The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on The Receipe for its Success Lies in Xds Long-term-focused Strategy on The Receipe for its Success Lies in Xds Long-term-focused Strategy on The Receipe for i",
+    serviceName: ["Nguyen Van A", "Sua chua dien thoai"],
+  };
 
   return (
     <div className="min-h-screen h-fit pb-20">
@@ -93,19 +83,23 @@ const DetailService: React.FC = () => {
             <div className="grid grid-cols-3">
               <div className="col-span-2 mt-5">
                 <div className="ml-10">
-                  {posts.map((post: any, index: number) => (
-                    <div className="mb-20" key={index}>
-                      <Post
-                        avatar={post.avatar}
-                        content={post.content}
-                        fullName={post.fullName}
-                        like={post.like}
-                        rating={post.rating}
-                        serviceName={post.serviceName}
-                        time={post.time}
-                      />
-                    </div>
-                  ))}
+                  {serviceState.commentLoading
+                    ? ""
+                    : serviceState.comments.map(
+                        (comment: any, index: number) => (
+                          <div className="mb-20" key={index}>
+                            <Post
+                              avatar={post.avatar}
+                              content={post.content}
+                              fullName={post.fullName}
+                              like={post.like}
+                              rating={post.rating}
+                              serviceName={post.serviceName}
+                              time={post.time}
+                            />
+                          </div>
+                        )
+                      )}
                 </div>
               </div>
               <div>

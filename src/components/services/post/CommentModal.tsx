@@ -5,8 +5,13 @@ import service from "../../../assets/service/service.png";
 import measure from "../../../assets/service/measure.png";
 import rating from "../../../assets/service/rating.png";
 import RCSlider from "../../layouts/RCSlider";
+import { json } from "stream/consumers";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
+import { comment } from "../../../redux/slices/service";
 
 const CommentModal: React.FC = () => {
+  const serviceId = useSelector((state: RootState) => state.service.serviceId);
   const cancelButtonRef = useRef(null);
   const [showModalComment, setShowModalComment] = useState(false);
   const [Image, setImage] = useState(false);
@@ -31,31 +36,74 @@ const CommentModal: React.FC = () => {
     setShare(true);
   };
 
-  const [selectedImage, setSelectedImage] = useState();
-  const [preview, setPreview] = useState();
+  const [score_1, setScore_1] = useState(7);
+  const [score_2, setScore_2] = useState(7);
+  const [score_3, setScore_3] = useState(7);
+  const [score_4, setScore_4] = useState(7);
+  const [score_5, setScore_5] = useState(7);
+
+  const [selectedImages, setSelectedImage] = useState([]);
+  const [preview, setPreview] = useState([]);
 
   useEffect(() => {
-    if (!selectedImage) {
-      setPreview(undefined);
+    if (!selectedImages[0]) {
+      setPreview([]);
       return;
     }
-    const objectUrl = URL.createObjectURL(selectedImage);
-    setPreview(objectUrl as any);
 
-    return () => URL.revokeObjectURL(objectUrl);
-  }, [selectedImage]);
+    let objectUrls: any = [];
+    let idx = 0;
+    for (const selectedImage of selectedImages) {
+      objectUrls[idx] = URL.createObjectURL(selectedImage);
+      idx++;
+    }
+
+    setPreview(objectUrls as any);
+
+    let result = [];
+    idx = 0;
+    for (const objectUrl of objectUrls) {
+      result[idx] = () => URL.revokeObjectURL(objectUrl);
+      idx++;
+    }
+    return result[0];
+  }, [selectedImages]);
 
   const imageChange = (e: any) => {
     if (!e.target.files || e.target.files.lenght === 0) {
       console.log(e.target.files[0]);
-      setSelectedImage(undefined);
+      setSelectedImage([]);
       return;
     }
-    setSelectedImage(e.target.files[0]);
+
+    setSelectedImage(e.target.files);
   };
 
   const removeImage = () => {
-    setSelectedImage(undefined);
+    setSelectedImage([]);
+  };
+
+  const dispatch = useDispatch();
+
+  const onPostComment = (values: any, { resetForm }: any) => {
+    const formData = new FormData();
+    const score = JSON.stringify([score_1, score_2, score_3, score_4, score_5]);
+    formData.append("title", values.title);
+    formData.append("content", values.content);
+    for (const image of selectedImages) {
+      formData.append("images", image as any);
+    }
+    formData.append("score", score);
+    formData.append("serviceId", serviceId as string);
+    dispatch(comment(formData));
+    resetForm();
+    removeImage();
+    setScore_1(7);
+    setScore_2(7);
+    setScore_3(7);
+    setScore_4(7);
+    setScore_5(7);
+    setShowModalComment(false);
   };
 
   return (
@@ -64,7 +112,7 @@ const CommentModal: React.FC = () => {
         onClick={() => setShowModalComment(true)}
         className="bg-blue-500 w-full py-3 rounded-md text-white text-xl"
       >
-        Viet binh luan
+        Viết bình luận
       </button>
       <div>
         <Transition.Root show={showModalComment} as={Fragment}>
@@ -290,8 +338,20 @@ const CommentModal: React.FC = () => {
                             </div>
                           </div>
                           <div className="col-span-5 p-4 pl-0">
-                            <Formik initialValues={{}} onSubmit={() => {}}>
-                              {({ errors, handleChange, handleBlur }) => (
+                            <Formik
+                              initialValues={{
+                                title: "",
+                                content: "",
+                                images: "",
+                              }}
+                              onSubmit={onPostComment}
+                            >
+                              {({
+                                errors,
+                                handleChange,
+                                handleBlur,
+                                setFieldValue,
+                              }) => (
                                 <Form>
                                   {Share ? (
                                     <>
@@ -303,6 +363,8 @@ const CommentModal: React.FC = () => {
                                           id="title"
                                           name="title"
                                           required
+                                          onChange={handleChange}
+                                          onBlur={handleBlur}
                                         />
                                       </div>
                                       <div className="w-full">
@@ -311,6 +373,8 @@ const CommentModal: React.FC = () => {
                                           id="content"
                                           name="content"
                                           required
+                                          onChange={handleChange}
+                                          onBlur={handleBlur}
                                           placeholder="Nhập nội dung bình luận"
                                         />
                                       </div>
@@ -322,23 +386,43 @@ const CommentModal: React.FC = () => {
                                       <div className="h-122 w-full bg-white">
                                         <div className="px-5 pt-14 grid grid-cols-10">
                                           <div>
-                                            <p>Danh gia</p>
+                                            <p>Đánh giá</p>
                                           </div>
                                         </div>
                                         <div>
-                                          <RCSlider title="Tieu chi 1" />
+                                          <RCSlider
+                                            title="Tieu chi 1"
+                                            score={score_1}
+                                            setScore={setScore_1}
+                                          />
                                         </div>
                                         <div>
-                                          <RCSlider title="Tieu chi 2" />
+                                          <RCSlider
+                                            title="Tieu chi 2"
+                                            score={score_2}
+                                            setScore={setScore_2}
+                                          />
                                         </div>
                                         <div>
-                                          <RCSlider title="Tieu chi 3" />
+                                          <RCSlider
+                                            title="Tieu chi 3"
+                                            score={score_3}
+                                            setScore={setScore_3}
+                                          />
                                         </div>
                                         <div>
-                                          <RCSlider title="Tieu chi 4" />
+                                          <RCSlider
+                                            title="Tieu chi 4"
+                                            score={score_4}
+                                            setScore={setScore_4}
+                                          />
                                         </div>
                                         <div>
-                                          <RCSlider title="Tieu chi 5" />
+                                          <RCSlider
+                                            title="Tieu chi 5"
+                                            score={score_5}
+                                            setScore={setScore_5}
+                                          />
                                         </div>
                                       </div>
                                     </>
@@ -351,18 +435,27 @@ const CommentModal: React.FC = () => {
                                           type="file"
                                           className="w-80 h-20 p-3"
                                           id="image"
-                                          name="image"
+                                          name="images"
                                           onChange={imageChange}
+                                          multiple
                                         />
-                                        {selectedImage && (
-                                          <div className="pl-3 z-20">
-                                            <img
-                                              className="max-h-40 max-w-96 z-30"
-                                              src={preview}
-                                              alt="thumb"
-                                            />
-                                          </div>
-                                        )}
+                                        <div className="flex">
+                                          {selectedImages !== [] &&
+                                            preview.map(
+                                              (srcImage: any, index) => (
+                                                <div
+                                                  className="pl-3 z-20"
+                                                  key={index}
+                                                >
+                                                  <img
+                                                    className="max-h-40 max-w-96 z-30"
+                                                    src={srcImage}
+                                                    alt="thumb"
+                                                  />
+                                                </div>
+                                              )
+                                            )}
+                                        </div>
                                       </div>
                                     </>
                                   ) : null}
@@ -391,7 +484,7 @@ const CommentModal: React.FC = () => {
                                           />
                                         </svg>
                                       </div>
-                                      <p className="pt-2.5 pl-1.5">Binh luan</p>
+                                      <p className="pt-2.5 pl-1.5">Bình luận</p>
                                     </div>
                                     <div
                                       className={`flex justify-center ${
@@ -421,7 +514,7 @@ const CommentModal: React.FC = () => {
                                           <path d="M12 17.75l-6.172 3.245 1.179-6.873-4.993-4.867 6.9-1.002L12 2l3.086 6.253 6.9 1.002-4.993 4.867 1.179 6.873z" />
                                         </svg>
                                       </div>
-                                      <p className="pt-2.5 pl-1.5">Danh gia</p>
+                                      <p className="pt-2.5 pl-1.5">Đánh giá</p>
                                     </div>
                                     <div
                                       className={`flex justify-center  ${
@@ -452,11 +545,11 @@ const CommentModal: React.FC = () => {
                                           />
                                         </svg>
                                       </div>
-                                      <p className="pt-2.5 pl-1.5">Hinh anh</p>
+                                      <p className="pt-2.5 pl-1.5">Hình ảnh</p>
                                     </div>
                                     <div className="flex justify-center bg-gray-medium">
                                       <button className="bg-green-500 text-white px-5 rounded-sm ml-3 my-1.5">
-                                        Hoan tat
+                                        Hoàn tất
                                       </button>
                                     </div>
                                   </div>

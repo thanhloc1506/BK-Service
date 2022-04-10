@@ -1,18 +1,27 @@
 import Slider, { SliderTooltip } from "rc-slider";
 import "rc-slider/assets/index.css";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 
 interface ITitle {
   title: string;
+  score: number;
+  setScore: any;
 }
 
-const RCSlider: React.FC<ITitle> = ({ title }: ITitle) => {
+const RCSlider: React.FC<ITitle> = ({ title, score, setScore }: ITitle) => {
   const { Handle } = Slider;
-  const [value, setValue] = useState(9);
+  // const [value, setValue] = useState(7);
+
+  const handleInputChange = useCallback(
+    (value: any) => {
+      setScore(value);
+    },
+    [setScore]
+  );
 
   const handle = (props: any) => {
     const { value, dragging, index, ...restProps } = props;
-    setValue(value);
+    handleInputChange(value);
     return (
       <SliderTooltip
         prefixCls="rc-slider-tooltip"
@@ -32,10 +41,10 @@ const RCSlider: React.FC<ITitle> = ({ title }: ITitle) => {
           <p>{title}</p>
         </div>
         <div className="col-span-8 mt-1.5 px-6">
-          <Slider min={0} max={10} defaultValue={9} handle={handle} />
+          <Slider min={0} max={10} defaultValue={score} handle={handle} />
         </div>
         <div className="ml-5">
-          <p>{value}</p>
+          <p>{score}</p>
         </div>
       </div>
     </div>

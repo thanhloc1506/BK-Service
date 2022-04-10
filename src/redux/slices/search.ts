@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AxiosError, AxiosResponse } from "axios";
 import axiosClient from "../../apis/axios";
 import { PInSearch } from "../../apis/package/in/PInSearch";
+import { hideWaiting, showWaiting } from "./loading";
 
 export interface State {
   status: "loading" | "complete";
@@ -17,7 +18,9 @@ const initialState: State = {
   dataSearch: undefined,
 };
 
-export const search = createAsyncThunk("/search", async (text: string) => {
+export const search = createAsyncThunk("/search", async (text: string, api) => {
+  const dispatch = api.dispatch;
+  dispatch(showWaiting());
   return axiosClient
     .get("search", {
       params: {
@@ -29,6 +32,9 @@ export const search = createAsyncThunk("/search", async (text: string) => {
     })
     .catch((error: AxiosError) => {
       throw error;
+    })
+    .finally(() => {
+      dispatch(hideWaiting());
     });
 });
 

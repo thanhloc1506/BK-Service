@@ -7,9 +7,9 @@ import "./style/output.css";
 import "react-toastify/dist/ReactToastify.css";
 import ScollToTop from "./components/rounting/ScollToTop";
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <App />,
+  // </React.StrictMode>,
   document.getElementById("root")
 );
 

@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosClient from "../../apis/axios";
+import { hideWaiting, showWaiting } from "./loading";
 
 export interface State {
   services: any;
@@ -12,6 +13,8 @@ export interface State {
   isFollow: boolean;
   followService: any;
   followLoading: boolean;
+  comments: any;
+  commentLoading: boolean;
 }
 
 const initialState: State = {
@@ -25,6 +28,8 @@ const initialState: State = {
   isFollow: false,
   followService: [],
   followLoading: false,
+  comments: [],
+  commentLoading: false,
 };
 
 export const selectService = createAsyncThunk(
@@ -105,6 +110,41 @@ export const unFollow = createAsyncThunk(
   }
 );
 
+export const comment = createAsyncThunk(
+  "user/comment",
+  async (formComment: any, api) => {
+    const dispatch = api.dispatch;
+    try {
+      dispatch(showWaiting());
+      const response = axiosClient.post("/user/rating-service", formComment);
+      return (await response).data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    } finally {
+      dispatch(hideWaiting());
+    }
+  }
+);
+
+export const getComments = createAsyncThunk(
+  "user/get/comments",
+  async (serviceId: string, api) => {
+    const dispatch = api.dispatch;
+    try {
+      dispatch(showWaiting());
+      const response = axiosClient.get(`service/${serviceId}/comments`);
+      console.log((await response).data.comments);
+      return (await response).data.comments;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    } finally {
+      dispatch(hideWaiting());
+    }
+  }
+);
+
 const serviceSlice = createSlice({
   name: "serviceProfile",
   initialState,
@@ -148,6 +188,20 @@ const serviceSlice = createSlice({
       }
       state.isFollow = false;
       state.followLoading = false;
+    },
+    [getComments.pending.toString()]: (state, _action) => {
+      state.commentLoading = true;
+    },
+    [getComments.fulfilled.toString()]: (state, action) => {
+      state.comments = action.payload;
+      state.commentLoading = false;
+    },
+    [comment.pending.toString()]: (state, _action) => {
+      state.commentLoading = true;
+    },
+    [comment.fulfilled.toString()]: (state, action) => {
+      state.comments = [action.payload, ...state.comments];
+      state.commentLoading = false;
     },
   },
 });

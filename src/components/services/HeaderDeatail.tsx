@@ -1,5 +1,7 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import service from "../../assets/service/service.png";
+import { RootState } from "../../redux/store";
 import Breakcumb from "../layouts/Breakcumb";
 import ButtonFollow from "../layouts/ButtonFollow";
 
@@ -25,6 +27,7 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
   serviceId,
   followServices,
 }: IHeaderDetail) => {
+  const authState = useSelector((state: RootState) => state.user);
   return (
     <>
       <div className="grid grid-cols-3">
@@ -43,9 +46,11 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
                 <p className="font-bold text-xl">{name}</p>
               </div>
             </div>
-            <div className="flex justify-center">
-              <ButtonFollow serviceId={serviceId} />
-            </div>
+            {authState.isAuthenticated ? (
+              <div className="flex justify-center">
+                <ButtonFollow serviceId={serviceId} />
+              </div>
+            ) : null}
           </div>
           <div className="grid grid-cols-8 border-b-2 border-b-gray-100 pb-2">
             <div className="flex justify-start ml-10 mt-2">
