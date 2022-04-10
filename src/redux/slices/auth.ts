@@ -39,7 +39,7 @@ export const login = createAsyncThunk(
     try {
       const response: AxiosResponse<PInLogin> =
         await axiosClient.post<PInLogin>(`/auth/login-enterprise`, loginForm);
-      cookies.set("token", response.data.accessToken);
+      cookies.set("eToken", response.data.accessToken);
       const dispatch = thunkAPI.dispatch;
       return response;
     } catch (error) {
@@ -58,7 +58,7 @@ export const register = createAsyncThunk(
         `/enterprise/register`,
         dataRegister
       );
-      cookies.set("token", response.data.accessToken);
+      // cookies.set("eToken", response.data.accessToken);
       return response.data;
     } catch (error) {
       // @ts-ignore
@@ -74,7 +74,7 @@ export const logout = createAsyncThunk(
     try {
       // await axios.get(`${apiUrl}/logout`);
       setAuthToken(null);
-      cookies.remove("token");
+      cookies.remove("eToken");
       const dispatch = thunkAPI.dispatch;
     } catch (error) {
       throw error;

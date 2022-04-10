@@ -8,7 +8,7 @@ export const AuthSync = ({children}: any) => {
     const dispatch = useDispatch();
     const authState = useSelector((state: RootState) => state.user);
     useEffect(() => {
-        if (cookies.get("token")) {
+        if (cookies.get("eToken")) {
             dispatch(loadEnterprise());
         }
     }, [dispatch, authState.isAuthenticated]);

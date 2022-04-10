@@ -13,7 +13,7 @@ const axiosClient = axios.create({
 });
 
 axiosClient.interceptors.request.use(async (config: any) => {
-  const token = cookies.get("token");
+  const token = cookies.get("eToken");
   config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
@@ -33,7 +33,7 @@ axiosClient.interceptors.response.use(
         draggable: true,
         progress: undefined,
       });
-      cookies.remove("token");
+      cookies.remove("eToken");
     }
     throw error;
   }

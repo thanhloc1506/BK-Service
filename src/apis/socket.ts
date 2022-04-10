@@ -12,7 +12,7 @@ export class SocketClient {
 
     connect(): Promise<any> {
         this.socket = io(uri, {
-            auth: {"bearer": cookies.get("token")}
+            auth: {"bearer": cookies.get("eToken")}
         });
         return new Promise((resolve, reject) => {
             this.socket?.on("connect", () => {

@@ -64,7 +64,7 @@ const submitChangeService = (data: PInAllServices.Service | undefined, oldImg: F
     return axiosClient.put(`/service/${data._id}/modify-service`, formData, {
         headers: {
             'Content-Type': 'multipart/form-data',
-            'Authorization': `Bearer ${cookies.get('token')}`
+            'Authorization': `Bearer ${cookies.get('eToken')}`
         }
     })
 }

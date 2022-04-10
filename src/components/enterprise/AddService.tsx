@@ -44,7 +44,7 @@ const handleAddNewService = async (data: DataForm, images: File[]|undefined) => 
     return axiosClient.post("/enterprise/new-service", formData, {
         headers: {
             'Content-Type': 'multipart/form-data',
-            'Authorization': `Bearer ${cookies.get('token')}`
+            'Authorization': `Bearer ${cookies.get('eToken')}`
         }
     })
     //
