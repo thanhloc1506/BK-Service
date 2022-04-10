@@ -11,6 +11,7 @@ import { selectPage } from "../../redux/slices/user";
 import { SearchField } from "./SearchField";
 import Loading from "../../views/Loading";
 import { DEFAULT_AVATAR } from "../../constants/common";
+import {ModalNoti} from "../noti/ModalNoti";
 
 const Navbar: React.FC = () => {
   const authState = useSelector((state: RootState) => state.user);
@@ -114,27 +115,9 @@ const Navbar: React.FC = () => {
                   </p>
                 </span>
                 <span
-                  className="col-span-1 cursor-pointer flex flex-col justify-center items-center"
-                  onClick={goToNoti}
+                    className="col-span-1 cursor-pointer flex justify-center items-center flex-col"
                 >
-                  <div className="flex justify-center">
-                    <svg
-                      className="h-8 w-8 text-white"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      {" "}
-                      <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />{" "}
-                      <path d="M13.73 21a2 2 0 0 1-3.46 0" />
-                    </svg>
-                  </div>
-                  <p className="text-white mt-1 text-sm font-medium flex justify-center ml-3">
-                    Notifications
-                  </p>
+                <ModalNoti/>
                 </span>
               </span>
               <span className="col-span-3 flex justify-center items-center">
@@ -143,7 +126,7 @@ const Navbar: React.FC = () => {
                     <img
                       src={
                         authState.user?.avatar
-                          ? authState.user.avatar
+                          ? authState.user.avatar.url
                           : DEFAULT_AVATAR
                       }
                       className={"w-full h-full p-1 rounded-full"}

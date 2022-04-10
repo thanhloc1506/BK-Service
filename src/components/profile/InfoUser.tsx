@@ -209,7 +209,7 @@ const InfoUser: React.FC = () => {
         })
         .then((res) => {
           toastSuccess("Cập nhật thành công!");
-          dispatch(updateAvatar(res.data.url));
+          dispatch(updateAvatar(res.data.avatar));
         })
         .catch((err) => {
           toastError("Cập nhật thất bại!");
@@ -303,7 +303,7 @@ const InfoUser: React.FC = () => {
               }
             >
               <img
-                src={state.user?.avatar ? state.user.avatar : DEFAULT_AVATAR}
+                src={state.user?.avatar ? state.user.avatar.url : DEFAULT_AVATAR}
                 className={"rounded-full  w-full h-full"}
               />
               <button

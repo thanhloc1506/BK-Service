@@ -6,10 +6,13 @@ import cookies from "js-cookie";
 import axiosClient from "../../apis/axios";
 import { User } from "../../apis/common/User";
 import { PInLogin } from "../../apis/package/in/PInLogin";
-import { socketConnect, socketDisconnect } from "./socket";
 import { PInProfile } from "../../apis/package/in/PInProfile";
 import { hideWaiting, showWaiting } from "./loading";
 import { toastError, toastSuccess } from "../../utils/toast";
+import {FileUploaded} from "../../apis/common/FileUploaded";
+import {addNewNoti, getNoti} from "./noti";
+import {socket} from "../../apis/socket";
+import {PInNotification} from "../../apis/package/in/PInNoti";
 
 export interface State {
   user?: User;
@@ -39,7 +42,6 @@ export const login = createAsyncThunk(
         await axiosClient.post<PInLogin>(`/auth/login`, loginForm);
       cookies.set("token", response.data.accessToken);
       const dispatch = thunkAPI.dispatch;
-      dispatch(socketConnect());
       return response;
     } catch (error) {
       console.log(error);
@@ -68,7 +70,6 @@ export const logout = createAsyncThunk("/user/logout", async (_, thunkAPI) => {
     setAuthToken(null);
     cookies.remove("token");
     const dispatch = thunkAPI.dispatch;
-    dispatch(socketDisconnect());
   } catch (error) {
     throw error;
   }
@@ -83,6 +84,13 @@ export const loadUser = createAsyncThunk(
       const response: AxiosResponse<PInProfile> = await axiosClient.get(
         `/user/profile`
       );
+      dispatch(getNoti());
+      socket.connect().then((res) => {
+        socket.registerListener("noti", (e: PInNotification.Notification) => {
+          console.log("Da nhan", e);
+          dispatch(addNewNoti(e));
+        });
+      });
       return response.data;
     } catch (error) {
       console.log(error);
@@ -111,7 +119,7 @@ const authSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    updateAvatar(state: State, action: PayloadAction<string>) {
+    updateAvatar(state: State, action: PayloadAction<FileUploaded>) {
       state.user = { ...state.user, avatar: action.payload } as User;
     },
     updateProfile(state: State, action: PayloadAction<any>) {

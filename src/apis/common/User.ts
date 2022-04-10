@@ -1,5 +1,6 @@
 import { RolesType } from "./Role";
 import { Address } from "./Address";
+import {FileUploaded} from "./FileUploaded";
 
 export interface User {
   readonly username: string;
@@ -7,7 +8,7 @@ export interface User {
   readonly id: string;
   readonly fullName: string;
   readonly role: RolesType;
-  readonly avatar: string;
+  readonly avatar: FileUploaded;
   readonly birthday: string;
   readonly phone: string;
   readonly address: Address;
