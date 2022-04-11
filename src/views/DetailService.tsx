@@ -16,10 +16,13 @@ import {
   selectService,
 } from "../redux/slices/service";
 import { RootState } from "../redux/store";
+import {hideWaiting, showWaiting} from "../redux/slices/loading";
+import axiosClient from "../apis/axios";
+import {PInScore} from "../apis/package/in/PInScore";
 
 const DetailService: React.FC = () => {
   const { serviceId } = useParams();
-
+  const [score, setScore] = useState<number[]>([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -33,24 +36,31 @@ const DetailService: React.FC = () => {
   }, [dispatch]);
 
   const serviceState = useSelector((state: RootState) => state.service);
-  const description =
-    serviceState.singleService?.description ||
-    "The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on";
-  const actions = serviceState.singleService?.action || [
-    { name: "Thay mat kinh", price: 500000 },
-    { name: "Thay man hinh", price: 5000000 },
-  ];
-  const post = {
-    avatar: "",
-    fullName: "Tran Van C",
-    time: "30/11/2021",
-    like: [""],
-    rating: 9.2,
-    content:
-      "The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on The Receipe for its Success Lies in Xds Long-term-focused Strategy on The Receipe for its Success Lies in Xds Long-term-focused Strategy on The Receipe for i",
-    serviceName: ["Nguyen Van A", "Sua chua dien thoai"],
-  };
+  // const description =
+  //   serviceState.singleService?.description ||
+  //   "The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on";
+  // const actions = serviceState.singleService?.action || [
+  //   { name: "Thay mat kinh", price: 500000 },
+  //   { name: "Thay man hinh", price: 5000000 },
+  // ];
+  // const post = {
+  //   avatar: "",
+  //   fullName: "Tran Van C",
+  //   time: "30/11/2021",
+  //   like: [""],
+  //   rating: 9.2,
+  //   content:
+  //     "The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on The Receipe for its Success Lies in Xds Long-term-focused Strategy on The Receipe for its Success Lies in Xds Long-term-focused Strategy on The Receipe for i",
+  //   serviceName: ["Nguyen Van A", "Sua chua dien thoai"],
+  // };
 
+  useEffect(()=>{
+    //fethc score
+    dispatch(showWaiting());
+    axiosClient.get<PInScore>(`service/${serviceState.singleService?._id}/scores`)
+        .then(response => setScore(response.data.score))
+        .finally(()=>dispatch(hideWaiting()));
+  }, [serviceState.singleService])
   return (
     <div className="min-h-screen h-fit pb-20">
       <Navbar />
@@ -59,20 +69,21 @@ const DetailService: React.FC = () => {
       ) : (
         <>
           <div className="pt-24">
-            <HeaderDeatail
-              name={serviceState.singleService.name}
-              phone={serviceState.singleService.phone}
-              address={serviceState.singleService.address}
-              serviceId={serviceId as string}
-              followServices={serviceState.followService}
-            />
+            {serviceState.singleService && <HeaderDeatail
+                name={serviceState.singleService.name}
+                phone={serviceState.singleService.phone}
+                address={serviceState.singleService.address}
+                serviceId={serviceId as string}
+                followServices={serviceState.followService}
+                scores={score}
+            />}
           </div>
           <div className="grid grid-cols-3 border-gray-200 border-b-2 pb-5">
             <div className="col-span-2">
-              <Description description={description} />
-              <div className="mt-12">
-                <Menu actions={actions} />
-              </div>
+              <Description description={serviceState.singleService?.introduction || ""} />
+              {/*<div className="mt-12">*/}
+              {/*  <Menu actions={actions} />*/}
+              {/*</div>*/}
             </div>
             <div className="overflow-hidden max-w-screen">
               <Schedule />
@@ -87,15 +98,15 @@ const DetailService: React.FC = () => {
                     : serviceState.comments.map(
                         (comment: any, index: number) => (
                           <div className="mb-20" key={index}>
-                            <Post
-                              avatar={post.avatar}
-                              content={post.content}
-                              fullName={post.fullName}
-                              like={post.like}
-                              rating={post.rating}
-                              serviceName={post.serviceName}
-                              time={post.time}
-                            />
+                            {/*<Post*/}
+                            {/*  avatar={post.avatar}*/}
+                            {/*  content={post.content}*/}
+                            {/*  fullName={post.fullName}*/}
+                            {/*  like={post.like}*/}
+                            {/*  rating={post.rating}*/}
+                            {/*  serviceName={post.serviceName}*/}
+                            {/*  time={post.time}*/}
+                            {/*/>*/}
                           </div>
                         )
                       )}

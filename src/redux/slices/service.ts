@@ -10,7 +10,7 @@ export interface State {
   error: string | null;
   serviceLoading: boolean;
   totalService: number;
-  singleService: any;
+  singleService: Service|undefined;
   isFollow: boolean;
   followService: any;
   followLoading: boolean;

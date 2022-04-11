@@ -10,10 +10,11 @@ import {getAddressContent} from "../../utils/getAddressContent";
 
 interface IHeaderDetail {
   name: string;
-  phone: number;
+  phone: string;
   address: Address;
   serviceId: string;
   followServices: any;
+  scores : number[];
 }
 
 const HeaderDeatail: React.FC<IHeaderDetail> = ({
@@ -22,6 +23,7 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
   address,
   serviceId,
   followServices,
+    scores
 }: IHeaderDetail) => {
   const authState = useSelector((state: RootState) => state.user);
   const [addressText, setAddressText] = useState("");
@@ -56,32 +58,18 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
             <div className="flex justify-start ml-10 mt-2">
               <div className="bg-blue-light rounded-full overflow-hidden h-14 w-14">
                 <p className="flex justify-center mt-3 text-2xl font-bold text-white">
-                  9.2
+                  {scores&&scores.length>=5 ? scores[5] : ""}
                 </p>
               </div>
             </div>
             <div className="col-span-5 ml-2">
               <div className="grid grid-cols-5 gap-4">
-                <div className="mt-1">
-                  <p className="text-2xl text-blue-light font-semibold">9.2</p>
-                  <p className="mt-1">Tieu chi 1</p>
-                </div>
-                <div className="mt-1">
-                  <p className="text-2xl text-blue-light font-semibold">9.2</p>
-                  <p className="mt-1">Tieu chi 1</p>
-                </div>
-                <div className="mt-1">
-                  <p className="text-2xl text-blue-light font-semibold">9.2</p>
-                  <p className="mt-1">Tieu chi 1</p>
-                </div>
-                <div className="mt-1">
-                  <p className="text-2xl text-blue-light font-semibold">9.2</p>
-                  <p className="mt-1">Tieu chi 1</p>
-                </div>
-                <div className="mt-1">
-                  <p className="text-2xl text-blue-light font-semibold">9.2</p>
-                  <p className="mt-1">Tieu chi 1</p>
-                </div>
+                {scores && scores.length>=5 && scores.slice(0, 5).map((s, i)=>{
+                  return <div className="mt-1 text-center" key={i}>
+                    <p className="text-2xl text-blue-light font-semibold">{s}</p>
+                    <p className="mt-1">Tieu chi {i+1}</p>
+                  </div>
+                })}
               </div>
             </div>
             <div>
