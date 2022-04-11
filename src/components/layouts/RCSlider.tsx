@@ -1,6 +1,6 @@
 import Slider, { SliderTooltip } from "rc-slider";
 import "rc-slider/assets/index.css";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 interface ITitle {
   title: string;
@@ -10,7 +10,8 @@ interface ITitle {
 
 const RCSlider: React.FC<ITitle> = ({ title, score, setScore }: ITitle) => {
   const { Handle } = Slider;
-  // const [value, setValue] = useState(7);
+
+  useEffect(() => {}, []);
 
   const handleInputChange = useCallback(
     (value: any) => {

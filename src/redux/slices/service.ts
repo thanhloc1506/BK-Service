@@ -123,9 +123,10 @@ export const comment = createAsyncThunk(
         formComment
       );
       let commentResponses: any;
-      const userInfoResponse = await axiosClient.post("/user-info", {
-        userId: response.data.comment.user,
-      });
+
+      const userInfoResponse = await axiosClient.get(
+        `/user-info/${response.data.comment.user}`
+      );
       const time = moment(response.data.comment.createdAt, "YYYY/MM/DD");
       var month = time.format("M");
       var day = time.format("D");
@@ -161,9 +162,9 @@ export const getComments = createAsyncThunk(
       let idx = 0;
 
       for (const comment of comments) {
-        const userInfoResponse = await axiosClient.post("/user-info", {
-          userId: comment.user,
-        });
+        const userInfoResponse = await axiosClient.get(
+          `/user-info/${comment.user._id}`
+        );
         let isLiked = false;
         for (const userId of comment.userLiked) {
           if (paramId.userId === userId) {

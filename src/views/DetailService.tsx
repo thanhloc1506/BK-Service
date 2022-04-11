@@ -62,7 +62,11 @@ const DetailService: React.FC = () => {
           <div className="grid grid-cols-3 border-gray-200 border-b-2 pb-5">
             <div className="col-span-2">
               <Description
-                description={serviceState.singleService?.introduction || ""}
+                description={
+                  serviceState.singleService?.introduction !== ""
+                    ? (serviceState.singleService?.introduction as string)
+                    : "Chưa có mô tả"
+                }
               />
             </div>
             <div className="overflow-hidden max-w-screen">
