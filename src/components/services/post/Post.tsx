@@ -7,7 +7,7 @@ interface IPost {
   rating: number;
   content: string;
   like: string[];
-  serviceName: string[];
+  serviceName?: string;
   title: string;
   images: any;
 }

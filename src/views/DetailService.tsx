@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Navbar from "../components/layouts/Navbar";
@@ -17,10 +17,13 @@ import {
   selectService,
 } from "../redux/slices/service";
 import { RootState } from "../redux/store";
+import { hideWaiting, showWaiting } from "../redux/slices/loading";
+import axiosClient from "../apis/axios";
+import { PInScore } from "../apis/package/in/PInScore";
 
 const DetailService: React.FC = () => {
   const { serviceId } = useParams();
-
+  const [score, setScore] = useState<number[]>([]);
   const dispatch = useDispatch();
 
   const userId = useSelector((state: RootState) => state.user.user?._id);
@@ -36,24 +39,14 @@ const DetailService: React.FC = () => {
 
   const serviceState = useSelector((state: RootState) => state.service);
 
-  const description =
-    serviceState.singleService?.description ||
-    "The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on";
-  const actions = serviceState.singleService?.action || [
-    { name: "Thay mat kinh", price: 500000 },
-    { name: "Thay man hinh", price: 5000000 },
-  ];
-  const post = {
-    avatar: "",
-    fullName: "Tran Van C",
-    time: "30/11/2021",
-    like: [""],
-    rating: 9.2,
-    content:
-      "The Receipe for its Success Lies in Xd’s Long-term-focused Strategy on The Receipe for its Success Lies in Xds Long-term-focused Strategy on The Receipe for its Success Lies in Xds Long-term-focused Strategy on The Receipe for i",
-    serviceName: ["Nguyen Van A", "Sua chua dien thoai"],
-  };
-
+  useEffect(() => {
+    //fethc score
+    dispatch(showWaiting());
+    axiosClient
+      .get<PInScore>(`service/${serviceState.singleService?._id}/scores`)
+      .then((response) => setScore(response.data.score))
+      .finally(() => dispatch(hideWaiting()));
+  }, [serviceState.singleService]);
   return (
     <div className="min-h-screen h-fit pb-20">
       <Navbar />
@@ -62,20 +55,15 @@ const DetailService: React.FC = () => {
       ) : (
         <>
           <div className="pt-24">
-            <HeaderDeatail
-              name={serviceState.singleService.name}
-              phone={serviceState.singleService.phone}
-              address={serviceState.singleService.address}
-              serviceId={serviceId as string}
-              followServices={serviceState.followService}
-            />
+            {serviceState.singleService && (
+              <HeaderDeatail data={serviceState.singleService} scores={score} />
+            )}
           </div>
           <div className="grid grid-cols-3 border-gray-200 border-b-2 pb-5">
             <div className="col-span-2">
-              <Description description={description} />
-              <div className="mt-12">
-                <Menu actions={actions} />
-              </div>
+              <Description
+                description={serviceState.singleService?.introduction || ""}
+              />
             </div>
             <div className="overflow-hidden max-w-screen">
               <Schedule />
@@ -96,7 +84,7 @@ const DetailService: React.FC = () => {
                               fullName={comment.user.username}
                               like={comment.userLiked}
                               rating={comment.rating}
-                              serviceName={serviceState.singleService.name}
+                              serviceName={serviceState.singleService?.name}
                               time={comment.time}
                               title={comment.title}
                               images={comment.images}

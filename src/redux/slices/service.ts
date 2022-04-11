@@ -2,15 +2,16 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosClient from "../../apis/axios";
 import { hideWaiting, showWaiting } from "./loading";
 import moment from "moment";
+import { Service } from "../../apis/common/Service";
 
 export interface State {
-  services: any;
+  services: Service[];
   serviceId?: string | number;
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
   serviceLoading: boolean;
   totalService: number;
-  singleService: any;
+  singleService: Service | undefined;
   isFollow: boolean;
   followService: any;
   followLoading: boolean;
