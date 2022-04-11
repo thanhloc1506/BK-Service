@@ -180,10 +180,11 @@ export const getComments = createAsyncThunk(
           user: userInfoResponse.data.user,
           userLiked: isLiked,
           time: `${day}/${month}/${year}`,
+          numOfUserLiked: comment.userLiked.length,
         };
         idx++;
       }
-      console.log(commentResponses);
+
       return commentResponses;
     } catch (error) {
       console.log(error);

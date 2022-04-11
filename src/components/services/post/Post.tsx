@@ -13,6 +13,7 @@ interface IPost {
   title: string;
   images: any;
   id: string;
+  numOfUserLiked: number;
 }
 
 const Post: React.FC<IPost> = ({
@@ -26,6 +27,7 @@ const Post: React.FC<IPost> = ({
   title,
   images,
   id,
+  numOfUserLiked,
 }: IPost) => {
   const [imageIndex, setIndex] = useState(0);
   const [image, setImage] = useState(images[0]?.url);
@@ -133,7 +135,7 @@ const Post: React.FC<IPost> = ({
                   </svg>
                 )}
               </button>
-              <p className="ml-2 mt-0.5">Thích</p>
+              <p className="ml-2 mt-0.5">{numOfUserLiked} Thích</p>
             </div>
           </div>
         </div>

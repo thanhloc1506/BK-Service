@@ -94,6 +94,7 @@ const DetailService: React.FC = () => {
                               title={comment.title}
                               images={comment.images}
                               id={comment._id}
+                              numOfUserLiked={comment.numOfUserLiked}
                             />
                           </div>
                         )
