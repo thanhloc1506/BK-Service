@@ -128,8 +128,8 @@ export const comment = createAsyncThunk(
         `/user-info/${response.data.comment.user}`
       );
       const time = moment(response.data.comment.createdAt, "YYYY/MM/DD");
-      var month = time.format("M");
-      var day = time.format("D");
+      var month = time.format("MM");
+      var day = time.format("DD");
       var year = time.format("YYYY");
       commentResponses = {
         ...response.data.comment,
@@ -172,8 +172,8 @@ export const getComments = createAsyncThunk(
           }
         }
         const time = moment(comment.createdAt, "YYYY/MM/DD");
-        var month = time.format("M");
-        var day = time.format("D");
+        var month = time.format("MM");
+        var day = time.format("DD");
         var year = time.format("YYYY");
         commentResponses[idx] = {
           ...comment,
@@ -194,7 +194,19 @@ export const getComments = createAsyncThunk(
   }
 );
 
-const likeComment = createAsyncThunk("like/comment", async () => {});
+export const toggleLikeComment = createAsyncThunk(
+  "like/comment",
+  async (commentId: string) => {
+    try {
+      const response = await axiosClient.post("/user/like-comment", {
+        commentId,
+      });
+      return commentId;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
 
 const serviceSlice = createSlice({
   name: "serviceProfile",
@@ -254,6 +266,7 @@ const serviceSlice = createSlice({
       state.comments = [action.payload, ...state.comments];
       state.commentLoading = false;
     },
+    [toggleLikeComment.fulfilled.toString()]: (state, action) => {},
   },
 });
 

@@ -41,7 +41,7 @@ const DetailService: React.FC = () => {
 
   useEffect(() => {
     //fethc score
-    if(!serviceState.singleService?._id) return;
+    if (!serviceState.singleService?._id) return;
     dispatch(showWaiting());
     axiosClient
       .get<PInScore>(`service/${serviceState.singleService?._id}/scores`)
@@ -93,6 +93,7 @@ const DetailService: React.FC = () => {
                               time={comment.time}
                               title={comment.title}
                               images={comment.images}
+                              id={comment._id}
                             />
                           </div>
                         )

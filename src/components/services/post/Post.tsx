@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { toggleLikeComment } from "../../../redux/slices/service";
 
 interface IPost {
   avatar: string;
@@ -6,10 +8,11 @@ interface IPost {
   time: string;
   rating: number;
   content: string;
-  like: string[];
+  like: boolean;
   serviceName?: string;
   title: string;
   images: any;
+  id: string;
 }
 
 const Post: React.FC<IPost> = ({
@@ -22,9 +25,17 @@ const Post: React.FC<IPost> = ({
   serviceName,
   title,
   images,
+  id,
 }: IPost) => {
   const [imageIndex, setIndex] = useState(0);
   const [image, setImage] = useState(images[0]?.url);
+  const dispatch = useDispatch();
+
+  const [isLike, setIsLike] = useState(like);
+  const onClickLike = () => {
+    dispatch(toggleLikeComment(id));
+    setIsLike(!isLike);
+  };
 
   return (
     <>
@@ -91,8 +102,8 @@ const Post: React.FC<IPost> = ({
           </div>
           <div className="py-3 ml-5">
             <div className="flex justify-start">
-              <button>
-                {like ? (
+              <button onClick={onClickLike}>
+                {isLike ? (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-6 w-6 text-red-500"
