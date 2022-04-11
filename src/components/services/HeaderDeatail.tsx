@@ -6,30 +6,23 @@ import Breakcumb from "../layouts/Breakcumb";
 import ButtonFollow from "../layouts/ButtonFollow";
 import {Address} from "../../apis/common/Address";
 import {getAddressContent} from "../../utils/getAddressContent";
+import {Service} from "../../apis/common/Service";
 
 
 interface IHeaderDetail {
-  name: string;
-  phone: string;
-  address: Address;
-  serviceId: string;
-  followServices: any;
-  scores : number[];
+  data: Service,
+  scores: number[]
 }
 
 const HeaderDeatail: React.FC<IHeaderDetail> = ({
-  name,
-  phone,
-  address,
-  serviceId,
-  followServices,
+  data,
     scores
 }: IHeaderDetail) => {
   const authState = useSelector((state: RootState) => state.user);
   const [addressText, setAddressText] = useState("");
   useEffect(()=>{
-    getAddressContent(address).then(res=>setAddressText(res||""));
-  }, [address]);
+    getAddressContent(data.address).then(res=>setAddressText(res||""));
+  }, [data.address]);
   return (
     <>
       <div className="grid grid-cols-3">
@@ -41,16 +34,16 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
         <div className="col-span-2">
           <div className="grid grid-cols-5 border-b-2 border-b-gray-100 pb-5">
             <div className="col-span-4 ml-10">
-              <Breakcumb addresses={[address.province, address.district]} />
-              <div className="flex">
-                <p className="font-bold text-xl">Nguyen Van A</p>
-                <p className="font-bold text-xl mx-3">-</p>
-                <p className="font-bold text-xl">{name}</p>
+              {/*<Breakcumb addresses={[data.address.province, data.address.district]} />*/}
+              <div className="flex mt-10">
+                {/*<p className="font-bold text-xl">Nguyen Van A</p>*/}
+                {/*<p className="font-bold text-xl mx-3">-</p>*/}
+                <p className="font-bold text-2xl">{data.name}</p>
               </div>
             </div>
             {authState.isAuthenticated ? (
               <div className="flex justify-center">
-                <ButtonFollow serviceId={serviceId} />
+                <ButtonFollow serviceId={data._id} />
               </div>
             ) : null}
           </div>
@@ -120,7 +113,7 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
                   Đang mở cửa
                 </p>
                 <p className="text-gray-600 text-xl font-semibold ml-5">
-                  08h00 - 22h00
+                  {data.openTime} - {data.closeTime}
                 </p>
               </div>
             </div>
@@ -142,7 +135,7 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
                 <circle cx="9" cy="9" r="2" />
               </svg>
               <p className="text-gray-600 text-xl font-semibold ml-5">
-                20.000d - 1.000.000d
+                {data.minPrice}đ - {data.maxPrice}đ
               </p>
             </div>
           </div>

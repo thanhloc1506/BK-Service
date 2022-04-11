@@ -31,8 +31,8 @@ const ButtonFollow: React.FC<IFollow> = ({ serviceId }: IFollow) => {
         <button
           className={
             isFollow
-              ? "text-red-500 text-xl flex"
-              : "text-green-500  text-xl flex"
+              ? "text-red-500  bg-red-100 hover:bg-red-200 focus:ring-4 focus:outline-none focus:ring-red-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2"
+              : "text-green-500  bg-green-100 hover:bg-green-200 focus:ring-4 focus:outline-none focus:ring-green-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2"
           }
           onClick={isFollow ? onClickUnFollow : onClickFollow}
         >

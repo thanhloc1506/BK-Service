@@ -70,11 +70,7 @@ const DetailService: React.FC = () => {
         <>
           <div className="pt-24">
             {serviceState.singleService && <HeaderDeatail
-                name={serviceState.singleService.name}
-                phone={serviceState.singleService.phone}
-                address={serviceState.singleService.address}
-                serviceId={serviceId as string}
-                followServices={serviceState.followService}
+                data={serviceState.singleService}
                 scores={score}
             />}
           </div>
