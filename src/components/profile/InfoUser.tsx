@@ -18,6 +18,7 @@ import axios, { AxiosResponse } from "axios";
 import { PInProfile } from "../../apis/package/in/PInProfile";
 import { ModalAddress } from "../common/ModalAddress";
 import { Address } from "../../apis/common/Address";
+import {getAddressContent} from "../../utils/getAddressContent";
 
 const SEX = [
   {
@@ -29,43 +30,6 @@ const SEX = [
     value: 1,
   },
 ];
-
-const getAddressContent = async (data: Address | undefined) => {
-  try {
-    if (!data) return "";
-    const res = await axios.get(
-      ADDRESS_API_URL + "/province/district/" + data.province
-    );
-    const quanList = res.data.results;
-    let quan = undefined;
-    for (let i = 0; i < quanList.length; ++i) {
-      if (quanList[i].district_id == data.district) {
-        quan = quanList[i];
-        break;
-      }
-    }
-    if (!quan) return;
-
-    const resPhuong = await axios.get(
-      ADDRESS_API_URL + "/province/ward/" + quan.district_id
-    );
-    const phuongList = resPhuong.data.results;
-    let phuong = undefined;
-    for (let i = 0; i < phuongList.length; ++i) {
-      if (phuongList[i].ward_id == data.village) {
-        phuong = phuongList[i];
-        break;
-      }
-    }
-    if (!phuong) return;
-    if (data.detail) {
-      return `${data.detail}, ${phuong.ward_name}, ${quan.district_name}`;
-    }
-    return `${phuong.ward_name}, ${quan.district_name}`;
-  } catch (e) {
-    return "";
-  }
-};
 
 const InfoUser: React.FC = () => {
   const [modify, setModify] = useState<boolean>(false);

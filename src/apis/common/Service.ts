@@ -1,5 +1,6 @@
 import {Address} from "./Address";
 import {FileUploaded} from "./FileUploaded";
+import {Category} from "./Category";
 
 export interface Service {
     readonly _id: string;
@@ -13,7 +14,7 @@ export interface Service {
     readonly closeTime: string;
     readonly maxPrice: number;
     readonly minPrice: number;
-    readonly category: any;
+    readonly category?: Category;
     readonly images?: FileUploaded[];
     readonly introduction?: string;
 }

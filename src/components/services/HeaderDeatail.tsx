@@ -1,16 +1,12 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { useSelector } from "react-redux";
 import service from "../../assets/service/service.png";
 import { RootState } from "../../redux/store";
 import Breakcumb from "../layouts/Breakcumb";
 import ButtonFollow from "../layouts/ButtonFollow";
+import {Address} from "../../apis/common/Address";
+import {getAddressContent} from "../../utils/getAddressContent";
 
-type Address = {
-  province: string;
-  district: string;
-  village: string;
-  detail: string;
-};
 
 interface IHeaderDetail {
   name: string;
@@ -28,6 +24,10 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
   followServices,
 }: IHeaderDetail) => {
   const authState = useSelector((state: RootState) => state.user);
+  const [addressText, setAddressText] = useState("");
+  useEffect(()=>{
+    getAddressContent(address).then(res=>setAddressText(res||""));
+  }, [address]);
   return (
     <>
       <div className="grid grid-cols-3">
@@ -110,8 +110,7 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
                 <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 0 1 -2.827 0l-4.244-4.243a8 8 0 1 1 11.314 0z" />
               </svg>
               <p className="text-gray-600 text-xl font-semibold ml-5">
-                {address.detail},{address.village},{address.district},
-                {address.province}
+                {addressText}
               </p>
             </div>
             <div className="flex justify-start ml-12 mt-2">

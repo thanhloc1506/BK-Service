@@ -9,11 +9,12 @@ import {
 } from "../../redux/slices/service";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import {Service} from "../../apis/common/Service";
 
 interface ICategory {
   isLoveService?: boolean;
   isEnterprise?: boolean;
-  service: any;
+  service: Service;
 }
 
 const SingleCard: React.FC<ICategory> = ({
@@ -44,13 +45,13 @@ const SingleCard: React.FC<ICategory> = ({
         </div>
         <div className="grid grid-cols-6">
           <div className="col-span-4 font-bold px-4">
-            {service.name.length > 20
+            {service.name && service.name.length > 20
               ? service.name.slice(0, 17) + "..."
               : service.name}
           </div>
           <div className="flex justify-end p-1 mr-2 col-span-2">
             <p className="px-2 bg-blue-200 rounded-2xl overflow-hidden text-blue-600 text-xs w-fit h-fit">
-              {service.type}
+              {service.category?.category}
             </p>
           </div>
         </div>
