@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosClient from "../../apis/axios";
 import { hideWaiting, showWaiting } from "./loading";
+import moment from "moment";
 
 export interface State {
   services: any;
@@ -116,8 +117,26 @@ export const comment = createAsyncThunk(
     const dispatch = api.dispatch;
     try {
       dispatch(showWaiting());
-      const response = axiosClient.post("/user/rating-service", formComment);
-      return (await response).data;
+      const response = await axiosClient.post(
+        "/user/rating-service",
+        formComment
+      );
+      let commentResponses: any;
+      const userInfoResponse = await axiosClient.post("/user-info", {
+        userId: response.data.comment.user,
+      });
+      const time = moment(response.data.comment.createdAt, "YYYY/MM/DD");
+      var month = time.format("M");
+      var day = time.format("D");
+      var year = time.format("YYYY");
+      commentResponses = {
+        ...response.data.comment,
+        user: userInfoResponse.data.user,
+        userLiked: false,
+        time: `${day}/${month}/${year}`,
+      };
+
+      return commentResponses;
     } catch (error) {
       console.log(error);
       throw error;
@@ -129,13 +148,41 @@ export const comment = createAsyncThunk(
 
 export const getComments = createAsyncThunk(
   "user/get/comments",
-  async (serviceId: string, api) => {
+  async (paramId: any, api) => {
     const dispatch = api.dispatch;
     try {
       dispatch(showWaiting());
-      const response = axiosClient.get(`service/${serviceId}/comments`);
-      console.log((await response).data.comments);
-      return (await response).data.comments;
+      const response = await axiosClient.get(
+        `service/${paramId.serviceId}/comments`
+      );
+      const comments = response.data.comments;
+      let commentResponses = [];
+      let idx = 0;
+
+      for (const comment of comments) {
+        const userInfoResponse = await axiosClient.post("/user-info", {
+          userId: comment.user,
+        });
+        let isLiked = false;
+        for (const userId of comment.userLiked) {
+          if (paramId.userId === userId) {
+            isLiked = true;
+          }
+        }
+        const time = moment(comment.createdAt, "YYYY/MM/DD");
+        var month = time.format("M");
+        var day = time.format("D");
+        var year = time.format("YYYY");
+        commentResponses[idx] = {
+          ...comment,
+          user: userInfoResponse.data.user,
+          userLiked: isLiked,
+          time: `${day}/${month}/${year}`,
+        };
+        idx++;
+      }
+      console.log(commentResponses);
+      return commentResponses;
     } catch (error) {
       console.log(error);
       throw error;
@@ -144,6 +191,8 @@ export const getComments = createAsyncThunk(
     }
   }
 );
+
+const likeComment = createAsyncThunk("like/comment", async () => {});
 
 const serviceSlice = createSlice({
   name: "serviceProfile",
@@ -193,7 +242,7 @@ const serviceSlice = createSlice({
       state.commentLoading = true;
     },
     [getComments.fulfilled.toString()]: (state, action) => {
-      state.comments = action.payload;
+      state.comments = action.payload.reverse();
       state.commentLoading = false;
     },
     [comment.pending.toString()]: (state, _action) => {

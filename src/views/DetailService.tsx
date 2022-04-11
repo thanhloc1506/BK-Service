@@ -8,6 +8,7 @@ import Menu from "../components/services/Menu";
 import CommentModal from "../components/services/post/CommentModal";
 import Post from "../components/services/post/Post";
 import Schedule from "../components/services/Schedule";
+import BookServiceModal from "../components/services/schedule/BookServiceModal";
 import Statistical from "../components/services/Statistical";
 import {
   getComments,
@@ -22,11 +23,12 @@ const DetailService: React.FC = () => {
 
   const dispatch = useDispatch();
 
+  const userId = useSelector((state: RootState) => state.user.user?._id);
   useEffect(() => {
     const fetchData = async () => {
       await dispatch(getServiceById(serviceId as string));
       await dispatch(getFollowService());
-      await dispatch(getComments(serviceId as string));
+      await dispatch(getComments({ serviceId, userId }));
     };
     dispatch(selectService(serviceId as string));
     fetchData();
@@ -56,7 +58,7 @@ const DetailService: React.FC = () => {
     <div className="min-h-screen h-fit pb-20">
       <Navbar />
       {serviceState.serviceLoading ? (
-        "loading..."
+        ""
       ) : (
         <>
           <div className="pt-24">
@@ -89,13 +91,15 @@ const DetailService: React.FC = () => {
                         (comment: any, index: number) => (
                           <div className="mb-20" key={index}>
                             <Post
-                              avatar={post.avatar}
-                              content={post.content}
-                              fullName={post.fullName}
-                              like={post.like}
-                              rating={post.rating}
-                              serviceName={post.serviceName}
-                              time={post.time}
+                              avatar={comment.user.username}
+                              content={comment.content}
+                              fullName={comment.user.username}
+                              like={comment.userLiked}
+                              rating={comment.rating}
+                              serviceName={serviceState.singleService.name}
+                              time={comment.time}
+                              title={comment.title}
+                              images={comment.images}
                             />
                           </div>
                         )
