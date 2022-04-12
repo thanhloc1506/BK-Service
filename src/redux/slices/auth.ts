@@ -9,10 +9,10 @@ import { PInLogin } from "../../apis/package/in/PInLogin";
 import { PInProfile } from "../../apis/package/in/PInProfile";
 import { hideWaiting, showWaiting } from "./loading";
 import { toastError, toastSuccess } from "../../utils/toast";
-import {FileUploaded} from "../../apis/common/FileUploaded";
-import {addNewNoti, getNoti} from "./noti";
-import {socket} from "../../apis/socket";
-import {PInNotification} from "../../apis/package/in/PInNoti";
+import { FileUploaded } from "../../apis/common/FileUploaded";
+import { addNewNoti, getNoti } from "./noti";
+import { socket } from "../../apis/socket";
+import { PInNotification } from "../../apis/package/in/PInNoti";
 
 export interface State {
   user?: User;

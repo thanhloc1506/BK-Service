@@ -20,18 +20,25 @@ import { RootState } from "../redux/store";
 import { hideWaiting, showWaiting } from "../redux/slices/loading";
 import axiosClient from "../apis/axios";
 import { PInScore } from "../apis/package/in/PInScore";
+import { logout } from "../redux/slices/auth";
+import cookies from "js-cookie";
 
 const DetailService: React.FC = () => {
   const { serviceId } = useParams();
   const [score, setScore] = useState<number[]>([]);
   const dispatch = useDispatch();
 
-  const userId = useSelector((state: RootState) => state.user.user?._id);
+  const userState = useSelector((state: RootState) => state.user);
   useEffect(() => {
+    if (cookies.get("token") == undefined) {
+      dispatch(logout());
+    }
     const fetchData = async () => {
       await dispatch(getServiceById(serviceId as string));
-      await dispatch(getFollowService());
-      await dispatch(getComments({ serviceId, userId }));
+      if (userState.isAuthenticated) {
+        await dispatch(getFollowService());
+      }
+      await dispatch(getComments({ serviceId, userId: userState.user?._id }));
     };
     dispatch(selectService(serviceId as string));
     fetchData();
