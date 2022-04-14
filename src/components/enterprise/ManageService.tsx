@@ -10,7 +10,7 @@ const ManageService = () => {
         </p>
       </div>
       <div>
-        <UserTable />
+        {/*<UserTable />*/}
       </div>
     </div>
   );

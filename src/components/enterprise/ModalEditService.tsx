@@ -16,9 +16,10 @@ import cookies, {remove} from "js-cookie";
 import {FileUploaded} from "../../apis/common/FileUploaded";
 import {toastSuccess} from "../../utils/toast";
 import {ModalIntroduction} from "./ModalIntroduction";
+import {Service} from "../../apis/common/Service";
 
 interface IModalEditService {
-    data: PInAllServices.Service | undefined;
+    data: Service | undefined;
     onBtnClick?: () => void;
     show: boolean;
     setShow?: (b: boolean) => void;
@@ -39,7 +40,7 @@ interface DataForm {
     imageAdd?: any;
 }
 
-const submitChangeService = (data: PInAllServices.Service | undefined, oldImg: FileUploaded[]|undefined, newImg: File[] | undefined, intro: string | undefined) =>{
+const submitChangeService = (data: Service | undefined, oldImg: FileUploaded[]|undefined, newImg: File[] | undefined, intro: string | undefined) =>{
     const formData = new FormData();
     if(!data) return;
     data.name && formData.append("name", data.name);
@@ -71,7 +72,7 @@ const submitChangeService = (data: PInAllServices.Service | undefined, oldImg: F
 
 export const ModalEditService = ({data, show, setShow}: IModalEditService) => {
     const dispatch = useDispatch();
-    const [editData, setEditData] = useState<PInAllServices.Service | undefined>(data);
+    const [editData, setEditData] = useState<Service | undefined>(data);
     const [categories, setCategories] = useState<PInCategory.Category[] | undefined>();
     const [showModalAddress, setShowModalAddress] = useState(false);
     const [address, setAddress] = useState<Address | undefined>();
@@ -224,7 +225,7 @@ export const ModalEditService = ({data, show, setShow}: IModalEditService) => {
                                             <div>
                                                 <label className="block text-sm font-medium text-gray-900">Giờ hoạt
                                                     động</label>
-                                                <TimePicker defaultHour={"8"} defaultMin={"0"} defaultAP={"am"}
+                                                <TimePicker defaultHour={"08"} defaultMin={"00"} defaultAP={"am"}
                                                             onChange={(value) => {
                                                                 editData && setEditData((pre) => {
                                                                     if (pre) return ({...pre, openTime: value});
@@ -233,7 +234,7 @@ export const ModalEditService = ({data, show, setShow}: IModalEditService) => {
                                             </div>
                                             <div className={""}>
                                                 <label className="block text-sm font-medium text-gray-900">Đến</label>
-                                                <TimePicker defaultHour={"10"} defaultMin={"0"} defaultAP={"pm"}
+                                                <TimePicker defaultHour={"10"} defaultMin={"00"} defaultAP={"pm"}
                                                             onChange={(value: string) => {
                                                                 editData && setEditData((pre) => {
                                                                     if (pre) return ({...pre, closeTime: value});

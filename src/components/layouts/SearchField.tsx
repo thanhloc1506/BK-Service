@@ -8,7 +8,7 @@ import {RootState} from "../../redux/store";
 import {showWaiting} from "../../redux/slices/loading";
 
 export const SearchField = () => {
-    const [searchText, setSearchText] = useState("");
+    const [searchText, setSearchText] = useState<string|undefined>(undefined);
     const dispatch = useDispatch();
     const state = useSelector((state: RootState) => state.search)
     const onFocus = () => {
@@ -28,6 +28,7 @@ export const SearchField = () => {
     }
 
     useEffect(() => {
+        if(!searchText) return;
         const searchDelay = setTimeout(() => {
             dispatch(setCurrentSearchText(searchText));
             dispatch(search(searchText));

@@ -10,12 +10,14 @@ import enterpriseSlice from "./slices/enterprise";
 import searchSlice from "./slices/search";
 import loadingSlice from "./slices/loading";
 import notiSlice from "./slices/noti";
+import serviceSlice from "./slices/service";
 import { persistStore, persistReducer } from "redux-persist";
 import { State as SearchState } from "./slices/search";
 import { State as AuthState } from "./slices/auth";
 import { State as EnterpriseProfileState } from "./slices/enterprise";
 import { State as LoadingState } from "./slices/loading";
 import {State as NotiState} from "./slices/noti";
+import { State as ServiceState } from "./slices/service";
 //@ts-ignore
 import localStorage from "redux-persist/lib/storage";
 import { PersistConfig } from "redux-persist/es/types";
@@ -25,6 +27,7 @@ interface MyReducer {
   enterpriseProfile: EnterpriseProfileState;
   loading: LoadingState;
   noti: NotiState;
+  service: ServiceState;
 }
 const persistConfig: PersistConfig<any> = {
   key: "root",
@@ -37,7 +40,8 @@ const reducer = combineReducers<MyReducer>({
   enterpriseProfile: enterpriseSlice,
   search: searchSlice,
   loading: loadingSlice,
-  noti: notiSlice
+  noti: notiSlice,
+  service: serviceSlice,
 } as ReducersMapObject<any>);
 // const store = createStore({
 //   reducer: {

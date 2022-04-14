@@ -24,7 +24,10 @@ const App: React.FC = () => {
             <Router>
               <Routes>
                 <Route path="/" element={<Homepage/>}/>
-                <Route path="/detailService" element={<DetailService/>}/>
+                <Route
+                    path="/detailService/:serviceId"
+                    element={<DetailService />}
+                    />
                 <Route path="/loading" element={<Loading/>}/>
                 <Route
                     path="/profile"

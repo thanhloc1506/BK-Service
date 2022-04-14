@@ -135,12 +135,12 @@ const AddService: React.FC = () => {
                 <div className="flex justify-start gap-16 items-center">
                     <div>
                         <label className="block text-sm font-medium text-gray-900">Giờ hoạt động</label>
-                        <TimePicker defaultHour={"8"} defaultMin={"0"} defaultAP={"am"}
+                        <TimePicker defaultHour={"08"} defaultMin={"00"} defaultAP={"am"}
                                     onChange={(value) => setDataForm((pre: DataForm) => ({...pre, openTime: value}))}/>
                     </div>
                     <div className={""}>
                         <label className="block text-sm font-medium text-gray-900">Đến</label>
-                        <TimePicker defaultHour={"10"} defaultMin={"0"} defaultAP={"pm"}
+                        <TimePicker defaultHour={"10"} defaultMin={"00"} defaultAP={"pm"}
                                     onChange={(value: string) => setDataForm((pre: DataForm) => ({
                                         ...pre,
                                         closeTime: value

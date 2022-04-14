@@ -1,17 +1,20 @@
 import React from "react";
 import rating from "../../assets/service/rating.png";
-import {useNavigate} from "react-router-dom";
 import {PInAllServices} from "../../apis/package/in/PInAllServices";
 import {Carousel} from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import {Service} from "../../apis/common/Service";
+
 interface IService {
-    data: PInAllServices.Service;
+    data: Service;
     onBtnClick?: () => void;
+    btnText?: string;
 }
 
 const SingleCard: React.FC<IService> = ({
                                             data,
-                                            onBtnClick
+                                            onBtnClick,
+                                            btnText
                                         }: IService) => {
     return (
         <>
@@ -64,7 +67,7 @@ const SingleCard: React.FC<IService> = ({
                                 d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
                             />
                         </svg>
-                        <p className="ml-1 font-light">122</p>
+                        <p className="ml-1 font-light">{data.textCmtCount || 0}</p>
                     </div>
                     <div className="flex justify-center h-full mt-5">
                         <svg
@@ -86,14 +89,14 @@ const SingleCard: React.FC<IService> = ({
                                 d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
                             />
                         </svg>
-                        <p className="ml-1 font-light">90</p>
+                        <p className="ml-1 font-light">{data.imgCmtCount || 0}</p>
                     </div>
                     <div className="col-span-2 flex justify-center mt-2">
                         <button
                             className="bg-blue-500 h-10 w-fit px-5 rounded-md overflow-hidden text-white font-light"
                             onClick={onBtnClick}
                         >
-                            Chỉnh sửa
+                            {btnText || "Chỉnh sửa"}
                         </button>
                     </div>
                 </div>

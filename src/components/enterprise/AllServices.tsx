@@ -1,26 +1,32 @@
 import React, {useEffect, useState} from "react";
 import axiosClient from "../../apis/axios";
 import {PInAllServices} from "../../apis/package/in/PInAllServices";
-import Service from "./Service";
 import {ModalEditService} from "./ModalEditService";
+import {Service as ServiceType} from "../../apis/common/Service";
+import {useDispatch} from "react-redux";
+import {hideWaiting, showWaiting} from "../../redux/slices/loading";
+import Service from "./Service";
 
 const AllServices = () => {
-  const [services, setServices] = useState<PInAllServices.Service[] | undefined>();
-  const [showModalEdit, setShowModalEdit] = useState<boolean>(false);
-  const [curServiceEdit, setCurServiceEdit] = useState<PInAllServices.Service | undefined>();
+    const [services, setServices] = useState<ServiceType[] | undefined>();
+    const [showModalEdit, setShowModalEdit] = useState<boolean>(false);
+    const [curServiceEdit, setCurServiceEdit] = useState<ServiceType | undefined>();
+    const dispatch = useDispatch();
   useEffect(()=>{
+      dispatch(showWaiting());
     axiosClient.get<PInAllServices.Data>("/enterprise/all-services")
         .then((res)=>{
           console.log(res);
           setServices(res.data.services);
         })
         .catch((err)=>console.log(err))
-  }, []);
+        .finally(()=>dispatch(hideWaiting()));
+  }, [dispatch]);
 
-  const editService = (data: PInAllServices.Service)=>{
+    const editService = (data: ServiceType) => {
         setCurServiceEdit(data);
         setShowModalEdit(true);
-  }
+    }
   return (
     <div className="bg-gray-light h-fit">
         <ModalEditService show={showModalEdit} setShow={setShowModalEdit} data={curServiceEdit}/>

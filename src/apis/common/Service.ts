@@ -16,4 +16,7 @@ export interface Service {
     readonly category: any;
     readonly images?: FileUploaded[];
     readonly introduction?: string;
+    readonly imgCmtCount?: number;
+    readonly textCmtCount: number;
+
 }

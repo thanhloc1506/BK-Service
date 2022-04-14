@@ -1,145 +1,185 @@
-import React, { useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
+import { useSelector } from "react-redux";
 import service from "../../assets/service/service.png";
+import { RootState } from "../../redux/store";
 import Breakcumb from "../layouts/Breakcumb";
 import ButtonFollow from "../layouts/ButtonFollow";
+import { Address } from "../../apis/common/Address";
+import { getAddressContent } from "../../utils/getAddressContent";
+import { Service } from "../../apis/common/Service";
+import {Carousel} from "react-responsive-carousel";
+import {ModalImage} from "./ModalImage";
 
-const HeaderDeatail: React.FC = () => {
-  const [isFollow, setIsFollow] = useState(false);
+interface IHeaderDetail {
+  data: Service;
+  scores: number[];
+}
 
-  const toggleFollow = () => {
-    setIsFollow(!isFollow);
-  };
+const HeaderDeatail: React.FC<IHeaderDetail> = ({
+                                                  data,
+                                                  scores,
+                                                }: IHeaderDetail) => {
+  const authState = useSelector((state: RootState) => state.user);
+  const [addressText, setAddressText] = useState("");
+  const miniCarousel = useRef<Carousel>(null);
+  const [curIndexImage, setCurIndexImage] = useState(0);
+  const [showModalImage, setShowModalImage]= useState(false);
+  useEffect(() => {
+    let abort = true;
+    getAddressContent(data.address).then((res) => {
+      if(abort){
+        setAddressText(res || "")
+      }
+    });
+    return ()=>{abort = false;}
+  }, [data.address]);
   return (
-    <>
-      <div className="grid grid-cols-3">
-        <div>
-          <div className="pt-5 flex justify-end">
-            <img src={service} alt="Service" className="h-72 w-120" />
+      <>
+        <div className="grid grid-cols-3 px-4">
+          <ModalImage
+              defaultIndex={curIndexImage}
+              listImages={data.images?.map(e=>e.url) || [""]} onChangeImage={(i)=>{
+            miniCarousel.current && miniCarousel.current.moveTo(i)
+          }} show={showModalImage} setShow={setShowModalImage}/>
+          <div onClick={()=>setShowModalImage(true)} className={'cursor-pointer'}>
+            <div className="pt-5 flex justify-end">
+              {data.images&&data.images.length>0 ?
+                  <Carousel ref={miniCarousel}
+                            onChange={(i)=>setCurIndexImage(i)}
+                            showThumbs={false}
+                            showArrows={false}
+                            showIndicators={true}
+                            showStatus={false}
+                            autoPlay={!showModalImage}
+                            infiniteLoop={true}>
+                    { data.images && (data.images.map((e, index)=>{
+                      return <div key={index} className={'rounded-lg overflow-hidden'}>
+                        <img src={e.url} className={'w-full h-full'}/>
+                      </div>
+                    }))}
+                  </Carousel>
+                  : (<div>
+                    <img src={'https://paroda.vn/media/2021/08/customer-service.jpg'} className={'w72 h-40'}/>
+                  </div>)}
+            </div>
           </div>
-        </div>
-        <div className="col-span-2">
-          <div className="grid grid-cols-5 border-b-2 border-b-gray-100 pb-5">
-            <div className="col-span-4 ml-10">
-              <Breakcumb addresses={["TPHCM", "Quan 10"]} />
-              <div className="flex">
-                <p className="font-bold text-xl">Nguyen Van A</p>
-                <p className="font-bold text-xl mx-3">-</p>
-                <p className="font-bold text-xl">Sua chua dien thoai</p>
+          <div className="col-span-2">
+            <div className="grid grid-cols-5 border-b-2 border-b-gray-100 pb-5">
+              <div className="col-span-4 ml-10">
+                {/*<Breakcumb addresses={[data.address.province, data.address.district]} />*/}
+                <div className="flex mt-10">
+                  {/*<p className="font-bold text-xl">Nguyen Van A</p>*/}
+                  {/*<p className="font-bold text-xl mx-3">-</p>*/}
+                  <p className="font-bold text-2xl">{data.name}</p>
+                </div>
               </div>
+              {authState.isAuthenticated ? (
+                  <div className="flex justify-center">
+                    {/*<ButtonFollow serviceId={data._id} />*/}
+                  </div>
+              ) : null}
             </div>
-            <div className="flex justify-center" onClick={toggleFollow}>
-              <ButtonFollow isFollow={isFollow} />
-            </div>
-          </div>
-          <div className="grid grid-cols-8 border-b-2 border-b-gray-100 pb-2">
-            <div className="flex justify-start ml-10 mt-2">
-              <div className="bg-blue-light rounded-full overflow-hidden h-14 w-14">
-                <p className="flex justify-center mt-3 text-2xl font-bold text-white">
-                  9.2
-                </p>
+            <div className="grid grid-cols-8 border-b-2 border-b-gray-100 pb-2">
+              <div className="flex justify-start ml-10 mt-2">
+                <div className="bg-blue-light rounded-full overflow-hidden h-14 w-14">
+                  <p className="flex justify-center mt-3 text-2xl font-bold text-white">
+                    {scores && scores.length >= 5 ? scores[5] : ""}
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="col-span-5 ml-2">
-              <div className="grid grid-cols-5 gap-4">
-                <div className="mt-1">
-                  <p className="text-2xl text-blue-light font-semibold">9.2</p>
-                  <p className="mt-1">Tieu chi 1</p>
+              <div className="col-span-5 ml-2">
+                <div className="grid grid-cols-5 gap-4">
+                  {scores &&
+                  scores.length >= 5 &&
+                  scores.slice(0, 5).map((s, i) => {
+                    return (
+                        <div className="mt-1 text-center" key={i}>
+                          <p className="text-2xl text-blue-light font-semibold">
+                            {s}
+                          </p>
+                          <p className="mt-1">Tieu chi {i + 1}</p>
+                        </div>
+                    );
+                  })}
                 </div>
-                <div className="mt-1">
-                  <p className="text-2xl text-blue-light font-semibold">9.2</p>
-                  <p className="mt-1">Tieu chi 1</p>
-                </div>
-                <div className="mt-1">
-                  <p className="text-2xl text-blue-light font-semibold">9.2</p>
-                  <p className="mt-1">Tieu chi 1</p>
-                </div>
-                <div className="mt-1">
-                  <p className="text-2xl text-blue-light font-semibold">9.2</p>
-                  <p className="mt-1">Tieu chi 1</p>
-                </div>
-                <div className="mt-1">
-                  <p className="text-2xl text-blue-light font-semibold">9.2</p>
-                  <p className="mt-1">Tieu chi 1</p>
+              </div>
+              <div>
+                <div className="mt-1 ml-10">
+                  <p className="text-2xl font-semibold">122</p>
+                  <p className="mt-1">Bình luận</p>
                 </div>
               </div>
             </div>
             <div>
-              <div className="mt-1 ml-10">
-                <p className="text-2xl font-semibold">122</p>
-                <p className="mt-1">Binh luan</p>
-              </div>
-            </div>
-          </div>
-          <div>
-            <div className="flex justify-start ml-12 mt-3">
-              <svg
-                className="h-7 w-7 text-gray-600"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                strokeWidth="2"
-                stroke="currentColor"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                {" "}
-                <path stroke="none" d="M0 0h24v24H0z" />{" "}
-                <circle cx="12" cy="11" r="3" />{" "}
-                <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 0 1 -2.827 0l-4.244-4.243a8 8 0 1 1 11.314 0z" />
-              </svg>
-              <p className="text-gray-600 text-xl font-semibold ml-5">
-                268 Ly Thuong Kiet, Quan 10, TP.HCM
-              </p>
-            </div>
-            <div className="flex justify-start ml-12 mt-2">
-              <svg
-                className="h-6 w-6 text-gray-600"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                {" "}
-                <circle cx="12" cy="12" r="10" />{" "}
-                <polyline points="12 6 12 12 16 14" />
-              </svg>
-              <div className="flex">
-                <p className="text-green-400 ml-6 font-bold text-xl">
-                  Dang mo cua
-                </p>
+              <div className="flex justify-start ml-12 mt-3">
+                <svg
+                    className="h-7 w-7 text-gray-600"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    strokeWidth="2"
+                    stroke="currentColor"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                >
+                  {" "}
+                  <path stroke="none" d="M0 0h24v24H0z" />{" "}
+                  <circle cx="12" cy="11" r="3" />{" "}
+                  <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 0 1 -2.827 0l-4.244-4.243a8 8 0 1 1 11.314 0z" />
+                </svg>
                 <p className="text-gray-600 text-xl font-semibold ml-5">
-                  08h00 - 22h00
+                  {addressText}
                 </p>
               </div>
-            </div>
-            <div className="flex justify-start ml-12 mt-2">
-              <svg
-                className="h-7 w-7 text-gray-600"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                strokeWidth="2"
-                stroke="currentColor"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                {" "}
-                <path stroke="none" d="M0 0h24v24H0z" />{" "}
-                <path d="M11 3L20 12a1.5 1.5 0 0 1 0 2L14 20a1.5 1.5 0 0 1 -2 0L3 11v-4a4 4 0 0 1 4 -4h4" />{" "}
-                <circle cx="9" cy="9" r="2" />
-              </svg>
-              <p className="text-gray-600 text-xl font-semibold ml-5">
-                20.000d - 1.000.000d
-              </p>
+              <div className="flex justify-start ml-12 mt-2">
+                <svg
+                    className="h-6 w-6 text-gray-600"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                >
+                  {" "}
+                  <circle cx="12" cy="12" r="10" />{" "}
+                  <polyline points="12 6 12 12 16 14" />
+                </svg>
+                <div className="flex">
+                  <p className="text-green-400 ml-6 font-bold text-xl">
+                    Đang mở cửa
+                  </p>
+                  <p className="text-gray-600 text-xl font-semibold ml-5">
+                    {data.openTime} - {data.closeTime}
+                  </p>
+                </div>
+              </div>
+              <div className="flex justify-start ml-12 mt-2">
+                <svg
+                    className="h-7 w-7 text-gray-600"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    strokeWidth="2"
+                    stroke="currentColor"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                >
+                  {" "}
+                  <path stroke="none" d="M0 0h24v24H0z" />{" "}
+                  <path d="M11 3L20 12a1.5 1.5 0 0 1 0 2L14 20a1.5 1.5 0 0 1 -2 0L3 11v-4a4 4 0 0 1 4 -4h4" />{" "}
+                  <circle cx="9" cy="9" r="2" />
+                </svg>
+                <p className="text-gray-600 text-xl font-semibold ml-5">
+                  {data.minPrice}đ - {data.maxPrice}đ
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </>
+      </>
   );
 };
 

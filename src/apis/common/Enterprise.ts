@@ -10,4 +10,5 @@ export interface Enterprise {
   readonly avatar: string;
   readonly phone: string;
   readonly address: Address;
+  readonly premium: string;
 }
