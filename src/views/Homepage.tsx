@@ -8,10 +8,13 @@ import { RootState } from "../redux/store";
 import { search, setCurrentSearchText } from "../redux/slices/search";
 import { logout } from "../redux/slices/auth";
 import cookies from "js-cookie";
+import {useNavigate} from "react-router-dom";
+import Service from "../components/services/Service";
 
 const Homepage: React.FC = () => {
   const searchState = useSelector((state: RootState) => state.search);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   useEffect(() => {
     dispatch(setCurrentSearchText(""));
     dispatch(search(""));
@@ -34,11 +37,11 @@ const Homepage: React.FC = () => {
             <>
               <div className="grid grid-cols-3 gap-8 mb-5">
                 {searchState.dataSearch?.services?.map(
-                  (service: any, index: number) => (
-                    <div key={index}>
-                      <SingleCard service={service} />
-                    </div>
-                  )
+                    (service: any, index: number) => (
+                        <div key={index}>
+                          <Service data={service} btnText={"Truy cập"} onBtnClick={()=>navigate(`/detailService/${service._id}`)}/>
+                        </div>
+                    )
                 )}
               </div>
               {searchState.dataSearch &&

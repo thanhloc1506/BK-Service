@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import { useSelector } from "react-redux";
 import service from "../../assets/service/service.png";
 import { RootState } from "../../redux/store";
@@ -7,6 +7,8 @@ import ButtonFollow from "../layouts/ButtonFollow";
 import { Address } from "../../apis/common/Address";
 import { getAddressContent } from "../../utils/getAddressContent";
 import { Service } from "../../apis/common/Service";
+import {ModalImage} from "./ModalImage";
+import { Carousel } from "react-responsive-carousel";
 
 interface IHeaderDetail {
   data: Service;
@@ -19,15 +21,40 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
 }: IHeaderDetail) => {
   const authState = useSelector((state: RootState) => state.user);
   const [addressText, setAddressText] = useState("");
+  const miniCarousel = useRef<Carousel>(null);
+  const [curIndexImage, setCurIndexImage] = useState(0);
+  const [showModalImage, setShowModalImage]= useState(false);
   useEffect(() => {
     getAddressContent(data.address).then((res) => setAddressText(res || ""));
   }, [data.address]);
   return (
     <>
       <div className="grid grid-cols-3">
-        <div>
-          <div className="pt-5 flex justify-end">
-            <img src={service} alt="Service" className="h-[35vh] w-[25vw]" />
+        <ModalImage
+            defaultIndex={curIndexImage}
+            listImages={data.images?.map(e=>e.url) || [""]} onChangeImage={(i)=>{
+          miniCarousel.current && miniCarousel.current.moveTo(i)
+        }} show={showModalImage} setShow={setShowModalImage}/>
+        <div onClick={()=>setShowModalImage(true)} className={'cursor-pointer px-3'}>
+          <div className="pt-5 flex justify-end col-span-1">
+            {data.images&&data.images.length>0 ?
+                <Carousel ref={miniCarousel}
+                          onChange={(i)=>setCurIndexImage(i)}
+                          showThumbs={false}
+                          showArrows={false}
+                          showIndicators={true}
+                          showStatus={false}
+                          autoPlay={!showModalImage}
+                          infiniteLoop={true}>
+                  { data.images && (data.images.map((e, index)=>{
+                    return <div key={index} className={'rounded-lg overflow-hidden'}>
+                      <img src={e.url} className={'w-full h-full'}/>
+                    </div>
+                  }))}
+                </Carousel>
+                : (<div>
+                  <img src={'https://paroda.vn/media/2021/08/customer-service.jpg'} className={'w72 h-40'}/>
+                </div>)}
           </div>
         </div>
         <div className="col-span-2">
@@ -62,7 +89,7 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
                     return (
                       <div className="mt-1 text-center" key={i}>
                         <p className="text-2xl text-blue-light font-semibold">
-                          {s}
+                          {s.toFixed(2)}
                         </p>
                         <p className="mt-1">Tieu chi {i + 1}</p>
                       </div>
@@ -71,8 +98,8 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
               </div>
             </div>
             <div>
-              <div className="mt-1 ml-10">
-                <p className="text-2xl font-semibold">122</p>
+              <div className="mt-1 ml-10 text-center">
+                <p className="text-2xl font-semibold">{data.textCmtCount || 0}</p>
                 <p className="mt-1">Bình luận</p>
               </div>
             </div>

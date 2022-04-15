@@ -14,7 +14,11 @@ export interface Service {
     readonly closeTime: string;
     readonly maxPrice: number;
     readonly minPrice: number;
-    readonly category?: Category;
+    readonly category: Category;
     readonly images?: FileUploaded[];
     readonly introduction?: string;
+    readonly shortIntroduction?: string;
+    readonly imgCmtCount?: number;
+    readonly textCmtCount: number;
+
 }
