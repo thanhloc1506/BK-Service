@@ -1,6 +1,5 @@
 import {Dialog, Transition} from "@headlessui/react";
 import React, {ChangeEvent, Fragment, useEffect, useState} from "react";
-import {PInAllServices} from "../../apis/package/in/PInAllServices";
 import TimePicker from "../layouts/TimePicker";
 import Dropdown from "../common/Dropdown";
 import {PInCategory} from "../../apis/package/in/PInCategory";
@@ -12,7 +11,7 @@ import {Address} from "../../apis/common/Address";
 import {getAddressContent} from "../../utils/getAddressString";
 import {ImageControl} from "./ImageControl";
 import {ImageAdd} from "./ImageAdd";
-import cookies, {remove} from "js-cookie";
+import cookies from "js-cookie";
 import {FileUploaded} from "../../apis/common/FileUploaded";
 import {toastSuccess} from "../../utils/toast";
 import {ModalIntroduction} from "./ModalIntroduction";
@@ -40,7 +39,7 @@ interface DataForm {
     imageAdd?: any;
 }
 
-const submitChangeService = (data: Service | undefined, oldImg: FileUploaded[]|undefined, newImg: File[] | undefined, intro: string | undefined) =>{
+const submitChangeService = (data: Service | undefined, oldImg: FileUploaded[]|undefined, newImg: File[] | undefined) =>{
     const formData = new FormData();
     if(!data) return;
     data.name && formData.append("name", data.name);
@@ -52,7 +51,8 @@ const submitChangeService = (data: Service | undefined, oldImg: FileUploaded[]|u
     data.closeTime && formData.append("closeTime", data.closeTime);
     data.maxPrice && formData.append("maxPrice", data.maxPrice.toString());
     data.minPrice && formData.append("minPrice", data.minPrice.toString());
-    intro && formData.append("introduction", intro);
+    data.introduction && formData.append("introduction", data.introduction);
+    data.shortIntroduction && formData.append("shortIntroduction", data.shortIntroduction);
     let removeImg = data.images?.filter((image)=>{
         return !oldImg?.includes(image);
     }).map((e)=>e.key);
@@ -80,7 +80,9 @@ export const ModalEditService = ({data, show, setShow}: IModalEditService) => {
     const [oldImg, setOldImg] = useState<FileUploaded[]| undefined>();
     const [newImg, setNewImg] = useState<File[]>();
     const [showModalIntro, setShowModalIntro] = useState(false);
+    const [showModalShortIntro, setShowModalShortIntro] = useState(false);
     const [intro, setIntro] = useState("");
+    const [shortIntro, setShortIntro] = useState("");
     useEffect(() => {
         //fetch categories
         dispatch(showWaiting());
@@ -157,8 +159,24 @@ export const ModalEditService = ({data, show, setShow}: IModalEditService) => {
                                     {/*content*/}
                                     <ModalAddress show={showModalAddress} setShow={setShowModalAddress}
                                                   onChange={setAddress} defaultValue={address}/>
-                                    <ModalIntroduction show={showModalIntro} setShow={setShowModalIntro} onSave={setIntro} defaultData={intro}/>
-                                    <div>
+                                    <ModalIntroduction show={showModalIntro} setShow={setShowModalIntro}
+                                                       onSave={(v) => {
+                                                           setEditData((e) => {
+                                                               if (e) return {...e, introduction: v};
+                                                           })
+                                                       }}
+                                                       defaultData={data?.introduction || ""}
+                                                       title={'Chỉnh sửa nội dung mô tả chi tiết'}
+                                    />
+                                    <ModalIntroduction show={showModalShortIntro} setShow={setShowModalShortIntro}
+                                                       onSave={(v)=>{
+                                                           setEditData((e)=>{
+                                                               if(e) return {...e, shortIntroduction: v};
+                                                           })
+                                                       }}
+                                                       title={'Chỉnh sửa nội dung mô tả ngắn'}
+                                                       defaultData={data?.shortIntroduction || ""}/>
+                                    <div className={'flex flex-col gap-3'}>
                                         <div className="">
                                             <label className="block mb-2 text-sm font-medium text-gray-900">Tên dịch
                                                 vụ</label>
@@ -173,13 +191,23 @@ export const ModalEditService = ({data, show, setShow}: IModalEditService) => {
                                                 }}
                                             />
                                         </div>
-                                        <div className="">
-                                            <label className="block mb-2 text-sm font-medium text-gray-900">Nội dung mô tả</label>
-                                            <button
-                                                className={"py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200"}
-                                                onClick={() => {
-                                                    setShowModalIntro(true);
-                                                }}>{"Chỉnh sửa nội dung mô tả"}</button>
+                                        <div className="flex justify-start gap-6">
+                                            <div>
+                                                <label className="block mb-2 text-sm font-medium text-gray-900">Nội dung mô tả</label>
+                                                <button
+                                                    className={"py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200"}
+                                                    onClick={() => {
+                                                        setShowModalIntro(true);
+                                                    }}>{"Chỉnh sửa nội dung mô tả"}</button>
+                                            </div>
+                                            <div>
+                                                <label className="block mb-2 text-sm font-medium text-gray-900">Nội dung mô tả ngắn</label>
+                                                <button
+                                                    className={"py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200"}
+                                                    onClick={() => {
+                                                        setShowModalShortIntro(true);
+                                                    }}>{"Chỉnh sửa nội dung mô tả ngắn"}</button>
+                                            </div>
                                         </div>
                                         <div className="">
                                             <label className="block mb-2 text-sm font-medium text-gray-900">Địa
@@ -332,7 +360,7 @@ export const ModalEditService = ({data, show, setShow}: IModalEditService) => {
                                                 onClick={() => {
                                                     setShow && setShow(false);
                                                     dispatch(showWaiting());
-                                                    submitChangeService(editData, oldImg, newImg, intro)
+                                                    submitChangeService(editData, oldImg, newImg)
                                                         ?.then((res)=>{
                                                             toastSuccess("Cập nhật thành công!");
                                                         })

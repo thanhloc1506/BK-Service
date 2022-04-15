@@ -64,8 +64,8 @@ export const ModalImage = ({listImages, onChangeImage, show, setShow, defaultInd
                                                   ref={a}
                                         >
                                             {listImages.map((e, index)=>{
-                                                return <div key={index} className={'h-full rounded-lg overflow-hidden'}>
-                                                    <img src={e} className={'w-full h-full rounded-lg'}/>
+                                                return <div key={index} className={'rounded-lg overflow-hidden'}>
+                                                    <img src={e} className={'h-[75vh] rounded-lg'}/>
                                                 </div>
                                             })}
                                         </Carousel>

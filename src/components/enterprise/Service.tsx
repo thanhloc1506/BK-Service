@@ -1,9 +1,9 @@
 import React from "react";
 import rating from "../../assets/service/rating.png";
-import {PInAllServices} from "../../apis/package/in/PInAllServices";
 import {Carousel} from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import {Service} from "../../apis/common/Service";
+import {useNavigate} from "react-router-dom";
 
 interface IService {
     data: Service;
@@ -16,15 +16,18 @@ const SingleCard: React.FC<IService> = ({
                                             onBtnClick,
                                             btnText
                                         }: IService) => {
+    const navigate = useNavigate();
     return (
         <>
-            <div className="w-72 h-[28rem] bg-white border-2 border-blue-200 rounded">
-                <div className={'h-[40%] overflow-hidden'}>
-                    <div className="flex justify-center">
+            <div className="w-72 h-[28rem] bg-white border-2 border-blue-200 rounded hover:drop-shadow-2xl shadow-lg shadow-cyan-500/50 transition-all duration-500 cursor-pointer"
+                onClick={()=>navigate(`/detailService/${data._id}`)}
+            >
+                <div className={'h-[45%] overflow-hidden'}>
+                    <div className="flex justify-center p-3">
                         {data.images&&data.images.length>0 ?
                             <Carousel showThumbs={false} showArrows={false} showIndicators={false} showStatus={false} autoPlay={true} infiniteLoop={true}>
                                 { data.images && (data.images.map((e, index)=>{
-                                    return <div key={index}>
+                                    return <div key={index} className={'rounded overflow-hidden'}>
                                         <img src={e.url} className={'w-72 h-40'}/>
                                     </div>
                                 }))}
@@ -46,13 +49,13 @@ const SingleCard: React.FC<IService> = ({
                 <div className="px-4 h-[5%]">
                     <img src={rating} alt="rating"/>
                 </div>
-                <div className="px-4 py-2 h-[30%] overflow-hidden border-y-2 border-gray-200">
-                    <p className="text-sm font-light" dangerouslySetInnerHTML={{__html: data.introduction || ""}}>
+                <div className="px-4 py-2 h-[25%] overflow-hidden border-y-2 border-gray-200">
+                    <p className="text-sm font-light" dangerouslySetInnerHTML={{__html: data.shortIntroduction || ""}}>
                     </p>
                 </div>
                 {/*<div className="border-b-2 border-gray-100 mt-3"></div>*/}
                 {/*<div className="border-b-2 border-gray-100 mt-12"></div>*/}
-                <div className="grid grid-cols-4 h-16 row-span-1 h-[25%] overflow-hidden">
+                <div className="grid grid-cols-4 h-16 row-span-1 h-[15%] overflow-hidden">
                     <div className="flex justify-center h-full mt-5 ml-1">
                         <svg
                             className="h-5 w-5 text-gray-500 align-middle mt-0.5"

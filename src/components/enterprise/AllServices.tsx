@@ -35,8 +35,8 @@ const AllServices = () => {
       </div>
       <div className="px-10 pt-12 pb-16">
         <div className="grid grid-cols-3 gap-8 h-full">
-            {services && services.map(service =>{
-                return <div>
+            {services && services.map((service, i) =>{
+                return <div key={i}>
                     <Service data={service} onBtnClick={()=>{editService(service)}}/>
                 </div>
             })}

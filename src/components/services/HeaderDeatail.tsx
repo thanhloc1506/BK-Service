@@ -59,7 +59,7 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
                     }))}
                   </Carousel>
                   : (<div>
-                    <img src={'https://paroda.vn/media/2021/08/customer-service.jpg'} className={'w72 h-40'}/>
+                    <img src={'https://paroda.vn/media/2021/08/customer-service.jpg'} className={'w-full h-full'}/>
                   </div>)}
             </div>
           </div>
@@ -95,7 +95,7 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
                     return (
                         <div className="mt-1 text-center" key={i}>
                           <p className="text-2xl text-blue-light font-semibold">
-                            {s}
+                            {s.toFixed(2)}
                           </p>
                           <p className="mt-1">Tieu chi {i + 1}</p>
                         </div>
@@ -104,8 +104,8 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
                 </div>
               </div>
               <div>
-                <div className="mt-1 ml-10">
-                  <p className="text-2xl font-semibold">122</p>
+                <div className="mt-1 ml-10 text-center">
+                  <p className="text-2xl font-semibold">{data.textCmtCount || 0}</p>
                   <p className="mt-1">Bình luận</p>
                 </div>
               </div>

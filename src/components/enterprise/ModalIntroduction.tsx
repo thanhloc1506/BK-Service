@@ -7,9 +7,10 @@ interface IModalIntroduction{
     setShow: (b: boolean)=>void;
     onSave: (data: string)=>void;
     defaultData?: string;
+    title?: string;
 }
 
-export const ModalIntroduction = ({show, setShow, onSave, defaultData}: IModalIntroduction)=>{
+export const ModalIntroduction = ({show, setShow, onSave, defaultData, title}: IModalIntroduction)=>{
     const [data, setData] = useState("");
     const onCancel = ()=>{
         setShow(false);
@@ -59,7 +60,7 @@ export const ModalIntroduction = ({show, setShow, onSave, defaultData}: IModalIn
                             as="h3"
                             className="text-lg font-medium leading-6 text-gray-900 my-8"
                         >
-                            {"Thay đổi nội dung giới thiệu"}
+                            {title}
                         </Dialog.Title>
                         <div className={'w-full flex justify-center'}>
                             <MyEditor onChange={setData} defaultData={defaultData}/>
