@@ -10,7 +10,7 @@ import Post from "../components/services/post/Post";
 import Schedule from "../components/services/Schedule";
 import BookServiceModal from "../components/services/schedule/BookServiceModal";
 import Statistical from "../components/services/Statistical";
-import {
+import service, {
   getComments,
   getFollowService,
   getServiceById,
@@ -78,7 +78,11 @@ const DetailService: React.FC = () => {
               />
             </div>
             <div className="overflow-hidden max-w-screen">
-              <Schedule />
+              {serviceState.serviceLoading ? (
+                ""
+              ) : (
+                <Schedule service={serviceState.singleService} />
+              )}
             </div>
           </div>
           <div>

@@ -1,9 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import CalendarRow from "./CalendarRow";
 
-export interface CalendarProps {}
+export interface CalendarProps {
+  witdh?: string;
+  height?: string;
+  selectedDay?: any;
+}
 
-const Calendar: React.FC<CalendarProps> = () => {
+const Calendar: React.FC<CalendarProps> = ({ witdh, height, selectedDay }) => {
   const [activeMonth, setActiveMonth] = useState(new Date().getMonth());
   const [activeMonthString, setActiveMonthString] = useState(
     new Date().toDateString().split(" ")[1]
@@ -30,7 +34,9 @@ const Calendar: React.FC<CalendarProps> = () => {
   }, [activeMonth]);
 
   return (
-    <div className="md:shadow-lg md:rounded p-4 bg-white dark:bg-gray-700 md:w-96 mx-4 md:mx-auto">
+    <div
+      className={`md:shadow-lg md:rounded p-4 bg-white dark:bg-gray-700 w-96 mx-4 md:mx-auto`}
+    >
       <div className="w-full rounded">
         <div className="flex items-center justify-between mb-4">
           <div className="text-left font-bold text-xl text-black dark:text-white">

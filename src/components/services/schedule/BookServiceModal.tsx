@@ -1,12 +1,15 @@
 import React, { Fragment, useRef, useState } from "react";
 import { Transition, Dialog } from "@headlessui/react";
+import { Service } from "../../../apis/common/Service";
+import Daypicker from "../../layouts/Daypicker";
 
 interface IParam {
   open: boolean;
   setOpen: any;
+  service?: Service;
 }
 
-const BookServiceModal = ({ open, setOpen }: IParam) => {
+const BookServiceModal = ({ open, setOpen, service }: IParam) => {
   const cancelButtonRef = useRef(null);
 
   return (
@@ -45,9 +48,26 @@ const BookServiceModal = ({ open, setOpen }: IParam) => {
             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
-            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all w-[45rem] h-96">
+            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all w-[50rem] h-122">
               <div className="bg-white">
-                <div className=""></div>
+                <div className="h-12 border-b-2 border-gray-100 flex items-center pl-5 text-lg text-gray-700 font-medium">
+                  Đặt lịch dịch vụ: {service?.name}
+                </div>
+                <div>
+                  <div className="grid grid-cols-2 h-10 items-center">
+                    <div className="pl-5">
+                      <p>Họ và tên: Nguyễn Văn A</p>
+                    </div>
+                    <div className="pl-5">
+                      <p>Số điện thoại: 0123456789</p>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div className="flex justify-end">
+                    <Daypicker />
+                  </div>
+                </div>
               </div>
             </div>
           </Transition.Child>

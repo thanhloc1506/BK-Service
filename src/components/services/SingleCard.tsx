@@ -9,7 +9,7 @@ import {
 } from "../../redux/slices/service";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import {Service} from "../../apis/common/Service";
+import { Service } from "../../apis/common/Service";
 
 interface ICategory {
   isLoveService?: boolean;
@@ -41,7 +41,16 @@ const SingleCard: React.FC<ICategory> = ({
     <>
       <div className="w-72 h-96 bg-white border-2 border-blue-200 rounded">
         <div className="flex justify-center">
-          <img src={serviceImg} alt="service" className="w-72 h-40 p-3" />
+          <img
+            src={
+              (service.images &&
+                service.images?.length > 0 &&
+                service.images[0].url) ||
+              serviceImg
+            }
+            alt="service"
+            className="w-72 h-40 p-3"
+          />
         </div>
         <div className="grid grid-cols-6">
           <div className="col-span-4 font-bold px-4">

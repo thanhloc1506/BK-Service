@@ -1,6 +1,6 @@
 import React from "react";
 
-const TimePicker = () => {
+const TimePicker = (props: any) => {
   return (
     <div>
       <div className="h-12 w-5/6 bg-slate-100 p-2 pl-4 border-2 border-slate-300">

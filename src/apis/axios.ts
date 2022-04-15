@@ -24,15 +24,15 @@ axiosClient.interceptors.response.use(
   },
   (error) => {
     if (error.response.status == StatusCodes.UNAUTHORIZED) {
-      // toast.error('Lỗi xác thực !', {
-      //   position: "bottom-right",
-      //   autoClose: 5000,
-      //   hideProgressBar: false,
-      //   closeOnClick: true,
-      //   pauseOnHover: true,
-      //   draggable: true,
-      //   progress: undefined,
-      // });
+      toast.error("Lỗi xác thực !", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       cookies.remove("token");
     }
     throw error;

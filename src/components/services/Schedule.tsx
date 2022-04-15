@@ -1,8 +1,13 @@
 import React, { useState } from "react";
+import { Service } from "../../apis/common/Service";
 import Calendar from "./calendar/Calendar";
 import BookServiceModal from "./schedule/BookServiceModal";
 
-const Schedule: React.FC = () => {
+interface ISchedule {
+  service?: Service;
+}
+
+const Schedule: React.FC<ISchedule> = ({ service }: ISchedule) => {
   const [open, setOpen] = useState(false);
 
   const onClickOpen = () => {
@@ -11,7 +16,7 @@ const Schedule: React.FC = () => {
   return (
     <div className="py-5">
       <div className="flex justify-center">
-        <BookServiceModal open={open} setOpen={setOpen} />
+        <BookServiceModal open={open} setOpen={setOpen} service={service} />
         <div className="shadow-xl w-fit h-fit border-2 border-gray-200 ">
           <div className="flex justify-center">
             <p className="text-2xl font-bold pt-5">Thông tin đặt lịch</p>
