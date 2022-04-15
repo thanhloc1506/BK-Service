@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
-import { useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import service from "../../assets/service/service.png";
 import { RootState } from "../../redux/store";
 import Breakcumb from "../layouts/Breakcumb";
@@ -9,6 +9,7 @@ import { getAddressContent } from "../../utils/getAddressContent";
 import { Service } from "../../apis/common/Service";
 import {Carousel} from "react-responsive-carousel";
 import {ModalImage} from "./ModalImage";
+import {hideWaiting, showWaiting} from "../../redux/slices/loading";
 
 interface IHeaderDetail {
   data: Service;
@@ -24,13 +25,15 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
   const miniCarousel = useRef<Carousel>(null);
   const [curIndexImage, setCurIndexImage] = useState(0);
   const [showModalImage, setShowModalImage]= useState(false);
+  const dispatch = useDispatch();
   useEffect(() => {
     let abort = true;
+    dispatch(showWaiting());
     getAddressContent(data.address).then((res) => {
       if(abort){
         setAddressText(res || "")
       }
-    });
+    }).finally(()=>dispatch(hideWaiting()));
     return ()=>{abort = false;}
   }, [data.address]);
   return (

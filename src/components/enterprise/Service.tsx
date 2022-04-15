@@ -97,7 +97,10 @@ const SingleCard: React.FC<IService> = ({
                     <div className="col-span-2 flex justify-center mt-2">
                         <button
                             className="bg-blue-500 h-10 w-fit px-5 rounded-md overflow-hidden text-white font-light"
-                            onClick={onBtnClick}
+                            onClick={(e)=>{
+                                e.stopPropagation();
+                                onBtnClick && onBtnClick();
+                            }}
                         >
                             {btnText || "Chỉnh sửa"}
                         </button>
