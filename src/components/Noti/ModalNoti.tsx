@@ -62,6 +62,10 @@ const getContentNoti = (noti: PInNotification.Notification): ReactNode=>{
             return <p><strong>{noti.user.fullName}</strong> đã theo dõi dịch vụ <strong>{noti.service.name} </strong>của bạn</p>
         case NotiType.UNFOLLOWED:
             return <p><strong>{noti.user.fullName}</strong> đã hủy theo dõi dịch vụ <strong>{noti.service.name} </strong>của bạn</p>
+        case NotiType.ENTERPRISE_DELETE_SCHEDULE:
+            return <p>Bạn đã hủy lịch hẹn với <strong>{noti.user.fullName} </strong></p>
+        case NotiType.ENTERPRISE_DONE_SCHEDULE:
+            return <p>Đơn hàng của <strong>{noti.user.fullName}</strong> với dịch vụ <strong>{noti.service.name}</strong> của bạn đã hoàn thành.</p>
     }
 }
 

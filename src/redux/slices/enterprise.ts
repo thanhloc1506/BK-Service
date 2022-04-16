@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-export type PageEnterprise = "manage" | "all" | "add" | "premium" | string;
+export type PageEnterprise = "manage" | "all" | "add" | "premium" | "all-schedule" | string;
 
 export interface State {
   page: PageEnterprise;

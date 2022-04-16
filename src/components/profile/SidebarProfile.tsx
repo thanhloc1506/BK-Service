@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {PageEnterprise, selectPageEnterprise} from "../../redux/slices/enterprise";
+import {MdBorderAll} from "react-icons/md";
+import {RootState} from "../../redux/store";
 
 
 interface ISelectPage {
@@ -9,6 +11,7 @@ interface ISelectPage {
 
 const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
   const dispatch = useDispatch();
+  const state = useSelector((state: RootState)=>state.user.enterprise)
   const onSelectPage = (value: PageEnterprise) => {
     dispatch(selectPageEnterprise(value));
   };
@@ -19,7 +22,7 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
           <div className="w-14 h-14 rounded-full bg-gray-500"></div>
           <div>
             <p className="text-sm ml-2.5 mt-1">Tài khoản của</p>
-            <p className="text-lg font-medium mt-1.5 ml-2.5">Your name</p>
+            <p className="text-lg font-medium mt-1.5 ml-2.5">{state?.fullName}</p>
           </div>
         </div>
       </div>
@@ -62,6 +65,24 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
         >
           <div className={'w-2 top-0 left-0 h-full absolute h-full bg-blue-500'} hidden={page !== "all"}/>
 
+          <div className="flex justify-center">
+            <MdBorderAll size={32} className={'text-blue-solid'}/>
+          </div>
+          <div className="mt-1 ml-5">
+            <p className="text-blue-solid text-lg">Tất cả dịch vụ</p>
+          </div>
+        </div>
+      </div>
+      <div className="cursor-pointer" onClick={() => onSelectPage("all-schedule")}>
+        <div
+          className={`h-16 w-full flex justify-start pt-3 relative transition-all duration-300 ${
+            page === "all-schedule"
+                ? "bg-gray-100 pl-10"
+                : "opacity-40 pl-10"
+          }`}
+        >
+          <div className={'w-2 top-0 left-0 h-full absolute h-full bg-blue-500'} hidden={page !== "all-schedule"}/>
+
           <div className="">
             <svg
               className="h-8 w-8 text-blue-solid"
@@ -80,7 +101,7 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
             </svg>
           </div>
           <div className="mt-1 ml-5">
-            <p className="text-blue-solid text-lg">Tất cả dịch vụ</p>
+            <p className="text-blue-solid text-lg">Tất cả lịch hẹn</p>
           </div>
         </div>
       </div>

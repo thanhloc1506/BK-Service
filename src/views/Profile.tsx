@@ -3,13 +3,12 @@ import Navbar from "../components/layouts/Navbar";
 import SidebarProfile from "../components/profile/SidebarProfile";
 import {useSelector} from "react-redux";
 import {RootState} from "../redux/store";
-import History from "../components/profile/History";
-import {PageEnterprise} from "../redux/slices/enterprise";
 import {InfoEnterprise} from "../components/profile/InfoEnterprise";
 import AddService from "../components/enterprise/AddService";
 import ManageService from "../components/enterprise/ManageService";
 import AllServices from "../components/enterprise/AllServices";
 import Premium from "../components/enterprise/Premium";
+import {AllSchedules} from "../components/enterprise/schedule/AllSchedule";
 
 const Profile: React.FC = () => {
     const enterpriseProfile = useSelector((state: RootState) => state.enterpriseProfile);
@@ -30,6 +29,8 @@ const Profile: React.FC = () => {
                             <AddService/>
                         ) : enterpriseProfile.page === "premium" ? (
                             <Premium/>
+                        ) : enterpriseProfile.page === "all-schedule" ? (
+                            <AllSchedules/>
                         ) : (
                             <InfoEnterprise/>
                         )}
