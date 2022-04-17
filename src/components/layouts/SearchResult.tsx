@@ -17,8 +17,8 @@ export const SearchResult = ({show}: any) => {
                     enterTo="transform opacity-100 scale-100"
                 >
                     <div className={'flex justify-center fixed top-[10%] left-[50%] transform -translate-x-1/2 items-center p-10 transition-all'}>
-                            <svg className="animate-spin h-10 w-10 bg-gray-100 self-center" viewBox="0 0 24 24">
-                            </svg>
+                        <svg className="animate-spin h-10 w-10 bg-gray-100 self-center" viewBox="0 0 24 24">
+                        </svg>
                     </div>
                 </Transition>
                 <Transition

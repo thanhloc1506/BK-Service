@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {PageEnterprise, selectPageEnterprise} from "../../redux/slices/enterprise";
 import {MdBorderAll} from "react-icons/md";
 import {RootState} from "../../redux/store";
+import {DEFAULT_AVATAR} from "../../constants/common";
 
 
 interface ISelectPage {
@@ -19,7 +20,9 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
     <div className="bg-white h-full w-full shadow-sm border-right-2 border-gray-100">
       <div className="h-32 w-full border-b-2 border-b-gray-100">
         <div className="flex justify-start ml-10 mt-8">
-          <div className="w-14 h-14 rounded-full bg-gray-500"></div>
+          <div className="w-14 h-14 rounded-full bg-cyan-500">
+            <img src={state?.avatar? state.avatar.url : DEFAULT_AVATAR} className={"w-full h-full p-1 rounded-full"}/>
+          </div>
           <div>
             <p className="text-sm ml-2.5 mt-1">Tài khoản của</p>
             <p className="text-lg font-medium mt-1.5 ml-2.5">{state?.fullName}</p>

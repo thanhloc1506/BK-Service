@@ -30,7 +30,7 @@ const DropdownBtn = () => {
     <Menu as="div" className="relative inline-block text-left">
       <div>
         <Menu.Button className="inline-flex justify-center w-full rounded-md py-2 bg-transparent text-sm font-medium text-white focus:outline-none focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
-          {/*{ authState.user?.fullName? `${authState.user?.fullName} `: `${authState.user?.username}`}*/}
+          { authState.enterprise?.fullName? `${authState.enterprise?.fullName} `: ``}
           <ChevronDownIcon className="-mr-1 ml-1 h-5 w-5" aria-hidden="true" />
         </Menu.Button>
       </div>

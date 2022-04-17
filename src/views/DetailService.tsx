@@ -18,7 +18,7 @@ const DetailService: React.FC = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (!serviceState.singleService?._id) return;
+        // if (!serviceState.singleService?._id) return;
         const fetchData = async () => {
             await dispatch(getServiceById(serviceId as string));
             await dispatch(getComments({serviceId}));
