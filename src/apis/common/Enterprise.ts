@@ -1,14 +1,15 @@
-import { RolesType } from "./Role";
-import { Address } from "./Address";
+import {RolesType} from "./Role";
+import {Address} from "./Address";
+import {FileUploaded} from "./FileUploaded";
 
 export interface Enterprise {
-  readonly username: string;
-  readonly email: string;
-  readonly id: string;
-  readonly fullName: string;
-  readonly role: RolesType;
-  readonly avatar: string;
-  readonly phone: string;
-  readonly address: Address;
-  readonly premium: string;
+  email: string;
+  username: string;
+  id: string;
+  fullName: string;
+  role: RolesType;
+  avatar?: FileUploaded;
+  phone: string;
+  address: Address;
+  premium: string;
 }

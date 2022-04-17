@@ -12,6 +12,7 @@ import { toastError, toastSuccess } from "../../utils/toast";
 import { addNewNoti, getNoti } from "./noti";
 import { socket } from "../../apis/socket";
 import { PInNotification } from "../../apis/package/in/PInNoti";
+import {FileUploaded} from "../../apis/common/FileUploaded";
 
 export interface State {
   enterprise: Enterprise | undefined;
@@ -126,7 +127,7 @@ const authSlice = createSlice({
   name: "enterprise",
   initialState,
   reducers: {
-    updateAvatar(state: State, action: PayloadAction<string>) {
+    updateAvatar(state: State, action: PayloadAction<FileUploaded>) {
       state.enterprise = {
         ...state.enterprise,
         avatar: action.payload,
