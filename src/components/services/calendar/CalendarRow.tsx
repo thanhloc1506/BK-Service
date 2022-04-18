@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import EventCalendar from "./EventCalendar";
 
 export interface CalendarRowProps {
   firstDay: number;
@@ -6,6 +7,8 @@ export interface CalendarRowProps {
   row: number;
   currentMonth: number;
   currentYear: number;
+  schedules: any[];
+  currentDay?: number;
 }
 
 const CalendarRow: React.FC<CalendarRowProps> = ({
@@ -14,8 +17,20 @@ const CalendarRow: React.FC<CalendarRowProps> = ({
   row,
   currentMonth,
   currentYear,
+  currentDay,
+  schedules,
 }) => {
   const activeDay = useState(new Date().getDate())[0];
+
+  const [showEventPreview, setShowEventPreview] = useState(false);
+
+  const onHoverEventSchedule = () => {
+    setShowEventPreview(true);
+  };
+
+  const onOutEventSchedule = () => {
+    setShowEventPreview(false);
+  };
 
   let content = [];
   //first row with empty spaces
@@ -24,13 +39,34 @@ const CalendarRow: React.FC<CalendarRowProps> = ({
       content.push(<td key={i + 30}></td>);
     }
     content.push(
-      <td
-        key={100}
-        className="relative py-3 px-2 md:px-3  hover:text-blue-500 text-center text-gray-800"
-      >
-        1
+      <td key={100} className="relative py-3 px-2 md:px-3 text-center">
+        <EventCalendar
+          isCurrentDay={
+            1 === activeDay &&
+            new Date().getMonth() === currentMonth &&
+            new Date().getFullYear() === currentYear
+          }
+          isScheduleDay={
+            schedules.filter(
+              (schedule) =>
+                currentMonth + 1 == schedule.timeServe.month &&
+                currentYear == schedule.timeServe.year &&
+                1 == schedule.timeServe.day
+            ).length > 0
+          }
+          value={1}
+          isFirst={firstDay + 1 === 1}
+          isLast={firstDay + 1 === 7}
+          schedule={schedules.filter(
+            (schedule) =>
+              currentMonth + 1 == schedule.timeServe.month &&
+              currentYear == schedule.timeServe.year &&
+              1 == schedule.timeServe.day
+          )}
+        />
       </td>
     );
+
     let len = 7 - content.length;
     for (let i = 1; i <= len; i++) {
       content.push(
@@ -38,19 +74,33 @@ const CalendarRow: React.FC<CalendarRowProps> = ({
           key={i}
           className="relative py-3 px-2 md:px-3  hover:text-blue-500 text-center text-gray-800"
         >
-          {activeDay === i + 1 &&
-          new Date().getMonth() === currentMonth &&
-          new Date().getFullYear() === currentYear ? (
-            <span className="p-1 bg-blue-200 border-blue-300 border-2">
-              {i + 1}
-            </span>
-          ) : (
-            <span>{i + 1}</span>
-          )}
+          <EventCalendar
+            isCurrentDay={
+              activeDay === i + 1 &&
+              new Date().getMonth() === currentMonth &&
+              new Date().getFullYear() === currentYear
+            }
+            isScheduleDay={
+              schedules.filter(
+                (schedule) =>
+                  currentMonth + 1 == schedule.timeServe.month &&
+                  currentYear == schedule.timeServe.year &&
+                  i + 1 == schedule.timeServe.day
+              ).length > 0
+            }
+            value={i + 1}
+            isFirst={i === 1}
+            isLast={i === len}
+            schedule={schedules.filter(
+              (schedule) =>
+                currentMonth + 1 == schedule.timeServe.month &&
+                currentYear == schedule.timeServe.year &&
+                i + 1 == schedule.timeServe.day
+            )}
+          />
         </td>
       );
     }
-
     return <>{content}</>;
   }
   //other rows
@@ -61,15 +111,30 @@ const CalendarRow: React.FC<CalendarRowProps> = ({
           key={i}
           className="relative py-3 px-2 md:px-3  hover:text-blue-500 text-center text-gray-800"
         >
-          {activeDay === i + (7 * row - firstDay) &&
-          new Date().getMonth() === currentMonth &&
-          new Date().getFullYear() === currentYear ? (
-            <span className="p-1 rounded-full border-blue-400 border-2">
-              {i + (7 * row - firstDay)}
-            </span>
-          ) : (
-            <span>{i + (7 * row - firstDay)}</span>
-          )}
+          <EventCalendar
+            isCurrentDay={
+              activeDay === i + (7 * row - firstDay) &&
+              new Date().getMonth() === currentMonth &&
+              new Date().getFullYear() === currentYear
+            }
+            isScheduleDay={
+              schedules.filter(
+                (schedule) =>
+                  currentMonth + 1 == schedule.timeServe.month &&
+                  currentYear == schedule.timeServe.year &&
+                  i + (7 * row - firstDay) == schedule.timeServe.day
+              ).length > 0
+            }
+            value={i + (7 * row - firstDay)}
+            isFirst={i === 1}
+            isLast={i === 7}
+            schedule={schedules.filter(
+              (schedule) =>
+                currentMonth + 1 == schedule.timeServe.month &&
+                currentYear == schedule.timeServe.year &&
+                i + (7 * row - firstDay) == schedule.timeServe.day
+            )}
+          />
         </td>
       );
     }

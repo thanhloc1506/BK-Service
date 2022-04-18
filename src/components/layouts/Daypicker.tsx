@@ -1,13 +1,11 @@
 import React from "react";
-import "flowbite";
+// import "flowbite";
 import Calendar from "../services/calendar/Calendar";
 
 const Daypicker = () => {
   return (
     <>
-      <div className="flex justify-end">
-        <Calendar witdh="60" />
-      </div>
+      <div className="flex justify-end">{/* <Calendar witdh="60" /> */}</div>
     </>
   );
 };

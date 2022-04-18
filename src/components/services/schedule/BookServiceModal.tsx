@@ -2,6 +2,7 @@ import React, { Fragment, useRef, useState } from "react";
 import { Transition, Dialog } from "@headlessui/react";
 import { Service } from "../../../apis/common/Service";
 import Daypicker from "../../layouts/Daypicker";
+import ScheduleCalendar from "../../layouts/ScheduleCalendar";
 
 interface IParam {
   open: boolean;
@@ -66,6 +67,7 @@ const BookServiceModal = ({ open, setOpen, service }: IParam) => {
                 <div>
                   <div className="flex justify-end">
                     <Daypicker />
+                    {/* <ScheduleCalendar /> */}
                   </div>
                 </div>
               </div>

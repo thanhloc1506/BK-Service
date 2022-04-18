@@ -8,6 +8,8 @@ import ScheduleService from "../components/profile/ScheduleService";
 import LoveService from "../components/profile/LoveService";
 import Notifications from "../components/profile/Notifications";
 import History from "../components/profile/History";
+import ScheduleCalendar from "../components/layouts/ScheduleCalendar";
+import ReactCalendar from "../components/layouts/ReactCalendar";
 
 const Profile: React.FC = () => {
   const userProfileState = useSelector((state: RootState) => state.userProfile);

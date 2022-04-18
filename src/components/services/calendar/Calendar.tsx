@@ -5,9 +5,15 @@ export interface CalendarProps {
   witdh?: string;
   height?: string;
   selectedDay?: any;
+  schedules: any[];
 }
-
-const Calendar: React.FC<CalendarProps> = ({ witdh, height, selectedDay }) => {
+let rows = [0, 1, 2, 3, 4, 5];
+const Calendar: React.FC<CalendarProps> = ({
+  witdh,
+  height,
+  selectedDay,
+  schedules,
+}) => {
   const [activeMonth, setActiveMonth] = useState(new Date().getMonth());
   const [activeMonthString, setActiveMonthString] = useState(
     new Date().toDateString().split(" ")[1]
@@ -105,84 +111,22 @@ const Calendar: React.FC<CalendarProps> = ({ witdh, height, selectedDay }) => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <CalendarRow
-                  firstDay={firstDayInMonth[activeMonth]}
-                  lastDayInMonth={new Date(
-                    activeYear,
-                    activeMonth + 1,
-                    0
-                  ).getDate()}
-                  row={0}
-                  currentMonth={activeMonth}
-                  currentYear={activeYear}
-                />
-              </tr>
-              <tr>
-                <CalendarRow
-                  firstDay={firstDayInMonth[activeMonth]}
-                  lastDayInMonth={new Date(
-                    activeYear,
-                    activeMonth + 1,
-                    0
-                  ).getDate()}
-                  row={1}
-                  currentMonth={activeMonth}
-                  currentYear={activeYear}
-                />
-              </tr>
-              <tr>
-                <CalendarRow
-                  firstDay={firstDayInMonth[activeMonth]}
-                  lastDayInMonth={new Date(
-                    activeYear,
-                    activeMonth + 1,
-                    0
-                  ).getDate()}
-                  row={2}
-                  currentMonth={activeMonth}
-                  currentYear={activeYear}
-                />
-              </tr>
-              <tr>
-                <CalendarRow
-                  firstDay={firstDayInMonth[activeMonth]}
-                  lastDayInMonth={new Date(
-                    activeYear,
-                    activeMonth + 1,
-                    0
-                  ).getDate()}
-                  row={3}
-                  currentMonth={activeMonth}
-                  currentYear={activeYear}
-                />
-              </tr>
-              <tr>
-                <CalendarRow
-                  firstDay={firstDayInMonth[activeMonth]}
-                  lastDayInMonth={new Date(
-                    activeYear,
-                    activeMonth + 1,
-                    0
-                  ).getDate()}
-                  row={4}
-                  currentMonth={activeMonth}
-                  currentYear={activeYear}
-                />
-              </tr>
-              <tr>
-                <CalendarRow
-                  firstDay={firstDayInMonth[activeMonth]}
-                  lastDayInMonth={new Date(
-                    activeYear,
-                    activeMonth + 1,
-                    0
-                  ).getDate()}
-                  row={5}
-                  currentMonth={activeMonth}
-                  currentYear={activeYear}
-                />
-              </tr>
+              {rows.map((row, index) => (
+                <tr key={index}>
+                  <CalendarRow
+                    firstDay={firstDayInMonth[activeMonth]}
+                    lastDayInMonth={new Date(
+                      activeYear,
+                      activeMonth + 1,
+                      0
+                    ).getDate()}
+                    row={row}
+                    currentMonth={activeMonth}
+                    currentYear={activeYear}
+                    schedules={schedules}
+                  />
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

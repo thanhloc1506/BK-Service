@@ -11,9 +11,11 @@ import Schedule from "../components/services/Schedule";
 import BookServiceModal from "../components/services/schedule/BookServiceModal";
 import Statistical from "../components/services/Statistical";
 import service, {
+  getAllSchedules,
   getComments,
   getFollowService,
   getServiceById,
+  resetState,
   selectService,
 } from "../redux/slices/service";
 import { RootState } from "../redux/store";
@@ -33,10 +35,12 @@ const DetailService: React.FC = () => {
     if (cookies.get("token") == undefined) {
       dispatch(logout());
     }
+    dispatch(resetState());
     const fetchData = async () => {
       await dispatch(getServiceById(serviceId as string));
       if (userState.isAuthenticated) {
         await dispatch(getFollowService());
+        await dispatch(getAllSchedules(serviceId as string));
       }
       await dispatch(getComments({ serviceId, userId: userState.user?._id }));
     };
@@ -78,10 +82,13 @@ const DetailService: React.FC = () => {
               />
             </div>
             <div className="overflow-hidden max-w-screen">
-              {serviceState.serviceLoading ? (
+              {serviceState.serviceLoading || serviceState.scheduleLoading ? (
                 ""
               ) : (
-                <Schedule service={serviceState.singleService} />
+                <Schedule
+                  service={serviceState.singleService}
+                  schedules={serviceState.schedules}
+                />
               )}
             </div>
           </div>

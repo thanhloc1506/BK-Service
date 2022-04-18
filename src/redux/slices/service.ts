@@ -17,6 +17,9 @@ export interface State {
   followLoading: boolean;
   comments: any;
   commentLoading: boolean;
+  schedules: any[];
+  scheduleLoading: boolean;
+  currentServiceSchedules: any;
 }
 
 const initialState: State = {
@@ -32,7 +35,14 @@ const initialState: State = {
   followLoading: false,
   comments: [],
   commentLoading: false,
+  schedules: [],
+  scheduleLoading: false,
+  currentServiceSchedules: [],
 };
+
+export const resetState = createAsyncThunk("reset/state", () => {
+  return true;
+});
 
 export const selectService = createAsyncThunk(
   "/select/single/service",
@@ -57,8 +67,10 @@ export const getIsFollow = createAsyncThunk(
 
 export const followService = createAsyncThunk(
   "/follow/service",
-  async (serviceId: string | number) => {
+  async (serviceId: string | number, api) => {
+    const dispatch = api.dispatch;
     try {
+      // dispatch(showWaiting());
       const response = await axiosClient.post(`/user/add-favorite`, {
         serviceId: serviceId,
       });
@@ -66,32 +78,42 @@ export const followService = createAsyncThunk(
     } catch (error) {
       console.log(error);
       throw error;
+    } finally {
+      // dispatch(hideWaiting());
     }
   }
 );
 
 export const getFollowService = createAsyncThunk(
   "/get/follow/service",
-  async () => {
+  async (_, api) => {
+    const dispatch = api.dispatch;
     try {
+      // dispatch(showWaiting());
       const response = await axiosClient.get(`/user/followed-service`);
       return response.data;
     } catch (error) {
       console.log(error);
       throw error;
+    } finally {
+      // dispatch(hideWaiting());
     }
   }
 );
 
 export const getServiceById = createAsyncThunk(
   "get/service/by/id",
-  async (serviceId: string) => {
+  async (serviceId: string, api) => {
+    const dispatch = api.dispatch;
     try {
+      dispatch(showWaiting());
       const response = await axiosClient.get(`/service/${serviceId}`);
       return response.data;
     } catch (error) {
       console.log(error);
       throw error;
+    } finally {
+      dispatch(hideWaiting());
     }
   }
 );
@@ -117,7 +139,7 @@ export const comment = createAsyncThunk(
   async (formComment: any, api) => {
     const dispatch = api.dispatch;
     try {
-      dispatch(showWaiting());
+      // dispatch(showWaiting());
       const response = await axiosClient.post(
         "/user/rating-service",
         formComment
@@ -143,7 +165,7 @@ export const comment = createAsyncThunk(
       console.log(error);
       throw error;
     } finally {
-      dispatch(hideWaiting());
+      // dispatch(hideWaiting());
     }
   }
 );
@@ -153,7 +175,7 @@ export const getComments = createAsyncThunk(
   async (paramId: any, api) => {
     const dispatch = api.dispatch;
     try {
-      dispatch(showWaiting());
+      // dispatch(showWaiting());
       const response = await axiosClient.get(
         `service/${paramId.serviceId}/comments`
       );
@@ -190,7 +212,7 @@ export const getComments = createAsyncThunk(
       console.log(error);
       throw error;
     } finally {
-      dispatch(hideWaiting());
+      // dispatch(hideWaiting());
     }
   }
 );
@@ -209,11 +231,60 @@ export const toggleLikeComment = createAsyncThunk(
   }
 );
 
+export const getAllSchedules = createAsyncThunk(
+  "get/all/schedule",
+  async (serviceId: string, api) => {
+    const dispatch = api.dispatch;
+    try {
+      // dispatch(showWaiting());
+      let currentServiceSchedules: any = [];
+      let idx = 0;
+      const response = await axiosClient.get("/user/schedules");
+      for (const schedule of response.data.schedules) {
+        // if (schedule.service === serviceId) {
+        const serviceResponse = await axiosClient.get(
+          `/service/${schedule.service}`
+        );
+        console.log(serviceResponse);
+        const timeServe = moment(schedule.timeServe, "YYYY/MM/DD HH:mm");
+        var month = timeServe.format("MM");
+        var day = timeServe.format("DD");
+        var year = timeServe.format("YYYY");
+        var hour = timeServe.format("HH");
+        var min = timeServe.format("mm");
+        currentServiceSchedules[idx] = {
+          ...schedule,
+          timeServe: {
+            day: parseInt(day),
+            month: parseInt(month),
+            year: parseInt(year),
+            hour,
+            min,
+            sec: "00",
+          },
+          service: serviceResponse.data.service.name,
+        };
+        idx++;
+        // }
+      }
+      return currentServiceSchedules;
+    } catch (error) {
+      throw error;
+    } finally {
+      // dispatch(hideWaiting());
+    }
+  }
+);
+
 const serviceSlice = createSlice({
   name: "serviceProfile",
   initialState,
   reducers: {},
   extraReducers: {
+    [resetState.fulfilled.toString()]: (state, payload) => {
+      state.comments = [];
+      state.schedules = [];
+    },
     [selectService.pending.toString()]: (state, _action) => {
       state.serviceLoading = true;
     },
@@ -225,13 +296,15 @@ const serviceSlice = createSlice({
     },
     [getFollowService.pending.toString()]: (state, _action) => {
       state.followLoading = true;
+      console.log(1);
     },
     [getFollowService.fulfilled.toString()]: (state, action) => {
       state.followService = action.payload.services;
-      const currentFollowService = state.followService?.filter(
+      const currentFollowService = action.payload.services.filter(
         (service: any) => service._id === state.serviceId
       );
       state.isFollow = currentFollowService.length === 1;
+      console.log(2);
       state.followLoading = false;
     },
     [getServiceById.pending.toString()]: (state, _action) => {
@@ -268,6 +341,14 @@ const serviceSlice = createSlice({
       state.commentLoading = false;
     },
     [toggleLikeComment.fulfilled.toString()]: (state, action) => {},
+    [getAllSchedules.pending.toString()]: (state, _action) => {
+      state.scheduleLoading = true;
+    },
+    [getAllSchedules.fulfilled.toString()]: (state, action) => {
+      state.schedules = action.payload;
+      state.scheduleLoading = false;
+      console.log(state.schedules);
+    },
   },
 });
 

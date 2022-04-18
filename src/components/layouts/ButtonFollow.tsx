@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { followService, unFollow } from "../../redux/slices/service";
 import { RootState } from "../../redux/store";
+import LocalLoading from "./LocalLoading";
 
 interface IFollow {
   serviceId: string;
@@ -26,7 +27,7 @@ const ButtonFollow: React.FC<IFollow> = ({ serviceId }: IFollow) => {
   return (
     <div className="mt-6">
       {followLoading ? (
-        "loading..."
+        <LocalLoading />
       ) : (
         <button
           className={
