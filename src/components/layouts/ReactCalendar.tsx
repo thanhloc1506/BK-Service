@@ -4,18 +4,24 @@ import "react-calendar/dist/Calendar.css";
 import moment from "moment";
 import "../../style/calendar.css";
 
-const ReactCalendar = () => {
-  const [dateState, setDateState] = useState(new Date());
+interface IReactCalendar {
+  date: any;
+  setDate: any;
+  setOpen: any;
+}
+
+const ReactCalendar: React.FC<IReactCalendar> = ({
+  date,
+  setDate,
+  setOpen,
+}) => {
   const changeDate = (e: any) => {
-    setDateState(e);
+    setDate(e);
+    setOpen(false);
   };
   return (
     <>
-      <Calendar value={dateState} onChange={changeDate} />
-      <p>
-        Current selected date is{" "}
-        <b>{moment(dateState).format("MMMM Do YYYY")}</b>
-      </p>
+      <Calendar value={date} onChange={changeDate} />
     </>
   );
 };

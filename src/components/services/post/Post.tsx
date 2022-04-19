@@ -36,8 +36,15 @@ const Post: React.FC<IPost> = ({
   const [isLike, setIsLike] = useState(like);
   const onClickLike = () => {
     dispatch(toggleLikeComment(id));
+    if (isLike) {
+      setNumOfLike(numOfLike - 1);
+    } else {
+      setNumOfLike(numOfLike + 1);
+    }
     setIsLike(!isLike);
   };
+
+  const [numOfLike, setNumOfLike] = useState(numOfUserLiked);
 
   return (
     <>
@@ -135,7 +142,7 @@ const Post: React.FC<IPost> = ({
                   </svg>
                 )}
               </button>
-              <p className="ml-2 mt-0.5">{numOfUserLiked} Thích</p>
+              <p className="ml-2 mt-0.5">{numOfLike} Thích</p>
             </div>
           </div>
         </div>

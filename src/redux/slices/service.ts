@@ -245,8 +245,10 @@ export const getAllSchedules = createAsyncThunk(
         const serviceResponse = await axiosClient.get(
           `/service/${schedule.service}`
         );
-        console.log(serviceResponse);
-        const timeServe = moment(schedule.timeServe, "YYYY/MM/DD HH:mm");
+
+        const timeServe = moment(schedule.timeServe, "YYYY/MM/DD HH:mm").zone(
+          "+0700"
+        );
         var month = timeServe.format("MM");
         var day = timeServe.format("DD");
         var year = timeServe.format("YYYY");
@@ -272,6 +274,69 @@ export const getAllSchedules = createAsyncThunk(
       throw error;
     } finally {
       // dispatch(hideWaiting());
+    }
+  }
+);
+
+export const addSchedule = createAsyncThunk(
+  "add/schedule",
+  async (scheduleForm: any, api) => {
+    const dispatch = api.dispatch;
+    const { dateFormat, hour, min, AMPM, serviceId } = scheduleForm;
+    let dateArr = dateFormat.split("/");
+    let date = "";
+
+    date += dateArr[2] + "-";
+
+    if (parseInt(dateArr[0]) < 10) {
+      date += "0" + dateArr[0] + "-";
+    } else {
+      date += dateArr[0] + "-";
+    }
+
+    if (parseInt(dateArr[1]) < 10) {
+      date += "0" + dateArr[1];
+    } else {
+      date += dateArr[1];
+    }
+
+    date += ` ${AMPM === "AM" ? hour : parseInt(hour) + 12}:${min}:00`;
+
+    const formData = { timeServe: date, serviceId };
+
+    try {
+      dispatch(showWaiting());
+      const response = await axiosClient.post("/user/add-schedule", formData);
+
+      const serviceResponse = await axiosClient.get(`/service/${serviceId}`);
+
+      const timeServe = moment(
+        response.data.schedule.timeServe,
+        "YYYY/MM/DD HH:mm"
+      ).zone("+0700");
+      var month = timeServe.format("MM");
+      var day = timeServe.format("DD");
+      var year = timeServe.format("YYYY");
+      var hourFormat = timeServe.format("HH");
+      var minFormat = timeServe.format("mm");
+      let currentServiceSchedule = {
+        ...response.data.schedule,
+        timeServe: {
+          day: parseInt(day),
+          month: parseInt(month),
+          year: parseInt(year),
+          hour: hourFormat,
+          min: minFormat,
+          sec: "00",
+        },
+        service: serviceResponse.data.service.name,
+      };
+
+      return currentServiceSchedule;
+    } catch (error) {
+      throw error;
+    } finally {
+      dispatch(hideWaiting());
     }
   }
 );
@@ -347,7 +412,18 @@ const serviceSlice = createSlice({
     [getAllSchedules.fulfilled.toString()]: (state, action) => {
       state.schedules = action.payload;
       state.scheduleLoading = false;
-      console.log(state.schedules);
+    },
+    [addSchedule.pending.toString()]: (state, _action) => {
+      state.scheduleLoading = true;
+    },
+    [addSchedule.fulfilled.toString()]: (state, action) => {
+      state.schedules = [
+        action.payload,
+        ...state.schedules.filter(
+          (schedule: any) => schedule.service !== action.payload.service
+        ),
+      ];
+      state.scheduleLoading = false;
     },
   },
 });
