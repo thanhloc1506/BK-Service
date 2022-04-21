@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { selectPage } from "../../redux/slices/user";
+import {useDispatch, useSelector} from "react-redux";
+import user, { selectPage } from "../../redux/slices/user";
+import {RootState} from "../../redux/store";
+import {DEFAULT_AVATAR} from "../../constants/common";
 
 type Page = "info" | "schedule" | "love" | "noti" | "history";
 
@@ -10,6 +12,7 @@ interface ISelectPage {
 
 const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
   const dispatch = useDispatch();
+  const state = useSelector((state: RootState)=>state.user.user);
   const onSelectPage = (value: Page) => {
     dispatch(selectPage(value));
   };
@@ -17,10 +20,12 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
     <div className="bg-white h-[90vh] w-full shadow-sm border-2 border-gray-100">
       <div className="h-[12vh] w-full border-b-2 border-b-gray-100">
         <div className="flex justify-start ml-10 mt-8">
-          <div className="w-14 h-14 rounded-full bg-gray-500"></div>
+          <div className="w-14 h-14 rounded-full bg-gray-500">
+            <img src={state?.avatar? state.avatar.url : DEFAULT_AVATAR} className={"w-full h-full p-1 rounded-full"}/>
+          </div>
           <div>
             <p className="text-sm ml-2.5 mt-1">Tài khoản của</p>
-            <p className="text-lg font-medium mt-1.5 ml-2.5">Your name</p>
+            <p className="text-lg font-medium mt-1.5 ml-2.5">{state?.fullName || ""}</p>
           </div>
         </div>
       </div>
