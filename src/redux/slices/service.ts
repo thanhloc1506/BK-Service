@@ -3,6 +3,7 @@ import axiosClient from "../../apis/axios";
 import { hideWaiting, showWaiting } from "./loading";
 import moment from "moment";
 import { Service } from "../../apis/common/Service";
+import {PInSchedule} from "../../apis/package/in/PInSchedule";
 
 export interface State {
   services: Service[];
@@ -239,13 +240,9 @@ export const getAllSchedules = createAsyncThunk(
       // dispatch(showWaiting());
       let currentServiceSchedules: any = [];
       let idx = 0;
-      const response = await axiosClient.get("/user/schedules");
+      const response = await axiosClient.get<PInSchedule>("/user/schedules");
       for (const schedule of response.data.schedules) {
         // if (schedule.service === serviceId) {
-        const serviceResponse = await axiosClient.get(
-          `/service/${schedule.service}`
-        );
-
         const timeServe = moment(schedule.timeServe, "YYYY/MM/DD HH:mm").zone(
           "+0700"
         );
@@ -264,7 +261,7 @@ export const getAllSchedules = createAsyncThunk(
             min,
             sec: "00",
           },
-          service: serviceResponse.data.service.name,
+          service: schedule.service.name,
         };
         idx++;
         // }
