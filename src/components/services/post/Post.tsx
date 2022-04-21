@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleLikeComment } from "../../../redux/slices/service";
+import { RootState } from "../../../redux/store";
 
 interface IPost {
   avatar: string;
@@ -32,12 +33,22 @@ const Post: React.FC<IPost> = ({
   const [imageIndex, setIndex] = useState(0);
   const [image, setImage] = useState(images[0]?.url);
   const dispatch = useDispatch();
+  const userState = useSelector((state: RootState) => state.user);
 
   const [isLike, setIsLike] = useState(like);
   const onClickLike = () => {
     dispatch(toggleLikeComment(id));
-    setIsLike(!isLike);
+    if (userState.isAuthenticated) {
+      if (isLike) {
+        setNumOfLike(numOfLike - 1);
+      } else {
+        setNumOfLike(numOfLike + 1);
+      }
+      setIsLike(!isLike);
+    }
   };
+
+  const [numOfLike, setNumOfLike] = useState(numOfUserLiked);
 
   return (
     <>
@@ -135,7 +146,7 @@ const Post: React.FC<IPost> = ({
                   </svg>
                 )}
               </button>
-              <p className="ml-2 mt-0.5">{numOfUserLiked} Thích</p>
+              <p className="ml-2 mt-0.5">{numOfLike} Thích</p>
             </div>
           </div>
         </div>

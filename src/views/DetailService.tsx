@@ -46,7 +46,7 @@ const DetailService: React.FC = () => {
     };
     dispatch(selectService(serviceId as string));
     fetchData();
-  }, [dispatch]);
+  }, [dispatch, userState.isAuthenticated]);
 
   const serviceState = useSelector((state: RootState) => state.service);
 
@@ -68,7 +68,11 @@ const DetailService: React.FC = () => {
         <>
           <div className="pt-24">
             {serviceState.singleService && (
-              <HeaderDeatail data={serviceState.singleService} scores={score} />
+              <HeaderDeatail
+                data={serviceState.singleService}
+                scores={score}
+                numOfComments={serviceState.comments.length}
+              />
             )}
           </div>
           <div className="grid grid-cols-3 border-gray-200 border-b-2 pb-5">
