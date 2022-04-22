@@ -29,24 +29,26 @@ const EventCalendar: React.FC<IEventCalendar> = ({
   };
 
   if (isScheduleDay && isCurrentDay) {
-    <span className="relative">
-      {showEventPreview ? (
-        <div className="">
-          <PreviewSchedule
-            isFirst={isFirst}
-            isLast={isLast}
-            schedule={schedule[0]}
-          />
-        </div>
-      ) : null}
-      <span
-        className="p-1 rounded-full bg-blue-solid text-white border-blue-400 border-2"
-        onMouseOver={onHoverEventSchedule}
-        onMouseOut={onOutEventSchedule}
-      >
-        {value}
+    return (
+      <span className="relative">
+        {showEventPreview ? (
+          <div className="">
+            <PreviewSchedule
+              isFirst={isFirst}
+              isLast={isLast}
+              schedule={schedule[0]}
+            />
+          </div>
+        ) : null}
+        <span
+          className="p-1 rounded-full bg-blue-solid text-white border-blue-400 border-2"
+          onMouseOver={onHoverEventSchedule}
+          onMouseOut={onOutEventSchedule}
+        >
+          {value}
+        </span>
       </span>
-    </span>;
+    );
   }
 
   if (isScheduleDay && !isCurrentDay) {

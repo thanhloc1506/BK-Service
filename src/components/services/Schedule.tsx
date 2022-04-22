@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Service } from "../../apis/common/Service";
+import { toggleModalLogin } from "../../redux/slices/auth";
 import { RootState } from "../../redux/store";
 import Calendar from "./calendar/Calendar";
 import BookServiceModal from "./schedule/BookServiceModal";
@@ -13,9 +14,14 @@ interface ISchedule {
 const Schedule: React.FC<ISchedule> = ({ service, schedules }) => {
   const [open, setOpen] = useState(false);
 
-  const userState = useSelector((state: RootState) => state.user.user);
+  const dispatch = useDispatch();
+  const userState = useSelector((state: RootState) => state.user);
   const onClickOpen = () => {
-    setOpen(true);
+    if (userState.isAuthenticated) {
+      setOpen(true);
+    } else {
+      dispatch(toggleModalLogin(userState.showLoginForm));
+    }
   };
   return (
     <div className="py-5">
@@ -28,9 +34,9 @@ const Schedule: React.FC<ISchedule> = ({ service, schedules }) => {
           <div className="mt-5 ml-7">
             <p className="text-lg font-light">
               Họ và tên:{" "}
-              {userState?.fullName !== undefined
-                ? userState?.fullName
-                : userState?.username}
+              {userState.user?.fullName !== undefined
+                ? userState.user?.fullName
+                : userState.user?.username}
             </p>
             <p className="mt-1 text-lg font-light">Sdt: 0123456789</p>
             <p className="mt-1 text-lg font-light">Dịch vụ: {service?.name}</p>

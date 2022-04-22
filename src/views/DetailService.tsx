@@ -58,7 +58,7 @@ const DetailService: React.FC = () => {
       .get<PInScore>(`service/${serviceState.singleService?._id}/scores`)
       .then((response) => setScore(response.data.score))
       .finally(() => dispatch(hideWaiting()));
-  }, [serviceState.singleService]);
+  }, [serviceState.singleService, serviceState.comments]);
   return (
     <div className="min-h-screen h-fit pb-20">
       <Navbar />
@@ -124,7 +124,7 @@ const DetailService: React.FC = () => {
                 </div>
               </div>
               <div>
-                <Statistical />
+                <Statistical score={score} comments={serviceState.comments} />
                 <div className="mx-24 mt-4">
                   <CommentModal />
                 </div>
