@@ -3,24 +3,17 @@ import React, {Fragment, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../redux/store";
 import {CheckIcon, SelectorIcon} from "@heroicons/react/solid";
-import axios, {AxiosResponse} from "axios";
+import axios from "axios";
 import {ADDRESS_API_URL} from "../../constants/common";
 import {ModalConfirm} from "./ModalConfirm";
-import {Address} from "../../apis/common/Address";
+import {Address, Phuong, Quan} from "../../apis/common/Address";
 import axiosClient from "../../apis/axios";
 import {hideWaiting, showWaiting} from "../../redux/slices/loading";
 import {toastError, toastSuccess} from "../../utils/toast";
 import {updateProfile} from "../../redux/slices/auth";
 import {PInProfile} from "../../apis/package/in/PInProfile";
 
-interface Quan{
-    readonly district_id: string;
-    readonly district_name: string;
-}
-interface Phuong{
-    readonly ward_name: string;
-    readonly ward_id: string;
-}
+
 export interface ModalAddressProps {
     show: boolean;
     setShow: (b: boolean)=>void;

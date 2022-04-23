@@ -1,26 +1,20 @@
-import React, {
-  ChangeEvent,
-  Fragment,
-  KeyboardEvent,
-  KeyboardEventHandler,
-  useEffect,
-  useState,
-} from "react";
-import { BsSearch } from "react-icons/bs";
-import { SearchResult } from "./SearchResult";
-import { useDispatch, useSelector } from "react-redux";
+import React, {ChangeEvent, Fragment, KeyboardEvent, KeyboardEventHandler, useEffect, useState,} from "react";
+import {BsSearch} from "react-icons/bs";
+import {SearchResult} from "./SearchResult";
+import {useDispatch, useSelector} from "react-redux";
 import {
+  deepSearch,
   hideResult,
-  search,
+  quickSearch,
+  setCurrentQuickSearchText,
   setCurrentSearchText,
   showResult,
 } from "../../redux/slices/search";
-import { Transition } from "@headlessui/react";
-import { RootState } from "../../redux/store";
-import { showWaiting } from "../../redux/slices/loading";
+import {Transition} from "@headlessui/react";
+import {RootState} from "../../redux/store";
 
 export const SearchField = () => {
-  const [searchText, setSearchText] = useState<string|undefined>(undefined);
+  const [searchText, setSearchText] = useState<string | undefined>(undefined);
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state.search);
   const onFocus = () => {
@@ -34,16 +28,21 @@ export const SearchField = () => {
     setSearchText(e.target.value);
   };
   const onKeyPress = (e: KeyboardEvent<HTMLInputElement>): void => {
-    if (e.code == "Enter") {
+    if (e.code === "Enter") {
+
+      //@ts-ignore
+      e.target.blur();
       // dispatch(showWaiting());
+      dispatch(setCurrentSearchText(searchText || ""));
+      dispatch(deepSearch(searchText));
     }
   };
 
   useEffect(() => {
     if(!searchText) return;
     const searchDelay = setTimeout(() => {
-      dispatch(setCurrentSearchText(searchText));
-      dispatch(search(searchText));
+      dispatch(setCurrentQuickSearchText(searchText));
+      dispatch(quickSearch(searchText));
     }, 2000);
     return () => clearTimeout(searchDelay);
   }, [searchText]);
@@ -66,7 +65,7 @@ export const SearchField = () => {
           onFocus={onFocus}
           onBlur={onBlur}
           onChange={onChange}
-          onKeyPress={onKeyPress}
+          onKeyDown={onKeyPress}
         />
         <SearchResult />
       </div>
