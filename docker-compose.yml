@@ -7,8 +7,9 @@ services:
       - "5000:5000"
     env_file:
       - ./.env
-    #    environment:
-    #      - URL_API=mongodb
+    environment:
+      - API_URL = http://3.26.55.185:3008
+      - SOCKET_URI= http://3.26.55.185:8080
     stdin_open: true
     tty: true
 
