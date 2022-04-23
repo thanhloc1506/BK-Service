@@ -310,7 +310,7 @@ const ManageService = () => {
                     <div
                         className={'block flex flex-col justify-center items-center gap-2 p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:shadow-xl transition-all duration-300'}>
                         <div className={'w-20 h-20'}>
-                            <img src={require('../../assets/enterprise/service-analysis.png')}
+                            <img src={require('../../assets/enterprise/service.png')}
                                  className={'w-full h-full'} alt=""/>
                         </div>
                         <div>
@@ -322,7 +322,7 @@ const ManageService = () => {
             </div>
             <div className={'block flex flex-col justify-center items-center gap-2 p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:shadow-xl transition-all duration-300'}>
                 <div className={'w-20 h-20'}>
-                    <img src={require('../../assets/enterprise/follow-analysis.png')} className={'w-full h-full'} alt=""/>
+                    <img src={require('../../assets/enterprise/user.png')} className={'w-full h-full'} alt=""/>
                 </div>
                 <div>
                     <p className={'text-2xl font-bold tracking-tight text-gray-900'}>{overView?.numOfFollow || 0}</p>
@@ -333,7 +333,7 @@ const ManageService = () => {
             </div>
             <div className={'block flex flex-col justify-center items-center gap-2 p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:shadow-xl transition-all duration-300'}>
                 <div className={'w-20 h-20'}>
-                    <img src={require('../../assets/enterprise/trade-analysis.png')} className={'w-full h-full'}
+                    <img src={require('../../assets/enterprise/trade.png')} className={'w-full h-full'}
                          alt=""/>
                 </div>
                 <div>
