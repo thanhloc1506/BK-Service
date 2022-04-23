@@ -50,7 +50,7 @@ const RegisterForm: React.FC = () => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+            <Dialog.Overlay className="fixed inset-0 bg-white/20 backdrop-blur" />
           </Transition.Child>
           {/* This element is to trick the browser into centering the modal contents. */}
           <span
@@ -68,7 +68,7 @@ const RegisterForm: React.FC = () => {
             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
-            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all duration-500 ease-in-out  w-1100 h-650">
+            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-2xl transform transition-all duration-500 ease-in-out  w-1100 h-650">
               <div className="bg-white">
                 <div className="h-650 m:flex sm:items-start">
                   <div className="w-full h-full border-black bg-blue-400">
