@@ -53,7 +53,7 @@ const Statistical: React.FC<IStsistical> = ({ comments, score }) => {
           </div>
         </div>
         <div className="flex justify-center py-5">
-          <p className="font-bold text-2xl text-purple-500">{score[5]}</p>
+          <p className="font-bold text-2xl text-purple-500">{score[5].toFixed(2)}</p>
           <p className="text-lg mt-1 ml-2">điểm</p>
           <p className="px-2 text-2xl">-</p>
           <p className="text-2xl">
