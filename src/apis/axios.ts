@@ -4,7 +4,7 @@ import cookies from "js-cookie";
 import {StatusCodes} from "http-status-codes";
 import {toast} from "react-toastify";
 
-export const apiUrl = process.env.API_URL || "localhost:8080";
+export const apiUrl = process.env.API_URL || "http://3.26.55.185:3008";
 const axiosClient = axios.create({
   baseURL: apiUrl,
   headers: {
