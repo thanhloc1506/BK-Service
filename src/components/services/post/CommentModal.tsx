@@ -42,7 +42,7 @@ const CommentModal: React.FC = () => {
   const [score_4, setScore_4] = useState(7);
   const [score_5, setScore_5] = useState(7);
 
-  const [selectedImages, setSelectedImage] = useState([]);
+  const [selectedImages, setSelectedImage] = useState<any[]>([]);
   const [preview, setPreview] = useState([]);
 
   useEffect(() => {
@@ -81,6 +81,20 @@ const CommentModal: React.FC = () => {
 
   const removeImage = () => {
     setSelectedImage([]);
+  };
+
+  const deletePreviewImage = (index: number) => {
+    // console.log(selectedImages[index]);
+    // let newPreviewImages = [];
+    // let idx = 0;
+    // for (const image of selectedImages) {
+    //   if (idx !== index) {
+    //     newPreviewImages[idx] = image;
+    //     idx++;
+    //   }
+    // }
+    // if (selectedImages.length - 1 == newPreviewImages.length)
+    //   setSelectedImage(newPreviewImages);
   };
 
   const dispatch = useDispatch();
@@ -446,6 +460,9 @@ const CommentModal: React.FC = () => {
                                                 <div
                                                   className="pl-3 z-20"
                                                   key={index}
+                                                  onClick={() =>
+                                                    deletePreviewImage(index)
+                                                  }
                                                 >
                                                   <img
                                                     className="max-h-40 max-w-96 z-30"
