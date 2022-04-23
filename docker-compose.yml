@@ -8,8 +8,8 @@ services:
     env_file:
       - ./.env
     environment:
-      - API_URL = http://3.26.55.185:3008
-      - SOCKET_URI= http://3.26.55.185:8080
+      - API_URL=http://3.26.55.185:3008
+      - SOCKET_URI=http://3.26.55.185:8080
     stdin_open: true
     tty: true
 
