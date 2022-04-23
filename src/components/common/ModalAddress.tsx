@@ -5,19 +5,11 @@ import {CheckIcon, SelectorIcon} from "@heroicons/react/solid";
 import axios from "axios";
 import {ADDRESS_API_URL} from "../../constants/common";
 import {ModalConfirm} from "./ModalConfirm";
-import {Address} from "../../apis/common/Address";
+import {Address, Phuong, Quan} from "../../apis/common/Address";
 import axiosClient from "../../apis/axios";
 import {hideWaiting, showWaiting} from "../../redux/slices/loading";
 import {PInProfile} from "../../apis/package/in/PInProfile";
 
-interface Quan{
-    readonly district_id: string;
-    readonly district_name: string;
-}
-interface Phuong{
-    readonly ward_name: string;
-    readonly ward_id: string;
-}
 export interface ModalAddressProps {
     show: boolean;
     setShow: (b: boolean) => void;

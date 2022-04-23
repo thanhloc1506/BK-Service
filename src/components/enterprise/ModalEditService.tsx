@@ -16,6 +16,7 @@ import {FileUploaded} from "../../apis/common/FileUploaded";
 import {toastSuccess} from "../../utils/toast";
 import {ModalIntroduction} from "./ModalIntroduction";
 import {Service} from "../../apis/common/Service";
+import {Category} from "../../apis/common/Category";
 
 interface IModalEditService {
     data: Service | undefined;
@@ -73,7 +74,7 @@ const submitChangeService = (data: Service | undefined, oldImg: FileUploaded[]|u
 export const ModalEditService = ({data, show, setShow}: IModalEditService) => {
     const dispatch = useDispatch();
     const [editData, setEditData] = useState<Service | undefined>(data);
-    const [categories, setCategories] = useState<PInCategory.Category[] | undefined>();
+    const [categories, setCategories] = useState<Category[] | undefined>();
     const [showModalAddress, setShowModalAddress] = useState(false);
     const [address, setAddress] = useState<Address | undefined>();
     const [textAddress, setTextAddress] = useState<string | undefined>("");
@@ -86,7 +87,7 @@ export const ModalEditService = ({data, show, setShow}: IModalEditService) => {
     useEffect(() => {
         //fetch categories
         dispatch(showWaiting());
-        axiosClient.get<PInCategory.Data>("/categories")
+        axiosClient.get<PInCategory>("/categories")
             .then((res) => {
                 setCategories(res.data.categories);
             })

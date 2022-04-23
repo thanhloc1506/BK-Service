@@ -12,6 +12,7 @@ import cookies from "js-cookie";
 import {toastError, toastSuccess} from "../../utils/toast";
 import {ImageControl} from "./ImageControl";
 import {ImageAdd} from "./ImageAdd";
+import {Category} from "../../apis/common/Category";
 
 interface DataForm {
     name?: string;
@@ -59,7 +60,7 @@ const AddService: React.FC = () => {
     const [showModalAddress, setShowModalAddress] = useState(false);
     const [address, setAddress] = useState<Address>();
     const [textAddress, setTextAddress] = useState<string>("");
-    const [categories, setCategories] = useState<Array<PInCategory.Category>>();
+    const [categories, setCategories] = useState<Array<Category>>();
     const [dataForm, setDataForm] = useState<DataForm>({});
     const [newImg, setNewImg] = useState<File[] | undefined>();
     useEffect(() => {
@@ -70,7 +71,7 @@ const AddService: React.FC = () => {
 
     useEffect(() => {
         dispatch(showWaiting());
-        axiosClient.get<PInCategory.Data>("/categories")
+        axiosClient.get<PInCategory>("/categories")
             .then((res) => {
                 setCategories(res.data.categories);
             })

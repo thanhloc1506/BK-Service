@@ -44,7 +44,7 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
               listImages={data.images?.map(e=>e.url) || [""]} onChangeImage={(i)=>{
             miniCarousel.current && miniCarousel.current.moveTo(i)
           }} show={showModalImage} setShow={setShowModalImage}/>
-          <div onClick={()=>setShowModalImage(true)} className={'cursor-pointer'}>
+          <div onClick={()=>(data.images&&data.images.length>0 && setShowModalImage(true))} className={'cursor-pointer'}>
             <div className="pt-5 flex justify-end">
               {data.images&&data.images.length>0 ?
                   <Carousel ref={miniCarousel}
@@ -86,7 +86,7 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
               <div className="flex justify-start ml-10 mt-2">
                 <div className="bg-blue-light rounded-full overflow-hidden h-14 w-14">
                   <p className="flex justify-center mt-3 text-2xl font-bold text-white">
-                    {scores && scores.length >= 5 ? scores[5] : ""}
+                    {scores && scores.length >= 5 ? scores[5].toFixed(2) : ""}
                   </p>
                 </div>
               </div>

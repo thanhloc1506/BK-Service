@@ -1,13 +1,12 @@
-import React, {useEffect, useState} from "react";
-import { Fragment } from "react";
-import {Listbox, Menu, Transition } from "@headlessui/react";
-import {CheckIcon, ChevronDownIcon, SelectorIcon} from "@heroicons/react/solid";
-import {PInCategory} from "../../apis/package/in/PInCategory";
+import React, {Fragment, useEffect, useState} from "react";
+import {Listbox, Transition} from "@headlessui/react";
+import {CheckIcon, SelectorIcon} from "@heroicons/react/solid";
+import {Category} from "../../apis/common/Category";
 
 interface IDropdownItem {
-  items: PInCategory.Category[] | undefined;
-  onChange?: (v: PInCategory.Category | undefined)=>void;
-  defaultValue?: PInCategory.Category;
+  items: Category[] | undefined;
+  onChange?: (v: Category | undefined) => void;
+  defaultValue?: Category;
 }
 
 const classNames = (...classes: any) => {
@@ -15,7 +14,7 @@ const classNames = (...classes: any) => {
 };
 
 const Dropdown: React.FC<IDropdownItem> = ({ items, onChange, defaultValue }: IDropdownItem) => {
-  const [selected, setSelected] = useState<PInCategory.Category | undefined>( defaultValue);
+  const [selected, setSelected] = useState<Category | undefined>(defaultValue);
   useEffect(()=>{
     onChange && onChange(selected);
   }, [selected]);
