@@ -10,5 +10,4 @@ export type RegisterForm = {
   email: string;
 };
 
-export const apiUrl =
-  process.env.NODE_ENV !== "production" ? "http://localhost:3007/api" : "https";
+

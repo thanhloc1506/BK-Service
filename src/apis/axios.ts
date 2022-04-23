@@ -3,9 +3,9 @@ import queryString from "query-string";
 import cookies from "js-cookie";
 import { StatusCodes } from "http-status-codes";
 import { toast } from "react-toastify";
-
+const apiUrl = process.env.API_URL || "localhost:8080";
 const axiosClient = axios.create({
-  baseURL: "http://localhost:3007",
+  baseURL: apiUrl,
   headers: {
     "content-type": "application/json",
   },
