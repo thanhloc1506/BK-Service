@@ -1,0 +1,14 @@
+version: "3.7"
+
+services:
+  server:
+    image: lv-client
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./.env
+#    environment:
+#      - URL_API=mongodb
+    stdin_open: true
+    tty: true
+
