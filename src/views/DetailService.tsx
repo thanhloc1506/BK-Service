@@ -109,7 +109,11 @@ const DetailService: React.FC = () => {
                             <Post
                               avatar={comment.user.username}
                               content={comment.content}
-                              fullName={comment.user.username}
+                              fullName={
+                                comment.user.fullName
+                                  ? comment.user.fullName
+                                  : comment.user.username
+                              }
                               like={comment.userLiked}
                               rating={comment.rating}
                               serviceName={serviceState.singleService?.name}

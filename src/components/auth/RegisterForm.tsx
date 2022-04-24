@@ -1,16 +1,14 @@
-import React, { Fragment, useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import logo from "../../assets/bg/login.png";
+import { Dialog, Transition } from "@headlessui/react";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import React, { Fragment, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
+import logo from "../../assets/bg/login.png";
 import {
   register,
   toggleModalLogin,
   toggleModalRegister,
 } from "../../redux/slices/auth";
-import { Formik, Field, Form, ErrorMessage } from "formik";
-import { Dialog, Transition } from "@headlessui/react";
-import { ExclamationIcon } from "@heroicons/react/outline";
+import { RootState } from "../../redux/store";
 import { RegisterForm as IRegisterForm } from "../../redux/types";
 
 const RegisterForm: React.FC = () => {
@@ -25,6 +23,7 @@ const RegisterForm: React.FC = () => {
 
   const toggleRegisterModal = () => {
     dispatch(toggleModalRegister(authState.showRegisterForm));
+    dispatch(toggleModalLogin(authState.showLoginForm));
   };
 
   const navigate = () => {
@@ -98,7 +97,6 @@ const RegisterForm: React.FC = () => {
                               email: "",
                             }}
                             onSubmit={(values) => {
-                              alert(JSON.stringify(values, null, 2));
                               onClickRegister(values);
                             }}
                           >
