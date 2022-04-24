@@ -1,7 +1,14 @@
-import React, {ChangeEvent, Fragment, KeyboardEvent, KeyboardEventHandler, useEffect, useState,} from "react";
-import {BsSearch} from "react-icons/bs";
-import {SearchResult} from "./SearchResult";
-import {useDispatch, useSelector} from "react-redux";
+import React, {
+  ChangeEvent,
+  Fragment,
+  KeyboardEvent,
+  KeyboardEventHandler,
+  useEffect,
+  useState,
+} from "react";
+import { BsSearch } from "react-icons/bs";
+import { SearchResult } from "./SearchResult";
+import { useDispatch, useSelector } from "react-redux";
 import {
   deepSearch,
   hideResult,
@@ -10,8 +17,8 @@ import {
   setCurrentSearchText,
   showResult,
 } from "../../redux/slices/search";
-import {Transition} from "@headlessui/react";
-import {RootState} from "../../redux/store";
+import { Transition } from "@headlessui/react";
+import { RootState } from "../../redux/store";
 
 export const SearchField = () => {
   const [searchText, setSearchText] = useState<string | undefined>(undefined);
@@ -29,7 +36,6 @@ export const SearchField = () => {
   };
   const onKeyPress = (e: KeyboardEvent<HTMLInputElement>): void => {
     if (e.code === "Enter") {
-
       //@ts-ignore
       e.target.blur();
       // dispatch(showWaiting());
@@ -39,7 +45,7 @@ export const SearchField = () => {
   };
 
   useEffect(() => {
-    if(!searchText) return;
+    if (!searchText) return;
     const searchDelay = setTimeout(() => {
       dispatch(setCurrentQuickSearchText(searchText));
       dispatch(quickSearch(searchText));
@@ -59,7 +65,9 @@ export const SearchField = () => {
           <BsSearch />
         </div>
         <input
-          className={"w-120 outline-none bg-none bg-transparent"}
+          className={
+            "2xl:w-120 xl:w-[26rem] outline-none bg-none bg-transparent"
+          }
           type={"search"}
           placeholder="Search..."
           onFocus={onFocus}

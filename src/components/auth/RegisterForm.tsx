@@ -39,7 +39,7 @@ const RegisterForm: React.FC = () => {
         initialFocus={cancelButtonRef}
         onClose={toggleRegisterModal}
       >
-        <div className="flex mt-28 justify-center text-center min-h-screen">
+        <div className="flex 2xl:mt-28 xl:mt-16 justify-center text-center min-h-screen">
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -51,7 +51,7 @@ const RegisterForm: React.FC = () => {
           >
             <Dialog.Overlay className="fixed inset-0 bg-white/20 backdrop-blur" />
           </Transition.Child>
-          {/* This element is to trick the browser into centering the modal contents. */}
+
           <span
             className="hidden sm:inline-block sm:align-middle"
             aria-hidden="true"
@@ -67,27 +67,33 @@ const RegisterForm: React.FC = () => {
             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
-            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-2xl transform transition-all duration-500 ease-in-out  w-1100 h-650">
+            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-2xl transform transition-all duration-500 ease-in-out 2xl:w-1100 2xl:h-650 xl:h-[80vh] xl:w-[80vw]">
               <div className="bg-white">
                 <div className="h-650 m:flex sm:items-start">
                   <div className="w-full h-full border-black bg-blue-400">
                     <div className="h-full grid grid-cols-3 gap-4">
                       <div className="">
-                        <h3 className="mt-11 justify-center flex text-5xl text-white">
+                        <h3 className="mt-11 justify-center flex 2xl:text-5xl xl:text-3xl text-white">
                           BK Service
                         </h3>
                         <div className="flex justify-center mt-14">
-                          <img src={logo} alt="..." className="w-20 h-20" />
+                          <img
+                            src={logo}
+                            alt="..."
+                            className="2xl:w-20 2xl:h-20 xl:w-16 xl:h-16"
+                          />
                         </div>
-                        <p className="px-14 text-white justify-center flex mt-14 text-2xl">
+                        <p className="px-14 text-white justify-center flex mt-14 2xl:text-2xl xl:text-xl">
                           Ứng dụng kết nối hàng triệu người dùng đến tất cả nhà
                           cung cấp dịch vụ tốt nhất
                         </p>
                       </div>
                       <div className="col-span-2 bg-white rounded-l-5xl">
-                        <div className="mt-20">
+                        <div className="2xl:mt-40 xl:mt-16">
                           <div className="flex justify-center">
-                            <p className="text-4xl mr-40">Đăng ký</p>
+                            <p className="2xl:text-4xl xl:text-2xl 2xl:mr-28 xl:mr-48">
+                              Đăng ký
+                            </p>
                           </div>
                           <Formik
                             initialValues={{
@@ -101,9 +107,9 @@ const RegisterForm: React.FC = () => {
                             }}
                           >
                             <Form>
-                              <div className="flex justify-center mt-10">
+                              <div className="flex justify-center 2xl:mt-10 xl:mt-6">
                                 <Field
-                                  className="border-blue-300 bg-transparent border-2 h-11 w-72 p-2 rounded-md overflow-hidden"
+                                  className="border-blue-300 bg-transparent border-2 2xl:h-11 2xl:w-72 xl:w-64 xl:h-10 xl:mr-6 p-2 outline-none rounded-md overflow-hidden"
                                   type="text"
                                   id="username"
                                   name="username"
@@ -116,9 +122,9 @@ const RegisterForm: React.FC = () => {
                                   name="username"
                                 />
                               </div>
-                              <div className="flex justify-center mt-6">
+                              <div className="flex justify-center 2xl:mt-6 xl:mt-4">
                                 <Field
-                                  className="border-blue-300 bg-transparent border-2 h-11 w-72 p-2 rounded-md overflow-hidden"
+                                  className="border-blue-300 bg-transparent border-2 2xl:h-11 2xl:w-72 xl:w-64 xl:h-10 xl:mr-6 p-2 outline-none rounded-md overflow-hidden"
                                   type="password"
                                   name="password"
                                   id="password"
@@ -131,9 +137,9 @@ const RegisterForm: React.FC = () => {
                                   name="password"
                                 />
                               </div>
-                              <div className="flex justify-center mt-6">
+                              <div className="flex justify-center 2xl:mt-6 xl:mt-4">
                                 <Field
-                                  className="border-blue-300 bg-transparent border-2 h-11 w-72 p-2 rounded-md overflow-hidden"
+                                  className="border-blue-300 bg-transparent border-2 2xl:h-11 2xl:w-72 xl:w-64 xl:h-10 xl:mr-6 p-2 outline-none rounded-md overflow-hidden"
                                   type="password"
                                   name="confirmPassword"
                                   id="confirmPassword"
@@ -146,9 +152,9 @@ const RegisterForm: React.FC = () => {
                                   name="confirmPassword"
                                 />
                               </div>
-                              <div className="flex justify-center mt-6">
+                              <div className="flex justify-center 2xl:mt-6 xl:mt-4">
                                 <Field
-                                  className="border-blue-300 bg-transparent border-2 h-11 w-72 p-2 rounded-md overflow-hidden"
+                                  className="border-blue-300 bg-transparent border-2 2xl:h-11 2xl:w-72 xl:w-64 xl:h-10 xl:mr-6 p-2 outline-none rounded-md overflow-hidden"
                                   type="email"
                                   name="email"
                                   id="email"
@@ -161,10 +167,10 @@ const RegisterForm: React.FC = () => {
                                   name="email"
                                 />
                               </div>
-                              <div className="flex justify-center mt-6">
+                              <div className="flex justify-center 2xl:mt-6 xl:mt-4">
                                 <button
                                   type="submit"
-                                  className="bg-blue-500 w-80 ml-8 p-2 text-white rounded-md overflow-hidden"
+                                  className="bg-blue-500 2xl:w-80 xl:w-72 2xl:ml-8 xl:ml-2 p-2 text-white rounded-md overflow-hidden"
                                 >
                                   Đăng ký
                                 </button>
@@ -175,7 +181,7 @@ const RegisterForm: React.FC = () => {
                           <div className="flex justify-center mt-6 ml-20">
                             <p className="inline-block">Đã có tài khoản?</p>
                             <p
-                              className="inline-block ml-2 text-blue-400"
+                              className="inline-block ml-2 text-blue-400 cursor-pointer"
                               onClick={navigate}
                             >
                               Đăng nhập ngay

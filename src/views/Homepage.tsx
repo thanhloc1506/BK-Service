@@ -5,10 +5,14 @@ import Pagination from "../components/layouts/Pagination/Pagination";
 import SideBarHomePage from "../components/layouts/SideBarHomePage";
 import SingleCard from "../components/services/SingleCard";
 import { RootState } from "../redux/store";
-import {deepSearch, search, setCurrentSearchText} from "../redux/slices/search";
+import {
+  deepSearch,
+  search,
+  setCurrentSearchText,
+} from "../redux/slices/search";
 import { logout } from "../redux/slices/auth";
 import cookies from "js-cookie";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Service from "../components/services/Service";
 
 const Homepage: React.FC = () => {
@@ -27,21 +31,27 @@ const Homepage: React.FC = () => {
       <Navbar />
       <div className="grid grid-cols-4 pb-12 h-auto">
         <div className="p-5 mt-5"></div>
-        <div className="p-5 mt-5 fixed w-full top-20 z-[9]">
+        <div className="p-5 mt-5 fixed w-full top-[3.5rem] z-[9]">
           <SideBarHomePage />
         </div>
-        <div className="col-span-4 mt-48 ">
+        <div className="col-span-4 mt-40 px-[12%]">
           {searchState.status === "loading" ? (
             ""
           ) : (
             <>
               <div className="grid grid-cols-4 gap-8 mb-5">
                 {searchState.dataSearch?.services?.map(
-                    (service: any, index: number) => (
-                        <div key={index} className={'flex justify-center'}>
-                          <Service data={service} btnText={"Truy cập"} onBtnClick={()=>navigate(`/detailService/${service._id}`)}/>
-                        </div>
-                    )
+                  (service: any, index: number) => (
+                    <div key={index} className={"flex justify-center"}>
+                      <Service
+                        data={service}
+                        btnText={"Truy cập"}
+                        onBtnClick={() =>
+                          navigate(`/detailService/${service._id}`)
+                        }
+                      />
+                    </div>
+                  )
                 )}
               </div>
               {searchState.dataSearch &&
