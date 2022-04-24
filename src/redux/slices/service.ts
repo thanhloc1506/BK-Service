@@ -3,7 +3,7 @@ import axiosClient from "../../apis/axios";
 import { hideWaiting, showWaiting } from "./loading";
 import moment from "moment";
 import { Service } from "../../apis/common/Service";
-import {PInSchedule} from "../../apis/package/in/PInSchedule";
+import { PInSchedule } from "../../apis/package/in/PInSchedule";
 
 export interface State {
   services: Service[];
@@ -183,17 +183,13 @@ export const getComments = createAsyncThunk(
       const comments = response.data.comments;
       let commentResponses = [];
       let idx = 0;
+      console.log(paramId);
 
       for (const comment of comments) {
         const userInfoResponse = await axiosClient.get(
           `/user-info/${comment.user._id}`
         );
-        let isLiked = false;
-        for (const userId of comment.userLiked) {
-          if (paramId.userId === userId) {
-            isLiked = true;
-          }
-        }
+
         const time = moment(comment.createdAt, "YYYY/MM/DD");
         var month = time.format("MM");
         var day = time.format("DD");
@@ -201,7 +197,6 @@ export const getComments = createAsyncThunk(
         commentResponses[idx] = {
           ...comment,
           user: userInfoResponse.data.user,
-          userLiked: isLiked,
           time: `${day}/${month}/${year}`,
           numOfUserLiked: comment.userLiked.length,
         };

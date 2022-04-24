@@ -9,7 +9,7 @@ interface IPost {
   time: string;
   rating: number;
   content: string;
-  like: boolean;
+  like: any[];
   serviceName?: string;
   title: string;
   images: any;
@@ -35,18 +35,24 @@ const Post: React.FC<IPost> = ({
   const dispatch = useDispatch();
   const userState = useSelector((state: RootState) => state.user);
 
-  const [isLike, setIsLike] = useState(like);
+  const [isLike, setIsLike] = useState(
+    like.filter((like: any) => like === userState.user?._id).length > 0
+  );
   const onClickLike = () => {
     dispatch(toggleLikeComment(id));
     if (userState.isAuthenticated) {
       if (isLike) {
-        setNumOfLike(numOfLike - 1);
+        if (Number.isInteger(numOfLike)) setNumOfLike(numOfLike - 1);
+        else setTmpLike(0);
       } else {
-        setNumOfLike(numOfLike + 1);
+        if (Number.isInteger(numOfLike)) setNumOfLike(numOfLike + 1);
+        else setTmpLike(1);
       }
       setIsLike(!isLike);
     }
   };
+
+  const [tmpLike, setTmpLike] = useState(0);
 
   const [numOfLike, setNumOfLike] = useState(numOfUserLiked);
 
@@ -146,7 +152,9 @@ const Post: React.FC<IPost> = ({
                   </svg>
                 )}
               </button>
-              <p className="ml-2 mt-0.5">{numOfLike} Thích</p>
+              <p className="ml-2 mt-0.5">
+                {Number.isInteger(numOfLike) ? numOfLike : tmpLike} Thích
+              </p>
             </div>
           </div>
         </div>

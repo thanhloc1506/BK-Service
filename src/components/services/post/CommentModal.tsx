@@ -9,10 +9,14 @@ import { json } from "stream/consumers";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { comment } from "../../../redux/slices/service";
+import { toggleModalLogin } from "../../../redux/slices/auth";
 
 const CommentModal: React.FC = () => {
   const serviceId = useSelector((state: RootState) => state.service.serviceId);
+  const userState = useSelector((state: RootState) => state.user);
+
   const cancelButtonRef = useRef(null);
+
   const [showModalComment, setShowModalComment] = useState(false);
   const [Image, setImage] = useState(false);
   const [Rating, setRating] = useState(false);
@@ -120,10 +124,15 @@ const CommentModal: React.FC = () => {
     setShowModalComment(false);
   };
 
+  const onClickComment = () => {
+    if (userState.isAuthenticated) setShowModalComment(true);
+    else dispatch(toggleModalLogin(userState.showLoginForm));
+  };
+
   return (
     <>
       <button
-        onClick={() => setShowModalComment(true)}
+        onClick={onClickComment}
         className="bg-blue-500 w-full py-3 rounded-md text-white text-xl"
       >
         Viết bình luận

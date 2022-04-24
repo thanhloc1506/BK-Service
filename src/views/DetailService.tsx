@@ -31,6 +31,7 @@ const DetailService: React.FC = () => {
   const dispatch = useDispatch();
 
   const userState = useSelector((state: RootState) => state.user);
+  console.log(userState);
   useEffect(() => {
     if (cookies.get("token") == undefined) {
       dispatch(logout());
@@ -46,7 +47,7 @@ const DetailService: React.FC = () => {
     };
     dispatch(selectService(serviceId as string));
     fetchData();
-  }, [dispatch, userState.isAuthenticated]);
+  }, [dispatch, userState.isAuthenticated, userState.authLoading]);
 
   const serviceState = useSelector((state: RootState) => state.service);
 
@@ -100,7 +101,7 @@ const DetailService: React.FC = () => {
             <div className="grid grid-cols-3">
               <div className="col-span-2 mt-5">
                 <div className="ml-10">
-                  {serviceState.commentLoading
+                  {serviceState.commentLoading && userState.authLoading
                     ? ""
                     : serviceState.comments.map(
                         (comment: any, index: number) => (
