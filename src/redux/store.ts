@@ -32,7 +32,7 @@ interface MyReducer {
 const persistConfig: PersistConfig<any> = {
   key: "root",
   storage: localStorage,
-  blacklist: ["search", "loading", "socket", "auth", "service"],
+  blacklist: ["loading", "socket", "auth", "service"],
 };
 
 const reducer = combineReducers<MyReducer>({

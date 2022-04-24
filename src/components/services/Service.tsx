@@ -1,4 +1,4 @@
-import React from "react";
+import React, {memo} from "react";
 import rating from "../../assets/service/rating.png";
 import {Carousel} from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
@@ -10,14 +10,14 @@ interface IService {
     btnText?: string;
 }
 
-const SingleCard: React.FC<IService> = ({
+const SingleCard: React.FC<IService> =memo(({
                                             data,
                                             onBtnClick,
                                             btnText
                                         }: IService) => {
     return (
         <>
-            <div className="w-72 h-[28rem] bg-white border-2 border-blue-200 rounded">
+            <div className="w-72 h-[28rem] bg-white border-2 border-blue-200 rounded hover:drop-shadow-2xl shadow-lg shadow-cyan-500/50 transition-all duration-500 cursor-pointer">
                 <div className={'h-[45%] overflow-hidden'}>
                     <div className="flex justify-center p-3">
                         {data.images&&data.images.length>0 ?
@@ -102,6 +102,6 @@ const SingleCard: React.FC<IService> = ({
             </div>
         </>
     );
-};
+});
 
 export default SingleCard;

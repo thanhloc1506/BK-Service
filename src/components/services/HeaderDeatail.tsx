@@ -42,39 +42,26 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
           show={showModalImage}
           setShow={setShowModalImage}
         />
-        <div
-          onClick={() => setShowModalImage(true)}
-          className={"cursor-pointer px-3"}
-        >
-          <div className="pt-5 flex justify-end col-span-1">
-            {data.images && data.images.length > 0 ? (
-              <Carousel
-                ref={miniCarousel}
-                onChange={(i) => setCurIndexImage(i)}
-                showThumbs={false}
-                showArrows={false}
-                showIndicators={true}
-                showStatus={false}
-                autoPlay={!showModalImage}
-                infiniteLoop={true}
-              >
-                {data.images &&
-                  data.images.map((e, index) => {
-                    return (
-                      <div key={index} className={"rounded-lg overflow-hidden"}>
-                        <img src={e.url} className={"w-full h-full"} />
-                      </div>
-                    );
-                  })}
-              </Carousel>
-            ) : (
-              <div>
-                <img
-                  src={"https://paroda.vn/media/2021/08/customer-service.jpg"}
-                  className={"w72 h-40"}
-                />
-              </div>
-            )}
+        <div onClick={()=>(data.images&&data.images.length>0 && setShowModalImage(true))} className={'cursor-pointer'}>
+          <div className="pt-5 flex justify-end">
+            {data.images&&data.images.length>0 ?
+                <Carousel ref={miniCarousel}
+                          onChange={(i)=>setCurIndexImage(i)}
+                          showThumbs={false}
+                          showArrows={false}
+                          showIndicators={true}
+                          showStatus={false}
+                          autoPlay={!showModalImage}
+                          infiniteLoop={true}>
+                  { data.images && (data.images.map((e, index)=>{
+                    return <div key={index} className={'rounded-lg overflow-hidden'}>
+                      <img src={e.url} className={'w-full h-full'}/>
+                    </div>
+                  }))}
+                </Carousel>
+                : (<div>
+                  <img src={'https://paroda.vn/media/2021/08/customer-service.jpg'} className={'w-full h-full'}/>
+                </div>)}
           </div>
         </div>
         <div className="col-span-2">
@@ -97,7 +84,7 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
             <div className="flex justify-start ml-10 mt-2">
               <div className="bg-blue-light rounded-full overflow-hidden h-14 w-14">
                 <p className="flex justify-center mt-3 text-2xl font-bold text-white">
-                  {scores && scores.length >= 5 ? scores[5] : ""}
+                  {scores && scores.length >= 5 ? scores[5].toFixed(2) : ""}
                 </p>
               </div>
             </div>
