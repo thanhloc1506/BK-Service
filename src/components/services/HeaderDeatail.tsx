@@ -42,26 +42,44 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
           show={showModalImage}
           setShow={setShowModalImage}
         />
-        <div onClick={()=>(data.images&&data.images.length>0 && setShowModalImage(true))} className={'cursor-pointer'}>
+        <div
+          onClick={() =>
+            data.images && data.images.length > 0 && setShowModalImage(true)
+          }
+          className={"cursor-pointer"}
+        >
           <div className="pt-5 flex justify-end">
-            {data.images&&data.images.length>0 ?
-                <Carousel ref={miniCarousel}
-                          onChange={(i)=>setCurIndexImage(i)}
-                          showThumbs={false}
-                          showArrows={false}
-                          showIndicators={true}
-                          showStatus={false}
-                          autoPlay={!showModalImage}
-                          infiniteLoop={true}>
-                  { data.images && (data.images.map((e, index)=>{
-                    return <div key={index} className={'rounded-lg overflow-hidden'}>
-                      <img src={e.url} className={'w-full h-full'}/>
-                    </div>
-                  }))}
-                </Carousel>
-                : (<div>
-                  <img src={'https://paroda.vn/media/2021/08/customer-service.jpg'} className={'w-full h-full'}/>
-                </div>)}
+            {data.images && data.images.length > 0 ? (
+              <Carousel
+                ref={miniCarousel}
+                onChange={(i) => setCurIndexImage(i)}
+                showThumbs={false}
+                showArrows={false}
+                showIndicators={true}
+                showStatus={false}
+                autoPlay={!showModalImage}
+                infiniteLoop={true}
+              >
+                {data.images &&
+                  data.images.map((e, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className={"rounded-lg overflow-hidden pl-8 pt-2"}
+                      >
+                        <img src={e.url} className={"max-w-xl max-h-64"} />
+                      </div>
+                    );
+                  })}
+              </Carousel>
+            ) : (
+              <div>
+                <img
+                  src={"https://paroda.vn/media/2021/08/customer-service.jpg"}
+                  className={"w-full h-full"}
+                />
+              </div>
+            )}
           </div>
         </div>
         <div className="col-span-2">

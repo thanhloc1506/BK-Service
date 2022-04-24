@@ -8,7 +8,7 @@ interface IStsistical {
 const Statistical: React.FC<IStsistical> = ({ comments, score }) => {
   return (
     <div className="mt-5">
-      <div className="mx-24 bg-gray-100">
+      <div className="bg-gray-100 w-80">
         <div className="flex justify-center py-5 border-b-2 border-b-gray-200">
           <p className="font-bold text-xl">{comments.length}</p>
           <p className="text-xl ml-2">Bình luận đã chia sẻ</p>
@@ -53,7 +53,9 @@ const Statistical: React.FC<IStsistical> = ({ comments, score }) => {
           </div>
         </div>
         <div className="flex justify-center py-5">
-          <p className="font-bold text-2xl text-purple-500">{score && score.length>=6 && score[5].toFixed(2)}</p>
+          <p className="font-bold text-2xl text-purple-500">
+            {score && score.length >= 6 && score[5].toFixed(2)}
+          </p>
           <p className="text-lg mt-1 ml-2">điểm</p>
           <p className="px-2 text-2xl">-</p>
           <p className="text-2xl">

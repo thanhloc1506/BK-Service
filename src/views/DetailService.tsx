@@ -125,8 +125,10 @@ const DetailService: React.FC = () => {
                 </div>
               </div>
               <div>
-                <Statistical score={score} comments={serviceState.comments} />
-                <div className="mx-24 mt-4">
+                <div className="flex justify-end pr-8">
+                  <Statistical score={score} comments={serviceState.comments} />
+                </div>
+                <div className="flex justify-end pr-8 mt-4">
                   <CommentModal />
                 </div>
               </div>

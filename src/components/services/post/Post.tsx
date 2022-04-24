@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { DEFAULT_AVATAR } from "../../../constants/common";
 import { toggleLikeComment } from "../../../redux/slices/service";
 import { RootState } from "../../../redux/store";
 
@@ -62,7 +63,16 @@ const Post: React.FC<IPost> = ({
         <div className="w-full shadow-lg pt-3  border-2 border-gray-100">
           <div className="grid grid-cols-2 border-b-2 border-b-gray-100 pb-2">
             <span className="flex ml-5">
-              <div className="w-12 h-12 bg-gray-200 rounded-full"></div>
+              <div className="col-span-1 rounded-full w-12 h-12 overflow-hidden ring-2 ring-white">
+                <img
+                  src={
+                    userState.user?.avatar
+                      ? userState.user.avatar.url
+                      : DEFAULT_AVATAR
+                  }
+                  className={"w-full h-full p-1 rounded-full"}
+                />
+              </div>
               <div>
                 <p className="ml-2 text-sm font-semibold">{fullName}</p>
                 <p className="ml-2 mt-1.5 text-light text-sm text-gray-500">
