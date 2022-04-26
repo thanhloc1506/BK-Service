@@ -39,7 +39,10 @@ const CalendarRow: React.FC<CalendarRowProps> = ({
       content.push(<td key={i + 30}></td>);
     }
     content.push(
-      <td key={100} className="relative py-3 px-2 md:px-3 text-center">
+      <td
+        key={100}
+        className="relative 2xl:py-3 xl:py-2 2xl:px-2 xl:px-1 text-center"
+      >
         <EventCalendar
           isCurrentDay={
             1 === activeDay &&
@@ -72,7 +75,7 @@ const CalendarRow: React.FC<CalendarRowProps> = ({
       content.push(
         <td
           key={i}
-          className="relative py-3 px-2 md:px-3  hover:text-blue-500 text-center text-gray-800"
+          className="relative 2xl:py-3 xl:py-2 2xl:px-2 xl:px-1 hover:text-blue-500 text-center text-gray-800"
         >
           <EventCalendar
             isCurrentDay={
@@ -109,7 +112,7 @@ const CalendarRow: React.FC<CalendarRowProps> = ({
       content.push(
         <td
           key={i}
-          className="relative py-3 px-2 md:px-3  hover:text-blue-500 text-center text-gray-800"
+          className="relative 2xl:py-3 xl:py-2 2xl:px-2 xl:px-1 hover:text-blue-500 text-center text-gray-800"
         >
           <EventCalendar
             isCurrentDay={

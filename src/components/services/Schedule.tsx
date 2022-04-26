@@ -25,13 +25,15 @@ const Schedule: React.FC<ISchedule> = ({ service, schedules }) => {
   };
   return (
     <div className="py-5">
-      <div className="flex justify-end mr-6">
+      <div className="flex justify-end mr-0">
         <BookServiceModal open={open} setOpen={setOpen} service={service} />
-        <div className="shadow-xl w-fit h-fit border-2 border-gray-200 ">
+        <div className="shadow-xl w-[22vw] h-fit border-2 border-gray-200 bg-white">
           <div className="flex justify-center">
-            <p className="text-2xl font-bold pt-5">Thông tin đặt lịch</p>
+            <p className="2xl:text-xl xl:text-lg font-semibold pt-3">
+              Thông tin đặt lịch
+            </p>
           </div>
-          <div className="mt-5 ml-7">
+          {/* <div className="mt-5 ml-7">
             <p className="text-lg font-light">
               Họ và tên:{" "}
               {userState.user?.fullName !== undefined
@@ -40,8 +42,8 @@ const Schedule: React.FC<ISchedule> = ({ service, schedules }) => {
             </p>
             <p className="mt-1 text-lg font-light">Sdt: 0123456789</p>
             <p className="mt-1 text-lg font-light">Dịch vụ: {service?.name}</p>
-          </div>
-          <div className="p-5">
+          </div> */}
+          <div className="p-3">
             {useMemo(
               () => (
                 <Calendar schedules={schedules} />
@@ -49,9 +51,9 @@ const Schedule: React.FC<ISchedule> = ({ service, schedules }) => {
               []
             )}
           </div>
-          <div className="px-5 pb-5 pt-2 flex justify-end">
+          <div className="2xl:pr-4 xl:pr-3 pb-5 pt-2 flex justify-end">
             <button
-              className="bg-blue-500 text-white rounded-sm px-5 py-2"
+              className="bg-blue-500 text-white rounded-sm text-sm 2xl:px-3 2xl:py-1.5 xl:px-2.5 xl:py-1"
               onClick={onClickOpen}
             >
               Đặt lịch

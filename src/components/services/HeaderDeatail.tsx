@@ -32,7 +32,7 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
   }, [data.address]);
   return (
     <>
-      <div className="grid grid-cols-3">
+      <div className="grid grid-cols-5 bg-white border-2 border-gray-50">
         <ModalImage
           defaultIndex={curIndexImage}
           listImages={data.images?.map((e) => e.url) || [""]}
@@ -46,9 +46,9 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
           onClick={() =>
             data.images && data.images.length > 0 && setShowModalImage(true)
           }
-          className={"cursor-pointer"}
+          className={"cursor-pointer col-span-2"}
         >
-          <div className="pt-5 flex justify-end">
+          <div className="flex justify-end">
             {data.images && data.images.length > 0 ? (
               <Carousel
                 ref={miniCarousel}
@@ -63,11 +63,8 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
                 {data.images &&
                   data.images.map((e, index) => {
                     return (
-                      <div
-                        key={index}
-                        className={"rounded-lg overflow-hidden pl-8 pt-2"}
-                      >
-                        <img src={e.url} className={"max-w-xl max-h-64"} />
+                      <div key={index} className={"overflow-hidden"}>
+                        <img src={e.url} className={"max-w-full h-full"} />
                       </div>
                     );
                   })}
@@ -82,26 +79,28 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
             )}
           </div>
         </div>
-        <div className="col-span-2">
-          <div className="grid grid-cols-5 border-b-2 border-b-gray-100 pb-5">
+        <div className="col-span-3">
+          <div className="grid grid-cols-6 border-b-2 border-b-gray-50 pb-3">
             <div className="col-span-4 ml-10">
               {/*<Breakcumb addresses={[data.address.province, data.address.district]} />*/}
-              <div className="flex mt-10">
+              <div className="flex">
                 {/*<p className="font-bold text-xl">Nguyen Van A</p>*/}
                 {/*<p className="font-bold text-xl mx-3">-</p>*/}
-                <p className="font-bold text-2xl">{data.name}</p>
+                <p className="font-bold 2xl:text-2xl xl:text-xl mt-3">
+                  {data.name}
+                </p>
               </div>
             </div>
             {authState.isAuthenticated ? (
-              <div className="flex justify-center">
+              <div className="flex justify-end col-span-2">
                 <ButtonFollow serviceId={data._id} />
               </div>
             ) : null}
           </div>
-          <div className="grid grid-cols-8 border-b-2 border-b-gray-100 pb-2">
+          <div className="grid grid-cols-8 border-b-2 border-b-gray-50 pb-2">
             <div className="flex justify-start ml-10 mt-2">
-              <div className="bg-blue-light rounded-full overflow-hidden h-14 w-14">
-                <p className="flex justify-center mt-3 text-2xl font-bold text-white">
+              <div className="bg-blue-light rounded-full overflow-hidden 2xl:h-12 2xl:w-12 xl:h-8 xl:w-8">
+                <p className="flex justify-center 2xl:mt-2.5 xl:mt-1.5 2xl:text-xl xl:text-sm font-semibold text-white">
                   {scores && scores.length >= 5 ? scores[5].toFixed(2) : ""}
                 </p>
               </div>
@@ -113,26 +112,32 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
                   scores.slice(0, 5).map((s, i) => {
                     return (
                       <div className="mt-1 text-center" key={i}>
-                        <p className="text-2xl text-blue-light font-semibold">
+                        <p className="2xl:text-lg xl:text-sm text-blue-light font-semibold">
                           {s.toFixed(2)}
                         </p>
-                        <p className="mt-1">Tieu chi {i + 1}</p>
+                        <p className="2xl:mt-1.5 xl:mt-1 2xl:text-sm xl:text-xs">
+                          Tieu chi {i + 1}
+                        </p>
                       </div>
                     );
                   })}
               </div>
             </div>
             <div>
-              <div className="mt-1 ml-10 text-center">
-                <p className="text-2xl font-semibold">{numOfComments}</p>
-                <p className="mt-1">Bình luận</p>
+              <div className="2xl:mt-1 xl:mt-0">
+                <p className="2xl:text-xl xl:text-lg font-semibold flex justify-center 2xl:pl-8">
+                  {numOfComments}
+                </p>
+                <p className="2xl:mt-1.5 xl:mt-0 2xl:text-sm xl:text-xs flex justify-end">
+                  Bình luận
+                </p>
               </div>
             </div>
           </div>
           <div>
-            <div className="flex justify-start ml-12 mt-3">
+            <div className="flex justify-start 2xl:ml-12 xl:ml-11 2xl:mt-3 xl:mt-1.5">
               <svg
-                className="h-7 w-7 text-gray-600"
+                className="2xl:h-7 2xl:w-7 xl:h-6 xl:w-6 text-gray-600"
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
@@ -151,9 +156,9 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
                 {addressText}
               </p>
             </div>
-            <div className="flex justify-start ml-12 mt-2">
+            <div className="flex justify-start 2xl:ml-12 xl:ml-[2.9rem] mt-2">
               <svg
-                className="h-6 w-6 text-gray-600"
+                className="2xl:h-6 2xl:w-6 xl:h-5 xl:w-5 text-gray-600"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -165,8 +170,8 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
                 <circle cx="12" cy="12" r="10" />{" "}
                 <polyline points="12 6 12 12 16 14" />
               </svg>
-              <div className="flex">
-                <p className="text-green-400 ml-6 font-bold text-xl">
+              <div className="flex xl:mt-[-1px] 2xl:mt-0">
+                <p className="text-green-400 2xl:ml-6 xl:ml-5 font-semibold 2xl:text-xl xl:text-sm">
                   Đang mở cửa
                 </p>
                 <p className="text-gray-600 text-xl font-semibold ml-5">
@@ -174,9 +179,9 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
                 </p>
               </div>
             </div>
-            <div className="flex justify-start ml-12 mt-2">
+            <div className="flex justify-start 2xl:ml-12 xl:ml-[2.9rem] 2xl:mt-1 xl:mt-0">
               <svg
-                className="h-7 w-7 text-gray-600"
+                className="2xl:h-7 2xl:w-7 xl:h-6 xl:w-6 text-gray-600"
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
@@ -191,7 +196,7 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
                 <path d="M11 3L20 12a1.5 1.5 0 0 1 0 2L14 20a1.5 1.5 0 0 1 -2 0L3 11v-4a4 4 0 0 1 4 -4h4" />{" "}
                 <circle cx="9" cy="9" r="2" />
               </svg>
-              <p className="text-gray-600 text-xl font-semibold ml-5">
+              <p className="text-gray-600 2xl:text-xl xl:text-lg font-semibold 2xl:ml-5 xl:ml-4 xl:mt-[-2px] 2xl:mt-0">
                 {data.minPrice}đ - {data.maxPrice}đ
               </p>
             </div>

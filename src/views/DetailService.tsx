@@ -61,13 +61,13 @@ const DetailService: React.FC = () => {
       .finally(() => dispatch(hideWaiting()));
   }, [serviceState.singleService, serviceState.comments]);
   return (
-    <div className="min-h-screen h-fit pb-20">
+    <div className="min-h-screen h-fit pb-20 bg-[#f7f8fa]">
       <Navbar />
       {serviceState.serviceLoading ? (
         ""
       ) : (
-        <>
-          <div className="pt-24">
+        <div className="px-[12%]">
+          <div className="pt-28">
             {serviceState.singleService && (
               <HeaderDeatail
                 data={serviceState.singleService}
@@ -138,7 +138,7 @@ const DetailService: React.FC = () => {
               </div>
             </div>
           </div>
-        </>
+        </div>
       )}
     </div>
   );
