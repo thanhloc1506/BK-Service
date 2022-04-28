@@ -58,7 +58,7 @@ const CalendarRow: React.FC<CalendarRowProps> = ({
             ).length > 0
           }
           value={1}
-          isFirst={firstDay + 1 === 1}
+          isFirst={firstDay + 1 === 1 || firstDay === 1}
           isLast={firstDay + 1 === 7}
           schedule={schedules.filter(
             (schedule) =>
@@ -92,7 +92,7 @@ const CalendarRow: React.FC<CalendarRowProps> = ({
               ).length > 0
             }
             value={i + 1}
-            isFirst={i === 1}
+            isFirst={i === 1 || i - 1 === 1}
             isLast={i === len}
             schedule={schedules.filter(
               (schedule) =>
@@ -129,7 +129,7 @@ const CalendarRow: React.FC<CalendarRowProps> = ({
               ).length > 0
             }
             value={i + (7 * row - firstDay)}
-            isFirst={i === 1}
+            isFirst={i === 1 || i - 1 === 1}
             isLast={i === 7}
             schedule={schedules.filter(
               (schedule) =>
