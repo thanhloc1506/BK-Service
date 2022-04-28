@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Navbar from "../components/layouts/Navbar";
@@ -29,6 +29,9 @@ const DetailService: React.FC = () => {
   const { serviceId } = useParams();
   const [score, setScore] = useState<number[]>([]);
   const dispatch = useDispatch();
+
+  const ref = useRef();
+  // const isVisible = useOnScreen(ref);
 
   const userState = useSelector((state: RootState) => state.user);
   console.log(userState);
@@ -61,7 +64,7 @@ const DetailService: React.FC = () => {
       .finally(() => dispatch(hideWaiting()));
   }, [serviceState.singleService, serviceState.comments]);
   return (
-    <div className="min-h-screen h-fit pb-20 bg-[#f7f8fa]">
+    <div className="min-h-screen h-fit pb-20 bg-[#f7f8fa] z-100">
       <Navbar />
       {serviceState.serviceLoading ? (
         ""
@@ -100,7 +103,7 @@ const DetailService: React.FC = () => {
           <div>
             <div className="grid grid-cols-3">
               <div className="col-span-2 mt-5">
-                <div className="ml-10">
+                <div className="">
                   {serviceState.commentLoading && userState.authLoading
                     ? ""
                     : serviceState.comments.map(
@@ -128,11 +131,12 @@ const DetailService: React.FC = () => {
                       )}
                 </div>
               </div>
-              <div>
-                <div className="flex justify-end pr-8">
+              {/* fixed z-10 top-40 left-[65.6%] */}
+              <div className="">
+                <div className="flex justify-end">
                   <Statistical score={score} comments={serviceState.comments} />
                 </div>
-                <div className="flex justify-end pr-8 mt-4">
+                <div className="flex justify-end mt-4">
                   <CommentModal />
                 </div>
               </div>
@@ -145,3 +149,21 @@ const DetailService: React.FC = () => {
 };
 
 export default DetailService;
+
+// export function useOnScreen(ref: any) {
+//   const [isIntersecting, setIntersecting] = useState(false);
+
+//   const observer = new IntersectionObserver(([entry]) =>
+//     setIntersecting(entry.isIntersecting)
+//   );
+
+//   useEffect(() => {
+//     observer.observe(ref.current);
+//     // Remove the observer as soon as the component is unmounted
+//     return () => {
+//       observer.disconnect();
+//     };
+//   }, []);
+
+//   return isIntersecting;
+// }

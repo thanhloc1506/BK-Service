@@ -133,7 +133,7 @@ const CommentModal: React.FC = () => {
     <>
       <button
         onClick={onClickComment}
-        className="bg-blue-500 w-80 py-3 rounded-md text-white text-xl"
+        className="bg-blue-solid w-[22vw] 2xl:py-2 xl:py-1 rounded-md text-white text-lg"
       >
         Viết bình luận
       </button>

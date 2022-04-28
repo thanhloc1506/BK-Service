@@ -27,7 +27,7 @@ const Schedule: React.FC<ISchedule> = ({ service, schedules }) => {
     <div className="py-5">
       <div className="flex justify-end mr-0">
         <BookServiceModal open={open} setOpen={setOpen} service={service} />
-        <div className="shadow-xl w-[22vw] h-fit border-2 border-gray-200 bg-white">
+        <div className="shadow-xl w-[22vw] h-fit border-2 border-gray-100 bg-white">
           <div className="flex justify-center">
             <p className="2xl:text-xl xl:text-lg font-semibold pt-3">
               Thông tin đặt lịch

@@ -14,7 +14,7 @@ const SingleCard: React.FC<IService> = memo(
   ({ data, onBtnClick, btnText }: IService) => {
     return (
       <>
-        <div className="2xl:w-72 2xl:h-[26rem] xl:w-full xl:h-[20rem] bg-white border-2 border-blue-200 rounded hover:drop-shadow-2xl shadow-lg shadow-cyan-500/50 transition-all duration-500 cursor-pointer">
+        <div className="2xl:w-72 2xl:h-[24rem] xl:w-full xl:h-[20rem] bg-white border-2 border-blue-200 rounded hover:drop-shadow-2xl shadow-lg shadow-cyan-500/50 transition-all duration-500 cursor-pointer">
           <div className={"2xl:h-[45%] xl:h-[41%] overflow-hidden"}>
             <div className="flex justify-center p-3">
               {data.images && data.images.length > 0 ? (
@@ -89,7 +89,7 @@ const SingleCard: React.FC<IService> = memo(
                   d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
                 />
               </svg>
-              <p className="ml-1 font-light items-center">
+              <p className="ml-0.5 font-light items-center">
                 {data.textCmtCount || 0}
               </p>
             </div>
@@ -113,11 +113,11 @@ const SingleCard: React.FC<IService> = memo(
                   d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
                 />
               </svg>
-              <p className="ml-1 font-light">{data.imgCmtCount || 0}</p>
+              <p className="ml-0.5 font-light">{data.imgCmtCount || 0}</p>
             </div>
-            <div className="col-span-2 flex justify-center items-center 2xl:mt-1 xl:mt-0">
+            <div className="col-span-2 flex justify-end pr-3 items-center xl:mt-0">
               <button
-                className="bg-blue-500 2xl:h-10 xl:h-8 w-fit px-5 rounded-md overflow-hidden text-white font-light"
+                className="bg-blue-solid 2xl:h-8 xl:h-6 w-fit 2xl:px-4 xl:px-3 2xl:texg-lg xl:text-sm rounded-sm overflow-hidden text-white font-light"
                 onClick={onBtnClick}
               >
                 {btnText || "Chỉnh sửa"}
