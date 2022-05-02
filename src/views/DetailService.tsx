@@ -24,6 +24,7 @@ import axiosClient from "../apis/axios";
 import { PInScore } from "../apis/package/in/PInScore";
 import { logout } from "../redux/slices/auth";
 import cookies from "js-cookie";
+import { Service } from "../apis/common/Service";
 
 const DetailService: React.FC = () => {
   const { serviceId } = useParams();
@@ -34,7 +35,7 @@ const DetailService: React.FC = () => {
   // const isVisible = useOnScreen(ref);
 
   const userState = useSelector((state: RootState) => state.user);
-  console.log(userState);
+
   useEffect(() => {
     if (cookies.get("token") == undefined) {
       dispatch(logout());
@@ -137,7 +138,11 @@ const DetailService: React.FC = () => {
                   <Statistical score={score} comments={serviceState.comments} />
                 </div>
                 <div className="flex justify-end mt-4">
-                  <CommentModal />
+                  <CommentModal
+                    score={score}
+                    service={serviceState.singleService as Service}
+                    comments={serviceState.comments}
+                  />
                 </div>
               </div>
             </div>

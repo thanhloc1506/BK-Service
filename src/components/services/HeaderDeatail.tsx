@@ -22,14 +22,16 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
   numOfComments,
 }: IHeaderDetail) => {
   const authState = useSelector((state: RootState) => state.user);
-  const [addressText, setAddressText] = useState("");
   const miniCarousel = useRef<Carousel>(null);
   const [curIndexImage, setCurIndexImage] = useState(0);
   const [showModalImage, setShowModalImage] = useState(false);
   const [numOfComment, setNumOfComment] = useState(numOfComments);
+  const [addressText, setAddressText] = useState("");
+
   useEffect(() => {
     getAddressContent(data.address).then((res) => setAddressText(res || ""));
   }, [data.address]);
+
   return (
     <>
       <div className="grid grid-cols-5 bg-white border-2 border-gray-50">
