@@ -18,7 +18,7 @@ import axios, { AxiosResponse } from "axios";
 import { PInProfile } from "../../apis/package/in/PInProfile";
 import { ModalAddress } from "../common/ModalAddress";
 import { Address } from "../../apis/common/Address";
-import {getAddressContent} from "../../utils/getAddressContent";
+import { getAddressContent } from "../../utils/getAddressContent";
 
 const SEX = [
   {
@@ -150,9 +150,8 @@ const InfoUser: React.FC = () => {
 
   useEffect(() => {
     getAddressContent(state.user?.address).then((res) => {
-          setAddress((pre: any) => ({...pre, value: res}))
-        }
-    );
+      setAddress((pre: any) => ({ ...pre, value: res }));
+    });
   }, [state.user?.address]);
 
   const _updateAvatar = () => {
@@ -253,22 +252,26 @@ const InfoUser: React.FC = () => {
     </Transition>
   );
   return (
-    <div>
+    <div className="h-full">
       {dialogConfirm}
-      <div className="h-12 bg-white py-8 pb-20 pl-20 border-b-2 border-b-gray-200 shadow-sm">
-        <p className="text-blue-400 font-medium text-3xl">Thông tin cá nhân</p>
+      <div className="h-12 bg-white pt-12 pb-14 pl-20 border-b-2 border-b-gray-200 shadow-sm">
+        <p className="text-blue-solid font-medium 2xl:text-xl xl:text-lg">
+          Thông tin cá nhân
+        </p>
       </div>
       <div className="grid grid-cols-7">
-        <div className="col-span-5 border-r-2 border-r-gray-200 h-[78vh] py-5">
+        <div className="col-span-5 border-r-2 border-r-gray-200 h-fit pt-5 pb-10">
           <div className={"flex justify-center items-center"}>
             <div
               className={
-                "relative w-32 h-32 rounded-full overflow-hidden group ring-4 ring-blue-300 p-2"
+                "relative 2xl:w-32 2xl:h-32 xl:h-28 xl:w-28 rounded-full overflow-hidden group 2xl:ring-4 xl:ring-2 ring-blue-solid 2xl:p-2 xl:p-1"
               }
             >
               <img
-                src={state.user?.avatar ? state.user.avatar.url : DEFAULT_AVATAR}
-                className={"rounded-full  w-full h-full"}
+                src={
+                  state.user?.avatar ? state.user.avatar.url : DEFAULT_AVATAR
+                }
+                className={"rounded-full w-full h-full"}
               />
               <button
                 onClick={onChangeAvatarClick}
