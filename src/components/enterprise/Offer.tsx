@@ -11,26 +11,28 @@ import {toastSuccess} from "../../utils/toast";
 interface OfferProps{
     id: string;
     data: PremiumConfig;
+    onClick?: ()=>void;
 }
 
-export const Offer = ({id, data}: OfferProps) => {
+export const Offer = ({id, data, onClick}: OfferProps) => {
     const state = useSelector((state: RootState)=>state.user);
     const dispatch = useDispatch();
     useEffect(()=>{
 
     }, [])
     const onClickBuyOffer = ()=>{
-        dispatch(showWaiting());
-        axiosClient.post("/enterprise/buyPremium", {id})
-            .then((res)=>{
-                toastSuccess("Bạn đã mua thành công");
-            })
-            .catch(e=>{
-
-            })
-            .finally(()=>{
-                dispatch(hideWaiting());
-            })
+        onClick && onClick();
+        // dispatch(showWaiting());
+        // axiosClient.post("/enterprise/buyPremium", {id})
+        //     .then((res)=>{
+        //         toastSuccess("Bạn đã mua thành công");
+        //     })
+        //     .catch(e=>{
+        //
+        //     })
+        //     .finally(()=>{
+        //         dispatch(hideWaiting());
+        //     })
     }
     return (
         <div className="relative w-full max-w-sm sm:max-w-none lg:col-span-3 xl:col-span-1">

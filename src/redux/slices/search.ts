@@ -30,6 +30,8 @@ export interface State {
     quan: Quan[];
     phuong: Phuong[];
     categories: Category[] | undefined;
+    page: number;
+    totalPage: number;
 }
 
 const initialState: State = {
@@ -44,6 +46,8 @@ const initialState: State = {
     categories: undefined,
     dataQuickSeacrh: undefined,
     currentQuickSearchText: "",
+    page: 1,
+    totalPage: 1
 };
 export const getAllCategory = createAsyncThunk("/getCategories", async (_, api) => {
     const dispatch = api.dispatch;
@@ -69,15 +73,29 @@ export const fetchPhuong = createAsyncThunk("/getPhuong", async (quanId: string,
         .finally(() => dispatch(hideWaiting()));
 });
 
-export const deepSearch = createAsyncThunk("/deepSearch", async (text: string|undefined, api: any) => {
+export const deepSearch = createAsyncThunk("/deepSearch", async (data: undefined|any, api: any) => {
     const filter: Filter = api.getState().search.filter;
     const dispatch = api.dispatch;
-    if(!text) text=api.getState().search.currentSearchText;
+    let text =  "";
+    let page = 1;
+    if(!data || !data.text){
+        text = api.getState().search.currentSearchText;
+    }
+    else{
+        text = data.text;
+    }
+    if(!data || !data.page){
+        page = api.getState().search.page;
+    }
+    else{
+        page = data.page;
+    }
     let params: any = {
         category: filter.category?._id,
         quan: filter.quan?.district_id,
         huyen: filter.phuong?.ward_id,
-        text: text
+        text: text,
+        page
     }
     Object.keys(params).forEach((k) => {
         if (!params[k]) {
@@ -210,10 +228,15 @@ const searchSlice = createSlice({
         },
         [deepSearch.fulfilled.toString()]: (state: State, action: PayloadAction<PInSearch.Data>) => {
             let data = action.payload;
+            console.log(data)
             if (data.searchText === state.currentSearchText || (data.searchText === undefined && state.currentSearchText === "")) {
                 if (data.services.length > 0) {
                     state.dataSearch = data;
+                    state.page = data.page;
+                    state.totalPage = data.totalPage;
                 } else {
+                    state.page =1;
+                    state.totalPage = 1;
                     state.dataSearch = undefined;
                 }
             }

@@ -30,13 +30,13 @@ const MenuCategory = () => {
           if(v._id==="-1"){
             dispatch(resetCategory());
             setTimeout(()=>{
-              dispatch(deepSearch());
+              dispatch(deepSearch(undefined));
             }, 1000);
           }
           else {
             dispatch(applyCategory(v));
             setTimeout(()=>{
-              dispatch(deepSearch());
+              dispatch(deepSearch(undefined));
             }, 1000);
           }
         }}>
@@ -108,7 +108,7 @@ const MenuQuan = () => {
             dispatch(resetQuan());
             dispatch(resetPhuong());
             setTimeout(()=>{
-              dispatch(deepSearch());
+              dispatch(deepSearch(undefined));
             }, 1000);
             return;
           }
@@ -116,7 +116,7 @@ const MenuQuan = () => {
           dispatch(fetchPhuong(v.district_id));
           dispatch(resetPhuong());
           setTimeout(()=>{
-            dispatch(deepSearch());
+            dispatch(deepSearch(undefined));
           }, 1000);
         }}>
           <div className="relative mt-1">
@@ -184,13 +184,13 @@ const MenuPhuong = () => {
             dispatch(resetPhuong());
             // dispatch(deepSearch("Hello"));
             setTimeout(()=>{
-              dispatch(deepSearch());
+              dispatch(deepSearch(undefined));
             }, 1000);
             return;
           }
           dispatch(applyPhuong(v));
           setTimeout(()=>{
-            dispatch(deepSearch());
+            dispatch(deepSearch(undefined));
           }, 1000);
         }}>
           <div className="relative mt-1">

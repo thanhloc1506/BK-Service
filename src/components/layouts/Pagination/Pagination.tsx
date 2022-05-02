@@ -1,50 +1,49 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../redux/store";
+import React, {useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../../../redux/store";
 import ItemButton from "../Pagination/ItemButton";
 import Ellipsis from "./Ellipsis";
 import NextButton from "./NextButton";
 import PreviousButton from "./PreviousButton";
+import {deepSearch} from "../../../redux/slices/search";
 
-let totalPage = 10;
 
-const Pagination = ({ itemsPerPage }: any) => {
-  const [pageNumber, setPageNumber] = useState(0);
-
+const Pagination = ({itemsPerPage}: any) => {
   const dispatch = useDispatch();
-
-  const [currentPage, setCurrentPage] = useState(1);
-
+  const currentPage = useSelector((state: RootState) => state.search.page);
+  const totalPage = useSelector((state: RootState) => state.search.totalPage);
   useEffect(() => {
+    console.log(totalPage)
     // dispatch(getQuestionByPage(1));
   }, [dispatch]);
 
   const goFirstPage = () => {
     // dispatch(getQuestionByPage(1));
-    setCurrentPage(1);
+    // setCurrentPage(1);
   };
   const goLastPage = () => {
     // dispatch(getQuestionByPage(totalPage));
-    setCurrentPage(totalPage);
+    // setCurrentPage(totalPage);
   };
 
   const goPrePage = () => {
     if (currentPage !== 1) {
       // dispatch(getQuestionByPage(currentPage - 1));
-      setCurrentPage(currentPage - 1);
+      // setCurrentPage(currentPage - 1);
     }
   };
 
   const goNextPage = () => {
     if (currentPage !== totalPage) {
       // dispatch(getQuestionByPage(currentPage + 1));
-      setCurrentPage(currentPage + 1);
+      // setCurrentPage(currentPage + 1);
     }
   };
 
   const handleClickPage = (page: number) => {
     // dispatch(getQuestionByPage(page));
-    setCurrentPage(page);
+    // setCurrentPage(page);
+    dispatch(deepSearch({page: page}))
   };
 
   let itemPaginations;
@@ -99,7 +98,7 @@ const Pagination = ({ itemsPerPage }: any) => {
       </div>
     );
   } else if (totalPage === 3) {
-    paginatePage = { itemPaginations };
+    paginatePage = itemPaginations ;
   } else {
     paginatePage = (
       <div>

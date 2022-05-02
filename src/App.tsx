@@ -12,6 +12,7 @@ import EHomepage from "./views/enterprise/EHomePage";
 import {PersistGate} from "redux-persist/integration/react";
 import {ToastContainer} from "react-toastify";
 import {AuthSync} from "./components/rounting/AuthSync";
+import {PaymentResult} from "./views/enterprise/PaymentResult";
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -39,6 +40,7 @@ const App: React.FC = () => {
                 />
                 <Route path="/admin/*" element={<Admin/>}/>
                 <Route path="/enterprise" element={<EHomepage/>}/>
+                  <Route path = "/payment-result" element={<PaymentResult/>}/>
               </Routes>
             </Router>
           </AuthSync>
