@@ -232,8 +232,8 @@ const CommentModal: React.FC<ICommentModal> = ({
                               <div className="ml-3 2xl:mt-1 xl:mt-0">
                                 <div className="flex">
                                   <p className="font-semibold 2xl:text-sm xl-text-sm">
-                                    {enterprise?.name
-                                      ? enterprise.name + "-"
+                                    {enterprise?.fullName
+                                      ? enterprise.fullName + "-"
                                       : ""}
                                     {name}
                                   </p>
