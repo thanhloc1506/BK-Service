@@ -27,7 +27,6 @@ const CommentModal: React.FC<ICommentModal> = ({
   const { name, enterprise } = service;
   const serviceState = useSelector((state: RootState) => state.service);
   const userState = useSelector((state: RootState) => state.user);
-
   const cancelButtonRef = useRef(null);
 
   const [showModalComment, setShowModalComment] = useState(false);
@@ -233,8 +232,9 @@ const CommentModal: React.FC<ICommentModal> = ({
                               <div className="ml-3 mt-1">
                                 <div className="flex">
                                   <p className="font-semibold text-sm">
-                                    {enterprise.name
-                                      ? enterprise.name + "-"
+                                    {
+                                      enterprise&&enterprise.fullName
+                                      ? enterprise.fullName + "-"
                                       : ""}
                                     {name}
                                   </p>

@@ -479,7 +479,7 @@ const InfoUser: React.FC = () => {
                       : "text-gray-400 w-[12vw] text-sm bg-transparent outline-none"
                   }
                   // defaultValue={state.user?.phone}
-                  value={state.user?.phone || ""}
+                  defaultValue={state.user?.phone || ""}
                   placeholder={"Số điện thoại"}
                   disabled={!phone.active}
                   onChange={(e: ChangeEvent<HTMLInputElement>) => {

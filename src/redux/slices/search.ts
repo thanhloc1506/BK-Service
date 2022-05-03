@@ -185,6 +185,9 @@ const searchSlice = createSlice({
     },
     resetCategory(state: State) {
       state.filter.category = undefined;
+    },
+    clearQuickSearch(state: State){
+      state.dataQuickSeacrh = undefined;
     }
   },
   extraReducers: {
@@ -244,10 +247,11 @@ const searchSlice = createSlice({
       let data = action.payload;
       state.quickSearchStatus = "complete";
       if(data.searchText === state.currentQuickSearchText){
+        console.log(data)
         if (data.services.length > 0) {
           state.dataQuickSeacrh = data;
         } else {
-          state.dataQuickSeacrh = undefined;
+          state.dataQuickSeacrh = data;
         }
       }
     },
@@ -273,6 +277,7 @@ export const {
   resetPhuong,
   resetCategory,
   resetQuan,
-    setCurrentQuickSearchText
+    setCurrentQuickSearchText,
+  clearQuickSearch
 } =
     searchSlice.actions;

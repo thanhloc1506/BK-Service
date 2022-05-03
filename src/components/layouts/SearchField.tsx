@@ -10,6 +10,7 @@ import { BsSearch } from "react-icons/bs";
 import { SearchResult } from "./SearchResult";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  clearQuickSearch,
   deepSearch,
   hideResult,
   quickSearch,
@@ -27,8 +28,12 @@ export const SearchField = () => {
   const onFocus = () => {
     dispatch(showResult());
   };
-  const onBlur = () => {
-    dispatch(hideResult());
+  const onBlur = (e: any) => {
+    setTimeout(()=>{
+      e.target.value='';
+      dispatch(hideResult());
+      dispatch(clearQuickSearch());
+    }, 200);
   };
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     // dispatch(search(e.target.value));

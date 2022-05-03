@@ -30,7 +30,6 @@ const DetailService: React.FC = () => {
   const { serviceId } = useParams();
   const [score, setScore] = useState<number[]>([]);
   const dispatch = useDispatch();
-
   const ref = useRef();
   // const isVisible = useOnScreen(ref);
 
@@ -51,7 +50,7 @@ const DetailService: React.FC = () => {
     };
     dispatch(selectService(serviceId as string));
     fetchData();
-  }, [dispatch, userState.isAuthenticated, userState.authLoading]);
+  }, [dispatch, userState.isAuthenticated, userState.authLoading, serviceId]);
 
   const serviceState = useSelector((state: RootState) => state.service);
 

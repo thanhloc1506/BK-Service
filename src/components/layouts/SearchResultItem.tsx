@@ -27,7 +27,9 @@ export const SearchResultItem = ({data}: SearchResultItemProp) => {
     }, [data?.address])
     return (
         <div className={`flex p-2 m-2 hover:bg-blue-200 transition-all duration-300 cursor-pointer rounded`}
-            onClick={()=>{navigate(`/detailService/${data?._id}`)}}
+            onClick={()=>{
+                navigate(`/detailService/${data?._id}`)}
+            }
         >
             <div className={''}>
                 <img
