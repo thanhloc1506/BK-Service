@@ -10,6 +10,7 @@ import Notifications from "../components/profile/Notifications";
 import History from "../components/profile/History";
 import ScheduleCalendar from "../components/layouts/ScheduleCalendar";
 import ReactCalendar from "../components/layouts/ReactCalendar";
+import {AllSchedules} from "../components/schedule/AllSchedule";
 
 const Profile: React.FC = () => {
   const userProfileState = useSelector((state: RootState) => state.userProfile);
@@ -25,7 +26,7 @@ const Profile: React.FC = () => {
             {userProfileState.page === "info" ? (
               <InfoUser />
             ) : userProfileState.page === "schedule" ? (
-              <ScheduleService />
+              <AllSchedules />
             ) : userProfileState.page === "love" ? (
               <LoveService />
             ) : userProfileState.page === "noti" ? (
