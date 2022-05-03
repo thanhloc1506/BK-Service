@@ -1,4 +1,4 @@
-import React, {Fragment} from "react";
+import React, {Fragment, useEffect, useState} from "react";
 import {Menu, Transition} from '@headlessui/react'
 import {useSelector} from "react-redux";
 import {RootState} from "../../redux/store";
@@ -22,7 +22,7 @@ export const SearchResult = ({show}: any) => {
                     </div>
                 </Transition>
                 <Transition
-                    show={state.isShowResult && state.quickSearchStatus !== "loading"}
+                    show={state.isShowResult && state.quickSearchStatus !== "loading" && state.dataQuickSeacrh!==undefined}
                     as={Fragment}
                     enter="transition ease-out duration-500 delay-200"
                     enterFrom="transform opacity-0 scale-95"
@@ -36,18 +36,19 @@ export const SearchResult = ({show}: any) => {
                     <div className={'w-full transition-all duration-300'}>
                         <Menu.Items
                             className="right-0 py-2 w-full mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                            {state.dataQuickSeacrh ? state.dataQuickSeacrh.services.map((s, index) => {
-                                return (
-                                    <div key={index}>
-                                        <Menu.Item>
-                                            {({active}) => (
-                                                <SearchResultItem data={s}/>
-                                            )}
-                                        </Menu.Item>
-                                    </div>
-                                )
-                            }) : <div className={'p-16 text-center italic text-blue-400 text-2xl'}>Không tìm thấy kết
-                                quả</div>}
+                            {state.dataQuickSeacrh&&state.dataQuickSeacrh.services&&state.dataQuickSeacrh.services.length>0
+                                ? state.dataQuickSeacrh.services.map((s, index) => {
+                                    return (
+                                        <div key={index}>
+                                            <Menu.Item>
+                                                {({active}) => (
+                                                    <SearchResultItem data={s}/>
+                                                )}
+                                            </Menu.Item>
+                                        </div>
+                                    )
+                                }) : <div className={'p-16 text-center italic text-blue-400 text-2xl'}>Không tìm thấy kết
+                                    quả</div>}
 
 
                         </Menu.Items>

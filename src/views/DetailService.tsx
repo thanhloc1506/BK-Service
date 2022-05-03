@@ -25,7 +25,7 @@ const DetailService: React.FC = () => {
         };
         dispatch(selectService(serviceId as string));
         fetchData();
-    }, [dispatch]);
+    }, [dispatch, serviceId]);
 
     const serviceState = useSelector((state: RootState) => state.service);
 
