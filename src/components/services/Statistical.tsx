@@ -41,7 +41,9 @@ const Statistical: React.FC<IStsistical> = ({ comments, score }) => {
                 ).length
               }
             </p>
-            <p className="col-span-3 ml-5 2xl:text-xl xl:text-lg">Trung bình</p>
+            <p className="col-span-3 ml-5 2xl:text-xl xl:text-lg">
+              Bình thường
+            </p>
           </div>
           <div className="grid grid-cols-5 pb-5">
             <p className="flex justify-end col-span-2 text-red-500 2xl:text-xl xl:text-lg">

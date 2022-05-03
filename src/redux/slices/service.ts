@@ -238,9 +238,10 @@ export const getAllSchedules = createAsyncThunk(
       const response = await axiosClient.get<PInSchedule>("/user/schedules");
       for (const schedule of response.data.schedules) {
         // if (schedule.service === serviceId) {
-        const timeServe = moment(schedule.timeServe, "YYYY/MM/DD HH:mm").zone(
-          "+0700"
-        );
+        const timeServe = moment(
+          schedule.timeServe as Date,
+          "YYYY/MM/DD HH:mm"
+        ).zone("+0700");
         var month = timeServe.format("MM");
         var day = timeServe.format("DD");
         var year = timeServe.format("YYYY");

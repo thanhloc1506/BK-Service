@@ -21,7 +21,7 @@ const Homepage: React.FC = () => {
   const navigate = useNavigate();
   useEffect(() => {
     dispatch(setCurrentSearchText(""));
-    dispatch(deepSearch({text: ""}));
+    dispatch(deepSearch({ text: "" }));
     if (cookies.get("token") == undefined) {
       dispatch(logout());
     }
@@ -31,7 +31,7 @@ const Homepage: React.FC = () => {
       <Navbar />
       <div className="grid grid-cols-4 pb-12 h-auto">
         <div className="p-5 mt-5"></div>
-        <div className="p-5 mt-5 fixed w-full top-[3.5rem] z-[9]">
+        <div className="p-5 mt-5 fixed flex justify-center w-full top-[3.5rem] z-[9]">
           <SideBarHomePage />
         </div>
         <div className="col-span-4 mt-40 px-[12%]">
