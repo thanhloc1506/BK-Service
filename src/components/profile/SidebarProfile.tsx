@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import user, { selectPage } from "../../redux/slices/user";
-import {RootState} from "../../redux/store";
-import {DEFAULT_AVATAR} from "../../constants/common";
+import { RootState } from "../../redux/store";
+import { DEFAULT_AVATAR } from "../../constants/common";
 
 type Page = "info" | "schedule" | "love" | "noti" | "history";
 
@@ -12,26 +12,35 @@ interface ISelectPage {
 
 const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
   const dispatch = useDispatch();
-  const state = useSelector((state: RootState)=>state.user.user);
+  const state = useSelector((state: RootState) => state.user.user);
   const onSelectPage = (value: Page) => {
     dispatch(selectPage(value));
   };
   return (
     <div className="bg-white h-[90vh] w-full shadow-sm border-2 border-gray-100">
-      <div className="h-[12vh] w-full border-b-2 border-b-gray-100">
-        <div className="flex justify-start ml-10 mt-8">
-          <div className="w-14 h-14 rounded-full bg-gray-500">
-            <img src={state?.avatar? state.avatar.url : DEFAULT_AVATAR} className={"w-full h-full p-1 rounded-full"}/>
+      <div className="2xl:h-20 xl:h-[4.3rem] w-full border-b-2 border-b-gray-100">
+        <div className="flex justify-start ml-10 2xl:mt-6 xl:mt-8 items-center 2xl:mb-0 xl:mb-3">
+          <div className="2xl:w-14 2xl:h-14 xl:w-10 xl:h-10 2xl:mt-0 xl:mt-2 rounded-full bg-gray-500">
+            <img
+              src={state?.avatar ? state.avatar.url : DEFAULT_AVATAR}
+              className={"w-full h-full p-1 rounded-full"}
+            />
           </div>
           <div>
-            <p className="text-sm ml-2.5 mt-1">Tài khoản của</p>
-            <p className="text-lg font-medium mt-1.5 ml-2.5">{state?.fullName || ""}</p>
+            <p className="ml-2.5 2xl:mt-1 xl:mt-3 2xl:text-lg xl:text-sm">
+              Tài khoản của
+            </p>
+            <p className="font-medium mt-1 ml-2.5 2xl:text-lg xl:text-sm">
+              {state?.fullName.split(" ")[
+                state?.fullName.split(" ").length - 1
+              ] || ""}
+            </p>
           </div>
         </div>
       </div>
       <div className="cursor-pointer" onClick={() => onSelectPage("info")}>
         <div
-          className={`h-[7vh] w-full flex justify-start pt-3 ${
+          className={`2xl:h-14 xl:h-12 w-full flex justify-start items-center ${
             page === "info"
               ? "bg-gray-100 border-l-4 border-l-blue-solid border-y-2 border-y-gray-100 border-r-2 border-r-gray-100 pl-9"
               : "opacity-40 pl-10"
@@ -39,7 +48,7 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
         >
           <div className="">
             <svg
-              className="h-8 w-8 text-blue-solid"
+              className="2xl:h-8 2xl:w-8 xl:h-7 xl:w-7 text-blue-solid"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -52,22 +61,24 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
               />
             </svg>
           </div>
-          <div className="mt-1 ml-5">
-            <p className="text-blue-solid text-lg">Thông tin cá nhân</p>
+          <div className="2xl:mt-1 xl:mt-0.5 ml-5">
+            <p className="text-blue-solid 2xl:text-lg xl:text-sm">
+              Thông tin cá nhân
+            </p>
           </div>
         </div>
       </div>
       <div className="cursor-pointer" onClick={() => onSelectPage("schedule")}>
         <div
-          className={`h-[7vh] w-full flex justify-start pt-3 ${
+          className={`2xl:h-14 xl:h-12 w-full flex justify-start items-center ${
             page === "schedule"
               ? "bg-gray-100 border-l-4 border-l-blue-solid border-y-2 border-y-gray-100 border-r-2 border-r-gray-100 pl-9"
               : "opacity-40 pl-10"
           }`}
         >
-          <div className="">
+          <div className="2xl:ml-0 xl:ml-0.5 2xl:mt-0 xl:mt-0.5">
             <svg
-              className="h-8 w-8 text-blue-solid"
+              className="2xl:h-8 2xl:w-8 xl:h-6 xl:w-6 text-blue-solid"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -82,23 +93,25 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
               <line x1="3" y1="10" x2="21" y2="10" />
             </svg>
           </div>
-          <div className="mt-1 ml-5">
-            <p className="text-blue-solid text-lg">Danh sách đặt lịch</p>
+          <div className="2xl:mt-1 xl:mt-0.5 ml-5">
+            <p className="text-blue-solid 2xl:text-lg xl:text-sm">
+              Danh sách đặt lịch
+            </p>
           </div>
         </div>
       </div>
       <div className="cursor-pointer" onClick={() => onSelectPage("love")}>
         <div
-          className={`h-[7vh] w-full flex justify-start pt-3 ${
+          className={`2xl:h-14 xl:h-12 w-full flex justify-start items-center ${
             page === "love"
               ? "bg-gray-100 border-l-4 border-l-blue-solid border-y-2 border-y-gray-100 border-r-2 border-r-gray-100 pl-9"
               : "opacity-40 pl-10"
           }`}
         >
-          <div className="">
+          <div className="2xl:ml-0 xl:ml-0.5 2xl:mt-0 xl:mt-0.5">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-8 w-8 text-blue-solid"
+              className="2xl:h-8 2xl:w-8 xl:h-6 xl:w-6 text-blue-solid"
               viewBox="0 0 20 20"
               fill="currentColor"
             >
@@ -109,50 +122,54 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
               />
             </svg>
           </div>
-          <div className="mt-1 ml-5">
-            <p className="text-blue-solid text-lg">Dịch vụ yêu thích</p>
+          <div className="2xl:mt-1 xl:mt-0.5 ml-5">
+            <p className="text-blue-solid 2xl:text-lg xl:text-sm">
+              Dịch vụ yêu thích
+            </p>
           </div>
         </div>
       </div>
-      {/*<div className="cursor-pointer" onClick={() => onSelectPage("noti")}>*/}
-      {/*  <div*/}
-      {/*    className={`h-[7vh] w-full flex justify-start pt-3 ${*/}
-      {/*      page === "noti"*/}
-      {/*        ? "bg-gray-100 border-l-4 border-l-blue-solid border-y-2 border-y-gray-100 border-r-2 border-r-gray-100 pl-9"*/}
-      {/*        : "opacity-40 pl-10"*/}
-      {/*    }`}*/}
-      {/*  >*/}
-      {/*    <div className="">*/}
-      {/*      <svg*/}
-      {/*        className="h-8 w-8 text-blue-solid"*/}
-      {/*        viewBox="0 0 24 24"*/}
-      {/*        fill="none"*/}
-      {/*        stroke="currentColor"*/}
-      {/*        strokeWidth="1.5"*/}
-      {/*        strokeLinecap="round"*/}
-      {/*        strokeLinejoin="round"*/}
-      {/*      >*/}
-      {/*        {" "}*/}
-      {/*        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />{" "}*/}
-      {/*        <path d="M13.73 21a2 2 0 0 1-3.46 0" />*/}
-      {/*      </svg>*/}
-      {/*    </div>*/}
-      {/*    <div className="mt-1 ml-5">*/}
-      {/*      <p className="text-blue-solid text-lg">Thông báo của tôi</p>*/}
-      {/*    </div>*/}
-      {/*  </div>*/}
-      {/*</div>*/}
+      <div className="cursor-pointer" onClick={() => onSelectPage("noti")}>
+        <div
+          className={`2xl:h-14 xl:h-12 w-full flex justify-start items-center ${
+            page === "noti"
+              ? "bg-gray-100 border-l-4 border-l-blue-solid border-y-2 border-y-gray-100 border-r-2 border-r-gray-100 pl-9"
+              : "opacity-40 pl-10"
+          }`}
+        >
+          <div className="2xl:ml-0 xl:ml-0.5 2xl:mt-0 xl:mt-0.5">
+            <svg
+              className="2xl:h-8 2xl:w-8 xl:h-6 xl:w-6 text-blue-solid"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              {" "}
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />{" "}
+              <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+            </svg>
+          </div>
+          <div className="2xl:mt-1 xl:mt-0.5 ml-5">
+            <p className="text-blue-solid 2xl:text-lg xl:text-sm">
+              Thông báo của tôi
+            </p>
+          </div>
+        </div>
+      </div>
       <div className="cursor-pointer" onClick={() => onSelectPage("history")}>
         <div
-          className={`h-[7vh] w-full flex justify-start pt-3 ${
+          className={`2xl:h-14 xl:h-12 w-full flex justify-start items-center ${
             page === "history"
               ? "bg-gray-100 border-l-4 border-l-blue-solid border-y-2 border-y-gray-100 border-r-2 border-r-gray-100 pl-9"
               : "opacity-40 pl-10"
           }`}
         >
-          <div className="">
+          <div className="2xl:ml-0 xl:ml-0.5 2xl:mt-0 xl:mt-0.5">
             <svg
-              className="h-8 w-8 text-blue-solid"
+              className="2xl:h-8 2xl:w-8 xl:h-6 xl:w-6 text-blue-solid"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -165,8 +182,8 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
               <polyline points="12 6 12 12 16 14" />
             </svg>
           </div>
-          <div className="mt-1 ml-5">
-            <p className="text-blue-solid text-lg">Lịch sử</p>
+          <div className="2xl:mt-1 xl:mt-0.5 ml-5">
+            <p className="text-blue-solid 2xl:text-lg xl:text-sm">Lịch sử</p>
           </div>
         </div>
       </div>

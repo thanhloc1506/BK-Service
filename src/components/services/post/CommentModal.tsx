@@ -10,9 +10,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { comment } from "../../../redux/slices/service";
 import { toggleModalLogin } from "../../../redux/slices/auth";
+import { Service } from "../../../apis/common/Service";
+import { getAddressContent } from "../../../utils/getAddressContent";
 
-const CommentModal: React.FC = () => {
-  const serviceId = useSelector((state: RootState) => state.service.serviceId);
+interface ICommentModal {
+  score: any;
+  service: Service;
+  comments: any;
+}
+
+const CommentModal: React.FC<ICommentModal> = ({
+  score,
+  service,
+  comments,
+}) => {
+  const { name, enterprise } = service;
+  const serviceState = useSelector((state: RootState) => state.service);
   const userState = useSelector((state: RootState) => state.user);
 
   const cancelButtonRef = useRef(null);
@@ -21,6 +34,7 @@ const CommentModal: React.FC = () => {
   const [Image, setImage] = useState(false);
   const [Rating, setRating] = useState(false);
   const [Share, setShare] = useState(true);
+  console.log(service);
 
   const onClickImage = () => {
     setImage(true);
@@ -48,6 +62,16 @@ const CommentModal: React.FC = () => {
 
   const [selectedImages, setSelectedImage] = useState<any[]>([]);
   const [preview, setPreview] = useState([]);
+
+  const [imgService, setImageService] = useState(
+    serviceState.singleService?.images &&
+      serviceState.singleService?.images?.length > 0
+      ? serviceState.singleService?.images[0].url
+      : service
+  );
+
+  console.log(imgService);
+  const [addressText, setAddressText] = useState("");
 
   useEffect(() => {
     if (!selectedImages[0]) {
@@ -101,6 +125,12 @@ const CommentModal: React.FC = () => {
     //   setSelectedImage(newPreviewImages);
   };
 
+  useEffect(() => {
+    getAddressContent(service?.address).then((res) =>
+      setAddressText(res || "")
+    );
+  }, [service?.address]);
+
   const dispatch = useDispatch();
 
   const onPostComment = (values: any, { resetForm }: any) => {
@@ -112,7 +142,7 @@ const CommentModal: React.FC = () => {
       formData.append("images", image as any);
     }
     formData.append("score", score);
-    formData.append("serviceId", serviceId as string);
+    formData.append("serviceId", serviceState.serviceId as string);
     dispatch(comment(formData));
     resetForm();
     removeImage();
@@ -188,31 +218,31 @@ const CommentModal: React.FC = () => {
                             <div className="flex justify-center">
                               <img
                                 className="w-full h-40"
-                                src={service}
+                                src={imgService as string}
                                 alt="Service"
                               />
                             </div>
                             <div className="flex mt-5">
                               <div className="bg-blue-400 rounded-full overflow-hidden h-12 w-12">
                                 <p className="flex justify-center mt-2.5 text-lg font-bold text-white">
-                                  9.2
+                                  {score &&
+                                    score.length >= 6 &&
+                                    score[5].toFixed(2)}
                                 </p>
                               </div>
                               <div className="ml-3 mt-1">
                                 <div className="flex">
                                   <p className="font-semibold text-sm">
-                                    Nguyen Van A
-                                  </p>
-                                  <p className="font-semibold text-sm mx-2">
-                                    -
-                                  </p>
-                                  <p className="font-semibold text-sm">
-                                    Sua chua dien ...
+                                    {enterprise.name
+                                      ? enterprise.name + "-"
+                                      : ""}
+                                    {name}
                                   </p>
                                 </div>
                                 <div className="mt-1.5">
                                   <p className="text-gray-600 text-xs font-semibold">
-                                    268 Ly Thuong Kiet, Quan 10, TP.HCM
+                                    {/* 268 Ly Thuong Kiet, Quan 10, TP.HCM */}
+                                    {addressText}
                                   </p>
                                 </div>
                               </div>
@@ -221,14 +251,19 @@ const CommentModal: React.FC = () => {
                               <div className="border-2 border-gray-300 w-full h-72 bg-white">
                                 <div className="p-1.5 flex justify-center">
                                   <p className="font-medium text-lg">
-                                    122 Bình luận
+                                    {comments.length} Bình luận
                                   </p>
                                 </div>
                                 <div className="mt-3">
                                   <div className="grid grid-cols-4 gap-2">
                                     <div className="mt-1">
                                       <p className="text-sm font-medium flex justify-center">
-                                        78
+                                        {
+                                          comments.filter(
+                                            (comment: any) =>
+                                              comment.rating >= 9
+                                          ).length
+                                        }
                                       </p>
                                       <p className="mt-1 text-xs flex justify-center">
                                         Tuyệt vời
@@ -236,7 +271,13 @@ const CommentModal: React.FC = () => {
                                     </div>
                                     <div className="mt-1">
                                       <p className="text-sm font-medium flex justify-center">
-                                        22
+                                        {
+                                          comments.filter(
+                                            (comment: any) =>
+                                              comment.rating >= 7.5 &&
+                                              comment.rating < 9
+                                          ).length
+                                        }
                                       </p>
                                       <p className="mt-1 text-xs flex justify-center">
                                         Tốt
@@ -244,7 +285,13 @@ const CommentModal: React.FC = () => {
                                     </div>
                                     <div className="mt-1">
                                       <p className="text-sm font-medium flex justify-center">
-                                        22
+                                        {
+                                          comments.filter(
+                                            (comment: any) =>
+                                              comment.rating >= 4.5 &&
+                                              comment.rating < 7.5
+                                          ).length
+                                        }
                                       </p>
                                       <p className="mt-1 text-xs flex justify-center">
                                         Trung bình
@@ -252,7 +299,13 @@ const CommentModal: React.FC = () => {
                                     </div>
                                     <div className="mt-1">
                                       <p className="text-sm font-medium flex justify-center">
-                                        0
+                                        {
+                                          comments.filter(
+                                            (comment: any) =>
+                                              comment.rating >= 0 &&
+                                              comment.rating < 4.5
+                                          ).length
+                                        }
                                       </p>
                                       <p className="mt-1 text-xs flex justify-center">
                                         Kém
@@ -285,7 +338,11 @@ const CommentModal: React.FC = () => {
                                       />
                                     </div>
                                     <div className="flex justify-center">
-                                      <p className="text-sm">9.2</p>
+                                      <p className="text-sm">
+                                        {score && score.length >= 5
+                                          ? score[0].toFixed(2)
+                                          : ""}
+                                      </p>
                                     </div>
                                   </div>
                                   <div className="grid grid-cols-4 mt-1">
@@ -302,7 +359,11 @@ const CommentModal: React.FC = () => {
                                       />
                                     </div>
                                     <div className="flex justify-center">
-                                      <p className="text-sm">9.2</p>
+                                      <p className="text-sm">
+                                        {score && score.length >= 5
+                                          ? score[1].toFixed(2)
+                                          : ""}
+                                      </p>
                                     </div>
                                   </div>
                                   <div className="grid grid-cols-4 mt-1">
@@ -319,7 +380,11 @@ const CommentModal: React.FC = () => {
                                       />
                                     </div>
                                     <div className="flex justify-center">
-                                      <p className="text-sm">9.2</p>
+                                      <p className="text-sm">
+                                        {score && score.length >= 5
+                                          ? score[2].toFixed(2)
+                                          : ""}
+                                      </p>
                                     </div>
                                   </div>
                                   <div className="grid grid-cols-4 mt-1">
@@ -336,7 +401,11 @@ const CommentModal: React.FC = () => {
                                       />
                                     </div>
                                     <div className="flex justify-center">
-                                      <p className="text-sm">9.2</p>
+                                      <p className="text-sm">
+                                        {score && score.length >= 5
+                                          ? score[3].toFixed(2)
+                                          : ""}
+                                      </p>
                                     </div>
                                   </div>
                                 </div>
@@ -354,7 +423,11 @@ const CommentModal: React.FC = () => {
                                     />
                                   </div>
                                   <div className="flex justify-center">
-                                    <p className="text-sm">9.2</p>
+                                    <p className="text-sm">
+                                      {score && score.length >= 5
+                                        ? score[4].toFixed(2)
+                                        : ""}
+                                    </p>
                                   </div>
                                 </div>
                               </div>
