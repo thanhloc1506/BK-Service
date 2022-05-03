@@ -67,10 +67,9 @@ const CommentModal: React.FC<ICommentModal> = ({
     serviceState.singleService?.images &&
       serviceState.singleService?.images?.length > 0
       ? serviceState.singleService?.images[0].url
-      : service
+      : "https://paroda.vn/media/2021/08/customer-service.jpg"
   );
 
-  console.log(imgService);
   const [addressText, setAddressText] = useState("");
 
   useEffect(() => {

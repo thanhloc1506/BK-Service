@@ -50,7 +50,7 @@ export const ScheduleItem: React.FC<ScheduleItemProps> = ({
   const [imgService, _si] = useState(
     data.service.images && data.service.images.length > 0
       ? data.service.images[0].url
-      : service
+      : "https://paroda.vn/media/2021/08/customer-service.jpg"
   );
 
   const [date, _sd] = useState<ParseDate>(data.timeServe as ParseDate);

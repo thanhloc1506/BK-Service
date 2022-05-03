@@ -64,7 +64,7 @@ const Post: React.FC<IPost> = ({
       <div className="w-full h-fit pr-20 flex justify-center">
         <div className="w-full shadow-lg pt-3  border-2 border-gray-100 bg-white">
           <div className="grid grid-cols-2 border-b-2 border-b-gray-100 pb-2">
-            <span className="flex ml-5">
+            <span className="flex ml-2.5">
               <div className="col-span-1 rounded-full w-12 h-12 overflow-hidden ring-2 ring-white">
                 <img
                   src={
@@ -99,12 +99,12 @@ const Post: React.FC<IPost> = ({
             </div>
           </div>
           <div className="border-b-2 border-b-gray-100">
-            <div className="my-5 ml-5 font-bold 2xl:text-lg xl:text-sm flex justify-start">
+            <div className="m-4 font-bold 2xl:text-lg xl:text-sm flex justify-start">
               <p>{serviceName}</p>
               <p className="mx-2">-</p>
               <p>{title}</p>
             </div>
-            <div className="flex justify-start ml-5 mt-2 pb-5">
+            <div className="flex justify-start m-4">
               <p className="font-light pr-5 2xl:text-lg xl:text-sm">
                 {content !== "undefined" ? content : ""}
               </p>
@@ -133,7 +133,7 @@ const Post: React.FC<IPost> = ({
                 ))}
             </div>
           </div>
-          <div className="py-3 ml-5">
+          <div className="py-3 ml-2.5">
             <div className="flex justify-start">
               <button onClick={onClickLike}>
                 {isLike ? (
@@ -166,7 +166,7 @@ const Post: React.FC<IPost> = ({
                   </svg>
                 )}
               </button>
-              <p className="ml-2 mt-0.5 2xl:text-lg xl:text-sm">
+              <p className="ml-1 mt-0.5 2xl:text-lg xl:text-sm">
                 {Number.isInteger(numOfLike) ? numOfLike : tmpLike} Thích
               </p>
             </div>
