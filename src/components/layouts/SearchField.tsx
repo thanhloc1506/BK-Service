@@ -40,7 +40,7 @@ export const SearchField = () => {
       e.target.blur();
       // dispatch(showWaiting());
       dispatch(setCurrentSearchText(searchText || ""));
-      dispatch(deepSearch(searchText));
+      dispatch(deepSearch({text: searchText}));
     }
   };
 

@@ -21,7 +21,7 @@ const Homepage: React.FC = () => {
   const navigate = useNavigate();
   useEffect(() => {
     dispatch(setCurrentSearchText(""));
-    dispatch(deepSearch(""));
+    dispatch(deepSearch({text: ""}));
     if (cookies.get("token") == undefined) {
       dispatch(logout());
     }
@@ -54,8 +54,7 @@ const Homepage: React.FC = () => {
                   )
                 )}
               </div>
-              {searchState.dataSearch &&
-              searchState.dataSearch.services.length > 9 ? (
+              {searchState.dataSearch ? (
                 <div className="flex justify-end pr-20 mt-10">
                   <Pagination itemsPerPage={4} />
                 </div>
