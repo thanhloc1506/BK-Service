@@ -5,6 +5,7 @@ import { PInSchedule } from "../../apis/package/in/PInSchedule";
 import { hideWaiting, showWaiting } from "./loading";
 import { toastSuccess } from "../../utils/toast";
 import { PInScheduleHistory } from "../../apis/package/in/PInScheduleHistory";
+import moment from "moment";
 
 export interface State {
   scheduleHistory: ScheduleHistory[];
@@ -45,7 +46,32 @@ const scheduleHistorySlice = createSlice({
       state: State,
       action: PayloadAction<ScheduleHistory[]>
     ) => {
-      state.scheduleHistory = action.payload;
+      let schedules: ScheduleHistory[] = [];
+      let idx = 0;
+      for (const schedule of action.payload) {
+        const timeServe = moment(
+          schedule.date as Date,
+          "YYYY/MM/DD HH:mm"
+        ).zone("+0700");
+        var month = timeServe.format("MM");
+        var day = timeServe.format("DD");
+        var year = timeServe.format("YYYY");
+        var hour = timeServe.format("HH");
+        var min = timeServe.format("mm");
+        schedules[idx] = {
+          ...schedule,
+          date: {
+            day: parseInt(day),
+            month: parseInt(month),
+            year: parseInt(year),
+            hour,
+            min,
+            sec: "00",
+          },
+        };
+        idx++;
+      }
+      state.scheduleHistory = schedules;
       state.scheduleHistoryLoading = false;
     },
   },

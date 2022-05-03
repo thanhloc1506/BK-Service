@@ -12,8 +12,10 @@ export const AllSchedules = () => {
   }, []);
   return (
     <div>
-      <div className="bg-white p-8  border-b-2 border-b-gray-200 shadow-sm">
-        <p className="text-blue-400 font-medium text-xl">Tất cả lịch hẹn</p>
+      <div className="h-12 bg-white pt-12 pb-14 pl-20 border-b-2 border-b-gray-200 shadow-sm">
+        <p className="text-blue-solid font-medium 2xl:text-xl xl:text-lg">
+          Tất cả lịch hẹn
+        </p>
       </div>
       {scheduleState.schedulesLoading ? (
         ""

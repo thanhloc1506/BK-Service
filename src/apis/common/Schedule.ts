@@ -21,6 +21,6 @@ export interface ScheduleHistory {
   _id: string;
   user: User;
   service: Service;
-  date: Date;
+  date: Date | ParseDate;
   hasRating: boolean;
 }
