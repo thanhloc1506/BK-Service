@@ -12,20 +12,25 @@ import {
 } from "../redux/slices/search";
 import { logout } from "../redux/slices/auth";
 import cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import Service from "../components/services/Service";
 
 const Homepage: React.FC = () => {
   const searchState = useSelector((state: RootState) => state.search);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const params = Object.fromEntries(new URLSearchParams(location.search));
   useEffect(() => {
-    dispatch(setCurrentSearchText(""));
-    dispatch(deepSearch({ text: "" }));
+    console.log(params)
+    dispatch(setCurrentSearchText(params['text'] || ""));
+    // console.log("run")
+
+    dispatch(deepSearch({ text: params['text'] || "" }));
     if (cookies.get("token") == undefined) {
       dispatch(logout());
     }
-  }, []);
+  }, [location]);
   return (
     <div className="bg-slate-100 min-h-screen h-fit">
       <Navbar />

@@ -20,11 +20,13 @@ import {
 } from "../../redux/slices/search";
 import { Transition } from "@headlessui/react";
 import { RootState } from "../../redux/store";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 
 export const SearchField = () => {
   const [searchText, setSearchText] = useState<string | undefined>(undefined);
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state.search);
+  const navigate = useNavigate();
   const onFocus = () => {
     dispatch(showResult());
   };
@@ -44,8 +46,7 @@ export const SearchField = () => {
       //@ts-ignore
       e.target.blur();
       // dispatch(showWaiting());
-      dispatch(setCurrentSearchText(searchText || ""));
-      dispatch(deepSearch({text: searchText}));
+      navigate(`/?text=${searchText || ""}`);
     }
   };
 

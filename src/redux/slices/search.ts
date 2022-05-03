@@ -102,6 +102,7 @@ export const deepSearch = createAsyncThunk("/deepSearch", async (data: any|undef
       delete params[k];
     }
   });
+  console.log(params)
   dispatch(showWaiting());
   return axiosClient.get<PInSearch.Data>("search", {
     params
