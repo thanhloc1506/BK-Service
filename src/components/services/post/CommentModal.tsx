@@ -293,7 +293,7 @@ const CommentModal: React.FC<ICommentModal> = ({
                                         }
                                       </p>
                                       <p className="mt-1 text-xs flex justify-center">
-                                        Trung bình
+                                        Bình thường
                                       </p>
                                     </div>
                                     <div className="mt-1">
