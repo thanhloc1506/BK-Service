@@ -178,7 +178,7 @@ const CommentModal: React.FC<ICommentModal> = ({
               removeImage();
             }}
           >
-            <div className="flex mt-28 justify-center text-center min-h-screen">
+            <div className="flex 2xl:mt-16 xl:mt-10 justify-center text-center h-fit">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
@@ -206,34 +206,34 @@ const CommentModal: React.FC<ICommentModal> = ({
                 leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                 leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
               >
-                <div className="inline-block align-bottom bg-white text-left overflow-hidden shadow-xl transform transition-all duration-500 ease-in-out  w-1100 h-630">
+                <div className="inline-block align-bottom bg-white text-left overflow-hidden shadow-xl transform transition-all duration-500 ease-in-out 2xl:w-1100 2xl:h-630 xl:w-[940px] xl:h-[520px]">
                   <div className="bg-gray-light">
-                    <div className="h-650 m:flex sm:items-start">
+                    <div className="2xl:h-650 xl:h-[520px] m:flex sm:items-start">
                       <div className="w-full h-full border-black">
-                        <div className="p-4 border-b-2 border-b-gray-300">
+                        <div className="2xl:p-4 xl:p-3 border-b-2 border-b-gray-300">
                           <p className="">Viết bình luận:</p>
                         </div>
                         <div className="grid grid-cols-7">
-                          <div className="col-span-2 p-4">
+                          <div className="col-span-2 2xl:p-4 xl:p-3">
                             <div className="flex justify-center">
                               <img
-                                className="w-full h-40"
+                                className="w-full 2xl:h-40 xl:h-32"
                                 src={imgService as string}
                                 alt="Service"
                               />
                             </div>
-                            <div className="flex mt-5">
-                              <div className="bg-blue-400 rounded-full overflow-hidden h-12 w-12">
-                                <p className="flex justify-center mt-2.5 text-lg font-bold text-white">
+                            <div className="flex 2xl:mt-5 xl:mt-3">
+                              <div className="bg-blue-400 rounded-full overflow-hidden 2xl:h-12 2xl:w-12 xl:w-10 xl:h-10">
+                                <p className="flex justify-center 2xl:mt-3 xl:mt-2.5 2xl:text-lg xl:text-sm font-semibold text-white">
                                   {score &&
                                     score.length >= 6 &&
                                     score[5].toFixed(2)}
                                 </p>
                               </div>
-                              <div className="ml-3 mt-1">
+                              <div className="ml-3 2xl:mt-1 xl:mt-0">
                                 <div className="flex">
-                                  <p className="font-semibold text-sm">
-                                    {enterprise.name
+                                  <p className="font-semibold 2xl:text-sm xl-text-sm">
+                                    {enterprise?.name
                                       ? enterprise.name + "-"
                                       : ""}
                                     {name}
@@ -247,17 +247,17 @@ const CommentModal: React.FC<ICommentModal> = ({
                                 </div>
                               </div>
                             </div>
-                            <div className="mt-6">
-                              <div className="border-2 border-gray-300 w-full h-72 bg-white">
-                                <div className="p-1.5 flex justify-center">
-                                  <p className="font-medium text-lg">
+                            <div className="2xl:mt-6 xl:mt-3">
+                              <div className="border-2 border-gray-300 w-full 2xl:h-72 xl:h-64  bg-white">
+                                <div className="2xl:p-1.5 xl:p-1 flex justify-center">
+                                  <p className="font-medium 2xl:text-lg xl:text-sm">
                                     {comments.length} Bình luận
                                   </p>
                                 </div>
-                                <div className="mt-3">
-                                  <div className="grid grid-cols-4 gap-2">
+                                <div className="2xl:mt-3 xl:mt-1.5">
+                                  <div className="grid grid-cols-4 2xl:gap-2 xl:gap-0">
                                     <div className="mt-1">
-                                      <p className="text-sm font-medium flex justify-center">
+                                      <p className="2xl:text-sm xl:text-xs font-medium flex justify-center">
                                         {
                                           comments.filter(
                                             (comment: any) =>
@@ -270,7 +270,7 @@ const CommentModal: React.FC<ICommentModal> = ({
                                       </p>
                                     </div>
                                     <div className="mt-1">
-                                      <p className="text-sm font-medium flex justify-center">
+                                      <p className="2xl:text-sm xl:text-xs font-medium flex justify-center">
                                         {
                                           comments.filter(
                                             (comment: any) =>
@@ -284,7 +284,7 @@ const CommentModal: React.FC<ICommentModal> = ({
                                       </p>
                                     </div>
                                     <div className="mt-1">
-                                      <p className="text-sm font-medium flex justify-center">
+                                      <p className="2xl:text-sm xl:text-xs font-medium flex justify-center">
                                         {
                                           comments.filter(
                                             (comment: any) =>
@@ -298,7 +298,7 @@ const CommentModal: React.FC<ICommentModal> = ({
                                       </p>
                                     </div>
                                     <div className="mt-1">
-                                      <p className="text-sm font-medium flex justify-center">
+                                      <p className="2xl:text-sm xl:text-xs font-medium flex justify-center">
                                         {
                                           comments.filter(
                                             (comment: any) =>
@@ -313,14 +313,14 @@ const CommentModal: React.FC<ICommentModal> = ({
                                     </div>
                                   </div>
                                 </div>
-                                <div className="mt-3">
+                                <div className="2xl:mt-3 xl:mt-2">
                                   <div className="grid grid-cols-3">
                                     <div>
-                                      <p className="text-sm mt-1 ml-2">
+                                      <p className="2xl:text-sm xl:text-xs mt-1 ml-2">
                                         Đánh giá
                                       </p>
                                     </div>
-                                    <div className="col-span-2">
+                                    <div className="col-span-2 2xl:mt-0 xl:mt-[-3px]">
                                       <img src={measure} alt="Measure" />
                                     </div>
                                   </div>
@@ -451,10 +451,10 @@ const CommentModal: React.FC<ICommentModal> = ({
                                 <Form>
                                   {Share ? (
                                     <>
-                                      <div className="h-12 w-full">
+                                      <div className="2xl:h-12 xl:h-8 w-full">
                                         <Field
                                           type="text"
-                                          className="w-full h-full p-3 focus:outline-none"
+                                          className="w-full h-full p-3 focus:outline-none 2xl:text-lg xl:text-sm"
                                           placeholder="Nhập tiêu đề: ví dụ (Dịch vụ tuyệt vời)"
                                           id="title"
                                           name="title"
@@ -465,7 +465,7 @@ const CommentModal: React.FC<ICommentModal> = ({
                                       </div>
                                       <div className="w-full">
                                         <textarea
-                                          className="mt-0.5 px-3 py-1.5 w-full text-lg block pb-96 text-gray-700 bg-clip-padding transition ease-in-out m-0 focus:text-gray-700 focus:outline-none resize-none"
+                                          className="mt-0.5 px-3 py-1.5 w-full block 2xl:pb-96 xl:pb-80 text-gray-700 bg-clip-padding transition ease-in-out m-0 focus:text-gray-700 focus:outline-none resize-none 2xl:text-lg xl:text-sm"
                                           id="content"
                                           name="content"
                                           required
@@ -479,10 +479,12 @@ const CommentModal: React.FC<ICommentModal> = ({
 
                                   {Rating ? (
                                     <>
-                                      <div className="h-122 w-full bg-white">
-                                        <div className="px-5 pt-14 grid grid-cols-10">
+                                      <div className="2xl:h-122 xl:h-[25rem] w-full bg-white">
+                                        <div className="px-5 2xl:pt-14 xl:pt-10 grid grid-cols-10">
                                           <div>
-                                            <p>Đánh giá</p>
+                                            <p className="2xl:text-[1rem] xl:text-sm font-semibold">
+                                              Đánh giá
+                                            </p>
                                           </div>
                                         </div>
                                         <div>
@@ -526,10 +528,10 @@ const CommentModal: React.FC<ICommentModal> = ({
 
                                   {Image ? (
                                     <>
-                                      <div className="h-122 w-full bg-white">
+                                      <div className="2xl:h-122 xl:h-[25rem] w-full bg-white">
                                         <input
                                           type="file"
-                                          className="w-80 h-20 p-3"
+                                          className="focus:outline-none 2xl:text-lg xl:text-sm w-fit h-fit cursor-pointer 2xl:p-3 xl:p-2"
                                           id="image"
                                           name="images"
                                           onChange={imageChange}
@@ -561,14 +563,14 @@ const CommentModal: React.FC<ICommentModal> = ({
 
                                   <div className="grid grid-cols-4 gap-0 h-11">
                                     <div
-                                      className={`flex justify-center ${
+                                      className={`flex justify-center items-center cursor-pointer ${
                                         Share === true
                                           ? "bg-slate-400"
                                           : "bg-gray-medium"
                                       }`}
                                       onClick={onClickShare}
                                     >
-                                      <div className="mt-2.5">
+                                      <div className="">
                                         <svg
                                           className="h-6 w-6"
                                           fill="none"
@@ -583,17 +585,19 @@ const CommentModal: React.FC<ICommentModal> = ({
                                           />
                                         </svg>
                                       </div>
-                                      <p className="pt-2.5 pl-1.5">Bình luận</p>
+                                      <p className="pl-1.5 2xl:text-lg xl:text-sm">
+                                        Bình luận
+                                      </p>
                                     </div>
                                     <div
-                                      className={`flex justify-center ${
+                                      className={`flex justify-center items-center cursor-pointer ${
                                         Rating === true
                                           ? "bg-slate-400"
                                           : "bg-gray-medium"
                                       }`}
                                       onClick={onClickRating}
                                     >
-                                      <div className="mt-2.5">
+                                      <div className="">
                                         <svg
                                           className="h-6 w-6"
                                           width="24"
@@ -613,17 +617,19 @@ const CommentModal: React.FC<ICommentModal> = ({
                                           <path d="M12 17.75l-6.172 3.245 1.179-6.873-4.993-4.867 6.9-1.002L12 2l3.086 6.253 6.9 1.002-4.993 4.867 1.179 6.873z" />
                                         </svg>
                                       </div>
-                                      <p className="pt-2.5 pl-1.5">Đánh giá</p>
+                                      <p className="pl-1.5 2xl:text-lg xl:text-sm">
+                                        Đánh giá
+                                      </p>
                                     </div>
                                     <div
-                                      className={`flex justify-center  ${
+                                      className={`flex justify-center items-center cursor-pointer ${
                                         Image === true
                                           ? "bg-slate-400"
                                           : "bg-gray-medium"
                                       }`}
                                       onClick={onClickImage}
                                     >
-                                      <div className="mt-2.5">
+                                      <div className="">
                                         <svg
                                           className="h-6 w-6"
                                           fill="none"
@@ -644,10 +650,12 @@ const CommentModal: React.FC<ICommentModal> = ({
                                           />
                                         </svg>
                                       </div>
-                                      <p className="pt-2.5 pl-1.5">Hình ảnh</p>
+                                      <p className="pl-1.5 2xl:text-lg xl:text-sm">
+                                        Hình ảnh
+                                      </p>
                                     </div>
-                                    <div className="flex justify-center bg-gray-medium">
-                                      <button className="bg-green-500 text-white px-5 rounded-sm ml-3 my-1.5">
+                                    <div className="flex justify-center bg-gray-medium cursor-pointer">
+                                      <button className="bg-green-500 text-white px-5 rounded-sm ml-3 my-1.5 2xl:text-lg xl:text-sm">
                                         Hoàn tất
                                       </button>
                                     </div>
