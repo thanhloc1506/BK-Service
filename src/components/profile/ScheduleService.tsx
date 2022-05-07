@@ -21,16 +21,16 @@ const ScheduleService = () => {
           Danh sách đặt lịch
         </p>
       </div>
-      <div className="2xl:mb-14 xl:mb-10">
-        <div className="2xl:px-64 xl:px-48 2xl:mt-10 xl:mt-8">
+      <div className="2xl:mb-14 xl:mb-10 lg:mb-8">
+        {/* <div className="2xl:px-64 xl:px-48 2xl:mt-10 xl:mt-8 lg:mt-6">
+          <ScheduleCard isSchedule schedule={schedule} />
+        </div> */}
+        {/* <div className="2xl:px-64 xl:px-48 2xl:mt-10 xl:mt-8 lg:mt-6">
           <ScheduleCard isSchedule schedule={schedule} />
         </div>
-        <div className="2xl:px-64 xl:px-48 2xl:mt-10 xl:mt-8">
+        <div className="2xl:px-64 xl:px-48 2xl:mt-10 xl:mt-8 lg:mt-6">
           <ScheduleCard isSchedule schedule={schedule} />
-        </div>
-        <div className="2xl:px-64 xl:px-48 2xl:mt-10 xl:mt-8">
-          <ScheduleCard isSchedule schedule={schedule} />
-        </div>
+        </div> */}
       </div>
     </div>
   );

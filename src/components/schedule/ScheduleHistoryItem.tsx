@@ -72,7 +72,7 @@ export const ScheduleHistoryItem: React.FC<ScheduleHistoryItemProps> = ({
               <div>
                 <p
                   className={
-                    "2xl:text-xl xl:text-lg font-bold tracking-tight text-gray-900"
+                    "2xl:text-xl xl:text-lg lg:text-xs font-bold tracking-tight text-gray-900"
                   }
                 >
                   {data.user.fullName}
@@ -80,7 +80,7 @@ export const ScheduleHistoryItem: React.FC<ScheduleHistoryItemProps> = ({
               </div>
               <div>
                 <BiTime className={"inline m-auto mr-2"} size={22} />
-                <p className={"inline 2xl:text-xl xl:text-sm"}>
+                <p className={"inline 2xl:text-lg xl:text-sm lg:text-xs"}>
                   {date.day}/{date.month}/{date.year} {date.hour}:{date.min}:
                   {date.sec}
                 </p>
@@ -98,7 +98,7 @@ export const ScheduleHistoryItem: React.FC<ScheduleHistoryItemProps> = ({
               <div>
                 <p
                   className={
-                    "2xl:text-xl xl:text-lg font-bold tracking-tight text-gray-900"
+                    "2xl:text-xl xl:text-lg lg:text-sm font-bold tracking-tight text-gray-900"
                   }
                 >
                   {data.service.name}
@@ -106,13 +106,13 @@ export const ScheduleHistoryItem: React.FC<ScheduleHistoryItemProps> = ({
               </div>
               <div>
                 <GrLocation className={"inline m-auto mr-2"} size={22} />
-                <p className={"inline 2xl:text-xl xl:text-sm"}>
+                <p className={"inline 2xl:text-xl xl:text-sm lg:text-xs"}>
                   {serviceAddress}
                 </p>
               </div>
               <div>
                 <BsTelephone className={"inline m-auto mr-2"} size={22} />
-                <p className={"inline 2xl:text-xl xl:text-sm"}>
+                <p className={"inline 2xl:text-xl xl:text-sm lg:text-xs"}>
                   {data.service.phone}
                 </p>
               </div>
@@ -130,7 +130,9 @@ export const ScheduleHistoryItem: React.FC<ScheduleHistoryItemProps> = ({
                 onClick={() => {}}
               >
                 <BsXLg className={"inline mr-2"} />
-                <p className={"inline 2xl:text-xl xl:text-sm"}>Hủy lịch</p>
+                <p className={"inline 2xl:text-lg xl:text-sm lg:text-xs"}>
+                  Hủy lịch
+                </p>
               </button>
             ) : (
               <button
@@ -140,7 +142,9 @@ export const ScheduleHistoryItem: React.FC<ScheduleHistoryItemProps> = ({
                 onClick={() => navigate(`/detailService/${data.service._id}`)}
               >
                 <BsFillStarFill className={"inline mr-2"} />
-                <p className={"inline 2xl:text-xl xl:text-sm"}>Đánh giá ngay</p>
+                <p className={"inline 2xl:text-lg xl:text-sm lg:text-xs"}>
+                  Đánh giá ngay
+                </p>
               </button>
             )}
           </div>

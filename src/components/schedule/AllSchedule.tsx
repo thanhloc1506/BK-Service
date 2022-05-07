@@ -13,7 +13,7 @@ export const AllSchedules = () => {
   return (
     <div>
       <div className="h-12 bg-white pt-12 pb-14 pl-20 border-b-2 border-b-gray-200 shadow-sm">
-        <p className="text-blue-solid font-medium 2xl:text-xl xl:text-lg">
+        <p className="text-blue-solid font-medium 2xl:text-xl xl:text-lg lg:text-sm">
           Tất cả lịch hẹn
         </p>
       </div>
