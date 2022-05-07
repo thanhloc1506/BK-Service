@@ -1,11 +1,11 @@
-import {Fragment, useEffect} from "react";
+import { Fragment, useEffect } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
 import { logout } from "../../redux/slices/auth";
 import { useNavigate } from "react-router-dom";
-import {selectPageEnterprise} from "../../redux/slices/enterprise";
+import { selectPageEnterprise } from "../../redux/slices/enterprise";
 
 const classNames = (...classes: any) => {
   return classes.filter(Boolean).join(" ");
@@ -29,8 +29,10 @@ const DropdownBtn = () => {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        <Menu.Button className="inline-flex justify-center w-full rounded-md py-2 bg-transparent text-sm font-medium text-white focus:outline-none focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
-          { authState.enterprise?.fullName? `${authState.enterprise?.fullName} `: ``}
+        <Menu.Button className="inline-flex justify-end w-full rounded-md py-2 bg-transparent 2xl:text-sm xl:text-sm xl:ml-0.5 items-center font-medium text-white focus:outline-none focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
+          {authState.enterprise?.fullName
+            ? `${authState.enterprise?.fullName} `
+            : `${authState.enterprise?.username}`}
           <ChevronDownIcon className="-mr-1 ml-1 h-5 w-5" aria-hidden="true" />
         </Menu.Button>
       </div>

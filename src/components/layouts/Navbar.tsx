@@ -1,19 +1,19 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import logo from "../../assets/bg/logo.png";
 import LoginForm from "../auth/LoginForm";
-import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../../redux/store";
-import {toggleModalLogin, toggleModalRegister} from "../../redux/slices/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { toggleModalLogin, toggleModalRegister } from "../../redux/slices/auth";
 import RegisterForm from "../auth/RegisterForm";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import DropdownBtn from "./DropdownBtn";
-import {SearchField} from "./SearchField";
-import {BsBorderAll} from "react-icons/bs";
-import {SiGoogletagmanager} from "react-icons/si";
-import {selectPageEnterprise} from "../../redux/slices/enterprise";
-import {RiNotification2Line, RiNotification3Line} from "react-icons/ri";
-import {ModalNoti} from "../Noti/ModalNoti";
-import {DEFAULT_AVATAR} from "../../constants/common";
+import { SearchField } from "./SearchField";
+import { BsBorderAll } from "react-icons/bs";
+import { SiGoogletagmanager } from "react-icons/si";
+import { selectPageEnterprise } from "../../redux/slices/enterprise";
+import { RiNotification2Line, RiNotification3Line } from "react-icons/ri";
+import { ModalNoti } from "../Noti/ModalNoti";
+import { DEFAULT_AVATAR } from "../../constants/common";
 
 const Navbar: React.FC = () => {
   const authState = useSelector((state: RootState) => state.user);
@@ -34,71 +34,70 @@ const Navbar: React.FC = () => {
     navigate("/");
   };
 
-
-  const gotoAllService=() => {
+  const gotoAllService = () => {
     dispatch(selectPageEnterprise("all"));
     navigate("/profile");
-  }
+  };
 
-  const gotoManage = ()=> {
+  const gotoManage = () => {
     dispatch(selectPageEnterprise("manage"));
     navigate("/profile");
-  }
+  };
 
   return (
     <>
-      {/*{authState.showLoginForm ? <LoginForm /> : null}*/}
-      {/*{authState.showRegisterForm ? <RegisterForm /> : null}*/}
       <RegisterForm />
       <LoginForm />
       <div className={"fixed z-10 w-full"}>
-        <nav className="grid grid-cols-9 bg-blue-light w-full">
+        <nav className="grid grid-cols-9 bg-blue-light w-full px-[10%]">
           <span
-            className="col-span-3 flex justify-start p-3 ml-2 cursor-pointer"
+            className="col-span-3 flex justify-start px-3 ml-2 cursor-pointer items-center"
             onClick={goToHomepage}
           >
-            <img src={logo} alt="logo" className="w-16 h-16 mr-2" />
-            <p className="text-white text-4xl flex justify-start pt-3">
+            <img
+              src={logo}
+              alt="logo"
+              className="2xl:w-16 2xl:h-16 mr-2 xl:w-14 xl:h-14 sm:w-10 sm:h-10"
+            />
+            <p className="text-white 2xl:text-4xl flex justify-start xl:text-2xl sm:text-xl">
               BK Service
             </p>
           </span>
           <div className="col-span-3">
-            <SearchField/>
+            <SearchField />
           </div>
 
           {!authState.isAuthenticated ? (
-            <span className={"col-span-3 px-5 grid grid-cols-3 gap-6"}>
-                <span className="col-start-2 flex justify-end items-center">
-                  <p
-                    className="text-white font-semibold text-2xl hover:text-blue-500 transition-all duration-500 cursor-pointer"
-                    onClick={onClickRegister}
-                  >
-                    Đăng ký
-                  </p>
-                </span>
-                <span className="col-span-1 flex justify-center items-center">
-                  <p
-                    className="text-white font-semibold text-2xl hover:text-blue-500 transition-all duration-500 cursor-pointer"
-                    onClick={onClickLogin}
-                  >
-                    Đăng nhập
-                  </p>
-                </span>
+            <span className={"col-span-3 px-5 grid grid-cols-2 gap-6"}>
+              <span className="col-span-1 flex justify-end items-center">
+                <p
+                  className="text-white font-semibold 2xl:text-2xl xl:text-xl hover:text-blue-500 transition-all duration-500 cursor-pointer"
+                  onClick={onClickRegister}
+                >
+                  Đăng ký
+                </p>
+              </span>
+              <span className="col-span-1 flex justify-end items-center">
+                <p
+                  className="text-white font-semibold 2xl:text-2xl xl:text-xl hover:text-blue-500 transition-all duration-500 cursor-pointer"
+                  onClick={onClickLogin}
+                >
+                  Đăng nhập
+                </p>
+              </span>
             </span>
           ) : (
             <div className="col-span-3 grid grid-cols-6 px-5">
               <span className="col-span-3 grid grid-cols-2">
-                <span
-                    className="col-span-1 cursor-pointer flex justify-center items-center flex-col"
-                >
-                <ModalNoti/>
+                <span className="col-span-1 cursor-pointer flex justify-center items-center flex-col">
+                  <ModalNoti />
                 </span>
                 <span
                   className="col-span-1 cursor-pointer flex flex-col justify-center items-center"
                   onClick={gotoManage}
                 >
                   <div className="flex justify-center">
-                    <SiGoogletagmanager className={'text-xl text-white'}/>
+                    <SiGoogletagmanager className={"text-xl text-white"} />
                   </div>
                   <p className="text-white mt-1 text-sm font-medium flex justify-center ml-3">
                     Quản lí
@@ -107,10 +106,17 @@ const Navbar: React.FC = () => {
               </span>
               <span className="col-span-3 flex justify-center items-center">
                 <div className="grid grid-cols-3">
-                  <div className="col-span-1 rounded-full w-12 h-12 overflow-hidden ring-2 ring-white">
-                    <img src={authState.enterprise?.avatar? authState.enterprise.avatar.url : DEFAULT_AVATAR} className={"w-full h-full p-1 rounded-full"}/>
+                  <div className="col-span-1 rounded-full 2xl:w-12 2xl:h-12 xl:w-8 xl:h-8 overflow-hidden ring-2 ring-white">
+                    <img
+                      src={
+                        authState.enterprise?.avatar
+                          ? authState.enterprise.avatar.url
+                          : DEFAULT_AVATAR
+                      }
+                      className={"w-full h-full rounded-full"}
+                    />
                   </div>
-                  <div className="col-span-2 flex justify-center items-center">
+                  <div className="col-span-2 flex justify-end items-center">
                     <DropdownBtn />
                   </div>
                 </div>
