@@ -31,8 +31,8 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
               Tài khoản của
             </p>
             <p className="font-medium mt-1 ml-2.5 2xl:text-lg xl:text-sm">
-              {state?.fullName.split(" ")[
-                state?.fullName.split(" ").length - 1
+              {state?.fullName?.split(" ")[
+                state?.fullName?.split(" ").length - 1
               ] || ""}
             </p>
           </div>
