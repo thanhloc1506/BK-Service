@@ -104,9 +104,9 @@ const Navbar: React.FC = () => {
                   </p>
                 </span>
               </span>
-              <span className="col-span-3 flex justify-center items-center">
+              <span className="col-span-3 flex justify-end items-center pr-2">
                 <div className="grid grid-cols-3">
-                  <div className="col-span-1 rounded-full 2xl:w-12 2xl:h-12 xl:w-8 xl:h-8 overflow-hidden ring-2 ring-white">
+                  <div className="col-span-1 flex justify-center rounded-full 2xl:mt-2 xl:mt-0 2xl:w-10 2xl:h-10 xl:w-8 xl:h-8 overflow-hidden ring-2 ring-white">
                     <img
                       src={
                         authState.enterprise?.avatar

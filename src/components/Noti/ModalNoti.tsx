@@ -22,12 +22,12 @@ export const ModalNoti = () => {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75" />
             <span className="relative inline-flex rounded-full h-3 w-3 bg-lime-500" />
           </span>
-          <div className="flex justify-center">
+          <div className="flex justify-center mt-1">
             <RiNotification3Line
               className={"2xl:text-2xl xl:text-xl text-white"}
             />
           </div>
-          <p className="text-white mt-1 2xl:text-sm xl:text-xs font-medium flex justify-end">
+          <p className="text-white 2xl:mt-2 xl:mt-1 2xl:text-sm xl:text-xs font-medium flex justify-end">
             Thông báo
           </p>
         </div>
