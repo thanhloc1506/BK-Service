@@ -32,14 +32,14 @@ const ButtonFollow: React.FC<IFollow> = ({ serviceId }: IFollow) => {
         <button
           className={
             isFollow
-              ? "text-red-500  bg-red-100 hover:bg-red-200 focus:ring-4 focus:outline-none focus:ring-red-100 font-medium rounded-lg 2xl:text-sm xl:text-xs 2xl:px-3 2xl:py-2 xl:px-1.5 xl:py-1 text-center inline-flex items-center mr-2 mb-2"
-              : "text-green-500  bg-green-100 hover:bg-green-200 focus:ring-4 focus:outline-none focus:ring-green-100 font-medium rounded-lg 2xl:text-sm xl:text-xs 2xl:px-3 2xl:py-2 xl:px-1.5 xl:py-1 text-center inline-flex items-center mr-2 mb-2"
+              ? "text-red-500  bg-red-100 hover:bg-red-200 focus:ring-4 focus:outline-none focus:ring-red-100 font-medium rounded-lg 2xl:text-sm xl:text-xs 2xl:px-3 2xl:py-2 xl:px-1.5 xl:py-1 lg:px-1 lg:py-0.5 text-center inline-flex items-center mr-2 mb-2"
+              : "text-green-500  bg-green-100 hover:bg-green-200 focus:ring-4 focus:outline-none focus:ring-green-100 font-medium rounded-lg 2xl:text-sm xl:text-xs 2xl:px-3 2xl:py-2 xl:px-1.5 xl:py-1 lg:px-1 lg:py-0.5 text-center inline-flex items-center mr-2 mb-2"
           }
           onClick={isFollow ? onClickUnFollow : onClickFollow}
         >
           {isFollow ? (
             <svg
-              className="2xl:h-5 2xl:w-5 xl:w-4 xl:h-4 text-red-500 mt-0.5"
+              className="2xl:h-5 2xl:w-5 xl:w-4 xl:h-4 lg:w-3 lg:h-3 text-red-500 mt-0.5"
               width="24"
               height="24"
               viewBox="0 0 24 24"
@@ -56,7 +56,7 @@ const ButtonFollow: React.FC<IFollow> = ({ serviceId }: IFollow) => {
             </svg>
           ) : (
             <svg
-              className="2xl:h-5 2xl:w-5 xl:w-4 xl:h-4 text-green-500 mt-0.5"
+              className="2xl:h-5 2xl:w-5 xl:w-4 xl:h-4 lg:h-3 lg:w-3 text-green-500 mt-0.5"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -68,7 +68,9 @@ const ButtonFollow: React.FC<IFollow> = ({ serviceId }: IFollow) => {
               <polyline points="20 6 9 17 4 12" />
             </svg>
           )}
-          <p className="ml-2">{isFollow ? "Hủy theo dõi" : "Theo dõi"}</p>
+          <p className="ml-2 2xl:text-lg xl:text-sm lg:text-xs">
+            {isFollow ? "Hủy theo dõi" : "Theo dõi"}
+          </p>
         </button>
       )}
     </div>
