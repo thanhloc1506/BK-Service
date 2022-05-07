@@ -8,8 +8,10 @@ services:
     env_file:
       - ./.env
     environment:
-      - API_URL=http://3.26.55.185:3008
-      - SOCKET_URI=http://3.26.55.185:8080
+      - REACT_APP_SOCKET_URI= http://3.26.113.160:8080
+      - REACT_APP_SOCKET_URI_DEV= http://localhost:8080
+      - REACT_APP_API_URL_DEV = http://localhost:3007
+      - REACT_APP_API_URL = http://3.26.113.160:3007
     stdin_open: true
     tty: true
 
