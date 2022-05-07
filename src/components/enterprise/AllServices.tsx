@@ -16,7 +16,6 @@ const AllServices = () => {
       dispatch(showWaiting());
     axiosClient.get<PInAllServices.Data>("/enterprise/all-services")
         .then((res)=>{
-          console.log(res);
           setServices(res.data.services);
         })
         .catch((err)=>console.log(err))

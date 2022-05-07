@@ -364,6 +364,9 @@ export const ModalEditService = ({data, show, setShow}: IModalEditService) => {
                                                     submitChangeService(editData, oldImg, newImg)
                                                         ?.then((res)=>{
                                                             toastSuccess("Cập nhật thành công!");
+                                                            setTimeout(()=>{
+                                                                window.location.reload();
+                                                            }, 1000);
                                                         })
                                                         .catch()
                                                         .finally(()=>dispatch(hideWaiting()))
