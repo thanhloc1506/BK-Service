@@ -43,7 +43,7 @@ const DetailService: React.FC = () => {
       .finally(() => dispatch(hideWaiting()));
   }, [serviceState.singleService]);
   return (
-    <div className="min-h-screen h-fit pb-20">
+    <div className="min-h-screen h-fit pb-20 bg-[#f7f8fa]">
       <Navbar />
       {serviceState.serviceLoading ? (
         ""
@@ -75,7 +75,7 @@ const DetailService: React.FC = () => {
           <div>
             <div className="grid grid-cols-3">
               <div className="col-span-2 mt-5">
-                <div className="ml-10">
+                <div className="">
                   {serviceState.commentLoading
                     ? ""
                     : serviceState.comments.map(
@@ -100,7 +100,9 @@ const DetailService: React.FC = () => {
                 </div>
               </div>
               <div>
-                <Statistical />
+                <div className="flex justify-end">
+                  <Statistical score={score} comments={serviceState.comments} />
+                </div>
                 {/*<div className="mx-24 mt-4">*/}
                 {/*    <CommentModal />*/}
                 {/*</div>*/}

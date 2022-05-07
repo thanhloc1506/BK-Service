@@ -20,7 +20,7 @@ const SingleCard: React.FC<IService> = ({
   return (
     <>
       <div
-        className="2xl:w-72 2xl:h-[26rem] xl:w-full xl:h-[20rem] bg-white border-2 border-blue-200 rounded hover:drop-shadow-2xl shadow-lg shadow-cyan-500/50 transition-all duration-500 cursor-pointer"
+        className="2xl:w-72 2xl:h-[24rem] xl:w-full xl:h-[20rem] bg-white border-2 border-blue-200 rounded hover:drop-shadow-2xl shadow-lg shadow-cyan-500/50 transition-all duration-500 cursor-pointer"
         onClick={() => navigate(`/detailService/${data._id}`)}
       >
         <div className={"2xl:h-[45%] xl:h-[41%] overflow-hidden"}>
@@ -94,7 +94,9 @@ const SingleCard: React.FC<IService> = ({
                 d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
               />
             </svg>
-            <p className="ml-1 font-light">{data.textCmtCount || 0}</p>
+            <p className="ml-0.5 font-light item-center">
+              {data.textCmtCount || 0}
+            </p>
           </div>
           <div className="flex justify-center h-full 2xl:mt-5 xl:mt-4">
             <svg
@@ -116,11 +118,11 @@ const SingleCard: React.FC<IService> = ({
                 d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
               />
             </svg>
-            <p className="ml-1 font-light">{data.imgCmtCount || 0}</p>
+            <p className="ml-0.5 font-light">{data.imgCmtCount || 0}</p>
           </div>
-          <div className="col-span-2 flex justify-center 2xl:mt-1 xl:mt-0 items-center">
+          <div className="col-span-2 flex justify-end pr-3 xl:mt-0 items-center">
             <button
-              className="bg-blue-solid 2xl:h-10 xl:h-8 w-fit 2xl:px-5 xl:px-3 2xl:py-1 xl:py-0 2xl:text-lg xl:text-sm rounded-md overflow-hidden text-white font-light"
+              className="bg-blue-solid 2xl:h-8 xl:h-6 w-fit 2xl:px-4 xl:px-3 2xl:texg-lg xl:text-sm rounded-sm overflow-hidden text-white font-light"
               onClick={(e) => {
                 e.stopPropagation();
                 onBtnClick && onBtnClick();
