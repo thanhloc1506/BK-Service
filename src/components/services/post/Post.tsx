@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { DEFAULT_AVATAR } from "../../../constants/common";
 import { toggleLikeComment } from "../../../redux/slices/service";
 import { RootState } from "../../../redux/store";
+import defaultAvatar from "../../../assets/admin/users.png";
 
 interface IPost {
   avatar: string;
@@ -67,11 +68,7 @@ const Post: React.FC<IPost> = ({
             <span className="flex ml-2.5">
               <div className="col-span-1 rounded-full w-12 h-12 overflow-hidden ring-2 ring-white">
                 <img
-                  src={
-                    userState.user?.avatar
-                      ? userState.user.avatar.url
-                      : DEFAULT_AVATAR
-                  }
+                  src={avatar ? avatar : DEFAULT_AVATAR}
                   className={"w-full h-full p-1 rounded-full"}
                 />
               </div>
@@ -86,20 +83,20 @@ const Post: React.FC<IPost> = ({
               <div
                 className={
                   rating > 8
-                    ? "2xl:w-10 2xl:h-10 xl:w-8 xl:h-8 rounded-full bg-blue-400 flex justify-center"
+                    ? "2xl:w-10 2xl:h-10 xl:w-8 xl:h-8 lg:w-7 lg:h-7 rounded-full bg-blue-400 flex justify-center"
                     : rating > 5
-                    ? "2xl:w-10 2xl:h-10 xl:w-8 xl:h-8 rounded-full bg-yellow-400 flex justify-center"
-                    : "2xl:w-10 2xl:h-10 xl:w-8 xl:h-8 rounded-full bg-red-400 flex justify-center"
+                    ? "2xl:w-10 2xl:h-10 xl:w-8 xl:h-8 lg:w-7 lg:h-7 rounded-full bg-yellow-400 flex justify-center"
+                    : "2xl:w-10 2xl:h-10 xl:w-8 xl:h-8 lg:w-7 lg:h-7 rounded-full bg-red-400 flex justify-center"
                 }
               >
-                <p className="flex items-center 2xl:text-lg xl:text-sm text-white">
+                <p className="flex items-center 2xl:text-lg xl:text-sm lg:text-sm text-white">
                   {rating}
                 </p>
               </div>
             </div>
           </div>
           <div className="border-b-2 border-b-gray-100">
-            <div className="m-4 font-bold 2xl:text-lg xl:text-sm flex justify-start">
+            <div className="m-4 font-bold 2xl:text-lg xl:text-sm lg:text-sm flex justify-start">
               <p>{serviceName}</p>
               <p className="mx-2">-</p>
               <p>{title}</p>
@@ -112,7 +109,7 @@ const Post: React.FC<IPost> = ({
             <div className="flex justify-start pl-3">
               {images.length > 0 && (
                 <img
-                  className="2xl:max-h-80 2xl:max-w-6xl xl:max-h-64 xl:max-w-5xl"
+                  className="2xl:max-h-80 2xl:max-w-6xl xl:max-h-64 xl:max-w-5xl lg:max-w-4xl lg:max-h-52"
                   src={image}
                   alt="image"
                   onClick={() => {}}
@@ -139,7 +136,7 @@ const Post: React.FC<IPost> = ({
                 {isLike ? (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6 text-red-500"
+                    className="2xl:h-6 2xl:w-6 xl:h-5 xl-w-5 lg:w-5 lg:h-5 text-red-500"
                     viewBox="0 0 20 20"
                     fill="currentColor"
                   >
@@ -151,7 +148,7 @@ const Post: React.FC<IPost> = ({
                   </svg>
                 ) : (
                   <svg
-                    className="h-6 w-6 text-gray-700"
+                    className="2xl:h-6 2xl:w-6 xl:h-5 xl-w-5 lg:w-4 lg:h-4 text-gray-700"
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
@@ -166,7 +163,7 @@ const Post: React.FC<IPost> = ({
                   </svg>
                 )}
               </button>
-              <p className="ml-1 mt-0.5 2xl:text-lg xl:text-sm">
+              <p className="ml-1 mt-0.5 2xl:text-lg xl:text-sm lg:text-xs">
                 {Number.isInteger(numOfLike) ? numOfLike : tmpLike} Thích
               </p>
             </div>
