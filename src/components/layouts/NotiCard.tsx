@@ -20,7 +20,7 @@ const NotiCard: React.FC<INoti> = ({ date, content, index }: INoti) => {
       appear={true}
     >
       <div
-        className="2xl:h-24 xl:h-20 bg-white w-full"
+        className="2xl:h-24 xl:h-20 lg:h-16 bg-white w-full"
         style={{ transitionDelay: `${index * 100}ms` }}
       >
         <div className="grid grid-cols-8 h-full">
