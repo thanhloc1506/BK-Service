@@ -1,9 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import CalendarRow from "./CalendarRow";
 
-export interface CalendarProps {}
-
-const Calendar: React.FC<CalendarProps> = () => {
+export interface CalendarProps {
+  witdh?: string;
+  height?: string;
+  selectedDay?: any;
+  schedules?: any[];
+}
+let rows = [0, 1, 2, 3, 4, 5];
+const Calendar: React.FC<CalendarProps> = ({
+  witdh,
+  height,
+  selectedDay,
+  schedules,
+}) => {
   const [activeMonth, setActiveMonth] = useState(new Date().getMonth());
   const [activeMonthString, setActiveMonthString] = useState(
     new Date().toDateString().split(" ")[1]
@@ -30,15 +40,17 @@ const Calendar: React.FC<CalendarProps> = () => {
   }, [activeMonth]);
 
   return (
-    <div className="md:shadow-lg md:rounded p-4 bg-white dark:bg-gray-700 md:w-96 mx-4 md:mx-auto">
-      <div className="w-full rounded">
+    <div
+      className={`md:shadow-lg md:rounded pt-3 pb-2 px-1 bg-white dark:bg-gray-700 w-[20vw] mx-4 md:mx-auto`}
+    >
+      <div className="w-[20vw] rounded px-3">
         <div className="flex items-center justify-between mb-4">
-          <div className="text-left font-bold text-xl text-black dark:text-white">
+          <div className="text-left font-bold text-sm text-black dark:text-white">
             {`${activeMonthString} ${activeYear}`}
           </div>
           <div className="flex space-x-4">
             <button
-              className="p-2 rounded bg-blue-400 text-white"
+              className="px-1 py-0.5 rounded bg-blue-400 text-white"
               onClick={() => {
                 if (prevMonth.current === 0) {
                   setActiveYear(activeYear - 1);
@@ -61,7 +73,7 @@ const Calendar: React.FC<CalendarProps> = () => {
               </svg>
             </button>
             <button
-              className="p-2 rounded bg-blue-400 text-white"
+              className="px-1 py-0.5 rounded bg-blue-400 text-white"
               onClick={() => {
                 if (prevMonth.current === 11) {
                   setActiveYear(activeYear + 1);
@@ -89,94 +101,32 @@ const Calendar: React.FC<CalendarProps> = () => {
           <table className="w-full dark:text-white">
             <thead>
               <tr>
-                <th className="py-3 px-2 md:px-3 ">S</th>
-                <th className="py-3 px-2 md:px-3 ">M</th>
-                <th className="py-3 px-2 md:px-3 ">T</th>
-                <th className="py-3 px-2 md:px-3 ">W</th>
-                <th className="py-3 px-2 md:px-3 ">T</th>
-                <th className="py-3 px-2 md:px-3 ">F</th>
-                <th className="py-3 px-2 md:px-3 ">S</th>
+                <th className="py-2 2xl:px-1 xl:px-1">S</th>
+                <th className="py-2 2xl:px-1 xl:px-1">M</th>
+                <th className="py-2 2xl:px-1 xl:px-1">T</th>
+                <th className="py-2 2xl:px-1 xl:px-1">W</th>
+                <th className="py-2 2xl:px-1 xl:px-1">T</th>
+                <th className="py-2 2xl:px-1 xl:px-1">F</th>
+                <th className="py-2 2xl:px-1 xl:px-1">S</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <CalendarRow
-                  firstDay={firstDayInMonth[activeMonth]}
-                  lastDayInMonth={new Date(
-                    activeYear,
-                    activeMonth + 1,
-                    0
-                  ).getDate()}
-                  row={0}
-                  currentMonth={activeMonth}
-                  currentYear={activeYear}
-                />
-              </tr>
-              <tr>
-                <CalendarRow
-                  firstDay={firstDayInMonth[activeMonth]}
-                  lastDayInMonth={new Date(
-                    activeYear,
-                    activeMonth + 1,
-                    0
-                  ).getDate()}
-                  row={1}
-                  currentMonth={activeMonth}
-                  currentYear={activeYear}
-                />
-              </tr>
-              <tr>
-                <CalendarRow
-                  firstDay={firstDayInMonth[activeMonth]}
-                  lastDayInMonth={new Date(
-                    activeYear,
-                    activeMonth + 1,
-                    0
-                  ).getDate()}
-                  row={2}
-                  currentMonth={activeMonth}
-                  currentYear={activeYear}
-                />
-              </tr>
-              <tr>
-                <CalendarRow
-                  firstDay={firstDayInMonth[activeMonth]}
-                  lastDayInMonth={new Date(
-                    activeYear,
-                    activeMonth + 1,
-                    0
-                  ).getDate()}
-                  row={3}
-                  currentMonth={activeMonth}
-                  currentYear={activeYear}
-                />
-              </tr>
-              <tr>
-                <CalendarRow
-                  firstDay={firstDayInMonth[activeMonth]}
-                  lastDayInMonth={new Date(
-                    activeYear,
-                    activeMonth + 1,
-                    0
-                  ).getDate()}
-                  row={4}
-                  currentMonth={activeMonth}
-                  currentYear={activeYear}
-                />
-              </tr>
-              <tr>
-                <CalendarRow
-                  firstDay={firstDayInMonth[activeMonth]}
-                  lastDayInMonth={new Date(
-                    activeYear,
-                    activeMonth + 1,
-                    0
-                  ).getDate()}
-                  row={5}
-                  currentMonth={activeMonth}
-                  currentYear={activeYear}
-                />
-              </tr>
+              {rows.map((row, index) => (
+                <tr key={index}>
+                  <CalendarRow
+                    firstDay={firstDayInMonth[activeMonth]}
+                    lastDayInMonth={new Date(
+                      activeYear,
+                      activeMonth + 1,
+                      0
+                    ).getDate()}
+                    row={row}
+                    currentMonth={activeMonth}
+                    currentYear={activeYear}
+                    // schedules={schedules}
+                  />
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

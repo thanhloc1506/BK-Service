@@ -14,8 +14,8 @@ const SingleCard: React.FC<ICategory> = ({
   const navigate = useNavigate();
   return (
     <>
-      <div className="w-72 h-96 bg-white border-2 border-blue-200 rounded">
-        <div className="flex justify-center">
+      <div className="2xl:w-72 2xl:h-[26rem] xl:w-full xl:h-[20rem] bg-white border-2 border-blue-200 rounded">
+        <div className="flex justify-center 2xl:h-[45%] xl:h-[41%]">
           <img src={service} alt="service" className="w-72 h-40 p-3" />
         </div>
         <div className="grid grid-cols-6">
