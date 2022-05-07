@@ -22,7 +22,10 @@ const Notifications = () => {
       </div>
       {Array.from(Array(10).keys()).map((e, index) => {
         return (
-          <div className="2xl:px-64 xl:px-48 2xl:mt-10 xl:mt-8" key={index}>
+          <div
+            className="2xl:px-64 xl:px-48 lg:px-36 2xl:mt-10 xl:mt-8 lg:mt-6"
+            key={index}
+          >
             <NotiCard
               date={noti.date}
               content={noti.content}

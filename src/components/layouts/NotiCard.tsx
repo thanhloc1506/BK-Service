@@ -25,15 +25,17 @@ const NotiCard: React.FC<INoti> = ({ date, content, index }: INoti) => {
       >
         <div className="grid grid-cols-8 h-full">
           <div className="col-span-2 flex justify-center items-center">
-            <div className="2xl:text-lg xl:text-sm font-light mr-5 text-[#374273]">
+            <div className="2xl:text-lg xl:text-sm lg:text-xs font-light mr-5 text-[#374273]">
               <p>{date}</p>
             </div>
-            <div className="2xl:w-12 2xl-h-12 xl:w-10 xl:h-10">
+            <div className="2xl:w-12 2xl-h-12 xl:w-10 xl:h-10 lg:w-8 lg:h-8">
               <img src={noti} alt="noti" />
             </div>
           </div>
           <div className="col-span-5 px-5 flex justify-center items-center">
-            <p className="2xl:text-lg xl:text-sm text-[#374273]">{content}</p>
+            <p className="2xl:text-lg xl:text-sm lg:text-xs text-[#374273]">
+              {content}
+            </p>
           </div>
           <div className={"col-span-1 items-start mt-3 flex justify-end mr-3"}>
             {/* <svg

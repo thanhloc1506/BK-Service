@@ -18,21 +18,21 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
   };
   return (
     <div className="bg-white h-[90vh] w-full shadow-sm border-2 border-gray-100">
-      <div className="2xl:h-20 xl:h-[4.3rem] w-full border-b-2 border-b-gray-100">
-        <div className="flex justify-start ml-10 2xl:mt-6 xl:mt-8 items-center 2xl:mb-0 xl:mb-3">
-          <div className="2xl:w-14 2xl:h-14 xl:w-10 xl:h-10 2xl:mt-0 xl:mt-2 rounded-full bg-gray-500">
+      <div className="2xl:h-20 xl:h-[4.3rem] lg:h-16 w-full border-b-2 border-b-gray-100">
+        <div className="flex justify-start ml-10 2xl:mt-6 xl:mt-8 lg:mt-10 items-center 2xl:mb-0 xl:mb-3">
+          <div className="2xl:w-14 2xl:h-14 xl:w-10 xl:h-10 lg:w-9 lg:h-9 2xl:mt-0 xl:mt-2 rounded-full bg-gray-500">
             <img
               src={state?.avatar ? state.avatar.url : DEFAULT_AVATAR}
               className={"w-full h-full p-1 rounded-full"}
             />
           </div>
           <div>
-            <p className="ml-2.5 2xl:mt-1 xl:mt-3 2xl:text-lg xl:text-sm">
+            <p className="ml-2.5 2xl:mt-1 xl:mt-3 2xl:text-lg xl:text-sm lg:text-xs">
               Tài khoản của
             </p>
-            <p className="font-medium mt-1 ml-2.5 2xl:text-lg xl:text-sm">
-              {state?.fullName?.split(" ")[
-                state?.fullName?.split(" ").length - 1
+            <p className="font-medium mt-1 ml-2.5 2xl:text-lg xl:text-sm lg:text-xs">
+              {state?.fullName.split(" ")[
+                state?.fullName.split(" ").length - 1
               ] || ""}
             </p>
           </div>
@@ -40,7 +40,7 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
       </div>
       <div className="cursor-pointer" onClick={() => onSelectPage("info")}>
         <div
-          className={`2xl:h-14 xl:h-12 w-full flex justify-start items-center ${
+          className={`2xl:h-14 xl:h-12 lg:h-10 w-full flex justify-start items-center ${
             page === "info"
               ? "bg-gray-100 border-l-4 border-l-blue-solid border-y-2 border-y-gray-100 border-r-2 border-r-gray-100 pl-9"
               : "opacity-40 pl-10"
@@ -48,7 +48,7 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
         >
           <div className="">
             <svg
-              className="2xl:h-8 2xl:w-8 xl:h-7 xl:w-7 text-blue-solid"
+              className="2xl:h-8 2xl:w-8 xl:h-7 xl:w-7 lg:w-6 lg:h-6 text-blue-solid"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -61,8 +61,8 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
               />
             </svg>
           </div>
-          <div className="2xl:mt-1 xl:mt-0.5 ml-5">
-            <p className="text-blue-solid 2xl:text-lg xl:text-sm">
+          <div className="2xl:mt-1 xl:mt-0.5 xl:ml-5 lg:ml-3">
+            <p className="text-blue-solid 2xl:text-lg xl:text-sm lg:text-xs">
               Thông tin cá nhân
             </p>
           </div>
@@ -70,7 +70,7 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
       </div>
       <div className="cursor-pointer" onClick={() => onSelectPage("schedule")}>
         <div
-          className={`2xl:h-14 xl:h-12 w-full flex justify-start items-center ${
+          className={`2xl:h-14 xl:h-12 lg:h-10 w-full flex justify-start items-center ${
             page === "schedule"
               ? "bg-gray-100 border-l-4 border-l-blue-solid border-y-2 border-y-gray-100 border-r-2 border-r-gray-100 pl-9"
               : "opacity-40 pl-10"
@@ -78,7 +78,7 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
         >
           <div className="2xl:ml-0 xl:ml-0.5 2xl:mt-0 xl:mt-0.5">
             <svg
-              className="2xl:h-8 2xl:w-8 xl:h-6 xl:w-6 text-blue-solid"
+              className="2xl:h-8 2xl:w-8 xl:h-6 xl:w-6 lg:w-5 lg:h-5 text-blue-solid"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -93,8 +93,8 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
               <line x1="3" y1="10" x2="21" y2="10" />
             </svg>
           </div>
-          <div className="2xl:mt-1 xl:mt-0.5 ml-5">
-            <p className="text-blue-solid 2xl:text-lg xl:text-sm">
+          <div className="2xl:mt-1 xl:mt-0.5 xl:ml-5 lg:ml-3">
+            <p className="text-blue-solid 2xl:text-lg xl:text-sm lg:text-xs">
               Danh sách đặt lịch
             </p>
           </div>
@@ -102,7 +102,7 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
       </div>
       <div className="cursor-pointer" onClick={() => onSelectPage("love")}>
         <div
-          className={`2xl:h-14 xl:h-12 w-full flex justify-start items-center ${
+          className={`2xl:h-14 xl:h-12 lg:h-10 w-full flex justify-start items-center ${
             page === "love"
               ? "bg-gray-100 border-l-4 border-l-blue-solid border-y-2 border-y-gray-100 border-r-2 border-r-gray-100 pl-9"
               : "opacity-40 pl-10"
@@ -111,7 +111,7 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
           <div className="2xl:ml-0 xl:ml-0.5 2xl:mt-0 xl:mt-0.5">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="2xl:h-8 2xl:w-8 xl:h-6 xl:w-6 text-blue-solid"
+              className="2xl:h-8 2xl:w-8 xl:h-6 xl:w-6 lg:h-5 lg:w-5 text-blue-solid"
               viewBox="0 0 20 20"
               fill="currentColor"
             >
@@ -122,8 +122,8 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
               />
             </svg>
           </div>
-          <div className="2xl:mt-1 xl:mt-0.5 ml-5">
-            <p className="text-blue-solid 2xl:text-lg xl:text-sm">
+          <div className="2xl:mt-1 xl:mt-0.5 xl:ml-5 lg:ml-3">
+            <p className="text-blue-solid 2xl:text-lg xl:text-sm lg:text-xs">
               Dịch vụ yêu thích
             </p>
           </div>
@@ -131,7 +131,7 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
       </div>
       <div className="cursor-pointer" onClick={() => onSelectPage("noti")}>
         <div
-          className={`2xl:h-14 xl:h-12 w-full flex justify-start items-center ${
+          className={`2xl:h-14 xl:h-12 lg:h-10 w-full flex justify-start items-center ${
             page === "noti"
               ? "bg-gray-100 border-l-4 border-l-blue-solid border-y-2 border-y-gray-100 border-r-2 border-r-gray-100 pl-9"
               : "opacity-40 pl-10"
@@ -139,7 +139,7 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
         >
           <div className="2xl:ml-0 xl:ml-0.5 2xl:mt-0 xl:mt-0.5">
             <svg
-              className="2xl:h-8 2xl:w-8 xl:h-6 xl:w-6 text-blue-solid"
+              className="2xl:h-8 2xl:w-8 xl:h-6 xl:w-6 lg:h-5 lg:w-5 text-blue-solid"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -152,8 +152,8 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
               <path d="M13.73 21a2 2 0 0 1-3.46 0" />
             </svg>
           </div>
-          <div className="2xl:mt-1 xl:mt-0.5 ml-5">
-            <p className="text-blue-solid 2xl:text-lg xl:text-sm">
+          <div className="2xl:mt-1 xl:mt-0.5 xl:ml-5 lg:ml-3">
+            <p className="text-blue-solid 2xl:text-lg xl:text-sm lg:text-xs">
               Thông báo của tôi
             </p>
           </div>
@@ -161,7 +161,7 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
       </div>
       <div className="cursor-pointer" onClick={() => onSelectPage("history")}>
         <div
-          className={`2xl:h-14 xl:h-12 w-full flex justify-start items-center ${
+          className={`2xl:h-14 xl:h-12 lg:h-10 w-full flex justify-start items-center ${
             page === "history"
               ? "bg-gray-100 border-l-4 border-l-blue-solid border-y-2 border-y-gray-100 border-r-2 border-r-gray-100 pl-9"
               : "opacity-40 pl-10"
@@ -169,7 +169,7 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
         >
           <div className="2xl:ml-0 xl:ml-0.5 2xl:mt-0 xl:mt-0.5">
             <svg
-              className="2xl:h-8 2xl:w-8 xl:h-6 xl:w-6 text-blue-solid"
+              className="2xl:h-8 2xl:w-8 xl:h-6 xl:w-6 lg:w-5 lg:h-5 text-blue-solid"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -182,8 +182,10 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
               <polyline points="12 6 12 12 16 14" />
             </svg>
           </div>
-          <div className="2xl:mt-1 xl:mt-0.5 ml-5">
-            <p className="text-blue-solid 2xl:text-lg xl:text-sm">Lịch sử</p>
+          <div className="2xl:mt-1 xl:mt-0.5 xl:ml-5 lg:ml-3">
+            <p className="text-blue-solid 2xl:text-lg xl:text-sm lg:text-xs">
+              Lịch sử
+            </p>
           </div>
         </div>
       </div>

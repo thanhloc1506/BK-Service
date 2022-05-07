@@ -27,7 +27,7 @@ const LoveService = () => {
           Dịch vụ yêu thích
         </p>
       </div>
-      <div className="px-10 2xl:pt-12 xl:pt-8 pb-16">
+      <div className="px-10 2xl:pt-12 xl:pt-8 lg:pt-6 pb-16">
         <>
           <div className="grid grid-cols-3 gap-8 mb-5">
             {serviceState.followService?.map((service: any, index: number) => (

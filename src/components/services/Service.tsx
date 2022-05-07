@@ -14,7 +14,7 @@ const SingleCard: React.FC<IService> = memo(
   ({ data, onBtnClick, btnText }: IService) => {
     return (
       <>
-        <div className="2xl:w-72 2xl:h-[24rem] xl:w-56 xl:h-[20rem] bg-white border-2 border-blue-200 rounded hover:drop-shadow-2xl shadow-lg shadow-cyan-500/50 transition-all duration-500 cursor-pointer">
+        <div className="2xl:w-72 2xl:h-[24rem] xl:w-56 xl:h-[20rem] lg:w-48 lg:h-[16rem] bg-white border-2 border-blue-200 rounded hover:drop-shadow-2xl shadow-lg shadow-cyan-500/50 transition-all duration-500 cursor-pointer">
           <div className={"2xl:h-[45%] xl:h-[41%] lg:h-[38%] overflow-hidden"}>
             <div className="flex justify-center 2xl:p-3 xl:p-2 lg:p-1">
               {data.images && data.images.length > 0 ? (

@@ -95,6 +95,7 @@ const InfoUser: React.FC = () => {
           toastError("Cập nhật thất bại!");
         })
         .finally(() => {
+          setPhone({ ...phone, active: false });
           dispatch(hideWaiting());
         });
     }
@@ -264,7 +265,7 @@ const InfoUser: React.FC = () => {
           <div className={"flex justify-center items-center"}>
             <div
               className={
-                "relative 2xl:w-32 2xl:h-32 xl:h-28 xl:w-28 rounded-full overflow-hidden group 2xl:ring-4 xl:ring-2 ring-blue-solid 2xl:p-2 xl:p-1"
+                "relative 2xl:w-32 2xl:h-32 xl:h-28 xl:w-28 lg:h-24 lg:w-24 rounded-full overflow-hidden group 2xl:ring-4 xl:ring-2 lg:ring-1 ring-blue-solid 2xl:p-2 xl:p-1 lg:p-0.5"
               }
             >
               <img
@@ -319,14 +320,14 @@ const InfoUser: React.FC = () => {
             </div>
             <div className="grid grid-cols-4 mt-10">
               <div className="col-span-1 flex justify-end">
-                <p className="text-gray-500 font-medium text-xl mt-3">
+                <p className="text-gray-500 font-medium 2xl:text-xl xl:text-lg lg:text-lg mt-3">
                   Họ và tên:
                 </p>
               </div>
               <div className="col-span-2">
                 <input
                   type="text"
-                  className="rounded-xl h-10 mt-2 ml-16 w-[50vh] border-2 border-gray-200 outline-none p-5 text-lg"
+                  className="rounded-xl h-10 mt-2 ml-16 w-[50vh] border-2 border-gray-200 outline-none 2xl:p-5 xl:p-4 lg:p-3 2xl:text-lg xl:text-lg lg:text-sm"
                   defaultValue={state.user?.fullName || undefined}
                   onChange={(e) => setName(e.target.value)}
                   disabled={!modify}
@@ -335,14 +336,14 @@ const InfoUser: React.FC = () => {
             </div>
             <div className="grid grid-cols-4 mt-10">
               <div className="col-span-1 flex justify-end">
-                <p className="text-gray-500 font-medium text-xl mt-3">
+                <p className="text-gray-500 font-medium 2xl:text-xl xl:text-lg lg:text-lg mt-3">
                   Ngày sinh:
                 </p>
               </div>
               <div className="col-span-3">
                 <input
                   type="date"
-                  className="rounded-xl h-10 mt-2 ml-16 w-[50vh] border-2 border-gray-200 outline-none p-5 text-lg"
+                  className="rounded-xl h-10 mt-2 ml-16 w-[50vh] border-2 border-gray-200 outline-none 2xl:p-5 xl:p-4 lg:p-3 2xl:text-lg xl:text-lg lg:text-sm"
                   defaultValue={
                     state.user && state.user.birthday
                       ? new Date(state.user?.birthday)
@@ -359,7 +360,7 @@ const InfoUser: React.FC = () => {
             </div>
             <div className="grid grid-cols-4 mt-10">
               <div className="col-span-1 flex justify-end">
-                <p className="text-gray-500 font-medium text-xl mt-3">
+                <p className="text-gray-500 font-medium 2xl:text-xl xl:text-lg lg:text-lg mt-3">
                   Giới tính:
                 </p>
               </div>
@@ -450,7 +451,9 @@ const InfoUser: React.FC = () => {
         </div>
         <div className="col-span-2">
           <div className="p-4">
-            <p className="text-gray-500">Thông tin liên hệ</p>
+            <p className="text-gray-500 2xl:text-xl xl:text-lg lg:text-sm">
+              Thông tin liên hệ
+            </p>
           </div>
           <div className="grid grid-cols-8 mt-6 px-5">
             <div className="col-span-5 border-b-2 border-b-gray-200 pb-5">
@@ -469,14 +472,16 @@ const InfoUser: React.FC = () => {
                     <path d="M15.05 5A5 5 0 0 1 19 8.95M15.05 1A9 9 0 0 1 23 8.94m-1 7.98v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
                   </svg>
                 </div>
-                <p className="text-gray-500 pl-4">Số điện thoại</p>
+                <p className="text-gray-500 pl-4 2xl:text-xl xl:text-lg lg:text-sm">
+                  Số điện thoại
+                </p>
               </div>
               <div className="pl-10">
                 <input
                   className={
                     phone.active
-                      ? "text-black text-sm outline-none w-[12vw] bg-white px-1 py-0.5 border-2 border-gray-300 focus:outline-none"
-                      : "text-gray-400 w-[12vw] text-sm bg-transparent outline-none"
+                      ? "text-black xl:text-sm lg:text-xs outline-none w-[12vw] bg-white px-1 py-0.5 border-2 border-gray-300 focus:outline-none"
+                      : "text-gray-400 w-[12vw] xl:text-sm lg:text-xs bg-transparent outline-none"
                   }
                   // defaultValue={state.user?.phone}
                   defaultValue={state.user?.phone || ""}
@@ -492,7 +497,7 @@ const InfoUser: React.FC = () => {
               <div className="flex justify-end w-full">
                 {phone.active ? (
                   <svg
-                    className="h-8 w-8 text-gray-400 hover:text-gray-700 mt-3 cursor-pointer"
+                    className="2xl:h-8 2xl:w-8 xl:h-7 xl:w-7 lg:w-6 lg:h-6 text-gray-400 hover:text-gray-700 mt-3 cursor-pointer"
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
@@ -511,7 +516,7 @@ const InfoUser: React.FC = () => {
                   </svg>
                 ) : (
                   <svg
-                    className="h-8 w-8 text-gray-400 hover:text-gray-700 cursor-pointer mt-3"
+                    className="2xl:h-8 2xl:w-8 xl:h-7 xl:w-7 lg:w-6 lg:h-6 text-gray-400 hover:text-gray-700 cursor-pointer mt-3"
                     viewBox="0 0 24 24"
                     strokeWidth="1.5"
                     stroke="currentColor"
@@ -535,7 +540,7 @@ const InfoUser: React.FC = () => {
               <div className="flex">
                 <div className="mt-1">
                   <svg
-                    className="h-6 w-6 text-gray-500"
+                    className="2xl:h-6 2xl:w-6 xl:h-5 xl:w-5 lg:w-5 lg:h-5 text-gray-500"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -548,14 +553,16 @@ const InfoUser: React.FC = () => {
                     <polyline points="22,6 12,13 2,6" />
                   </svg>
                 </div>
-                <p className="text-gray-400 text-lg pl-4">Email</p>
+                <p className="text-gray-400 2xl:text-xl xl:text-lg lg:text-sm pl-4">
+                  Email
+                </p>
               </div>
               <div className="pl-10">
                 <textarea
                   className={
                     email.active
-                      ? "text-black text-sm outline-none w-[12vw] bg-white px-1 py-0.5 border-2 border-gray-300 focus:outline-none resize-none"
-                      : "text-gray-400 w-[12vw] text-sm bg-transparent h-fit outline-none resize-none"
+                      ? "text-black xl:text-sm lg:text-xs outline-none w-[12vw] bg-white px-1 py-0.5 border-2 border-gray-300 focus:outline-none resize-none"
+                      : "text-gray-400 w-[12vw] xl:text-sm lg:text-xs bg-transparent h-fit outline-none resize-none"
                   }
                   defaultValue={state.user?.email}
                   placeholder={"Email"}
@@ -570,7 +577,7 @@ const InfoUser: React.FC = () => {
               <div className="flex justify-end w-full">
                 {email.active ? (
                   <svg
-                    className="h-8 w-8 text-gray-400 hover:text-gray-700 mt-3 cursor-pointer"
+                    className="2xl:h-8 2xl:w-8 xl:h-7 xl:w-7 lg:w-6 lg:h-6 text-gray-400 hover:text-gray-700 mt-3 cursor-pointer"
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
@@ -589,7 +596,7 @@ const InfoUser: React.FC = () => {
                   </svg>
                 ) : (
                   <svg
-                    className="h-8 w-8 text-gray-400 hover:text-gray-700 cursor-pointer mt-3"
+                    className="2xl:h-8 2xl:w-8 xl:h-7 xl:w-7 lg:w-6 lg:h-6 text-gray-400 hover:text-gray-700 cursor-pointer mt-3"
                     viewBox="0 0 24 24"
                     strokeWidth="1.5"
                     stroke="currentColor"
@@ -613,7 +620,7 @@ const InfoUser: React.FC = () => {
               <div className="flex">
                 <div className="mt-1">
                   <svg
-                    className="h-6 w-6 text-gray-500"
+                    className="2xl:h-6 2xl:w-6 xl:h-5 xl:w-5 lg:w-5 lg:h-5 text-gray-500"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -626,12 +633,14 @@ const InfoUser: React.FC = () => {
                     <circle cx="12" cy="10" r="3" />
                   </svg>
                 </div>
-                <p className="text-gray-400 text-lg pl-4">Địa chỉ</p>
+                <p className="text-gray-400 2xl:text-xl xl:text-lg lg:text-sm pl-4">
+                  Địa chỉ
+                </p>
               </div>
               <div className="pl-10">
                 <textarea
                   className={
-                    "text-gray-400 text-sm w-[12vw] bg-transparent outline-none resize-none"
+                    "text-gray-400 xl:text-sm lg:text-xs w-[12vw] bg-transparent outline-none resize-none"
                   }
                   value={address.value}
                   disabled
@@ -650,7 +659,7 @@ const InfoUser: React.FC = () => {
             <div className="col-span-3 border-b-2 border-b-gray-200 pb-5">
               <div className="flex justify-end w-full">
                 <svg
-                  className="h-8 w-8 text-gray-400 hover:text-gray-700 cursor-pointer mt-3"
+                  className="2xl:h-8 2xl:w-8 xl:h-7 xl:w-7 lg:w-6 lg:h-6 text-gray-400 hover:text-gray-700 cursor-pointer mt-3"
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
                   stroke="currentColor"
