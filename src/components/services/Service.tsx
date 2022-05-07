@@ -15,8 +15,8 @@ const SingleCard: React.FC<IService> = memo(
     return (
       <>
         <div className="2xl:w-72 2xl:h-[24rem] xl:w-56 xl:h-[20rem] bg-white border-2 border-blue-200 rounded hover:drop-shadow-2xl shadow-lg shadow-cyan-500/50 transition-all duration-500 cursor-pointer">
-          <div className={"2xl:h-[45%] xl:h-[41%] overflow-hidden"}>
-            <div className="flex justify-center p-3">
+          <div className={"2xl:h-[45%] xl:h-[41%] lg:h-[38%] overflow-hidden"}>
+            <div className="flex justify-center 2xl:p-3 xl:p-2 lg:p-1">
               {data.images && data.images.length > 0 ? (
                 <Carousel
                   showThumbs={false}
@@ -42,39 +42,39 @@ const SingleCard: React.FC<IService> = memo(
                 <div>
                   <img
                     src={"https://paroda.vn/media/2021/08/customer-service.jpg"}
-                    className={"w-72 h-40"}
+                    className={
+                      "2xl:w-72 2xl:h-40 xl:h-40 xl:w-72 lg:h-40 lg:w-72"
+                    }
                   />
                 </div>
               )}
               {/*<img src={data.avatar?.url} alt="service" className="w-72 h-40 p-3"/>*/}
             </div>
           </div>
-          <div className="grid grid-cols-6 h-[10%] overflow-hidden">
-            <div className="col-span-4 xl:text-xs font-semibold 2xl:px-4 xl:px-3 xl:mt-1">
+          <div className="grid grid-cols-6 2xl:h-[10%] xl:h-[10%] lg:h-[12%] overflow-hidden">
+            <div className="col-span-4 xl:text-xs lg:text-[13px] font-semibold 2xl:px-4 xl:px-3 lg:px-1 xl:mt-1">
               {data.name}
             </div>
-            <div className="flex justify-end p-1 mr-2 col-span-2">
-              <p className="2xl:px-2 xl:px-0.5 bg-blue-200 rounded-2xl overflow-hidden text-blue-600 text-xs w-fit h-fit">
+            <div className="flex justify-end 2xl:p-1 xl:p-1 lg-p-0.5 2xl:mr-2 xl:mr-2 lg:mr-1 col-span-2">
+              <p className="2xl:mt-1 xl:mt-0.5 lg:mt-0.5 2xl:px-2 xl:px-0.5 lg-px-0 lg:text-[12px] bg-blue-200 rounded-2xl overflow-hidden text-blue-600 2xl:text-xs xl:text-xs w-fit h-fit">
                 {data.category?.category}
               </p>
             </div>
           </div>
-          <div className="2xl:px-4 xl:px-3 2xl:h-[5%] xl:h-[6%]">
+          <div className="2xl:px-4 xl:px-3 2xl:h-[5%] xl:h-[6%] lg:h-[6%] xl:mt-0.5 lg:mt-2 lg:ml-1">
             <img
               src={rating}
               alt="rating"
-              className="xl:w-[40%] xl:h-[65%] xl:mt-[2%]"
+              className="xl:w-[40%] xl:h-[65%] lg:h-[60%%] xl:mt-[2%] lg:mt[3%]"
             />
           </div>
-          <div className="px-4 py-2 h-[25%] overflow-hidden border-y-2 border-gray-200">
+          <div className="px-4 py-2 2xl:h-[25%] xl:h-[25%] lg:h-[30%] overflow-hidden border-y-2 border-gray-200">
             <p
               className="text-sm font-light"
               dangerouslySetInnerHTML={{ __html: data.shortIntroduction || "" }}
             ></p>
           </div>
-          {/*<div className="border-b-2 border-gray-100 mt-3"></div>*/}
-          {/*<div className="border-b-2 border-gray-100 mt-12"></div>*/}
-          <div className="grid grid-cols-4 row-span-1 xl:h-14 overflow-hidden">
+          <div className="grid grid-cols-4 row-span-1 xl:h-14 overflow-hidden lg:mt-1.5">
             <div className="flex justify-center h-full ml-1 2xl:mt-5 xl:mt-4">
               <svg
                 className="h-5 w-5 text-gray-500"
@@ -115,9 +115,9 @@ const SingleCard: React.FC<IService> = memo(
               </svg>
               <p className="ml-0.5 font-light">{data.imgCmtCount || 0}</p>
             </div>
-            <div className="col-span-2 flex justify-end pr-3 items-center xl:mt-0">
+            <div className="col-span-2 flex justify-end pr-3 items-center xl:mt-0 lg:mt-[-5px]">
               <button
-                className="bg-blue-solid 2xl:h-8 xl:h-6 w-fit 2xl:px-4 xl:px-3 2xl:texg-lg xl:text-sm rounded-sm overflow-hidden text-white font-light"
+                className="bg-blue-solid 2xl:h-8 xl:h-6 w-fit 2xl:px-4 xl:px-3 lg:px-1.5 lg:py-0.5 2xl:text-lg xl:text-sm lg:text-xs rounded-sm overflow-hidden text-white font-light"
                 onClick={onBtnClick}
               >
                 {btnText || "Chỉnh sửa"}

@@ -28,7 +28,7 @@ const MenuCategory = () => {
   }, [dispatch]);
 
   return (
-    <div className="w-72">
+    <div className="2xl:w-72 xl:w-72 lg:w-52">
       <Listbox
         value={categories?.find((c) => c._id === filter.category?._id) || null}
         onChange={(v: Category) => {
@@ -115,7 +115,7 @@ const MenuQuan = () => {
     dispatch && dispatch(fetchQuan());
   }, [dispatch]);
   return (
-    <div className="w-72">
+    <div className="2xl:w-72 xl:w-72 lg:w-52">
       <Listbox
         value={
           quan.find((v) => v.district_id === filter.quan?.district_id) || null
@@ -205,7 +205,7 @@ const MenuPhuong = () => {
   const filter = useSelector((state: RootState) => state.search.filter);
   const dispatch = useDispatch();
   return (
-    <div className="w-72">
+    <div className="2xl:w-72 xl:w-72 lg:w-52">
       <Listbox
         value={phuong.find((p) => p.ward_id === filter.phuong?.ward_id) || null}
         onChange={(v: Phuong) => {
@@ -378,7 +378,7 @@ const MenuPhuong = () => {
 // }
 const SideBarHomePage: React.FC = () => {
   return (
-    <div className="bg-white py-6 w-full 2xl:mx-[10.6vw] xl:mx-[10.5vw] shadow-md m-auto rounded relative">
+    <div className="bg-white 2xl:py-6 xl:py-5 lg:py-3 w-full 2xl:mx-[10.6vw] xl:mx-[10.5vw] lg:mx-[10.2vw] shadow-md m-auto rounded relative">
       <div className={"flex justify-center items-center relative gap-2"}>
         <MenuCategory />
         <MenuQuan />

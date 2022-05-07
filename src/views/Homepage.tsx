@@ -12,7 +12,7 @@ import {
 } from "../redux/slices/search";
 import { logout } from "../redux/slices/auth";
 import cookies from "js-cookie";
-import {useLocation, useNavigate} from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Service from "../components/services/Service";
 
 const Homepage: React.FC = () => {
@@ -22,11 +22,11 @@ const Homepage: React.FC = () => {
   const location = useLocation();
   const params = Object.fromEntries(new URLSearchParams(location.search));
   useEffect(() => {
-    console.log(params)
-    dispatch(setCurrentSearchText(params['text'] || ""));
+    console.log(params);
+    dispatch(setCurrentSearchText(params["text"] || ""));
     // console.log("run")
 
-    dispatch(deepSearch({ text: params['text'] || "" }));
+    dispatch(deepSearch({ text: params["text"] || "" }));
     if (cookies.get("token") == undefined) {
       dispatch(logout());
     }
@@ -36,15 +36,15 @@ const Homepage: React.FC = () => {
       <Navbar />
       <div className="grid grid-cols-4 pb-12 h-auto">
         <div className="p-5 mt-5"></div>
-        <div className="p-5 mt-5 fixed flex justify-center w-full top-[3.5rem] z-[9]">
+        <div className="p-5 2xl:mt-5 xl:mt-3 lg:mt-0 fixed flex justify-center w-full top-[3.5rem] z-[9]">
           <SideBarHomePage />
         </div>
-        <div className="col-span-4 mt-40 px-[12%]">
+        <div className="col-span-4 2xl:mt-40 xl:mt-32 lg:mt-28 px-[12%]">
           {searchState.status === "loading" ? (
             ""
           ) : (
             <>
-              <div className="grid grid-cols-4 gap-8 mb-5">
+              <div className="grid grid-cols-4 2xl:gap-8 xl:gap-6 lg:gap-4 mb-5">
                 {searchState.dataSearch?.services?.map(
                   (service: any, index: number) => (
                     <div key={index} className={"flex justify-center"}>
@@ -60,7 +60,7 @@ const Homepage: React.FC = () => {
                 )}
               </div>
               {searchState.dataSearch ? (
-                <div className="flex justify-end pr-20 mt-10">
+                <div className="flex justify-end 2xl:pr-20 xl:pr-16 lg-pr-10 mt-10">
                   <Pagination itemsPerPage={4} />
                 </div>
               ) : null}

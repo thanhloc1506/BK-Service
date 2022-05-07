@@ -49,7 +49,7 @@ const Navbar: React.FC = () => {
       <div className={"fixed z-10 w-full"}>
         <nav className="grid grid-cols-9 bg-blue-light w-full px-[10%]">
           <span
-            className="col-span-3 flex justify-start px-3 ml-2 cursor-pointer items-center"
+            className="2xl:col-span-2 xl:col-span-2 lg:col-span-2 flex justify-start px-3 ml-2 cursor-pointer items-center"
             onClick={goToHomepage}
           >
             <img
@@ -61,7 +61,7 @@ const Navbar: React.FC = () => {
               BK Service
             </p>
           </span>
-          <div className="col-span-3">
+          <div className="2xl:col-span-4 xl:col-span-4 lg:col-span-4 2xl:pl-16 xl:pl-12 lg:pl-10">
             <SearchField />
           </div>
 
@@ -112,7 +112,7 @@ const Navbar: React.FC = () => {
                       <rect x="8" y="15" width="2" height="2" />
                     </svg>
                   </div>
-                  <p className="text-white mt-1 2xl:text-sm xl:text-xs font-medium flex justify-center">
+                  <p className="text-white mt-1 2xl:text-sm xl:text-xs lg:text-[12px] font-medium flex justify-center">
                     Schedule
                   </p>
                 </span>
@@ -122,7 +122,7 @@ const Navbar: React.FC = () => {
               </span>
               <span className="col-span-3 flex justify-end items-center pr-2">
                 <div className="grid grid-cols-3">
-                  <div className="col-span-1 flex justify-center rounded-full 2xl:mt-2 xl:mt-0 2xl:w-10 2xl:h-10 xl:w-8 xl:h-8 overflow-hidden ring-2 ring-white">
+                  <div className="col-span-1 flex justify-center rounded-full 2xl:mt-2 xl:mt-0 lg:mt-1.5 2xl:w-10 2xl:h-10 xl:w-8 xl:h-8 lg:w-7 lg:h-7 overflow-hidden ring-2 ring-white">
                     <img
                       src={
                         authState.user?.avatar

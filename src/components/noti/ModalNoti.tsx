@@ -13,7 +13,7 @@ export const ModalNoti = () => {
   return (
     <Popover className="relative">
       <Popover.Button>
-        <div className={""}>
+        <div className={"w-full"}>
           <span
             className={`flex h-3 w-3 absolute right-2 top-0 ${
               !state.hasNewNoti ? "hidden" : ""
@@ -24,11 +24,11 @@ export const ModalNoti = () => {
           </span>
           <div className="flex justify-center mt-1">
             <RiNotification3Line
-              className={"2xl:text-2xl xl:text-xl text-white"}
+              className={"2xl:text-2xl xl:text-xl lg:text-xl text-white"}
               //   size={28}
             />
           </div>
-          <p className="text-white 2xl:mt-2 xl:mt-1 2xl:text-sm xl:text-xs font-medium flex justify-center">
+          <p className="text-white 2xl:mt-2 xl:mt-1 lg:mt-1 2xl:text-sm xl:text-xs lg:text-[11.5px] font-medium flex justify-end">
             Thông báo
           </p>
         </div>
