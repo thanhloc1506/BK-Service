@@ -41,7 +41,7 @@ const CalendarRow: React.FC<CalendarRowProps> = ({
     content.push(
       <td
         key={100}
-        className="relative 2xl:py-3 xl:py-2 2xl:px-2 xl:px-1 text-center"
+        className="relative 2xl:py-3 xl:py-2 lg:py-1.5 2xl:px-2 xl:px-1 lg:px-0.5 text-center"
       >
         <EventCalendar
           isCurrentDay={

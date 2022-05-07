@@ -30,11 +30,11 @@ const TimePicker: React.FC<ITimePicker> = ({
   };
   return (
     <div>
-      <div className="h-[38px] block px-3 rounded-sm py-1.5 text-gray-700 bg-white border border-solid border-gray-300">
+      <div className="2xl:h-[38px] xl:h-[32px] lg:h-[32px] block 2xl:px-3 xl:px-2 lg:px-1.5 rounded-sm 2xl:py-1.5 xl:py-1 lg:py-1 text-gray-700 bg-white border border-solid border-gray-300">
         <div className="flex justify-center">
           <select
             name="hours"
-            className="bg-transparent appearance-none outline-none text-right"
+            className="bg-transparent appearance-none outline-none text-right 2xl:text-lg xl:text-sm lg:text-sm"
             onChange={(e: any) => onClickHour(e.target.value)}
           >
             <option value="1" selected={hour === "1"}>
@@ -74,10 +74,12 @@ const TimePicker: React.FC<ITimePicker> = ({
               12
             </option>
           </select>
-          <span className="mr-3">:</span>
+          <span className="2xl:px-2 xl:px-1.5 lg:px-1 2xl:text-lg xl:text-sm lg:text-sm">
+            :
+          </span>
           <select
             name="minutes"
-            className="bg-transparent appearance-none outline-none mr-4"
+            className="bg-transparent appearance-none outline-none mr-4 2xl:text-lg xl:text-sm lg:text-sm"
             onChange={(e: any) => onClickMin(e.target.value)}
           >
             <option value="00" selected={min === "00"}>
@@ -89,7 +91,7 @@ const TimePicker: React.FC<ITimePicker> = ({
           </select>
           <select
             name="ampm"
-            className="bg-transparent appearance-none outline-none"
+            className="bg-transparent appearance-none outline-none 2xl:text-lg xl:text-sm lg:text-sm"
             onChange={(e: any) => onClickAMPM(e.target.value)}
           >
             <option value="AM" selected={AMPM === "AM"}>

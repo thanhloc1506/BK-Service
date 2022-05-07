@@ -24,7 +24,7 @@ const CalendarModal: React.FC<ICalendarModal> = ({
         initialFocus={cancelButtonRef}
         onClose={setOpen}
       >
-        <div className="flex mt-28 justify-center text-center">
+        <div className="flex 2xl:mt-28 xl:mt-10 lg:mt-0 justify-center text-center">
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"

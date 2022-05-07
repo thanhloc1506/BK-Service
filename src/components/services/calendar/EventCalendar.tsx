@@ -41,7 +41,7 @@ const EventCalendar: React.FC<IEventCalendar> = ({
           </div>
         ) : null}
         <span
-          className="p-1 rounded-full bg-blue-solid text-white border-blue-400 border-2 2xl:text-sm xl:text-sm"
+          className="p-1 rounded-full bg-blue-solid text-white border-blue-400 border-2 2xl:text-sm xl:text-sm lg:text-xs"
           onMouseOver={onHoverEventSchedule}
           onMouseOut={onOutEventSchedule}
         >
@@ -64,7 +64,7 @@ const EventCalendar: React.FC<IEventCalendar> = ({
           </div>
         ) : null}
         <span
-          className="p-1 bg-blue-400 border-2 text-white cursor-pointer 2xl:text-sm xl:text-sm"
+          className="p-1 bg-blue-400 border-2 text-white cursor-pointer 2xl:text-sm xl:text-sm lg:text-xs"
           onMouseOver={onHoverEventSchedule}
           onMouseOut={onOutEventSchedule}
         >
@@ -76,13 +76,13 @@ const EventCalendar: React.FC<IEventCalendar> = ({
 
   if (!isScheduleDay && isCurrentDay) {
     return (
-      <span className="p-1 rounded-full border-blue-400 border-2 2xl:text-sm xl:text-sm">
+      <span className="p-1 rounded-full border-blue-400 border-2 2xl:text-sm xl:text-sm lg:text-xs">
         {value}
       </span>
     );
   }
 
-  return <span className="2xl:text-sm xl:text-sm">{value}</span>;
+  return <span className="2xl:text-sm xl:text-sm lg:text-xs">{value}</span>;
 };
 
 export default EventCalendar;

@@ -51,9 +51,9 @@ const Schedule: React.FC<ISchedule> = ({ service, schedules }) => {
               []
             )}
           </div>
-          <div className="2xl:pr-4 xl:pr-3 pb-5 pt-2 flex justify-end">
+          <div className="2xl:pr-4 xl:pr-3 lg:pr-2 pb-5 pt-2 flex justify-end">
             <button
-              className="bg-blue-500 text-white rounded-sm text-sm 2xl:px-3 2xl:py-1.5 xl:px-2.5 xl:py-1"
+              className="bg-blue-500 text-white hover:text-gray-700 rounded-sm 2xl:text-sm xl:text-sm lg:text-xs 2xl:px-3 2xl:py-1.5 xl:px-2.5 xl:py-1 lg:px-2 lg:py-1"
               onClick={onClickOpen}
             >
               Đặt lịch

@@ -16,10 +16,10 @@ const PreviewSchedule: React.FC<IPreviewSchedule> = ({
     <div
       className={
         isFirst
-          ? "h-fit w-52 bg-white border-2 text-sm border-gray-300 absolute bottom-10 left-[-12px] z-1000"
+          ? "h-fit w-52 bg-white border-2 text-sm border-gray-300 absolute bottom-10 xl:left-[-12px] lg:left-[-40px] z-1000"
           : isLast
-          ? "h-fit w-52 bg-white border-2 text-sm border-gray-300 absolute bottom-10 left-[-200px] z-1000"
-          : "h-fit w-52 bg-white border-2 text-sm border-gray-300 absolute bottom-10 left-[-155px] z-1000"
+          ? "h-fit w-52 bg-white border-2 text-sm border-gray-300 absolute bottom-10 xl:left-[-200px] lg:left-[-190px] z-1000"
+          : "h-fit w-52 bg-white border-2 text-sm border-gray-300 absolute bottom-10 xl:left-[-155px] lg:left-[-170px] z-1000"
       }
     >
       <div className="border-b-2 border-b-gray-200 py-1">

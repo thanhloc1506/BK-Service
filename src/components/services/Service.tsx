@@ -75,7 +75,7 @@ const SingleCard: React.FC<IService> = memo(
             ></p>
           </div>
           <div className="grid grid-cols-4 row-span-1 xl:h-14 overflow-hidden lg:mt-1.5">
-            <div className="flex justify-center h-full ml-1 2xl:mt-5 xl:mt-4">
+            <div className="flex justify-center h-full ml-1 2xl:mt-2 xl:mt-4">
               <svg
                 className="h-5 w-5 text-gray-500"
                 fill="none"
@@ -93,7 +93,7 @@ const SingleCard: React.FC<IService> = memo(
                 {data.textCmtCount || 0}
               </p>
             </div>
-            <div className="flex justify-center h-full 2xl:mt-5 xl:mt-4">
+            <div className="flex justify-center h-full 2xl:mt-2 xl:mt-4">
               <svg
                 className="h-5 w-5 text-gray-500 align-middle"
                 fill="none"
@@ -115,7 +115,7 @@ const SingleCard: React.FC<IService> = memo(
               </svg>
               <p className="ml-0.5 font-light">{data.imgCmtCount || 0}</p>
             </div>
-            <div className="col-span-2 flex justify-end pr-3 items-center xl:mt-0 lg:mt-[-5px]">
+            <div className="col-span-2 flex justify-end pr-3 items-center 2xl:mt-[-15px] xl:mt-0 lg:mt-[-5px]">
               <button
                 className="bg-blue-solid 2xl:h-8 xl:h-6 w-fit 2xl:px-4 xl:px-3 lg:px-1.5 lg:py-0.5 2xl:text-lg xl:text-sm lg:text-xs rounded-sm overflow-hidden text-white font-light"
                 onClick={onBtnClick}

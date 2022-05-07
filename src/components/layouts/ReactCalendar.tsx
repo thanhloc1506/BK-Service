@@ -20,9 +20,9 @@ const ReactCalendar: React.FC<IReactCalendar> = ({
     setOpen(false);
   };
   return (
-    <>
+    <div className="">
       <Calendar value={date} onChange={changeDate} />
-    </>
+    </div>
   );
 };
 

@@ -101,13 +101,27 @@ const Calendar: React.FC<CalendarProps> = ({
           <table className="w-full dark:text-white">
             <thead>
               <tr>
-                <th className="py-2 2xl:px-1 xl:px-1">S</th>
-                <th className="py-2 2xl:px-1 xl:px-1">M</th>
-                <th className="py-2 2xl:px-1 xl:px-1">T</th>
-                <th className="py-2 2xl:px-1 xl:px-1">W</th>
-                <th className="py-2 2xl:px-1 xl:px-1">T</th>
-                <th className="py-2 2xl:px-1 xl:px-1">F</th>
-                <th className="py-2 2xl:px-1 xl:px-1">S</th>
+                <th className="py-2 2xl:px-1 xl:px-1 lg:px-0.5 2xl:text-xl xl:text-lg lg:text-sm">
+                  S
+                </th>
+                <th className="py-2 2xl:px-1 xl:px-1 lg:px-0.5 2xl:text-xl xl:text-lg lg:text-sm">
+                  M
+                </th>
+                <th className="py-2 2xl:px-1 xl:px-1 lg:px-0.5 2xl:text-xl xl:text-lg lg:text-sm">
+                  T
+                </th>
+                <th className="py-2 2xl:px-1 xl:px-1 lg:px-0.5 2xl:text-xl xl:text-lg lg:text-sm">
+                  W
+                </th>
+                <th className="py-2 2xl:px-1 xl:px-1 lg:px-0.5 2xl:text-xl xl:text-lg lg:text-sm">
+                  T
+                </th>
+                <th className="py-2 2xl:px-1 xl:px-1 lg:px-0.5 2xl:text-xl xl:text-lg lg:text-sm">
+                  F
+                </th>
+                <th className="py-2 2xl:px-1 xl:px-1 lg:px-0.5 2xl:text-xl xl:text-lg lg:text-sm">
+                  S
+                </th>
               </tr>
             </thead>
             <tbody>

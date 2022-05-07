@@ -63,7 +63,7 @@ const BookServiceModal = ({ open, setOpen, service }: IParam) => {
         initialFocus={cancelButtonRef}
         onClose={setOpen}
       >
-        <div className="flex mt-36 justify-center text-center">
+        <div className="flex 2xl:mt-36 xl:mt-28 lg:mt-24 justify-center text-center">
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -91,15 +91,15 @@ const BookServiceModal = ({ open, setOpen, service }: IParam) => {
             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
-            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all w-[50rem] h-60">
+            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all 2xl:w-[50rem] 2xl:h-60 xl:w-[45rem] xl:h-56 lg:w-[40rem] lg:h-56">
               <div className="bg-white">
-                <div className="h-12 border-b-2 border-gray-100 flex items-center pl-5 text-lg text-gray-700 font-medium">
+                <div className="2xl:h-12 xl:h-10 lg:h-10 border-b-2 border-gray-100 flex items-center pl-5 2xl:text-lg xl:text-sm lg:text-sm text-gray-700 font-medium">
                   Đặt lịch dịch vụ: {service?.name}
                 </div>
                 <div>
                   <div className="grid grid-cols-2 h-10 items-center pt-3">
                     <div className="pl-5">
-                      <p>
+                      <p className="2xl:text-lg xl:text-sm lg:text-sm">
                         Họ và tên:{" "}
                         {userState?.fullName !== undefined
                           ? userState?.fullName
@@ -107,23 +107,27 @@ const BookServiceModal = ({ open, setOpen, service }: IParam) => {
                       </p>
                     </div>
                     <div className="pl-5">
-                      <p>Số điện thoại: 0123456789</p>
+                      <p className="2xl:text-lg xl:text-sm lg:text-sm">
+                        Số điện thoại: 0123456789
+                      </p>
                     </div>
                   </div>
                 </div>
                 <div className="grid grid-cols-2 pt-3">
                   <div className="flex justify-start pl-5">
                     <div className="flex align-middle">
-                      <p>Ngày: </p>
+                      <p className="2xl:text-lg xl:text-sm lg:text-sm">
+                        Ngày:{" "}
+                      </p>
                     </div>
                     <div className="flex items-center justify-center pl-3">
                       <div
-                        className="relative xl:w-96 mb-7"
+                        className="relative xl:w-96 lg:w-80 2xl:mb-7 xl:mb-7 lg:mb-10"
                         onClick={onClickShowCalendar}
                       >
                         <input
                           type="text"
-                          className="absolute w-[42%] form-control block px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                          className="absolute w-[42%] form-control block 2xl:px-3 2xl:py-1.5 xl:px-2 xl:py-1 lg:px-1.5 lg:py-1 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                           placeholder="Select a date"
                           value={
                             date
@@ -134,7 +138,7 @@ const BookServiceModal = ({ open, setOpen, service }: IParam) => {
                           }
                         />
                         <svg
-                          className="absolute h-6 w-6 text-gray-700 left-1/3 top-2"
+                          className="absolute h-6 w-6 text-gray-700 left-1/3 2xl:top-2 xl:top-2 lg:top-1"
                           width="24"
                           height="24"
                           viewBox="0 0 24 24"
@@ -158,7 +162,7 @@ const BookServiceModal = ({ open, setOpen, service }: IParam) => {
                   </div>
                   <div className="flex justify-start">
                     <div className="pl-5">
-                      <p>Giờ:</p>
+                      <p className="2xl:text-lg xl:text-sm lg:text-sm">Giờ:</p>
                     </div>
                     <div className="pl-3">
                       <TimePicker
@@ -184,7 +188,7 @@ const BookServiceModal = ({ open, setOpen, service }: IParam) => {
                 <div className="border-t-2 border-t-gray-100 mt-2">
                   <div className="flex justify-end pt-1.5 pr-10">
                     <button
-                      className="bg-green-500 px-5 py-1.5 rounded-sm text-gray-600"
+                      className="2xl:text-lg xl:text-sm lg:text-sm bg-green-500 2xl:px-5 2xl:py-1.5 xl:px-3 xl:py-1 lg:px-2 lg:py-1 rounded-sm text-gray-100 hover:text-gray-700"
                       onClick={onAddSchedule}
                     >
                       Xác nhận
