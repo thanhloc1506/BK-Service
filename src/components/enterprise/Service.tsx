@@ -20,7 +20,7 @@ const SingleCard: React.FC<IService> = ({
   return (
     <>
       <div
-        className="2xl:w-72 2xl:h-[24rem] xl:w-full xl:h-[20rem] bg-white border-2 border-blue-200 rounded hover:drop-shadow-2xl shadow-lg shadow-cyan-500/50 transition-all duration-500 cursor-pointer"
+        className="2xl:w-72 2xl:h-[24rem] xl:w-56 xl:h-[20rem] bg-white border-2 border-blue-200 rounded hover:drop-shadow-2xl shadow-lg shadow-cyan-500/50 transition-all duration-500 cursor-pointer"
         onClick={() => navigate(`/detailService/${data._id}`)}
       >
         <div className={"2xl:h-[45%] xl:h-[41%] overflow-hidden"}>

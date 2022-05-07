@@ -41,7 +41,7 @@ const Navbar: React.FC = () => {
 
   const gotoManage = () => {
     dispatch(selectPageEnterprise("manage"));
-    navigate("/profile");
+    navigate("/enterprise");
   };
 
   return (

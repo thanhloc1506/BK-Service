@@ -19,78 +19,88 @@ const SidebarEnterprise: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
   };
   return (
     <div className="bg-white h-[90vh] w-full shadow-sm border-2 border-gray-100">
-      <div className="h-[6vh] w-full border-b-2 border-b-gray-100 mb-5">
-        <div className="flex justify-start ml-10 mt-8">
-          <p className="text-2xl text-blue-solid">Danh mục</p>
+      <div className="2xl:h-20 xl:h-[4.3rem] w-full border-b-2 border-b-gray-100">
+        <div className="flex justify-start ml-10 2xl:mt-6 xl:mt-8 items-center 2xl:mb-0 xl:mb-3">
+          <p className="2xl:mt-0 xl:mt-4 2xl:text-xl xl:text-lg text-blue-solid font-semibold">
+            Danh mục
+          </p>
         </div>
       </div>
       <div className="cursor-pointer" onClick={() => onSelectPage("manage")}>
         <div
-          className={`h-[7vh] w-full flex justify-start pt-3 ${
+          className={`2xl:h-14 xl:h-12 w-full flex justify-start items-center ${
             page === "manage"
               ? "bg-gray-100 border-l-4 border-l-blue-solid border-y-2 border-y-gray-100 border-r-2 border-r-gray-100 pl-9"
               : "opacity-40 pl-10"
           }`}
         >
-          <div className="">
-            <img src={manage} alt="manage" className="w-8 h-8" />
+          <div className="2xl:ml-0 xl:ml-0.5 2xl:mt-0 xl:mt-0.5">
+            <img
+              src={manage}
+              alt="manage"
+              className="2xl:h-7 2xl:w-7 xl:h-5 xl:w-5 text-blue-solid"
+            />
           </div>
-          <div className="mt-1 ml-5">
-            <p className="text-blue-solid text-lg">Quản lý</p>
+          <div className="2xl:mt-1 xl:mt-0.5 ml-5">
+            <p className="text-blue-solid 2xl:text-lg xl:text-sm">Quản lý</p>
           </div>
         </div>
       </div>
       <div className="cursor-pointer" onClick={() => onSelectPage("all")}>
         <div
-          className={`h-[7vh] w-full flex justify-start pt-3 ${
+          className={`2xl:h-14 xl:h-12 w-full flex justify-start items-center ${
             page === "all"
               ? "bg-gray-100 border-l-4 border-l-blue-solid border-y-2 border-y-gray-100 border-r-2 border-r-gray-100 pl-9"
               : "opacity-40 pl-10"
           }`}
         >
-          <div className="">
+          <div className="2xl:ml-0 xl:ml-0.5 2xl:mt-0 xl:mt-0.5">
             <img
               src={group}
               alt="all-services"
-              className="w-8 h-8 text-blue-solid"
+              className="2xl:h-7 2xl:w-7 xl:h-5 xl:w-5 text-blue-solid"
             />
           </div>
-          <div className="mt-1 ml-5">
-            <p className="text-blue-solid text-lg">Tất cả dịch vụ</p>
+          <div className="2xl:mt-1 xl:mt-0.5 ml-5">
+            <p className="text-blue-solid 2xl:text-lg xl:text-sm">
+              Tất cả dịch vụ
+            </p>
           </div>
         </div>
       </div>
       <div className="cursor-pointer" onClick={() => onSelectPage("add")}>
         <div
-          className={`h-[7vh] w-full flex justify-start pt-3 ${
+          className={`2xl:h-14 xl:h-12 w-full flex justify-start items-center ${
             page === "add"
               ? "bg-gray-100 border-l-4 border-l-blue-solid border-y-2 border-y-gray-100 border-r-2 border-r-gray-100 pl-9"
               : "opacity-40 pl-10"
           }`}
         >
-          <div className="">
+          <div className="2xl:ml-0 xl:ml-0 2xl:mt-0 xl:mt-0.5">
             <img
               src={add}
               alt="Add-service"
-              className="w-8 h-8 text-blue-solid"
+              className="2xl:h-8 2xl:w-8 xl:h-6 xl:w-6 text-blue-solid"
             />
           </div>
-          <div className="mt-1 ml-5">
-            <p className="text-blue-solid text-lg">Thêm dịch vụ</p>
+          <div className="2xl:mt-1 xl:mt-0.5 ml-5">
+            <p className="text-blue-solid 2xl:text-lg xl:text-sm">
+              Thêm dịch vụ
+            </p>
           </div>
         </div>
       </div>
       <div className="cursor-pointer" onClick={() => onSelectPage("premium")}>
         <div
-          className={`h-[7vh] w-full flex justify-start pt-3 ${
+          className={`2xl:h-14 xl:h-12 w-full flex justify-start items-center ${
             page === "premium"
               ? "bg-gray-100 border-l-4 border-l-blue-solid border-y-2 border-y-gray-100 border-r-2 border-r-gray-100 pl-9"
               : "opacity-40 pl-10"
           }`}
         >
-          <div className="">
+          <div className="2xl:ml-0 xl:ml-0 2xl:mt-0 xl:mt-0.5">
             <svg
-              className="h-8 w-8 text-blue-solid"
+              className="2xl:h-8 2xl:w-8 xl:h-6 xl:w-6 text-blue-solid"
               width="24"
               height="24"
               viewBox="0 0 24 24"
@@ -106,8 +116,8 @@ const SidebarEnterprise: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
               <path d="M10 12l-2 -2.2l.6 -1" />
             </svg>
           </div>
-          <div className="mt-1 ml-5">
-            <p className="text-blue-solid text-lg">Premium</p>
+          <div className="2xl:mt-1 xl:mt-0.5 ml-5">
+            <p className="text-blue-solid 2xl:text-lg xl:text-sm">Premium</p>
           </div>
         </div>
       </div>

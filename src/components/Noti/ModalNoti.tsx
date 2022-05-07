@@ -139,7 +139,7 @@ export const NotiContent = () => {
             return (
               <NotiItem
                 content={getContentNoti(n)}
-                img={n.user.avatar.url}
+                img={n.user.avatar?.url}
                 time={getTimeText(n.date)}
                 key={index}
                 hadRead={n.hadRead}
