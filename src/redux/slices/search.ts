@@ -73,7 +73,7 @@ export const fetchPhuong = createAsyncThunk("/getPhuong", async (quanId: string,
         .finally(() => dispatch(hideWaiting()));
 });
 
-export const deepSearch = createAsyncThunk("/deepSearch", async (data: undefined|any, api: any) => {
+export const deepSearch = createAsyncThunk("/deepSearch", async (data: any|undefined, api: any) => {
     const filter: Filter = api.getState().search.filter;
     const dispatch = api.dispatch;
     let text =  "";
@@ -102,6 +102,7 @@ export const deepSearch = createAsyncThunk("/deepSearch", async (data: undefined
             delete params[k];
         }
     });
+    console.log(params)
     dispatch(showWaiting());
     return axiosClient.get<PInSearch.Data>("search", {
         params
@@ -185,6 +186,9 @@ const searchSlice = createSlice({
         },
         resetCategory(state: State) {
             state.filter.category = undefined;
+        },
+        clearQuickSearch(state: State){
+            state.dataQuickSeacrh = undefined;
         }
     },
     extraReducers: {
@@ -228,16 +232,15 @@ const searchSlice = createSlice({
         },
         [deepSearch.fulfilled.toString()]: (state: State, action: PayloadAction<PInSearch.Data>) => {
             let data = action.payload;
-            console.log(data)
             if (data.searchText === state.currentSearchText || (data.searchText === undefined && state.currentSearchText === "")) {
                 if (data.services.length > 0) {
                     state.dataSearch = data;
+                    state.totalPage=data.totalPage;
                     state.page = data.page;
-                    state.totalPage = data.totalPage;
                 } else {
-                    state.page =1;
-                    state.totalPage = 1;
                     state.dataSearch = undefined;
+                    state.page= 1;
+                    state.totalPage =1;
                 }
             }
         },
@@ -245,10 +248,11 @@ const searchSlice = createSlice({
             let data = action.payload;
             state.quickSearchStatus = "complete";
             if(data.searchText === state.currentQuickSearchText){
+                console.log(data)
                 if (data.services.length > 0) {
                     state.dataQuickSeacrh = data;
                 } else {
-                    state.dataQuickSeacrh = undefined;
+                    state.dataQuickSeacrh = data;
                 }
             }
         },
@@ -274,6 +278,7 @@ export const {
     resetPhuong,
     resetCategory,
     resetQuan,
-    setCurrentQuickSearchText
+    setCurrentQuickSearchText,
+    clearQuickSearch
 } =
     searchSlice.actions;

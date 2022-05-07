@@ -2,6 +2,7 @@ import React, {
   ChangeEvent,
   Fragment,
   KeyboardEvent,
+  KeyboardEventHandler,
   useEffect,
   useState,
 } from "react";
@@ -9,6 +10,7 @@ import { BsSearch } from "react-icons/bs";
 import { SearchResult } from "./SearchResult";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  clearQuickSearch,
   deepSearch,
   hideResult,
   quickSearch,
@@ -18,16 +20,22 @@ import {
 } from "../../redux/slices/search";
 import { Transition } from "@headlessui/react";
 import { RootState } from "../../redux/store";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 export const SearchField = () => {
   const [searchText, setSearchText] = useState<string | undefined>(undefined);
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state.search);
+  const navigate = useNavigate();
   const onFocus = () => {
     dispatch(showResult());
   };
-  const onBlur = () => {
-    dispatch(hideResult());
+  const onBlur = (e: any) => {
+    setTimeout(() => {
+      e.target.value = "";
+      dispatch(hideResult());
+      dispatch(clearQuickSearch());
+    }, 200);
   };
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     // dispatch(search(e.target.value));
@@ -38,8 +46,7 @@ export const SearchField = () => {
       //@ts-ignore
       e.target.blur();
       // dispatch(showWaiting());
-      dispatch(setCurrentSearchText(searchText || ""));
-      dispatch(deepSearch({ text: searchText }));
+      navigate(`/?text=${searchText || ""}`);
     }
   };
 

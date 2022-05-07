@@ -22,7 +22,7 @@ const DropdownBtn = () => {
   };
 
   const goToProfile = () => {
-    dispatch(selectPageEnterprise("info"));
+    dispatch(selectPageEnterprise("manage"));
     navigate("/profile");
   };
 

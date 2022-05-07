@@ -12,26 +12,31 @@ import {
 } from "../redux/slices/search";
 import { logout } from "../redux/slices/auth";
 import cookies from "js-cookie";
+import { useLocation, useNavigate } from "react-router-dom";
 import Service from "../components/enterprise/Service";
-import { useNavigate } from "react-router-dom";
 
 const Homepage: React.FC = () => {
   const searchState = useSelector((state: RootState) => state.search);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const params = Object.fromEntries(new URLSearchParams(location.search));
   useEffect(() => {
-    dispatch(setCurrentSearchText(""));
-    dispatch(deepSearch({ text: "" }));
-    if (cookies.get("eToken") == undefined) {
+    console.log(params);
+    dispatch(setCurrentSearchText(params["text"] || ""));
+    // console.log("run")
+
+    dispatch(deepSearch({ text: params["text"] || "" }));
+    if (cookies.get("token") == undefined) {
       dispatch(logout());
     }
-  }, []);
-  const navigate = useNavigate();
+  }, [location]);
   return (
     <div className="bg-slate-100 min-h-screen h-fit">
       <Navbar />
       <div className="grid grid-cols-4 pb-12 h-auto">
         <div className="p-5 mt-5"></div>
-        <div className="p-5 mt-5 fixed w-full top-[3.5rem] z-[9]">
+        <div className="p-5 mt-5 fixed flex justify-center w-full top-[3.5rem] z-[9]">
           <SideBarHomePage />
         </div>
         <div className="col-span-4 mt-40 px-[12%]">
