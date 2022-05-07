@@ -1,2 +1,2 @@
 sudo docker build -t lv-client-customer .
-sudo docker-compose up
+sudo docker-compose up -d
