@@ -4,5 +4,7 @@ export namespace PInSearch {
   export interface Data {
     searchText: string;
     services: Service[];
+    page: number;
+    totalPage: number;
   }
 }

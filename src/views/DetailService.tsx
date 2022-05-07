@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Navbar from "../components/layouts/Navbar";
@@ -24,13 +24,17 @@ import axiosClient from "../apis/axios";
 import { PInScore } from "../apis/package/in/PInScore";
 import { logout } from "../redux/slices/auth";
 import cookies from "js-cookie";
+import { Service } from "../apis/common/Service";
 
 const DetailService: React.FC = () => {
   const { serviceId } = useParams();
   const [score, setScore] = useState<number[]>([]);
   const dispatch = useDispatch();
+  const ref = useRef();
+  // const isVisible = useOnScreen(ref);
 
   const userState = useSelector((state: RootState) => state.user);
+
   useEffect(() => {
     if (cookies.get("token") == undefined) {
       dispatch(logout());
@@ -46,7 +50,7 @@ const DetailService: React.FC = () => {
     };
     dispatch(selectService(serviceId as string));
     fetchData();
-  }, [dispatch, userState.isAuthenticated]);
+  }, [dispatch, userState.isAuthenticated, userState.authLoading, serviceId]);
 
   const serviceState = useSelector((state: RootState) => state.service);
 
@@ -60,13 +64,13 @@ const DetailService: React.FC = () => {
       .finally(() => dispatch(hideWaiting()));
   }, [serviceState.singleService, serviceState.comments]);
   return (
-    <div className="min-h-screen h-fit pb-20">
+    <div className="min-h-screen h-fit pb-20 bg-[#f7f8fa] z-100">
       <Navbar />
       {serviceState.serviceLoading ? (
         ""
       ) : (
-        <>
-          <div className="pt-24">
+        <div className="px-[12%]">
+          <div className="pt-28">
             {serviceState.singleService && (
               <HeaderDeatail
                 data={serviceState.singleService}
@@ -99,16 +103,24 @@ const DetailService: React.FC = () => {
           <div>
             <div className="grid grid-cols-3">
               <div className="col-span-2 mt-5">
-                <div className="ml-10">
-                  {serviceState.commentLoading
+                <div className="">
+                  {serviceState.commentLoading && userState.authLoading
                     ? ""
                     : serviceState.comments.map(
                         (comment: any, index: number) => (
                           <div className="mb-20" key={index}>
                             <Post
-                              avatar={comment.user.username}
+                              avatar={
+                                comment.user?.avatar.url
+                                  ? comment.user?.avatar.url
+                                  : null
+                              }
                               content={comment.content}
-                              fullName={comment.user.username}
+                              fullName={
+                                comment.user.fullName
+                                  ? comment.user.fullName
+                                  : comment.user.username
+                              }
                               like={comment.userLiked}
                               rating={comment.rating}
                               serviceName={serviceState.singleService?.name}
@@ -123,18 +135,43 @@ const DetailService: React.FC = () => {
                       )}
                 </div>
               </div>
-              <div>
-                <Statistical score={score} comments={serviceState.comments} />
-                <div className="mx-24 mt-4">
-                  <CommentModal />
+              {/* fixed z-10 top-40 left-[65.6%] */}
+              <div className="">
+                <div className="flex justify-end">
+                  <Statistical score={score} comments={serviceState.comments} />
+                </div>
+                <div className="flex justify-end mt-4">
+                  <CommentModal
+                    score={score}
+                    service={serviceState.singleService as Service}
+                    comments={serviceState.comments}
+                  />
                 </div>
               </div>
             </div>
           </div>
-        </>
+        </div>
       )}
     </div>
   );
 };
 
 export default DetailService;
+
+// export function useOnScreen(ref: any) {
+//   const [isIntersecting, setIntersecting] = useState(false);
+
+//   const observer = new IntersectionObserver(([entry]) =>
+//     setIntersecting(entry.isIntersecting)
+//   );
+
+//   useEffect(() => {
+//     observer.observe(ref.current);
+//     // Remove the observer as soon as the component is unmounted
+//     return () => {
+//       observer.disconnect();
+//     };
+//   }, []);
+
+//   return isIntersecting;
+// }

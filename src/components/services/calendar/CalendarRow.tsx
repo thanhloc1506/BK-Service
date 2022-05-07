@@ -39,7 +39,10 @@ const CalendarRow: React.FC<CalendarRowProps> = ({
       content.push(<td key={i + 30}></td>);
     }
     content.push(
-      <td key={100} className="relative py-3 px-2 md:px-3 text-center">
+      <td
+        key={100}
+        className="relative 2xl:py-3 xl:py-2 lg:py-1.5 2xl:px-2 xl:px-1 lg:px-0.5 text-center"
+      >
         <EventCalendar
           isCurrentDay={
             1 === activeDay &&
@@ -55,7 +58,7 @@ const CalendarRow: React.FC<CalendarRowProps> = ({
             ).length > 0
           }
           value={1}
-          isFirst={firstDay + 1 === 1}
+          isFirst={firstDay + 1 === 1 || firstDay === 1}
           isLast={firstDay + 1 === 7}
           schedule={schedules.filter(
             (schedule) =>
@@ -72,7 +75,7 @@ const CalendarRow: React.FC<CalendarRowProps> = ({
       content.push(
         <td
           key={i}
-          className="relative py-3 px-2 md:px-3  hover:text-blue-500 text-center text-gray-800"
+          className="relative 2xl:py-3 xl:py-2 2xl:px-2 xl:px-1 hover:text-blue-500 text-center text-gray-800"
         >
           <EventCalendar
             isCurrentDay={
@@ -89,7 +92,7 @@ const CalendarRow: React.FC<CalendarRowProps> = ({
               ).length > 0
             }
             value={i + 1}
-            isFirst={i === 1}
+            isFirst={i === 1 || i - 1 === 1}
             isLast={i === len}
             schedule={schedules.filter(
               (schedule) =>
@@ -109,7 +112,7 @@ const CalendarRow: React.FC<CalendarRowProps> = ({
       content.push(
         <td
           key={i}
-          className="relative py-3 px-2 md:px-3  hover:text-blue-500 text-center text-gray-800"
+          className="relative 2xl:py-3 xl:py-2 2xl:px-2 xl:px-1 hover:text-blue-500 text-center text-gray-800"
         >
           <EventCalendar
             isCurrentDay={
@@ -126,7 +129,7 @@ const CalendarRow: React.FC<CalendarRowProps> = ({
               ).length > 0
             }
             value={i + (7 * row - firstDay)}
-            isFirst={i === 1}
+            isFirst={i === 1 || i - 1 === 1}
             isLast={i === 7}
             schedule={schedules.filter(
               (schedule) =>

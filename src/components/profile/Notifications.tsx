@@ -14,16 +14,28 @@ const Notifications = () => {
   };
 
   return (
-      <div>
-          <div className="h-12 bg-white py-8 pb-20 pl-20 border-b-2 border-b-gray-200 shadow-sm">
-              <p className="text-blue-400 font-medium text-3xl">Thông báo của tôi</p>
-          </div>
-          {Array.from(Array(10).keys()).map((e, index)=>{
-              return <div className="px-[10vw] mt-8" key={index}>
-                  <NotiCard date={noti.date} content={noti.content} index={e} key={e}/>
-              </div>
-          })}
+    <div>
+      <div className="h-12 bg-white pt-12 pb-14 pl-20 border-b-2 border-b-gray-200 shadow-sm">
+        <p className="text-blue-solid font-medium 2xl:text-xl xl:text-lg">
+          Thông báo của tôi
+        </p>
       </div>
+      {Array.from(Array(10).keys()).map((e, index) => {
+        return (
+          <div
+            className="2xl:px-64 xl:px-48 lg:px-36 2xl:mt-10 xl:mt-8 lg:mt-6"
+            key={index}
+          >
+            <NotiCard
+              date={noti.date}
+              content={noti.content}
+              index={e}
+              key={e}
+            />
+          </div>
+        );
+      })}
+    </div>
   );
 };
 

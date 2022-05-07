@@ -41,16 +41,16 @@ const Calendar: React.FC<CalendarProps> = ({
 
   return (
     <div
-      className={`md:shadow-lg md:rounded p-4 bg-white dark:bg-gray-700 w-96 mx-4 md:mx-auto`}
+      className={`md:shadow-lg md:rounded pt-3 pb-2 px-1 bg-white dark:bg-gray-700 w-[20vw] mx-4 md:mx-auto`}
     >
-      <div className="w-full rounded">
+      <div className="w-[20vw] rounded px-3">
         <div className="flex items-center justify-between mb-4">
-          <div className="text-left font-bold text-xl text-black dark:text-white">
+          <div className="text-left font-bold text-sm text-black dark:text-white">
             {`${activeMonthString} ${activeYear}`}
           </div>
           <div className="flex space-x-4">
             <button
-              className="p-2 rounded bg-blue-400 text-white"
+              className="px-1 py-0.5 rounded bg-blue-400 text-white"
               onClick={() => {
                 if (prevMonth.current === 0) {
                   setActiveYear(activeYear - 1);
@@ -73,7 +73,7 @@ const Calendar: React.FC<CalendarProps> = ({
               </svg>
             </button>
             <button
-              className="p-2 rounded bg-blue-400 text-white"
+              className="px-1 py-0.5 rounded bg-blue-400 text-white"
               onClick={() => {
                 if (prevMonth.current === 11) {
                   setActiveYear(activeYear + 1);
@@ -101,13 +101,27 @@ const Calendar: React.FC<CalendarProps> = ({
           <table className="w-full dark:text-white">
             <thead>
               <tr>
-                <th className="py-3 px-2 md:px-3 ">S</th>
-                <th className="py-3 px-2 md:px-3 ">M</th>
-                <th className="py-3 px-2 md:px-3 ">T</th>
-                <th className="py-3 px-2 md:px-3 ">W</th>
-                <th className="py-3 px-2 md:px-3 ">T</th>
-                <th className="py-3 px-2 md:px-3 ">F</th>
-                <th className="py-3 px-2 md:px-3 ">S</th>
+                <th className="py-2 2xl:px-1 xl:px-1 lg:px-0.5 2xl:text-xl xl:text-lg lg:text-sm">
+                  S
+                </th>
+                <th className="py-2 2xl:px-1 xl:px-1 lg:px-0.5 2xl:text-xl xl:text-lg lg:text-sm">
+                  M
+                </th>
+                <th className="py-2 2xl:px-1 xl:px-1 lg:px-0.5 2xl:text-xl xl:text-lg lg:text-sm">
+                  T
+                </th>
+                <th className="py-2 2xl:px-1 xl:px-1 lg:px-0.5 2xl:text-xl xl:text-lg lg:text-sm">
+                  W
+                </th>
+                <th className="py-2 2xl:px-1 xl:px-1 lg:px-0.5 2xl:text-xl xl:text-lg lg:text-sm">
+                  T
+                </th>
+                <th className="py-2 2xl:px-1 xl:px-1 lg:px-0.5 2xl:text-xl xl:text-lg lg:text-sm">
+                  F
+                </th>
+                <th className="py-2 2xl:px-1 xl:px-1 lg:px-0.5 2xl:text-xl xl:text-lg lg:text-sm">
+                  S
+                </th>
               </tr>
             </thead>
             <tbody>

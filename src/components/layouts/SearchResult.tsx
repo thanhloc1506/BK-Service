@@ -22,7 +22,7 @@ export const SearchResult = ({show}: any) => {
                     </div>
                 </Transition>
                 <Transition
-                    show={state.isShowResult && state.quickSearchStatus !== "loading"}
+                    show={state.isShowResult && state.quickSearchStatus !== "loading" && state.dataQuickSeacrh!==undefined}
                     as={Fragment}
                     enter="transition ease-out duration-500 delay-200"
                     enterFrom="transform opacity-0 scale-95"
@@ -36,7 +36,8 @@ export const SearchResult = ({show}: any) => {
                     <div className={'w-full transition-all duration-300'}>
                         <Menu.Items
                             className="right-0 py-2 w-full mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                            {state.dataQuickSeacrh ? state.dataQuickSeacrh.services.map((s, index) => {
+                            {state.dataQuickSeacrh&&state.dataQuickSeacrh.services&&state.dataQuickSeacrh.services.length>0
+                                ? state.dataQuickSeacrh.services.map((s, index) => {
                                 return (
                                     <div key={index}>
                                         <Menu.Item>

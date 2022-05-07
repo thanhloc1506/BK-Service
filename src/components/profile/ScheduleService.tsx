@@ -16,17 +16,21 @@ const ScheduleService = () => {
   };
   return (
     <div>
-      <div className="h-12 bg-white py-8 pb-20 pl-20 border-b-2 border-b-gray-200 shadow-sm">
-        <p className="text-blue-400 font-medium text-3xl">Danh sách đặt lịch</p>
+      <div className="h-12 bg-white pt-12 pb-14 pl-20 border-b-2 border-b-gray-200 shadow-sm">
+        <p className="text-blue-solid font-medium 2xl:text-xl xl:text-lg">
+          Danh sách đặt lịch
+        </p>
       </div>
-      <div className="px-64 mt-14">
-        <ScheduleCard isSchedule schedule={schedule} />
-      </div>
-      <div className="px-64 mt-14">
-        <ScheduleCard isSchedule schedule={schedule} />
-      </div>
-      <div className="px-64 mt-14">
-        <ScheduleCard isSchedule schedule={schedule} />
+      <div className="2xl:mb-14 xl:mb-10 lg:mb-8">
+        {/* <div className="2xl:px-64 xl:px-48 2xl:mt-10 xl:mt-8 lg:mt-6">
+          <ScheduleCard isSchedule schedule={schedule} />
+        </div> */}
+        {/* <div className="2xl:px-64 xl:px-48 2xl:mt-10 xl:mt-8 lg:mt-6">
+          <ScheduleCard isSchedule schedule={schedule} />
+        </div>
+        <div className="2xl:px-64 xl:px-48 2xl:mt-10 xl:mt-8 lg:mt-6">
+          <ScheduleCard isSchedule schedule={schedule} />
+        </div> */}
       </div>
     </div>
   );
