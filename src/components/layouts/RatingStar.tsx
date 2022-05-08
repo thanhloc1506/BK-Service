@@ -2,7 +2,7 @@ import React from "react";
 import solidStar from "../../assets/service/star-solid.svg";
 
 interface IRating {
-  rating: number;
+  rating: number | string;
 }
 
 const RatingStar: React.FC<IRating> = ({ rating }) => {

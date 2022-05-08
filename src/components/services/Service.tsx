@@ -1,8 +1,13 @@
-import React, { memo } from "react";
+import React, { useEffect, useState, memo } from "react";
 import rating from "../../assets/service/rating.png";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Service } from "../../apis/common/Service";
+import RatingStar from "../layouts/RatingStar";
+import { hideWaiting, showWaiting } from "../../redux/slices/loading";
+import axiosClient from "../../apis/axios";
+import { PInScore } from "../../apis/package/in/PInScore";
+import { useDispatch } from "react-redux";
 
 interface IService {
   data: Service;
@@ -12,6 +17,22 @@ interface IService {
 
 const SingleCard: React.FC<IService> = memo(
   ({ data, onBtnClick, btnText }: IService) => {
+    const [score, setScore] = useState<number[]>([]);
+    const dispatch = useDispatch();
+    const [scoreLoading, setScoreLoading] = useState(true);
+    useEffect(() => {
+      //fethc score
+      if (!data?._id) return;
+      dispatch(showWaiting());
+      axiosClient
+        .get<PInScore>(`service/${data?._id}/scores`)
+        .then((response) => setScore(response.data.score))
+        .finally(() => {
+          dispatch(hideWaiting());
+          setScoreLoading(false);
+        });
+    }, []);
+
     return (
       <>
         <div className="2xl:w-72 2xl:h-[24rem] xl:w-56 xl:h-[20rem] lg:w-48 lg:h-[16rem] bg-white border-2 border-blue-200 rounded hover:drop-shadow-2xl shadow-lg shadow-cyan-500/50 transition-all duration-500 cursor-pointer">
@@ -61,12 +82,19 @@ const SingleCard: React.FC<IService> = memo(
               </p>
             </div>
           </div>
-          <div className="2xl:px-4 xl:px-2.5 lg:px-1 2xl:h-[5%] xl:h-[6%] lg:h-[7%] xl:mt-0.5 lg:mt-2">
-            <img
+          <div className="2xl:px-3 xl:px-2 lg:px-1 2xl:h-[5%] xl:h-[6%] lg:h-[7%] 2xl:mb-1 xl:mb-1.5 lg:mb-2">
+            {/* <img
               src={rating}
               alt="rating"
               className="xl:w-[40%] xl:h-[65%] lg:h-[60%%] xl:mt-[2%] lg:mt[3%]"
-            />
+            /> */}
+            {scoreLoading ? (
+              ""
+            ) : (
+              <RatingStar
+                rating={score && score.length >= 5 ? score[5].toFixed(1) : 7}
+              />
+            )}
           </div>
           <div className="px-4 py-2 2xl:h-[25%] xl:h-[25%] lg:h-[28%] overflow-hidden border-y-2 border-gray-200">
             <p
