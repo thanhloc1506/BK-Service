@@ -22,7 +22,7 @@ export const AllSchedules = () => {
       ) : (
         <div className={"flex flex-col gap-2 px-32 mt-10"}>
           {scheduleState.schedules.map((s, index) => (
-            <ScheduleItem data={s} key={index} />
+            <ScheduleItem data={s} key={s._id} />
           ))}
         </div>
       )}
