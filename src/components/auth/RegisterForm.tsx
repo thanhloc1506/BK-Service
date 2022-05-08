@@ -10,6 +10,7 @@ import {
 } from "../../redux/slices/auth";
 import { RootState } from "../../redux/store";
 import { RegisterForm as IRegisterForm } from "../../redux/types";
+import * as Yup from "yup";
 
 const RegisterForm: React.FC = () => {
   const authState = useSelector((state: RootState) => state.user);
@@ -30,6 +31,11 @@ const RegisterForm: React.FC = () => {
     dispatch(toggleModalRegister(authState.showRegisterForm));
   };
   const cancelButtonRef = useRef(null);
+
+  const validationSchema = Yup.object().shape({
+    password: Yup.string().min(8, "*Password phải có từ 8 ký tự trở lên"),
+  });
+
   return (
     <Transition.Root show={authState.showRegisterForm} as={Fragment}>
       <Dialog
@@ -95,6 +101,7 @@ const RegisterForm: React.FC = () => {
                             </p>
                           </div>
                           <Formik
+                            validationSchema={validationSchema}
                             initialValues={{
                               username: "",
                               password: "",
@@ -105,76 +112,84 @@ const RegisterForm: React.FC = () => {
                               onClickRegister(values);
                             }}
                           >
-                            <Form>
-                              <div className="flex justify-center 2xl:mt-10 xl:mt-6 lg:mt-4">
-                                <Field
-                                  className="2xl:text-lg xl:text-lg lg:text-sm border-blue-300 bg-transparent border-2 2xl:h-11 2xl:w-72 xl:w-64 xl:h-10 lg:h-8 lg:w-56 xl:mr-6 lg:mr-16 p-2 outline-none rounded-md overflow-hidden"
-                                  type="text"
-                                  id="username"
-                                  name="username"
-                                  placeholder="Tên đăng nhập"
-                                  required
-                                />
-                                <ErrorMessage
-                                  component="a"
-                                  className=""
-                                  name="username"
-                                />
-                              </div>
-                              <div className="flex justify-center 2xl:mt-6 xl:mt-4 lg:mt-3">
-                                <Field
-                                  className="2xl:text-lg xl:text-lg lg:text-sm border-blue-300 bg-transparent border-2 2xl:h-11 2xl:w-72 xl:w-64 xl:h-10 lg:h-8 lg:w-56 xl:mr-6 lg:mr-16 p-2 outline-none rounded-md overflow-hidden"
-                                  type="password"
-                                  name="password"
-                                  id="password"
-                                  placeholder="Mật khẩu"
-                                  required
-                                />
-                                <ErrorMessage
-                                  component="a"
-                                  className=""
-                                  name="password"
-                                />
-                              </div>
-                              <div className="flex justify-center 2xl:mt-6 xl:mt-4 lg:mt-3">
-                                <Field
-                                  className="2xl:text-lg xl:text-lg lg:text-sm border-blue-300 bg-transparent border-2 2xl:h-11 2xl:w-72 xl:w-64 xl:h-10 lg:h-8 lg:w-56 xl:mr-6 lg:mr-16 p-2 outline-none rounded-md overflow-hidden"
-                                  type="password"
-                                  name="confirmPassword"
-                                  id="confirmPassword"
-                                  placeholder="Nhập lại mật khẩu"
-                                  required
-                                />
-                                <ErrorMessage
-                                  component="a"
-                                  className=""
-                                  name="confirmPassword"
-                                />
-                              </div>
-                              <div className="flex justify-center 2xl:mt-6 xl:mt-4 lg:mt-3">
-                                <Field
-                                  className="2xl:text-lg xl:text-lg lg:text-sm border-blue-300 bg-transparent border-2 2xl:h-11 2xl:w-72 xl:w-64 xl:h-10 lg:h-8 lg:w-56 xl:mr-6 lg:mr-16 p-2 outline-none rounded-md overflow-hidden"
-                                  type="email"
-                                  name="email"
-                                  id="email"
-                                  placeholder="Email"
-                                  required
-                                />
-                                <ErrorMessage
-                                  component="a"
-                                  className=""
-                                  name="email"
-                                />
-                              </div>
-                              <div className="flex justify-center 2xl:mt-6 xl:mt-4 lg:mt-3">
-                                <button
-                                  type="submit"
-                                  className="bg-blue-500 2xl:w-80 xl:w-72 lg:w-64 2xl:ml-2 xl:ml-2 lg:ml-[-30px] 2xl:p-2 xl:p-1.5 lg:p-1 text-white rounded-md overflow-hidden"
-                                >
-                                  Đăng ký
-                                </button>
-                              </div>
-                            </Form>
+                            {({ values, errors, touched }) => (
+                              <Form>
+                                <div className="flex justify-center 2xl:mt-10 xl:mt-6 lg:mt-4">
+                                  <Field
+                                    className="2xl:text-lg xl:text-lg lg:text-sm border-blue-300 bg-transparent border-2 2xl:h-11 2xl:w-72 xl:w-64 xl:h-10 lg:h-8 lg:w-56 xl:mr-6 lg:mr-16 p-2 outline-none rounded-md overflow-hidden"
+                                    type="text"
+                                    id="username"
+                                    name="username"
+                                    placeholder="Tên đăng nhập"
+                                    required
+                                  />
+                                  <ErrorMessage
+                                    component="a"
+                                    className=""
+                                    name="username"
+                                  />
+                                </div>
+                                <div className="flex justify-center 2xl:mt-6 xl:mt-4 lg:mt-3">
+                                  <Field
+                                    className="2xl:text-lg xl:text-lg lg:text-sm border-blue-300 bg-transparent border-2 2xl:h-11 2xl:w-72 xl:w-64 xl:h-10 lg:h-8 lg:w-56 xl:mr-6 lg:mr-16 p-2 outline-none rounded-md overflow-hidden"
+                                    type="password"
+                                    name="password"
+                                    id="password"
+                                    placeholder="Mật khẩu"
+                                    required
+                                  />
+
+                                  {/* <ErrorMessage
+                                    component="a"
+                                    className=""
+                                    name="password"
+                                  /> */}
+                                </div>
+                                {touched["password"] && errors["password"] && (
+                                  <p className="2xl:text-sm xl:text-xs lg:text-[12px] text-red-500 text-center mr-24">
+                                    {errors["password"]}
+                                  </p>
+                                )}
+                                <div className="flex justify-center 2xl:mt-6 xl:mt-4 lg:mt-3">
+                                  <Field
+                                    className="2xl:text-lg xl:text-lg lg:text-sm border-blue-300 bg-transparent border-2 2xl:h-11 2xl:w-72 xl:w-64 xl:h-10 lg:h-8 lg:w-56 xl:mr-6 lg:mr-16 p-2 outline-none rounded-md overflow-hidden"
+                                    type="password"
+                                    name="confirmPassword"
+                                    id="confirmPassword"
+                                    placeholder="Nhập lại mật khẩu"
+                                    required
+                                  />
+                                  <ErrorMessage
+                                    component="a"
+                                    className=""
+                                    name="confirmPassword"
+                                  />
+                                </div>
+                                <div className="flex justify-center 2xl:mt-6 xl:mt-4 lg:mt-3">
+                                  <Field
+                                    className="2xl:text-lg xl:text-lg lg:text-sm border-blue-300 bg-transparent border-2 2xl:h-11 2xl:w-72 xl:w-64 xl:h-10 lg:h-8 lg:w-56 xl:mr-6 lg:mr-16 p-2 outline-none rounded-md overflow-hidden"
+                                    type="email"
+                                    name="email"
+                                    id="email"
+                                    placeholder="Email"
+                                    required
+                                  />
+                                  <ErrorMessage
+                                    component="a"
+                                    className=""
+                                    name="email"
+                                  />
+                                </div>
+                                <div className="flex justify-center 2xl:mt-6 xl:mt-4 lg:mt-3">
+                                  <button
+                                    type="submit"
+                                    className="bg-blue-500 2xl:w-80 xl:w-72 lg:w-64 2xl:ml-2 xl:ml-2 lg:ml-[-30px] 2xl:p-2 xl:p-1.5 lg:p-1 text-white rounded-md overflow-hidden"
+                                  >
+                                    Đăng ký
+                                  </button>
+                                </div>
+                              </Form>
+                            )}
                           </Formik>
 
                           <div className="flex justify-center 2xl:mt-6 xl:mt-4 lg:mt-3 2xl:ml-20 xl:ml-12 lg:ml-10">
