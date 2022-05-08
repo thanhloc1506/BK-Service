@@ -77,7 +77,7 @@ const SingleCard: React.FC<IService> = memo(
               {data.name}
             </div>
             <div className="flex justify-end 2xl:p-1 xl:p-1 lg-p-0.5 2xl:mr-2 xl:mr-2 lg:mr-1 col-span-2">
-              <p className="2xl:mt-1 xl:mt-0.5 lg:mt-0.5 2xl:px-2 xl:px-0.5 lg-px-0 lg:text-[12px] bg-blue-200 rounded-2xl overflow-hidden text-blue-600 2xl:text-xs xl:text-xs w-fit h-fit">
+              <p className="2xl:mt-1 xl:mt-0.5 lg:mt-0.5 2xl:px-2 xl:px-0.5 lg-px-0 bg-blue-200 rounded-2xl overflow-hidden text-blue-600 2xl:text-[12px] xl:text-[10px] lg:text-[8px] w-fit h-fit">
                 {data.category?.category}
               </p>
             </div>
