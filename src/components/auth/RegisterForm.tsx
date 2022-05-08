@@ -33,7 +33,7 @@ const RegisterForm: React.FC = () => {
   const cancelButtonRef = useRef(null);
 
   const validationSchema = Yup.object().shape({
-    password: Yup.string().min(8, "*Password phải có từ 8 ký tự trở lên"),
+    password: Yup.string().min(8, "*Mật khẩu phải có từ 8 ký tự trở lên"),
   });
 
   return (
