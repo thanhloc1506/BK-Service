@@ -1,7 +1,10 @@
 import {io, Socket} from "socket.io-client";
 import cookies from "js-cookie";
 
-const uri = process.env.SOCKET_URI || "localhost:8080";
+const uri: string = (process.env.NODE_ENV === "development"
+        ? process.env.REACT_APP_SOCKET_URI_DEV
+        : process.env.REACT_APP_SOCKET_URI)
+    || "localhost:8080";
 
 export class SocketClient {
     private socket: Socket | undefined;
