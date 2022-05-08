@@ -412,9 +412,10 @@ const serviceSlice = createSlice({
     [addSchedule.fulfilled.toString()]: (state, action) => {
       state.schedules = [
         action.payload,
-        ...state.schedules.filter(
-          (schedule: any) => schedule.service !== action.payload.service
-        ),
+        ...state.schedules,
+        // ...state.schedules.filter(
+        //   (schedule: any) => schedule.service !== action.payload.service
+        // ),
       ];
       state.scheduleLoading = false;
     },
