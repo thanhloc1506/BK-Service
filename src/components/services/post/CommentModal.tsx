@@ -18,6 +18,7 @@ interface ICommentModal {
   service: Service;
   comments: any;
 }
+const tieuchi = ["Tin cậy", "Đáp ứng", "Đảm bảo", "Vật chất", "Thiện cảm"];
 
 const CommentModal: React.FC<ICommentModal> = ({
   score,
@@ -328,7 +329,7 @@ const CommentModal: React.FC<ICommentModal> = ({
                                   <div className="grid grid-cols-4">
                                     <div>
                                       <p className="xl:text-xs lg:text-[10px] mt-1 ml-2">
-                                        Tieu chi 1
+                                        {tieuchi[0]}
                                       </p>
                                     </div>
                                     <div className="col-span-2 flex justify-center ml-2 mt-1">
@@ -349,7 +350,7 @@ const CommentModal: React.FC<ICommentModal> = ({
                                   <div className="grid grid-cols-4 mt-1">
                                     <div>
                                       <p className="xl:text-xs lg:text-[10px] mt-1 ml-2">
-                                        Tieu chi 2
+                                        {tieuchi[1]}
                                       </p>
                                     </div>
                                     <div className="col-span-2 flex justify-center ml-2 mt-1">
@@ -370,7 +371,7 @@ const CommentModal: React.FC<ICommentModal> = ({
                                   <div className="grid grid-cols-4 mt-1">
                                     <div>
                                       <p className="xl:text-xs lg:text-[10px] mt-1 ml-2">
-                                        Tieu chi 3
+                                        {tieuchi[2]}
                                       </p>
                                     </div>
                                     <div className="col-span-2 flex justify-center ml-2 mt-1">
@@ -391,7 +392,7 @@ const CommentModal: React.FC<ICommentModal> = ({
                                   <div className="grid grid-cols-4 mt-1">
                                     <div>
                                       <p className="xl:text-xs lg:text-[10px] mt-1 ml-2">
-                                        Tieu chi 4
+                                        {tieuchi[3]}
                                       </p>
                                     </div>
                                     <div className="col-span-2 flex justify-center ml-2 mt-1">
@@ -413,7 +414,7 @@ const CommentModal: React.FC<ICommentModal> = ({
                                 <div className="grid grid-cols-4 mt-1">
                                   <div>
                                     <p className="xl:text-xs lg:text-[10px] mt-1 ml-2">
-                                      Tieu chi 5
+                                      {tieuchi[4]}
                                     </p>
                                   </div>
                                   <div className="col-span-2 flex justify-center ml-2 mt-1">
@@ -490,35 +491,35 @@ const CommentModal: React.FC<ICommentModal> = ({
                                         </div>
                                         <div>
                                           <RCSlider
-                                            title="Tieu chi 1"
+                                            title={tieuchi[0]}
                                             score={score_1}
                                             setScore={setScore_1}
                                           />
                                         </div>
                                         <div>
                                           <RCSlider
-                                            title="Tieu chi 2"
+                                            title={tieuchi[1]}
                                             score={score_2}
                                             setScore={setScore_2}
                                           />
                                         </div>
                                         <div>
                                           <RCSlider
-                                            title="Tieu chi 3"
+                                            title={tieuchi[2]}
                                             score={score_3}
                                             setScore={setScore_3}
                                           />
                                         </div>
                                         <div>
                                           <RCSlider
-                                            title="Tieu chi 4"
+                                            title={tieuchi[3]}
                                             score={score_4}
                                             setScore={setScore_4}
                                           />
                                         </div>
                                         <div>
                                           <RCSlider
-                                            title="Tieu chi 5"
+                                            title={tieuchi[4]}
                                             score={score_5}
                                             setScore={setScore_5}
                                           />
