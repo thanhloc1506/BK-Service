@@ -295,7 +295,7 @@ const CommentModal: React.FC<ICommentModal> = ({
                                           ).length
                                         }
                                       </p>
-                                      <p className="xl:mt-1 lg:mt-1.5 xl:text-xs lg:text-[8.5px] xl:font-medium lg:font-semibold flex justify-center">
+                                      <p className="xl:mt-1 lg:mt-1.5 xl:text-[11px] lg:text-[8.5px] xl:font-light lg:font-semibold flex justify-center">
                                         Bình thường
                                       </p>
                                     </div>
