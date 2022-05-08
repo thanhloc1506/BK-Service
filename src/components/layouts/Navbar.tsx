@@ -93,7 +93,7 @@ const Navbar: React.FC = () => {
                 >
                   <div className="flex justify-end items-center">
                     <svg
-                      className="2xl:h-8 2xl:w-8 xl:w-5 xl:h-5 lg:w-4 lg:h-4 text-white"
+                      className="2xl:h-8 2xl:w-8 xl:w-5 xl:h-5 lg:w-5 lg:h-5 2xl:mt-0 xl:mt-0.5 lg:mt-1 text-white"
                       width="24"
                       height="24"
                       viewBox="0 0 24 24"
@@ -112,7 +112,7 @@ const Navbar: React.FC = () => {
                       <rect x="8" y="15" width="2" height="2" />
                     </svg>
                   </div>
-                  <p className="text-white mt-1 2xl:text-sm xl:text-xs lg:text-[10px] font-medium flex justify-center">
+                  <p className="text-white mt-1 2xl:text-sm xl:text-xs lg:text-[12px] font-medium flex justify-center">
                     Schedule
                   </p>
                 </span>
