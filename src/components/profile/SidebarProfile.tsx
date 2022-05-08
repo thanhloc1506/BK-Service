@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {PageEnterprise, selectPageEnterprise} from "../../redux/slices/enterprise";
-import {MdBorderAll} from "react-icons/md";
-import {RootState} from "../../redux/store";
-import {DEFAULT_AVATAR} from "../../constants/common";
-
+import { useDispatch, useSelector } from "react-redux";
+import {
+  PageEnterprise,
+  selectPageEnterprise,
+} from "../../redux/slices/enterprise";
+import { MdBorderAll } from "react-icons/md";
+import { RootState } from "../../redux/store";
+import { DEFAULT_AVATAR } from "../../constants/common";
 
 interface ISelectPage {
   page: string;
@@ -12,35 +14,34 @@ interface ISelectPage {
 
 const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
   const dispatch = useDispatch();
-  const state = useSelector((state: RootState)=>state.user.enterprise)
+  const state = useSelector((state: RootState) => state.user.enterprise);
   const onSelectPage = (value: PageEnterprise) => {
     dispatch(selectPageEnterprise(value));
   };
   return (
-    <div className="bg-white h-full w-full shadow-sm border-right-2 border-gray-100">
-      <div className="h-32 w-full border-b-2 border-b-gray-100">
-        <div className="flex justify-start ml-10 mt-8">
-          <div className="w-14 h-14 rounded-full bg-cyan-500">
-            <img src={state?.avatar? state.avatar.url : DEFAULT_AVATAR} className={"w-full h-full p-1 rounded-full"}/>
-          </div>
-          <div>
-            <p className="text-sm ml-2.5 mt-1">Tài khoản của</p>
-            <p className="text-lg font-medium mt-1.5 ml-2.5">{state?.fullName}</p>
-          </div>
+    <div className="bg-white  h-[90vh] w-full shadow-sm border-right-2 border-gray-100">
+      <div className="2xl:h-[4.5rem] xl:h-[3.9rem] w-full border-b-2 border-b-gray-100">
+        <div className="flex justify-start ml-10 2xl:mt-6 xl:mt-8 items-center 2xl:mb-0 xl:mb-3">
+          <p className="2xl:mt-0 xl:mt-0 2xl:text-xl xl:text-lg text-blue-solid font-semibold">
+            Danh mục
+          </p>
         </div>
       </div>
       <div className="cursor-pointer" onClick={() => onSelectPage("manage")}>
         <div
-          className={`h-16 w-full flex justify-start pt-3 relative transition-all duration-300 ${
-            page === "manage"
-              ? "bg-gray-100 pl-10"
-              : "opacity-40 pl-10"
+          className={`2xl:h-14 xl:h-12 w-full flex justify-start items-center relative transition-all duration-300 ${
+            page === "manage" ? "bg-gray-100 pl-10" : "opacity-40 pl-10"
           }`}
         >
-          <div className={'w-2 top-0 left-0 h-full absolute h-full bg-blue-500'} hidden={page !== "manage"}/>
-          <div className="">
+          <div
+            className={
+              "2xl:w-2 xl:w-1 lg:w-0.5 top-0 left-0 h-full absolute bg-blue-500"
+            }
+            hidden={page !== "manage"}
+          />
+          <div className="2xl:ml-0 xl:ml-0.5 2xl:mt-0 xl:mt-0">
             <svg
-              className="h-8 w-8 text-blue-solid"
+              className="2xl:h-8 2xl:w-8 xl:h-7 xl:w-7 text-blue-solid"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -53,42 +54,53 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
               />
             </svg>
           </div>
-          <div className="mt-1 ml-5">
+          <div className="ml-5">
             <p className="text-blue-solid text-lg">Quản lí</p>
           </div>
         </div>
       </div>
       <div className="cursor-pointer" onClick={() => onSelectPage("all")}>
         <div
-          className={`h-16 w-full flex justify-start pt-3 relative transition-all duration-300 ${
-            page === "all"
-                ? "bg-gray-100 pl-10"
-                : "opacity-40 pl-10"
+          className={`2xl:h-14 xl:h-12 w-full flex justify-start items-center relative transition-all duration-300 ${
+            page === "all" ? "bg-gray-100 pl-10" : "opacity-40 pl-10"
           }`}
         >
-          <div className={'w-2 top-0 left-0 h-full absolute h-full bg-blue-500'} hidden={page !== "all"}/>
+          <div
+            className={
+              "2xl:w-2 xl:w-1 lg:w-0.5 top-0 left-0 h-full absolute bg-blue-500"
+            }
+            hidden={page !== "all"}
+          />
 
           <div className="flex justify-center">
-            <MdBorderAll size={32} className={'text-blue-solid'}/>
+            <MdBorderAll
+              className={"2xl:h-8 2xl:w-8 xl:h-7 xl:w-7 text-blue-solid"}
+            />
           </div>
           <div className="mt-1 ml-5">
             <p className="text-blue-solid text-lg">Tất cả dịch vụ</p>
           </div>
         </div>
       </div>
-      <div className="cursor-pointer" onClick={() => onSelectPage("all-schedule")}>
+      <div
+        className="cursor-pointer"
+        onClick={() => onSelectPage("all-schedule")}
+      >
         <div
-          className={`h-16 w-full flex justify-start pt-3 relative transition-all duration-300 ${
-            page === "all-schedule"
-                ? "bg-gray-100 pl-10"
-                : "opacity-40 pl-10"
+          className={`2xl:h-14 xl:h-12 w-full flex justify-start items-center relative transition-all duration-300 ${
+            page === "all-schedule" ? "bg-gray-100 pl-10" : "opacity-40 pl-10"
           }`}
         >
-          <div className={'w-2 top-0 left-0 h-full absolute h-full bg-blue-500'} hidden={page !== "all-schedule"}/>
+          <div
+            className={
+              "2xl:w-2 xl:w-1 lg:w-0.5 top-0 left-0 h-full absolute bg-blue-500"
+            }
+            hidden={page !== "all-schedule"}
+          />
 
-          <div className="">
+          <div className="2xl:ml-0 xl:ml-0.5 2xl:mt-0 xl:mt-0">
             <svg
-              className="h-8 w-8 text-blue-solid"
+              className="2xl:h-8 2xl:w-8 xl:h-7 xl:w-7 text-blue-solid"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -110,18 +122,21 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
       </div>
       <div className="cursor-pointer" onClick={() => onSelectPage("add")}>
         <div
-          className={`h-16 w-full flex justify-start pt-3 relative transition-all duration-300 ${
-            page === "add"
-                ? "bg-gray-100 pl-10"
-                : "opacity-40 pl-10"
+          className={`2xl:h-14 xl:h-12 w-full flex justify-start items-center relative transition-all duration-300 ${
+            page === "add" ? "bg-gray-100 pl-10" : "opacity-40 pl-10"
           }`}
         >
-          <div className={'w-2 top-0 left-0 h-full absolute h-full bg-blue-500'} hidden={page !== "add"}/>
+          <div
+            className={
+              "2xl:w-2 xl:w-1 lg:w-0.5 top-0 left-0 h-full absolute h-full bg-blue-500"
+            }
+            hidden={page !== "add"}
+          />
 
-          <div className="">
+          <div className="2xl:ml-0 xl:ml-0.5 2xl:mt-0 xl:mt-0">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-8 w-8 text-blue-solid"
+              className="2xl:h-8 2xl:w-8 xl:h-7 xl:w-7 text-blue-solid"
               viewBox="0 0 20 20"
               fill="currentColor"
             >
@@ -139,16 +154,19 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
       </div>
       <div className="cursor-pointer" onClick={() => onSelectPage("premium")}>
         <div
-          className={`h-16 w-full flex justify-start pt-3 relative transition-all duration-300 ${
-            page === "premium"
-                ? "bg-gray-100 pl-10"
-                : "opacity-40 pl-10"
+          className={`2xl:h-14 xl:h-12 w-full flex justify-start items-center relative transition-all duration-300 ${
+            page === "premium" ? "bg-gray-100 pl-10" : "opacity-40 pl-10"
           }`}
         >
-          <div className={'w-2 top-0 left-0 h-full absolute h-full bg-blue-500'} hidden={page !== "premium"}/>
-          <div className="">
+          <div
+            className={
+              "2xl:w-2 xl:w-1 lg:w-0.5 top-0 left-0 h-full absolute bg-blue-500"
+            }
+            hidden={page !== "premium"}
+          />
+          <div className="2xl:ml-0 xl:ml-0.5 2xl:mt-0 xl:mt-0">
             <svg
-              className="h-8 w-8 text-blue-solid"
+              className="2xl:h-8 2xl:w-8 xl:h-7 xl:w-7 text-blue-solid"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
