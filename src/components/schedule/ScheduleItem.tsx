@@ -108,7 +108,7 @@ export const ScheduleItem: React.FC<ScheduleItemProps> = ({
                     "2xl:text-lg xl:text-sm lg:text-xs font-bold tracking-tight text-gray-900"
                   }
                 >
-                  {data.user.fullName}
+                  {data.user.fullName ? data.user.fullName : data.user.username}
                 </p>
               </div>
               <div>
