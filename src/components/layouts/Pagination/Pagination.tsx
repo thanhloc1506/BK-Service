@@ -20,14 +20,17 @@ const Pagination = ({itemsPerPage}: any) => {
   const goFirstPage = () => {
     // dispatch(getQuestionByPage(1));
     // setCurrentPage(1);
+      dispatch(deepSearch({page: 1}))
   };
   const goLastPage = () => {
     // dispatch(getQuestionByPage(totalPage));
     // setCurrentPage(totalPage);
+      dispatch(deepSearch({page: totalPage}))
   };
 
   const goPrePage = () => {
     if (currentPage !== 1) {
+        dispatch(deepSearch({page: currentPage-1}))
       // dispatch(getQuestionByPage(currentPage - 1));
       // setCurrentPage(currentPage - 1);
     }
@@ -35,6 +38,7 @@ const Pagination = ({itemsPerPage}: any) => {
 
   const goNextPage = () => {
     if (currentPage !== totalPage) {
+        dispatch(deepSearch({page: currentPage+1}))
       // dispatch(getQuestionByPage(currentPage + 1));
       // setCurrentPage(currentPage + 1);
     }
@@ -76,25 +80,28 @@ const Pagination = ({itemsPerPage}: any) => {
   let paginatePage;
   if (totalPage === 1 || totalPage === 0) {
     paginatePage = (
-        <ItemButton
-            page={1}
-            isCurruntPage={1 === currentPage}
-            onClick={() => handleClickPage(1)}
-        />
+        <span  onClick={() => handleClickPage(1)}>
+            <ItemButton
+                page={1}
+                isCurruntPage={1 === currentPage}
+            />
+        </span>
     );
   } else if (totalPage === 2) {
     paginatePage = (
         <div>
-          <ItemButton
-              page={1}
-              isCurruntPage={1 === currentPage}
-              onClick={() => handleClickPage(1)}
-          />
-          <ItemButton
-              page={2}
-              isCurruntPage={2 === currentPage}
-              onClick={() => handleClickPage(2)}
-          />
+            <span onClick={() => handleClickPage(1)}>
+                <ItemButton
+                    page={1}
+                    isCurruntPage={1 === currentPage}
+                />
+            </span>
+            <span onClick={() => handleClickPage(2)}>
+                <ItemButton
+                    page={2}
+                    isCurruntPage={2 === currentPage}
+                />
+            </span>
         </div>
     );
   } else if (totalPage === 3) {
