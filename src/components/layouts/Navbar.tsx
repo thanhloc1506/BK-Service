@@ -93,11 +93,11 @@ const Navbar: React.FC = () => {
                 >
                   <div className="flex justify-end items-center">
                     <svg
-                      className="2xl:h-8 2xl:w-8 xl:w-5 xl:h-5 text-white"
+                      className="2xl:h-8 2xl:w-8 xl:w-5 xl:h-5 lg:w-5 lg:h-5 2xl:mt-0 xl:mt-0.5 lg:mt-1 text-white"
                       width="24"
                       height="24"
                       viewBox="0 0 24 24"
-                      strokeWidth="2"
+                      strokeWidth="1.5"
                       stroke="currentColor"
                       fill="none"
                       strokeLinecap="round"
