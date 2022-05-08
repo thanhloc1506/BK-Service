@@ -39,7 +39,9 @@ const RCSlider: React.FC<ITitle> = ({ title, score, setScore }: ITitle) => {
     <div>
       <div className="px-5 pt-5 grid grid-cols-10">
         <div>
-          <p className="2xl:text-[1rem] xl:text-sm lg:text-xs">{title}</p>
+          <p className="2xl:text-[0.9rem] xl:text-[0.8rem] lg:text-[0.7rem]">
+            {title}
+          </p>
         </div>
         <div className="col-span-8 mt-1.5 px-6">
           <Slider min={0} max={10} defaultValue={score} handle={handle} />
