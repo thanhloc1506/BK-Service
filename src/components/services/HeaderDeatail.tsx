@@ -16,6 +16,8 @@ interface IHeaderDetail {
   numOfComments: number;
 }
 
+const tieuchi = ["Tin cậy", "Đáp ứng", "Đảm bảo", "Vật chất", "Thiện cảm"];
+
 const HeaderDeatail: React.FC<IHeaderDetail> = ({
   data,
   scores,
@@ -118,7 +120,7 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
                           {s.toFixed(1)}
                         </p>
                         <p className="2xl:mt-1.5 xl:mt-1 2xl:text-sm xl:text-xs lg:text-[12px]">
-                          Tieu chi {i + 1}
+                          {tieuchi[i]}
                         </p>
                       </div>
                     );
