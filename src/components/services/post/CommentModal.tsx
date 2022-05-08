@@ -12,6 +12,7 @@ import { comment } from "../../../redux/slices/service";
 import { toggleModalLogin } from "../../../redux/slices/auth";
 import { Service } from "../../../apis/common/Service";
 import { getAddressContent } from "../../../utils/getAddressContent";
+import RatingStar from "../../layouts/RatingStar";
 
 interface ICommentModal {
   score: any;
@@ -328,15 +329,17 @@ const CommentModal: React.FC<ICommentModal> = ({
                                   </div>
                                   <div className="grid grid-cols-4">
                                     <div>
-                                      <p className="xl:text-xs lg:text-[10px] mt-1 ml-2">
+                                      <p className="2xl:text-xs xl:text-[11px] lg:text-[10px] mt-1 ml-2">
                                         {tieuchi[0]}
                                       </p>
                                     </div>
                                     <div className="col-span-2 flex justify-center ml-2 mt-1">
-                                      <img
-                                        src={rating}
-                                        alt="rating"
-                                        className="w-2/3 h-3"
+                                      <RatingStar
+                                        rating={
+                                          score && score.length >= 5
+                                            ? score[0].toFixed(1)
+                                            : 5
+                                        }
                                       />
                                     </div>
                                     <div className="flex justify-center">
@@ -349,15 +352,17 @@ const CommentModal: React.FC<ICommentModal> = ({
                                   </div>
                                   <div className="grid grid-cols-4 mt-1">
                                     <div>
-                                      <p className="xl:text-xs lg:text-[10px] mt-1 ml-2">
+                                      <p className="2xl:text-xs xl:text-[11px] lg:text-[10px] mt-1 ml-2">
                                         {tieuchi[1]}
                                       </p>
                                     </div>
                                     <div className="col-span-2 flex justify-center ml-2 mt-1">
-                                      <img
-                                        src={rating}
-                                        alt="rating"
-                                        className="w-2/3 h-3"
+                                      <RatingStar
+                                        rating={
+                                          score && score.length >= 5
+                                            ? score[0].toFixed(1)
+                                            : 5
+                                        }
                                       />
                                     </div>
                                     <div className="flex justify-center">
@@ -370,15 +375,17 @@ const CommentModal: React.FC<ICommentModal> = ({
                                   </div>
                                   <div className="grid grid-cols-4 mt-1">
                                     <div>
-                                      <p className="xl:text-xs lg:text-[10px] mt-1 ml-2">
+                                      <p className="2xl:text-xs xl:text-[11px] lg:text-[10px] mt-1 ml-2">
                                         {tieuchi[2]}
                                       </p>
                                     </div>
                                     <div className="col-span-2 flex justify-center ml-2 mt-1">
-                                      <img
-                                        src={rating}
-                                        alt="rating"
-                                        className="w-2/3 h-3"
+                                      <RatingStar
+                                        rating={
+                                          score && score.length >= 5
+                                            ? score[0].toFixed(1)
+                                            : 5
+                                        }
                                       />
                                     </div>
                                     <div className="flex justify-center">
@@ -391,15 +398,17 @@ const CommentModal: React.FC<ICommentModal> = ({
                                   </div>
                                   <div className="grid grid-cols-4 mt-1">
                                     <div>
-                                      <p className="xl:text-xs lg:text-[10px] mt-1 ml-2">
+                                      <p className="2xl:text-xs xl:text-[11px] lg:text-[10px] mt-1 ml-2">
                                         {tieuchi[3]}
                                       </p>
                                     </div>
                                     <div className="col-span-2 flex justify-center ml-2 mt-1">
-                                      <img
-                                        src={rating}
-                                        alt="rating"
-                                        className="w-2/3 h-3"
+                                      <RatingStar
+                                        rating={
+                                          score && score.length >= 5
+                                            ? score[0].toFixed(1)
+                                            : 5
+                                        }
                                       />
                                     </div>
                                     <div className="flex justify-center">
@@ -413,15 +422,17 @@ const CommentModal: React.FC<ICommentModal> = ({
                                 </div>
                                 <div className="grid grid-cols-4 mt-1">
                                   <div>
-                                    <p className="xl:text-xs lg:text-[10px] mt-1 ml-2">
+                                    <p className="2xl:text-xs xl:text-[11px] lg:text-[10px] mt-1 ml-2">
                                       {tieuchi[4]}
                                     </p>
                                   </div>
                                   <div className="col-span-2 flex justify-center ml-2 mt-1">
-                                    <img
-                                      src={rating}
-                                      alt="rating"
-                                      className="w-2/3 h-3"
+                                    <RatingStar
+                                      rating={
+                                        score && score.length >= 5
+                                          ? score[0].toFixed(1)
+                                          : 5
+                                      }
                                     />
                                   </div>
                                   <div className="flex justify-center">
