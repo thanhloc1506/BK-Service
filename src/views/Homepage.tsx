@@ -27,7 +27,7 @@ const Homepage: React.FC = () => {
     // console.log("run")
 
     dispatch(deepSearch({ text: params["text"] || "" }));
-    if (cookies.get("token") == undefined) {
+    if (cookies.get("eToken") == undefined) {
       dispatch(logout());
     }
   }, [location]);
