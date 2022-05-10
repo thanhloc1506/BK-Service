@@ -98,7 +98,7 @@ const SingleCard: React.FC<IService> = memo(
           </div>
           <div className="px-4 py-2 2xl:h-[25%] xl:h-[25%] lg:h-[28%] overflow-hidden border-y-2 border-gray-200">
             <p
-              className="text-sm font-light"
+              className="xl:text-sm lg:text-xs font-light"
               dangerouslySetInnerHTML={{ __html: data.shortIntroduction || "" }}
             ></p>
           </div>

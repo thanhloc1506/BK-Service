@@ -6,8 +6,11 @@ interface IDescription {
 
 const Description: React.FC<IDescription> = ({ description }: IDescription) => {
   return (
-    <div className="flex justify-start pl-32 pt-6">
-      <p className="font-light text-lg" dangerouslySetInnerHTML={{__html: description}}/>
+    <div className="flex justify-start pt-6">
+      <p
+        className="font-light 2xl:text-lg xl:text-sm lg:text-xs"
+        dangerouslySetInnerHTML={{ __html: description }}
+      />
     </div>
   );
 };

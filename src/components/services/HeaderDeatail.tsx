@@ -175,10 +175,10 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
                 <polyline points="12 6 12 12 16 14" />
               </svg>
               <div className="flex xl:mt-[-1px] 2xl:mt-0 lg:mt-[-1px]">
-                <p className="text-green-400 2xl:ml-6 xl:ml-5 lg:ml-4 font-semibold 2xl:text-xl xl:text-sm">
+                <p className="text-green-400 2xl:ml-6 xl:ml-5 lg:ml-4 font-semibold 2xl:text-xl xl:text-lg lg:text-sm">
                   Đang mở cửa
                 </p>
-                <p className="text-gray-600 text-xl font-semibold ml-5">
+                <p className="text-gray-600 2xl:text-xl xl:text-lg lg:text-sm font-semibold xl:mt-0 lg:mt-0.5 ml-5">
                   {data.openTime} - {data.closeTime}
                 </p>
               </div>
