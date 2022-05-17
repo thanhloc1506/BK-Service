@@ -113,7 +113,7 @@ const Navbar: React.FC = () => {
                     </svg>
                   </div>
                   <p className="text-white mt-1 2xl:text-sm xl:text-xs lg:text-[12px] font-medium flex justify-center">
-                    Schedule
+                    Lịch hẹn
                   </p>
                 </span>
                 <span className="col-span-1 cursor-pointer flex justify-center items-center flex-col">

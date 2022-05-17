@@ -31,7 +31,10 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
   const [addressText, setAddressText] = useState("");
 
   useEffect(() => {
-    getAddressContent(data.address).then((res) => setAddressText(res || ""));
+    getAddressContent(data.address).then((res) => {
+      setAddressText(res || "");
+      console.log(res);
+    });
   }, [data.address]);
 
   return (
