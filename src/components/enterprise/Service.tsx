@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import rating from "../../assets/service/rating.png";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Service } from "../../apis/common/Service";
 import { useNavigate } from "react-router-dom";
+import RatingStar from "../layouts/RatingStar";
+import { useDispatch } from "react-redux";
+import { hideWaiting, showWaiting } from "../../redux/slices/loading";
+import axiosClient from "../../apis/axios";
+import { PInScore } from "../../apis/package/in/PInScore";
 
 interface IService {
   data: Service;
@@ -17,6 +22,23 @@ const SingleCard: React.FC<IService> = ({
   btnText,
 }: IService) => {
   const navigate = useNavigate();
+
+  const [score, setScore] = useState<number[]>([]);
+  const dispatch = useDispatch();
+  const [scoreLoading, setScoreLoading] = useState(true);
+  useEffect(() => {
+    //fethc score
+    if (!data?._id) return;
+    dispatch(showWaiting());
+    axiosClient
+      .get<PInScore>(`service/${data?._id}/scores`)
+      .then((response) => setScore(response.data.score))
+      .finally(() => {
+        dispatch(hideWaiting());
+        setScoreLoading(false);
+      });
+  }, []);
+
   return (
     <>
       <div
@@ -64,12 +86,19 @@ const SingleCard: React.FC<IService> = ({
             </p>
           </div>
         </div>
-        <div className="2xl:px-4 xl:px-3 2xl:h-[5%] xl:h-[6%]">
-          <img
+        <div className="2xl:px-3 xl:px-2 lg:px-1 2xl:h-[5%] xl:h-[6%] lg:h-[7%] 2xl:mb-1 xl:mb-1.5 lg:mb-2">
+          {/* <img
             src={rating}
             alt="rating"
             className="xl:w-[40%] xl:h-[65%] xl:mt-[2%]"
-          />
+          /> */}
+          {scoreLoading ? (
+            ""
+          ) : (
+            <RatingStar
+              rating={score && score.length >= 5 ? score[5].toFixed(1) : 7}
+            />
+          )}
         </div>
         <div className="px-4 py-2 h-[25%] overflow-hidden border-y-2 border-gray-200">
           <p

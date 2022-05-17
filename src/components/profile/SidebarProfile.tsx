@@ -128,23 +128,25 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
         >
           <div
             className={
-              "2xl:w-2 xl:w-1 lg:w-0.5 top-0 left-0 h-full absolute h-full bg-blue-500"
+              "2xl:w-2 xl:w-1 lg:w-0.5 top-0 left-0 h-full absolute bg-blue-500"
             }
             hidden={page !== "add"}
           />
 
           <div className="2xl:ml-0 xl:ml-0.5 2xl:mt-0 xl:mt-0">
             <svg
-              xmlns="http://www.w3.org/2000/svg"
               className="2xl:h-8 2xl:w-8 xl:h-7 xl:w-7 text-blue-solid"
-              viewBox="0 0 20 20"
-              fill="currentColor"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
-              <path
-                fillRule="evenodd"
-                d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-                clipRule="evenodd"
-              />
+              {" "}
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />{" "}
+              <line x1="12" y1="8" x2="12" y2="16" />{" "}
+              <line x1="8" y1="12" x2="16" y2="12" />
             </svg>
           </div>
           <div className="mt-1 ml-5">

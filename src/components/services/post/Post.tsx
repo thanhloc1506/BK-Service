@@ -68,11 +68,7 @@ const Post: React.FC<IPost> = ({
             <span className="flex ml-2.5">
               <div className="col-span-1 rounded-full w-12 h-12 overflow-hidden ring-2 ring-white">
                 <img
-                  src={
-                    userState.enterprise?.avatar
-                      ? userState.enterprise.avatar.url
-                      : DEFAULT_AVATAR
-                  }
+                  src={avatar ? avatar : DEFAULT_AVATAR}
                   className={"w-full h-full p-1 rounded-full"}
                 />
               </div>
