@@ -438,7 +438,6 @@ const serviceSlice = createSlice({
       state.commentLoading = true;
     },
     [deleteComment.fulfilled.toString()]: (state, action) => {
-      console.log(state.comments);
       if (action.payload) {
         state.comments = state.comments.filter(
           (comment: any) => comment._id != action.payload
