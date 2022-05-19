@@ -354,7 +354,6 @@ const serviceSlice = createSlice({
     },
     [getFollowService.pending.toString()]: (state, _action) => {
       state.followLoading = true;
-      console.log(1);
     },
     [getFollowService.fulfilled.toString()]: (state, action) => {
       state.followService = action.payload.services;
@@ -362,7 +361,6 @@ const serviceSlice = createSlice({
         (service: any) => service._id === state.serviceId
       );
       state.isFollow = currentFollowService.length === 1;
-      console.log(2);
       state.followLoading = false;
     },
     [getServiceById.pending.toString()]: (state, _action) => {

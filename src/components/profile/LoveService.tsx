@@ -16,7 +16,7 @@ const LoveService = () => {
       dispatch(getFollowService());
     };
     fetchData();
-  });
+  }, []);
 
   const serviceState = useSelector((state: RootState) => state.service);
 
@@ -36,6 +36,7 @@ const LoveService = () => {
                   data={service}
                   btnText={"Truy cập"}
                   onBtnClick={() => navigate(`/detailService/${service._id}`)}
+                  isLoveServicePage
                 />
               </div>
             ))}
