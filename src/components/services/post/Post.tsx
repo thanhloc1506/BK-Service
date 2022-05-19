@@ -4,6 +4,7 @@ import { DEFAULT_AVATAR } from "../../../constants/common";
 import { toggleLikeComment } from "../../../redux/slices/service";
 import { RootState } from "../../../redux/store";
 import defaultAvatar from "../../../assets/admin/users.png";
+import ModalDeleteComment from "./ModalDeleteComment";
 
 interface IPost {
   avatar: string;
@@ -17,6 +18,7 @@ interface IPost {
   images: any;
   id: string;
   numOfUserLiked: number;
+  userId: string;
 }
 
 const Post: React.FC<IPost> = ({
@@ -31,6 +33,7 @@ const Post: React.FC<IPost> = ({
   images,
   id,
   numOfUserLiked,
+  userId,
 }: IPost) => {
   const [imageIndex, setIndex] = useState(0);
   const [image, setImage] = useState(images[0]?.url);
@@ -60,8 +63,15 @@ const Post: React.FC<IPost> = ({
 
   const [numOfLike, setNumOfLike] = useState(numOfUserLiked);
 
+  const [show, setShow] = useState(false);
+
+  const onDeleteComment = () => {
+    setShow(true);
+  };
+
   return (
     <>
+      <ModalDeleteComment show={show} setShow={setShow} commentId={id} />
       <div className="w-full h-fit pr-20 flex justify-center">
         <div className="w-full shadow-lg pt-3  border-2 border-gray-100 bg-white">
           <div className="grid grid-cols-2 border-b-2 border-b-gray-100 pb-2">
@@ -79,7 +89,7 @@ const Post: React.FC<IPost> = ({
                 </p>
               </div>
             </span>
-            <div className="flex justify-end mr-5">
+            <div className="flex items-center justify-end mr-5">
               <div
                 className={
                   rating > 8
@@ -92,6 +102,32 @@ const Post: React.FC<IPost> = ({
                 <p className="flex items-center 2xl:text-lg xl:text-sm lg:text-sm text-white">
                   {rating}
                 </p>
+              </div>
+              <div className="cursor-pointer">
+                {userState.user?._id === userId ? (
+                  <div
+                    className="flex items-center ml-4"
+                    onClick={onDeleteComment}
+                  >
+                    <svg
+                      className="2xl:h-6 2xl:w-6 xl:h-6 xl:w-6 lg:h-5 lg:w-5 text-gray-500 hover:text-gray-700"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      {" "}
+                      <polyline points="3 6 5 6 21 6" />{" "}
+                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />{" "}
+                      <line x1="10" y1="11" x2="10" y2="17" />{" "}
+                      <line x1="14" y1="11" x2="14" y2="17" />
+                    </svg>
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
           </div>

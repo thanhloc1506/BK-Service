@@ -140,7 +140,7 @@ export const comment = createAsyncThunk(
   async (formComment: any, api) => {
     const dispatch = api.dispatch;
     try {
-      // dispatch(showWaiting());
+      dispatch(showWaiting());
       const response = await axiosClient.post(
         "/user/rating-service",
         formComment
@@ -166,7 +166,7 @@ export const comment = createAsyncThunk(
       console.log(error);
       throw error;
     } finally {
-      // dispatch(hideWaiting());
+      dispatch(hideWaiting());
     }
   }
 );
@@ -176,7 +176,7 @@ export const getComments = createAsyncThunk(
   async (paramId: any, api) => {
     const dispatch = api.dispatch;
     try {
-      // dispatch(showWaiting());
+      dispatch(showWaiting());
       const response = await axiosClient.get(
         `service/${paramId.serviceId}/comments`
       );
@@ -208,7 +208,24 @@ export const getComments = createAsyncThunk(
       console.log(error);
       throw error;
     } finally {
-      // dispatch(hideWaiting());
+      dispatch(hideWaiting());
+    }
+  }
+);
+
+export const deleteComment = createAsyncThunk(
+  "delete/comment",
+  async (commentId: string) => {
+    try {
+      const response = await axiosClient.post("/user/delete-rating", {
+        id: commentId,
+      });
+      if (response.status === 200) {
+        return commentId;
+      }
+      return false;
+    } catch (error) {
+      throw error;
     }
   }
 );
@@ -416,6 +433,18 @@ const serviceSlice = createSlice({
         // ),
       ];
       state.scheduleLoading = false;
+    },
+    [deleteComment.pending.toString()]: (state, _action) => {
+      state.commentLoading = true;
+    },
+    [deleteComment.fulfilled.toString()]: (state, action) => {
+      console.log(state.comments);
+      if (action.payload) {
+        state.comments = state.comments.filter(
+          (comment: any) => comment._id != action.payload
+        );
+      }
+      state.commentLoading = false;
     },
   },
 });

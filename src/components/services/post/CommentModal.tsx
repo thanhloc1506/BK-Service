@@ -36,7 +36,6 @@ const CommentModal: React.FC<ICommentModal> = ({
   const [Image, setImage] = useState(false);
   const [Rating, setRating] = useState(false);
   const [Share, setShare] = useState(true);
-  console.log(service);
 
   const onClickImage = () => {
     setImage(true);
@@ -551,7 +550,7 @@ const CommentModal: React.FC<ICommentModal> = ({
                                           multiple
                                         />
                                         <div className="flex">
-                                          {selectedImages !== [] &&
+                                          {selectedImages.length > 0 &&
                                             preview.map(
                                               (srcImage: any, index) => (
                                                 <div

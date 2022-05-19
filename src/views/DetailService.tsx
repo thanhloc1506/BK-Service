@@ -129,6 +129,7 @@ const DetailService: React.FC = () => {
                               images={comment.images}
                               id={comment._id}
                               numOfUserLiked={comment.numOfUserLiked}
+                              userId={comment?.user?._id}
                             />
                           </div>
                         )
