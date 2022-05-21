@@ -103,6 +103,7 @@ export const deepSearch = createAsyncThunk(
       category: filter.category?._id,
       quan: filter.quan?.district_id,
       huyen: filter.phuong?.ward_id,
+      rating: filter.rating,
       text: text,
       page,
     };
@@ -171,7 +172,7 @@ export const quickSearch = createAsyncThunk(
 export const selectRating = createAsyncThunk(
   "/search/rating",
   (rating: any) => {
-    return rating !== "Tất cả" ? rating : "Chọn rating";
+    return rating;
   }
 );
 

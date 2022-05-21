@@ -296,7 +296,7 @@ const MenuPhuong = () => {
   );
 };
 
-const ratingStatus = ["Tất cả", "5 Sao", "4 Sao", "3 Sao", "2 Sao", "1 Sao"];
+const ratingStatus = ["-1", "5", "4", "3", "2", "1"];
 
 function MenuRating() {
   const filter = useSelector((state: RootState) => state.search.filter);
@@ -304,6 +304,9 @@ function MenuRating() {
   const dispatch = useDispatch();
   const onChangeRating = (rating: any) => {
     dispatch(selectRating(rating));
+    setTimeout(()=>{
+      dispatch(deepSearch(undefined));
+    }, 1000);
   };
 
   return (
@@ -313,7 +316,7 @@ function MenuRating() {
           <div className="relative mt-1">
             <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left ring rounded-lg  cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
               <span className="block truncate">
-                {filter.rating ?? "Chọn rating"}
+                {filter.rating === "-1"?"Chọn Đánh giá": `${filter.rating} Sao`}
               </span>
               <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                 <SelectorIcon
@@ -355,7 +358,7 @@ function MenuRating() {
                             selected ? "font-medium" : "font-normal"
                           }`}
                         >
-                          {rating}
+                          {rating === "-1"?"Chọn Đánh giá": `${rating} Sao`}
                         </span>
                         {selected ? (
                           <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
