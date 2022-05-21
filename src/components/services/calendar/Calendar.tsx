@@ -41,11 +41,11 @@ const Calendar: React.FC<CalendarProps> = ({
 
   return (
     <div
-      className={`md:shadow-lg md:rounded pt-3 pb-2 px-1 bg-white dark:bg-gray-700 w-[20vw] mx-4 md:mx-auto`}
+      className={`md:shadow-lg md:rounded pt-3 pb-2 px-1 bg-white w-[20vw] mx-4 md:mx-auto`}
     >
       <div className="w-[20vw] rounded px-3">
         <div className="flex items-center justify-between mb-4">
-          <div className="text-left font-bold text-sm text-black dark:text-white">
+          <div className="text-left font-bold text-sm text-black">
             {`${activeMonthString} ${activeYear}`}
           </div>
           <div className="flex space-x-4">
@@ -98,7 +98,7 @@ const Calendar: React.FC<CalendarProps> = ({
           </div>
         </div>
         <div className="-mx-2">
-          <table className="w-full dark:text-white">
+          <table className="w-full">
             <thead>
               <tr>
                 <th className="py-2 2xl:px-1 xl:px-1 lg:px-0.5 2xl:text-xl xl:text-lg lg:text-sm">

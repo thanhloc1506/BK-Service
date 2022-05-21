@@ -34,7 +34,7 @@ const Homepage: React.FC = () => {
   return (
     <div className="bg-slate-100 min-h-screen h-fit">
       <Navbar />
-      <div className="grid grid-cols-4 pb-12 h-auto">
+      <div className="grid grid-cols-4 pb-12 h-full">
         <div className="p-5 mt-5"></div>
         <div className="p-5 2xl:mt-5 xl:mt-3 lg:mt-0 fixed flex justify-center w-full top-[3.5rem] z-[9]">
           <SideBarHomePage />
