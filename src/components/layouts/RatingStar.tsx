@@ -6,6 +6,7 @@ interface IRating {
 }
 
 const RatingStar: React.FC<IRating> = ({ rating }) => {
+  if (rating < 0) return <></>;
   if (rating > 8) {
     return (
       <div className="flex">

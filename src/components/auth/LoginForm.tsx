@@ -96,7 +96,7 @@ const LoginForm: React.FC = () => {
                       <div className="col-span-2 bg-white rounded-l-5xl">
                         <div className="2xl:mt-40 xl:mt-16">
                           <div className="flex justify-center">
-                            <p className="2xl:text-4xl xl:text-2xl 2xl:mr-28 xl:mr-40">
+                            <p className="2xl:text-4xl xl:text-2xl 2xl:mr-32 xl:mr-40">
                               Đăng nhập
                             </p>
                           </div>
@@ -137,7 +137,7 @@ const LoginForm: React.FC = () => {
                                   name="password"
                                 />
                               </div>
-                              <div className="flex justify-center mt-6">
+                              <div className="flex justify-center mt-6 2xl:mr-5">
                                 <button
                                   type="submit"
                                   className="bg-blue-500 2xl:w-80 xl:w-72 2xl:ml-8 xl:ml-2 p-2 text-white rounded-md overflow-hidden"

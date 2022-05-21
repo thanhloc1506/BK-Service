@@ -47,7 +47,7 @@ const Homepage: React.FC = () => {
               <div className="grid grid-cols-4 gap-8 mb-5">
                 {searchState.dataSearch?.services?.map(
                   (service: any, index: number) => (
-                    <div key={index} className={"flex justify-center"}>
+                    <div key={service._id} className={"flex justify-center"}>
                       <Service
                         data={service}
                         btnText={"Truy cập"}

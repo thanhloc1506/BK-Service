@@ -99,8 +99,8 @@ const Navbar: React.FC = () => {
                   <div className="flex justify-center">
                     <SiGoogletagmanager className={"text-xl text-white"} />
                   </div>
-                  <p className="text-white mt-1 text-sm font-medium flex justify-center ml-3">
-                    Quản lí
+                  <p className="text-white 2xl:mt-3 xl:mt-1 text-sm font-medium flex justify-center ml-3">
+                    Quản lý
                   </p>
                 </span>
               </span>
