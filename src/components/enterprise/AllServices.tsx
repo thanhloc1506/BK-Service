@@ -6,6 +6,7 @@ import { Service as ServiceType } from "../../apis/common/Service";
 import { useDispatch } from "react-redux";
 import { hideWaiting, showWaiting } from "../../redux/slices/loading";
 import Service from "./Service";
+import service from "../../redux/slices/service";
 
 const AllServices = () => {
   const [services, setServices] = useState<ServiceType[] | undefined>();
@@ -30,6 +31,22 @@ const AllServices = () => {
     setCurServiceEdit(data);
     setShowModalEdit(true);
   };
+
+  const deleteService = async (serviceId: string) => {
+    setServices(
+      services?.filter(
+        (service: ServiceType | undefined) => service?._id !== serviceId
+      )
+    );
+    try {
+      const response = await axiosClient.post(
+        `http://127.0.0.1:3007/service/${serviceId}/delete`
+      );
+    } catch (e) {
+      throw e;
+    }
+  };
+
   return (
     <div className="bg-gray-light h-fit">
       <ModalEditService
@@ -53,6 +70,8 @@ const AllServices = () => {
                     onBtnClick={() => {
                       editService(service);
                     }}
+                    isEnterPrisePage
+                    deleteService={deleteService}
                   />
                 </div>
               );

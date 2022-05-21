@@ -9,17 +9,22 @@ import { useDispatch } from "react-redux";
 import { hideWaiting, showWaiting } from "../../redux/slices/loading";
 import axiosClient from "../../apis/axios";
 import { PInScore } from "../../apis/package/in/PInScore";
+import ModalDeleteService from "./ModalDeleteService";
 
 interface IService {
   data: Service;
   onBtnClick?: () => void;
   btnText?: string;
+  isEnterPrisePage?: boolean;
+  deleteService?: (serviceId: string) => void;
 }
 
 const SingleCard: React.FC<IService> = ({
   data,
   onBtnClick,
   btnText,
+  isEnterPrisePage,
+  deleteService,
 }: IService) => {
   const navigate = useNavigate();
 
@@ -39,8 +44,21 @@ const SingleCard: React.FC<IService> = ({
       });
   }, []);
 
+  const [show, setShow] = useState(false);
+
+  const onClickDelete = (e: any) => {
+    e.stopPropagation();
+    setShow(true);
+  };
+
   return (
     <>
+      <ModalDeleteService
+        serviceId={data._id}
+        show={show}
+        setShow={setShow}
+        deleteService={deleteService}
+      />
       <div
         className="2xl:w-72 2xl:h-[24rem] xl:w-56 xl:h-[20rem] bg-white border-2 border-blue-200 rounded hover:drop-shadow-2xl shadow-lg shadow-cyan-500/50 transition-all duration-500 cursor-pointer"
         onClick={() => navigate(`/detailService/${data._id}`)}
@@ -149,16 +167,64 @@ const SingleCard: React.FC<IService> = ({
             </svg>
             <p className="ml-0.5 font-light">{data.imgCmtCount || 0}</p>
           </div>
-          <div className="col-span-2 flex justify-end pr-3 xl:mt-0 items-center">
-            <button
-              className="bg-blue-solid 2xl:h-8 xl:h-6 w-fit 2xl:px-4 xl:px-3 2xl:texg-lg xl:text-sm rounded-sm overflow-hidden text-white font-light"
-              onClick={(e) => {
-                e.stopPropagation();
-                onBtnClick && onBtnClick();
-              }}
-            >
-              {btnText || "Chỉnh sửa"}
-            </button>
+          <div className="col-span-2 flex justify-center pr-3 xl:mt-0 items-center">
+            {isEnterPrisePage ? (
+              <div className="grid grid-cols-2 w-full h-full">
+                <div
+                  className="flex justify-center 2xl:mt-[1.2rem] xl:mt-3"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onBtnClick && onBtnClick();
+                  }}
+                >
+                  <svg
+                    className="h-6 w-6 text-gray-500 hover:text-gray-700"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    {" "}
+                    <path stroke="none" d="M0 0h24v24H0z" />{" "}
+                    <path d="M9 7 h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" />{" "}
+                    <path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" />{" "}
+                    <line x1="16" y1="5" x2="19" y2="8" />
+                  </svg>
+                </div>
+                <div
+                  className="flex justify-center 2xl:mt-[1.2rem] xl:mt-3"
+                  onClick={onClickDelete}
+                >
+                  <svg
+                    className="h-6 w-6 text-gray-500 hover:text-gray-700"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    {" "}
+                    <polyline points="3 6 5 6 21 6" />{" "}
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />{" "}
+                    <line x1="10" y1="11" x2="10" y2="17" />{" "}
+                    <line x1="14" y1="11" x2="14" y2="17" />
+                  </svg>
+                </div>
+              </div>
+            ) : (
+              <button
+                className="bg-blue-solid 2xl:h-8 xl:h-6 w-fit 2xl:px-4 xl:px-3 2xl:texg-lg xl:text-sm rounded-sm overflow-hidden text-white font-light"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onBtnClick && onBtnClick();
+                }}
+              >
+                {btnText || "Chỉnh sửa"}
+              </button>
+            )}
           </div>
         </div>
       </div>

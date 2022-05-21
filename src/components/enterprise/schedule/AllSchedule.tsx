@@ -11,7 +11,7 @@ export const AllSchedules = () => {
     dispatch(fetchSchedule());
   }, []);
   return (
-    <div>
+    <>
       <div className="bg-white p-8  border-b-2 border-b-gray-200 shadow-sm">
         <p className="text-blue-400 font-medium text-xl">Tất cả lịch hẹn</p>
       </div>
@@ -24,6 +24,6 @@ export const AllSchedules = () => {
           ))}
         </div>
       )}
-    </div>
+    </>
   );
 };

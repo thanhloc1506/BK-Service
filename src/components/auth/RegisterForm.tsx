@@ -12,6 +12,7 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationIcon } from "@heroicons/react/outline";
 import { RegisterForm as IRegisterForm } from "../../redux/types";
+import { hideWaiting, showWaiting } from "../../redux/slices/loading";
 
 const RegisterForm: React.FC = () => {
   const authState = useSelector((state: RootState) => state.user);
@@ -27,9 +28,13 @@ const RegisterForm: React.FC = () => {
     dispatch(toggleModalRegister(authState.showRegisterForm));
   };
 
-  const navigate = () => {
-    dispatch(toggleModalLogin(authState.showLoginForm));
-    dispatch(toggleModalRegister(authState.showRegisterForm));
+  const navigate = async () => {
+    dispatch(showWaiting());
+    await dispatch(toggleModalRegister(authState.showRegisterForm));
+    await setTimeout(async () => {
+      await dispatch(toggleModalLogin(authState.showLoginForm));
+      dispatch(hideWaiting());
+    }, 700);
   };
   const cancelButtonRef = useRef(null);
   return (

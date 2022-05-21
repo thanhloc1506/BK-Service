@@ -11,6 +11,7 @@ import {
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { Dialog, Transition } from "@headlessui/react";
 import { LoginForm as ILoginForm } from "../../redux/types";
+import { hideWaiting, showWaiting } from "../../redux/slices/loading";
 
 const LoginForm: React.FC = () => {
   const authState = useSelector((state: RootState) => state.user);
@@ -26,9 +27,13 @@ const LoginForm: React.FC = () => {
     dispatch(toggleModalLogin(authState.showLoginForm));
   };
 
-  const navigate = () => {
-    dispatch(toggleModalLogin(authState.showLoginForm));
-    dispatch(toggleModalRegister(authState.showRegisterForm));
+  const navigate = async () => {
+    dispatch(showWaiting());
+    await dispatch(toggleModalLogin(authState.showLoginForm));
+    await setTimeout(async () => {
+      await dispatch(toggleModalRegister(authState.showRegisterForm));
+      dispatch(hideWaiting());
+    }, 700);
   };
   const cancelButtonRef = useRef(null);
   return (
