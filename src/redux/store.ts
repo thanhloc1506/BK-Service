@@ -19,9 +19,9 @@ import { State as AuthState } from "./slices/auth";
 import { State as UserState } from "./slices/user";
 import { State as LoadingState } from "./slices/loading";
 import { State as ServiceState } from "./slices/service";
-import {State as NotiState} from "./slices/noti";
-import {State as ScheduleState} from "./slices/schedule";
-import {State as ScheduleHistoryState} from "./slices/schedule-history";
+import { State as NotiState } from "./slices/noti";
+import { State as ScheduleState } from "./slices/schedule";
+import { State as ScheduleHistoryState } from "./slices/schedule-history";
 //@ts-ignore
 import localStorage from "redux-persist/lib/storage";
 import { PersistConfig } from "redux-persist/es/types";
@@ -38,7 +38,14 @@ interface MyReducer {
 const persistConfig: PersistConfig<any> = {
   key: "root",
   storage: localStorage,
-  blacklist: ["loading", "socket", "auth", "service", "schedule", "scheduleHistory"],
+  blacklist: [
+    "loading",
+    "socket",
+    "auth",
+    "service",
+    "schedule",
+    "scheduleHistory",
+  ],
 };
 
 const reducer = combineReducers<MyReducer>({
@@ -49,7 +56,7 @@ const reducer = combineReducers<MyReducer>({
   service: serviceSlice,
   noti: notiSlice,
   schedule: scheduleSlice,
-  scheduleHistory: scheduleHistorySlice
+  scheduleHistory: scheduleHistorySlice,
 } as ReducersMapObject<any>);
 // const store = createStore({
 //   reducer: {

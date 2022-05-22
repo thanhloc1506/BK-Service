@@ -148,21 +148,23 @@ export const NotiContent = () => {
             "divide-y 2xl:mx-3 xl:mx-2 2xl:h-[560px] xl:h-[450px] lg:h-[380px] 2xl:mt-5 xl:mt-3 overflow-y-auto overflow-y-hiden"
           }
         >
-          {noti.notiData.map((n, index) => {
-            return (
-              <NotiItem
-                content={getContentNoti(n)}
-                img={
-                  n.service.images && n.service.images.length > 0
-                    ? n.service.images[0].url
-                    : ""
-                }
-                time={getTimeText(n.date)}
-                key={index}
-                hadRead={n.hadRead}
-              />
-            );
-          })}
+          {noti.notiLoading
+            ? ""
+            : noti.notiData.map((n, index) => {
+                return (
+                  <NotiItem
+                    content={getContentNoti(n)}
+                    img={
+                      n.service.images && n.service.images.length > 0
+                        ? n.service.images[0].url
+                        : ""
+                    }
+                    time={getTimeText(n.date)}
+                    key={index}
+                    hadRead={n.hadRead}
+                  />
+                );
+              })}
         </div>
       </div>
     </>

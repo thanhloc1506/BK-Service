@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { getFollowService } from "../../redux/slices/service";
 import { RootState } from "../../redux/store";
 import Pagination from "../layouts/Pagination/Pagination";
 import Service from "../services/Service";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import ModalConfirmUnFollow from "./ModalConfirmUnFollow";
 
 const LoveService = () => {
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const LoveService = () => {
       dispatch(getFollowService());
     };
     fetchData();
-  });
+  }, []);
 
   const serviceState = useSelector((state: RootState) => state.service);
 
@@ -36,6 +37,7 @@ const LoveService = () => {
                   data={service}
                   btnText={"Truy cập"}
                   onBtnClick={() => navigate(`/detailService/${service._id}`)}
+                  isLoveServicePage
                 />
               </div>
             ))}

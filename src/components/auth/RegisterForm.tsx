@@ -11,6 +11,7 @@ import {
 import { RootState } from "../../redux/store";
 import { RegisterForm as IRegisterForm } from "../../redux/types";
 import * as Yup from "yup";
+import { hideWaiting, showWaiting } from "../../redux/slices/loading";
 
 const RegisterForm: React.FC = () => {
   const authState = useSelector((state: RootState) => state.user);
@@ -18,22 +19,30 @@ const RegisterForm: React.FC = () => {
   const dispatch = useDispatch();
 
   const onClickRegister = (values: IRegisterForm) => {
-    dispatch(register(values));
-    toggleRegisterModal();
+    if (values.username.length < 50) {
+      dispatch(register(values));
+      toggleRegisterModal();
+    }
   };
 
   const toggleRegisterModal = () => {
     dispatch(toggleModalRegister(authState.showRegisterForm));
   };
 
-  const navigate = () => {
-    dispatch(toggleModalLogin(authState.showLoginForm));
-    dispatch(toggleModalRegister(authState.showRegisterForm));
+  const navigate = async () => {
+    dispatch(showWaiting());
+    await dispatch(toggleModalRegister(authState.showRegisterForm));
+    await setTimeout(async () => {
+      await dispatch(toggleModalLogin(authState.showLoginForm));
+      dispatch(hideWaiting());
+    }, 700);
   };
   const cancelButtonRef = useRef(null);
 
   const validationSchema = Yup.object().shape({
     password: Yup.string().min(8, "*Mật khẩu phải có từ 8 ký tự trở lên"),
+    username: Yup.string().max(50, "*Tên tài khoản không vượt quá 50 ký tự"),
+    email: Yup.string().max(50, "*Email không vượt quá 50 ký tự"),
   });
 
   return (
@@ -94,9 +103,9 @@ const RegisterForm: React.FC = () => {
                         </p>
                       </div>
                       <div className="col-span-2 bg-white rounded-l-5xl">
-                        <div className="2xl:mt-40 xl:mt-16 lg:mt-16">
+                        <div className="2xl:mt-24 xl:mt-16 lg:mt-16">
                           <div className="flex justify-center">
-                            <p className="2xl:text-4xl xl:text-2xl lg:text-xl 2xl:mr-28 xl:mr-40 lg:mr-52">
+                            <p className="2xl:text-4xl xl:text-2xl lg:text-xl 2xl:mr-44 xl:mr-48 lg:mr-52">
                               Đăng ký
                             </p>
                           </div>
@@ -123,12 +132,17 @@ const RegisterForm: React.FC = () => {
                                     placeholder="Tên đăng nhập"
                                     required
                                   />
-                                  <ErrorMessage
+                                  {/* <ErrorMessage
                                     component="a"
                                     className=""
                                     name="username"
-                                  />
+                                  /> */}
                                 </div>
+                                {touched["username"] && errors["username"] && (
+                                  <p className="2xl:text-sm xl:text-xs lg:text-[12px] text-red-500 text-center mr-16">
+                                    {errors["username"]}
+                                  </p>
+                                )}
                                 <div className="flex justify-center 2xl:mt-6 xl:mt-4 lg:mt-3">
                                   <Field
                                     className="2xl:text-lg xl:text-lg lg:text-sm border-blue-300 bg-transparent border-2 2xl:h-11 2xl:w-72 xl:w-64 xl:h-10 lg:h-8 lg:w-56 xl:mr-6 lg:mr-16 p-2 outline-none rounded-md overflow-hidden"
@@ -146,7 +160,7 @@ const RegisterForm: React.FC = () => {
                                   /> */}
                                 </div>
                                 {touched["password"] && errors["password"] && (
-                                  <p className="2xl:text-sm xl:text-xs lg:text-[12px] text-red-500 text-center mr-24">
+                                  <p className="2xl:text-sm xl:text-xs lg:text-[12px] text-red-500 text-center mr-[5.5rem]">
                                     {errors["password"]}
                                   </p>
                                 )}
@@ -159,12 +173,12 @@ const RegisterForm: React.FC = () => {
                                     placeholder="Nhập lại mật khẩu"
                                     required
                                   />
-                                  <ErrorMessage
-                                    component="a"
-                                    className=""
-                                    name="confirmPassword"
-                                  />
                                 </div>
+                                <ErrorMessage
+                                  component="a"
+                                  className="2xl:text-sm xl:text-xs lg:text-[12px] text-red-500 text-center mr-[5.5rem]"
+                                  name="confirmPassword"
+                                />
                                 <div className="flex justify-center 2xl:mt-6 xl:mt-4 lg:mt-3">
                                   <Field
                                     className="2xl:text-lg xl:text-lg lg:text-sm border-blue-300 bg-transparent border-2 2xl:h-11 2xl:w-72 xl:w-64 xl:h-10 lg:h-8 lg:w-56 xl:mr-6 lg:mr-16 p-2 outline-none rounded-md overflow-hidden"
@@ -174,12 +188,12 @@ const RegisterForm: React.FC = () => {
                                     placeholder="Email"
                                     required
                                   />
-                                  <ErrorMessage
-                                    component="a"
-                                    className=""
-                                    name="email"
-                                  />
                                 </div>
+                                <ErrorMessage
+                                  component="a"
+                                  className="2xl:text-sm xl:text-xs lg:text-[12px] text-red-500 text-center mr-[5.5rem]"
+                                  name="email"
+                                />
                                 <div className="flex justify-center 2xl:mt-6 xl:mt-4 lg:mt-3">
                                   <button
                                     type="submit"

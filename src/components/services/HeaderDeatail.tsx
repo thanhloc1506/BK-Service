@@ -9,6 +9,7 @@ import { getAddressContent } from "../../utils/getAddressContent";
 import { Service } from "../../apis/common/Service";
 import { ModalImage } from "./ModalImage";
 import { Carousel } from "react-responsive-carousel";
+import moment from "moment";
 
 interface IHeaderDetail {
   data: Service;
@@ -17,6 +18,13 @@ interface IHeaderDetail {
 }
 
 const tieuchi = ["Tin cậy", "Đáp ứng", "Đảm bảo", "Vật chất", "Thiện cảm"];
+
+const timeServe = moment(new Date(), "YYYY/MM/DD HH:mm").zone("+0700");
+var month = timeServe.format("MM");
+var day = timeServe.format("DD");
+var year = timeServe.format("YYYY");
+var hourFormat = parseInt(timeServe.format("HH"));
+var minFormat = parseInt(timeServe.format("mm"));
 
 const HeaderDeatail: React.FC<IHeaderDetail> = ({
   data,
@@ -31,8 +39,52 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
   const [addressText, setAddressText] = useState("");
 
   useEffect(() => {
-    getAddressContent(data.address).then((res) => setAddressText(res || ""));
+    getAddressContent(data.address).then((res) => {
+      setAddressText(res || "");
+    });
   }, [data.address]);
+
+  const [status, setStatus] = useState(false);
+  const [statusLoading, setStatusLoading] = useState(true);
+
+  useEffect(() => {
+    if (data.openTime == undefined || data.closeTime == undefined) {
+      return;
+    }
+    let tmp = parseInt(data.openTime.split(":")[0]);
+    let tmp2 = parseInt(data.closeTime.split(":")[0]);
+    if (data.openTime.split(" ")[1] === "pm") {
+      tmp = tmp * 2;
+    }
+    if (data.closeTime.split(" ")[1] === "pm") {
+      tmp2 = tmp2 * 2;
+    }
+
+    if (tmp < hourFormat && hourFormat < tmp2) {
+      setStatus(true);
+      setStatusLoading(false);
+      return;
+    }
+
+    if (
+      tmp == hourFormat &&
+      parseInt(data.openTime.split(":")[1]) < minFormat
+    ) {
+      setStatus(true);
+      setStatusLoading(false);
+      return;
+    }
+
+    if (
+      tmp2 == hourFormat &&
+      parseInt(data.openTime.split(":")[1]) > minFormat
+    ) {
+      setStatus(true);
+      setStatusLoading(false);
+      return;
+    }
+    setStatusLoading(false);
+  }, []);
 
   return (
     <>
@@ -175,12 +227,23 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
                 <polyline points="12 6 12 12 16 14" />
               </svg>
               <div className="flex xl:mt-[-1px] 2xl:mt-0 lg:mt-[-1px]">
-                <p className="text-green-400 2xl:ml-6 xl:ml-5 lg:ml-4 font-semibold 2xl:text-xl xl:text-lg lg:text-sm">
-                  Đang mở cửa
-                </p>
-                <p className="text-gray-600 2xl:text-xl xl:text-lg lg:text-sm font-semibold xl:mt-0 lg:mt-0.5 ml-5">
-                  {data.openTime} - {data.closeTime}
-                </p>
+                {statusLoading ? null : (
+                  <>
+                    {status ? (
+                      <p className="text-green-400 2xl:ml-6 xl:ml-5 lg:ml-4 font-semibold 2xl:text-xl xl:text-lg lg:text-sm">
+                        Đang mở cửa
+                      </p>
+                    ) : (
+                      <p className="text-red-400 2xl:ml-6 xl:ml-5 lg:ml-4 font-semibold 2xl:text-xl xl:text-lg lg:text-sm">
+                        Đang đóng cửa
+                      </p>
+                    )}
+
+                    <p className="text-gray-600 2xl:text-xl xl:text-lg lg:text-sm font-semibold xl:mt-0 lg:mt-0.5 ml-5">
+                      {data.openTime} - {data.closeTime}
+                    </p>
+                  </>
+                )}
               </div>
             </div>
             <div className="flex justify-start 2xl:ml-12 xl:ml-[2.9rem] lg:ml-[2.8rem] 2xl:mt-1 xl:mt-0">
