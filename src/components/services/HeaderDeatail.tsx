@@ -120,7 +120,12 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
                   data.images.map((e, index) => {
                     return (
                       <div key={index} className={"overflow-hidden"}>
-                        <img src={e.url} className={"max-w-full h-full"} />
+                        <img
+                          src={e.url}
+                          className={
+                            "max-w-full 2xl:max-h-64 xl:max-h-56 lg:max-h-52"
+                          }
+                        />
                       </div>
                     );
                   })}
@@ -203,7 +208,7 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
                 <circle cx="12" cy="11" r="3" />{" "}
                 <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 0 1 -2.827 0l-4.244-4.243a8 8 0 1 1 11.314 0z" />
               </svg>
-              <p className="text-gray-600 text-xl font-semibold ml-5">
+              <p className="text-gray-600 2xl:text-xl xl:text-lg lg:text-sm font-semibold ml-5">
                 {addressText}
               </p>
             </div>
@@ -234,16 +239,16 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
                       </p>
                     )}
 
-                    <p className="text-gray-600 2xl:text-xl xl:text-lg lg:text-sm font-semibold xl:mt-0 lg:mt-0.5 ml-5">
+                    <p className="text-gray-600 2xl:text-xl xl:text-lg lg:text-sm font-semibold xl:mt-0 lg:mt-0 ml-5">
                       {data.openTime} - {data.closeTime}
                     </p>
                   </>
                 )}
               </div>
             </div>
-            <div className="flex justify-start 2xl:ml-12 xl:ml-[2.9rem] lg:ml-[2.8rem] 2xl:mt-1 xl:mt-0">
+            <div className="flex justify-start 2xl:ml-12 xl:ml-[2.9rem] lg:ml-[2.8rem] 2xl:mt-1 xl:mt-0 lg:mt-1">
               <svg
-                className="2xl:h-7 2xl:w-7 xl:h-6 xl:w-6 lg:h-6 lg:w-6 text-gray-600"
+                className="2xl:h-7 2xl:w-7 xl:h-6 xl:w-6 lg:h-5 lg:w-5 text-gray-600"
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"

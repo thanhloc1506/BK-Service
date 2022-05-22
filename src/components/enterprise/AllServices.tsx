@@ -54,12 +54,12 @@ const AllServices = () => {
         setShow={setShowModalEdit}
         data={curServiceEdit}
       />
-      <div className="h-12 bg-white pt-12 pb-14 pl-20 border-b-2 border-b-gray-200 shadow-sm">
+      <div className="h-12 bg-white 2xl:pt-10 xl:pt-8 lg:pt-0 pb-14 pl-20 border-b-2 border-b-gray-200 shadow-sm">
         <p className="text-blue-solid font-medium 2xl:text-xl xl:text-lg">
           Tất cả dịch vụ
         </p>
       </div>
-      <div className="px-10 2xl:pt-12 xl:pt-8 pb-16">
+      <div className="px-10 2xl:pt-12 xl:pt-8 lg:pt-6 pb-16">
         <div className="grid grid-cols-3 gap-8 h-full">
           {services &&
             services.map((service, i) => {

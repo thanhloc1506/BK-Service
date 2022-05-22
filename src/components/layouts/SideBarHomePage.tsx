@@ -384,7 +384,7 @@ function MenuRating() {
 
 const SideBarHomePage: React.FC = () => {
   return (
-    <div className="bg-white py-6 w-full 2xl:mx-[10.6vw] xl:mx-[10.5vw] shadow-md m-auto rounded relative">
+    <div className="bg-white 2xl:py-6 xl:py-5 lg:py-3 w-full 2xl:mx-[10.6vw] xl:mx-[10.5vw] lg:mx-[10.2vw] shadow-md m-auto rounded relative">
       <div className={"flex justify-center items-center relative gap-2"}>
         <MenuRating />
         <MenuCategory />
