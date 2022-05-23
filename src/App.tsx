@@ -16,7 +16,7 @@ import {PaymentResult} from "./views/enterprise/PaymentResult";
 
 const App: React.FC = () => {
   useEffect(() => {
-    console.log("hello App");
+    document.title = "BK Service";
   }, []);
   return (
       <Provider store={store}>

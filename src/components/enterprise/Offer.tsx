@@ -54,15 +54,14 @@ export const Offer = ({id, data, onClick}: OfferProps) => {
                             <h3 className="sr-only">Price</h3>
                             <div className="text-base font-medium mb-10 sm:mb-8 lg:mb-10">
                               <span className="flex items-center justify-center">
-                                <ins className="text-5xl tracking-tight text-yellow-800 font-extrabold no-underline mx-3">$279.000</ins>
+                                <ins className="text-5xl tracking-tight text-yellow-800 font-extrabold no-underline mx-3">${data.price}</ins>
                                 <span>VND</span>
                               </span>
                             </div>
 
                             <div className="sm:block xl:hidden">
                                 <a href="/checkout/aa651062-caee-4517-b83a-d2aed4cd00cc"
-                                   className="block mx-auto text-center w-60 md:w-64 xl:w-60 bg-teal-400 text-teal-900 hover:bg-teal-300 rounded-lg font-semibold p-3 mb-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900">Get
-                                    this package</a>
+                                   className="block mx-auto text-center w-60 md:w-64 xl:w-60 bg-teal-400 text-teal-900 hover:bg-teal-300 rounded-lg font-semibold p-3 mb-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"></a>
                             </div>
                         </div>
 
@@ -99,8 +98,7 @@ export const Offer = ({id, data, onClick}: OfferProps) => {
                                 (<span className={'block italic text-green-200 mx-auto text-center w-60 md:w-64 xl:w-60 font-semibold p-3 mb-6'}>Bạn đang sử dụng gói này</span>):
                                 (<button
                                     onClick={onClickBuyOffer}
-                                    className="block mx-auto text-center w-60 md:w-64 xl:w-60 bg-teal-400 text-teal-900 hover:bg-teal-300 rounded-lg font-semibold p-3 mb-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900">Get
-                                    this package</button>)
+                                    className="block mx-auto text-center w-60 md:w-64 xl:w-60 bg-teal-400 text-teal-900 hover:bg-teal-300 rounded-lg font-semibold p-3 mb-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900">Mua ngay</button>)
                             }
 
                         </div>

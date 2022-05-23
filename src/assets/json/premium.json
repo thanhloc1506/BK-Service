@@ -1,44 +1,29 @@
 {
   "1": {
-    "price": 279000,
+    "price": 100000,
     "title": "Gói thường",
     "benefit": [
-      "Benefit 1",
-      "Benefit 2",
-      "Benefit 3"
+      "Tăng 50% quảng bá"
     ],
     "missing": [
-      "Missing 1",
-      "Missing 2",
-      "Missing 3"
     ]
   },
   "2": {
-    "price": 279000,
+    "price": 200000,
     "title": "Gói VIP",
     "benefit": [
-      "Benefit 1",
-      "Benefit 2",
-      "Benefit 3"
+      "Tăng 100% quảng bá"
     ],
     "missing": [
-      "Missing 1",
-      "Missing 2",
-      "Missing 3"
     ]
   },
   "3": {
-    "price": 279000,
+    "price": 300000,
     "title": "Gói Premium",
     "benefit": [
-      "Benefit 1",
-      "Benefit 2",
-      "Benefit 3"
+      "Tăng 150% quảng bá"
     ],
     "missing": [
-      "Missing 1",
-      "Missing 2",
-      "Missing 3"
     ]
   }
 }
