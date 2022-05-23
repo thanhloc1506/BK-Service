@@ -120,7 +120,12 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
                   data.images.map((e, index) => {
                     return (
                       <div key={index} className={"overflow-hidden"}>
-                        <img src={e.url} className={"max-w-full h-full"} />
+                        <img
+                          src={e.url}
+                          className={
+                            "max-w-full 2xl:max-h-64 xl:max-h-56 lg:max-h-52"
+                          }
+                        />
                       </div>
                     );
                   })}

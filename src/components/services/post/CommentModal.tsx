@@ -256,7 +256,7 @@ const CommentModal: React.FC<ICommentModal> = ({
                                     {comments.length} Bình luận
                                   </p>
                                 </div>
-                                <div className="2xl:mt-3 xl:mt-1.5 lg:mt-1">
+                                <div className="">
                                   <div className="grid grid-cols-4 2xl:gap-2 xl:gap-0 lg:gap-0">
                                     <div className="mt-1">
                                       <p className="2xl:text-sm xl:text-xs lg:text-[12px] font-medium flex justify-center">
@@ -332,7 +332,7 @@ const CommentModal: React.FC<ICommentModal> = ({
                                         {tieuchi[0]}
                                       </p>
                                     </div>
-                                    <div className="col-span-2 flex justify-center ml-2 mt-1">
+                                    <div className="col-span-2 flex justify-center ml-2">
                                       <RatingStar
                                         rating={
                                           score && score.length >= 5
