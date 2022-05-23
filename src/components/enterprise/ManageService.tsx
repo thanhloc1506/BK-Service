@@ -333,9 +333,9 @@ const ManageService = () => {
   }, [dispatch]);
   return (
     <div>
-      <div className="h-12 bg-white pt-12 pb-14 pl-20 border-b-2 border-b-gray-200 shadow-sm">
+      <div className="h-12 bg-white 2xl:pt-10 xl:pt-8 lg:pt-0 pb-14 pl-20 border-b-2 border-b-gray-200 shadow-sm">
         <p className="text-blue-solid font-medium 2xl:text-xl xl:text-lg">
-          Quản lí
+          Quản lý
         </p>
       </div>
       <div>

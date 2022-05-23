@@ -63,16 +63,16 @@ export const SearchField = () => {
     <div>
       <div
         className={
-          "px-4 py-4 bg-gray-100 my-5 flex w-full justify-center items-center rounded z-10 relative"
+          "px-4 2xl:py-4 xl:py-3 lg:py-2.5 2xl:text-lg xl:text-sm lg:text-xs bg-gray-100 my-5 flex w-full justify-center items-center rounded z-10 relative"
         }
         style={{ zIndex: 10 }}
       >
-        <div className={"px-4"}>
+        <div className={"2xl:px-4 xl:px-2 lg:px-0"}>
           <BsSearch />
         </div>
         <input
           className={
-            "2xl:w-120 xl:w-[26rem] outline-none bg-none bg-transparent"
+            "2xl:w-120 xl:w-[26rem] px-1 w-full outline-none bg-none bg-transparent"
           }
           type={"search"}
           placeholder="Search..."

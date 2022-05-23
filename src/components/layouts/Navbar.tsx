@@ -51,7 +51,7 @@ const Navbar: React.FC = () => {
       <div className={"fixed z-10 w-full"}>
         <nav className="grid grid-cols-9 bg-blue-light w-full px-[10%]">
           <span
-            className="col-span-3 flex justify-start px-3 ml-2 cursor-pointer items-center"
+            className="2xl:col-span-2 xl:col-span-2 lg:col-span-2 flex justify-start px-3 ml-2 cursor-pointer items-center"
             onClick={goToHomepage}
           >
             <img
@@ -63,7 +63,7 @@ const Navbar: React.FC = () => {
               BK Service
             </p>
           </span>
-          <div className="col-span-3">
+          <div className="2xl:col-span-4 xl:col-span-4 lg:col-span-4 2xl:pl-16 xl:pl-12 lg:pl-10">
             <SearchField />
           </div>
 
@@ -93,20 +93,20 @@ const Navbar: React.FC = () => {
                   <ModalNoti />
                 </span>
                 <span
-                  className="col-span-1 cursor-pointer flex flex-col justify-center items-center"
+                  className="col-span-1 cursor-pointer flex flex-col justify-center items-center xl:mt-0.5 lg:mt-1 "
                   onClick={gotoManage}
                 >
                   <div className="flex justify-center">
                     <SiGoogletagmanager className={"text-xl text-white"} />
                   </div>
-                  <p className="text-white mt-1 text-sm font-medium flex justify-center ml-3">
-                    Quản lí
+                  <p className="text-white 2xl:mt-3 xl:mt-1 lg:mt-1 2xl:text-sm xl:text-xs lg:text-[11.5px] font-medium flex justify-center ml-3">
+                    Quản lý
                   </p>
                 </span>
               </span>
               <span className="col-span-3 flex justify-end items-center pr-2">
                 <div className="grid grid-cols-3">
-                  <div className="col-span-1 flex justify-center rounded-full 2xl:mt-2 xl:mt-0 2xl:w-10 2xl:h-10 xl:w-8 xl:h-8 overflow-hidden ring-2 ring-white">
+                  <div className="col-span-1 flex justify-center rounded-full 2xl:mt-2 xl:mt-0 lg:mt-1 2xl:w-10 2xl:h-10 xl:w-8 xl:h-8 lg:h-7 lg:w-7 overflow-hidden ring-2 ring-white">
                     <img
                       src={
                         authState.enterprise?.avatar

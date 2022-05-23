@@ -13,7 +13,7 @@ export const ModalNoti = () => {
   return (
     <Popover className="relative">
       <Popover.Button>
-        <div className={""}>
+        <div className={"w-full"}>
           <span
             className={`flex h-3 w-3 absolute right-2 top-0 ${
               !state.hasNewNoti ? "hidden" : ""
@@ -24,10 +24,10 @@ export const ModalNoti = () => {
           </span>
           <div className="flex justify-center mt-1">
             <RiNotification3Line
-              className={"2xl:text-2xl xl:text-xl text-white"}
+              className={"2xl:text-2xl xl:text-xl lg:text-xl text-white"}
             />
           </div>
-          <p className="text-white 2xl:mt-2 xl:mt-1 2xl:text-sm xl:text-xs font-medium flex justify-end">
+          <p className="text-white 2xl:mt-2 xl:mt-1 lg:mt-1 2xl:text-sm xl:text-xs lg:text-[11.5px] font-medium flex justify-end">
             Thông báo
           </p>
         </div>
@@ -69,7 +69,7 @@ const getContentNoti = (noti: PInNotification.Notification): ReactNode => {
   switch (noti.type) {
     case NotiType.FOLLOWED:
       return (
-        <span className="2xl:text-lg xl:text-sm">
+        <span className="2xl:text-lg xl:text-sm lg:text-xs">
           <span className="font-semibold">
             {noti.user.fullName ? noti.user.fullName : noti.user.username}
           </span>{" "}
@@ -80,7 +80,7 @@ const getContentNoti = (noti: PInNotification.Notification): ReactNode => {
       );
     case NotiType.UNFOLLOWED:
       return (
-        <span className="2xl:text-lg xl:text-sm">
+        <span className="2xl:text-lg xl:text-sm lg:text-xs">
           <span className="font-semibold">
             {noti.user.fullName ? noti.user.fullName : noti.user.username}
           </span>{" "}
@@ -101,7 +101,7 @@ const getContentNoti = (noti: PInNotification.Notification): ReactNode => {
       );
     case NotiType.ENTERPRISE_DELETE_SCHEDULE:
       return (
-        <span className="2xl:text-lg xl:text-sm">
+        <span className="2xl:text-lg xl:text-sm lg:text-xs">
           <span>Bạn đã hủy lịch hẹn với </span>
           <span className="font-semibold">
             {noti.user.fullName ? noti.user.fullName : noti.user.username}{" "}
@@ -110,7 +110,7 @@ const getContentNoti = (noti: PInNotification.Notification): ReactNode => {
       );
     case NotiType.ENTERPRISE_DONE_SCHEDULE:
       return (
-        <span className="2xl:text-lg xl:text-sm">
+        <span className="2xl:text-lg xl:text-sm lg:text-xs">
           <span>Đơn hàng của </span>
           <span className="font-semibold">
             {noti.user.fullName ? noti.user.fullName : noti.user.username}
@@ -141,20 +141,20 @@ export const NotiContent = () => {
     <>
       <div
         className={
-          "2xl:w-[460px] xl:w-[380px] 2xl:max-w-[580px] xl:max-w-[460px] h-fit max-h-[85vh] bg-white drop-shadow-xl rounded-md translate-x-[-45%] 2xl:p-2 xl:p-2 relative"
+          "2xl:w-[460px] xl:w-[380px] 2xl:max-w-[580px] xl:max-w-[460px] lg:w-[320px] h-fit max-h-[85vh] bg-white drop-shadow-xl rounded-md translate-x-[-45%] 2xl:p-2 xl:p-2 lg:p-1.5 relative"
         }
       >
-        <div className={"flex justify-between items-center h-fit w-full"}>
+        <div className={"flex justify-between items-center h-fit w-full p-1"}>
           <p
             className={
-              "font-medium leading-6 text-gray-700 2xl:text-xl xl:text-sm pl-2"
+              "font-medium leading-6 text-gray-700 2xl:text-xl xl:text-sm lg:text-xs pl-2"
             }
           >
             Thông báo
           </p>
           <p
             className={
-              "italic text-black/50 underline-offset-1 2xl:text-lg xl:text-sm pr-2"
+              "italic text-black/50 underline-offset-1 2xl:text-lg xl:text-sm lg:text-xs pr-2"
             }
             onClick={() => dispatch(readAllNoti())}
           >
@@ -164,7 +164,7 @@ export const NotiContent = () => {
 
         <div
           className={
-            "divide-y 2xl:mx-3 xl:mx-2 2xl:h-[560px] xl:h-[450px] 2xl:mt-5 xl:mt-3 overflow-y-auto overflow-y-hiden"
+            "divide-y 2xl:mx-3 xl:mx-2 2xl:h-[560px] xl:h-[450px] lg:h-[380px] 2xl:mt-5 xl:mt-3 overflow-y-auto overflow-y-hiden"
           }
         >
           {noti.notiData.map((n, index) => {
@@ -202,7 +202,7 @@ export const NotiItem = ({
   return (
     <div>
       <div
-        className={`items-center grid grid-cols-7 2xl:p-3 xl:p-2 my-1 transition-all duration-500 rounded ${
+        className={`items-center grid grid-cols-7 2xl:p-3 xl:p-2 lg:p-1 my-1 transition-all duration-500 rounded ${
           !hadRead
             ? "bg-orange-200/30 hover:bg-orange-200"
             : "bg-gray-200/30 hover:bg-gray-200"
@@ -211,17 +211,19 @@ export const NotiItem = ({
         <div className={"col-span-1"}>
           <img
             src={img}
-            className={"2xl:w-16 2xl:h-16 xl:w-12 xl:h-12 rounded"}
+            className={
+              "2xl:w-14 2xl:h-14 xl:w-12 xl:h-12 lg:w-10 lg:h-10 rounded"
+            }
           />
         </div>
         <div className={"col-span-6"}>
-          <div className="2xl:text-lg xl:text-sm 2xl:px-3 xl:px-2">
+          <div className="2xl:text-lg xl:text-sm lg:text-[12px] 2xl:px-3 xl:px-2 lg:px-1">
             {content}
           </div>
           <div>
             <p
               className={
-                "text-gray-500 2xl:text-sm xl:text-xs 2xl:px-3 xl:px-2"
+                "text-gray-500 2xl:text-sm xl:text-xs lg:text-[12px] 2xl:px-3 xl:px-2 lg:px-1"
               }
             >
               {time}

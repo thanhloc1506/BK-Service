@@ -29,7 +29,7 @@ const DropdownBtn = () => {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        <Menu.Button className="inline-flex justify-center  w-full rounded-md py-2 bg-transparent 2xl:text-sm xl:text-sm xl:ml-0.5 items-center font-medium text-white focus:outline-none focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
+        <Menu.Button className="inline-flex justify-center  w-full rounded-md py-2 bg-transparent 2xl:text-sm xl:text-sm xl:ml-0.5 lg:ml-1 items-center font-medium text-white focus:outline-none focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
           {authState.enterprise?.fullName
             ? `${
                 authState.enterprise?.fullName.split(" ")[
@@ -61,7 +61,7 @@ const DropdownBtn = () => {
                   )}
                   onClick={goToProfile}
                 >
-                  Account settings
+                  Thông tin tài khoản
                 </div>
               )}
             </Menu.Item>
@@ -74,7 +74,7 @@ const DropdownBtn = () => {
                     "block px-4 py-2 text-sm flex justify-end"
                   )}
                 >
-                  Support
+                  Hỗ trợ
                 </a>
               )}
             </Menu.Item>
@@ -88,7 +88,7 @@ const DropdownBtn = () => {
                   )}
                   onClick={onClickSignOut}
                 >
-                  Sign out
+                  Đăng xuất
                 </button>
               )}
             </Menu.Item>
