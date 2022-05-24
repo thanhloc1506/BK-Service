@@ -78,7 +78,7 @@ const Statistical: React.FC<IStsistical> = ({ comments, score }) => {
               : score[5] >= 7.5 && score[5] < 9
               ? "Tốt"
               : score[5] >= 4.5 && score[5] < 7.5
-              ? "Trung bình"
+              ? "Bình thường"
               : "Kém"}
           </p>
         </div>
