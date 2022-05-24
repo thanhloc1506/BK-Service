@@ -10,6 +10,7 @@ import { PInScore } from "../../apis/package/in/PInScore";
 import { useDispatch } from "react-redux";
 import { unFollow } from "../../redux/slices/service";
 import ModalConfirmUnFollow from "../profile/ModalConfirmUnFollow";
+import QC from "../layouts/QC/QC";
 
 interface IService {
   data: Service;
@@ -86,9 +87,14 @@ const SingleCard: React.FC<IService> = memo(
               {/*<img src={data.avatar?.url} alt="service" className="w-72 h-40 p-3"/>*/}
             </div>
           </div>
-          <div className="grid grid-cols-6 2xl:h-[10%] xl:h-[11%] lg:h-[13%] overflow-hidden">
-            <div className="col-span-4 xl:text-xs lg:text-[10px] font-semibold 2xl:px-4 xl:px-3 lg:px-1 xl:mt-1">
-              {data.name}
+          <div className="grid grid-cols-7 2xl:h-[10%] xl:h-[11%] lg:h-[13%] overflow-hidden">
+            <div className="col-span-5 2xl:text-xs xl:text-[10px] lg:text-[9px] font-semibold 2xl:px-4 xl:px-3 lg:px-1 xl:mt-1 flex-nowrap flex">
+              {data.enterprise?.premium ? <QC /> : null}
+              <p className={data.enterprise?.premium ? "ml-1" : ""}>
+                {data.name.length < 26
+                  ? " " + data.name
+                  : " " + data.name.slice(0, 23) + "..."}
+              </p>
             </div>
             <div className="flex justify-end 2xl:p-1 xl:p-1 lg-p-0.5 2xl:mr-2 xl:mr-2 lg:mr-1 col-span-2">
               <p className="2xl:mt-1 xl:mt-0.5 lg:mt-0.5 2xl:px-2 xl:px-0.5 lg-px-0 bg-blue-200 rounded-2xl overflow-hidden text-blue-600 2xl:text-[10px] xl:text-[9px] lg:text-[8px] w-fit h-fit">
@@ -124,7 +130,7 @@ const SingleCard: React.FC<IService> = memo(
             {isLoveServicePage ? (
               <div className="col-span-2 flex justify-statrt pl-3 items-center">
                 <button
-                  className="bg-red-400 hover:bg-red-500 2xl:h-8 xl:h-6 w-fit 2xl:px-4 xl:px-3 lg:px-1.5 lg:py-0.5 2xl:text-lg xl:text-sm lg:text-xs rounded-sm overflow-hidden text-white font-light hover:text-gray-700"
+                  className="bg-red-400 hover:bg-red-500 2xl:h-8 xl:h-6 w-fit 2xl:px-4 xl:px-3 lg:px-1.5 lg:py-0.5 2xl:text-sm xl:text-xs lg:text-[10px] rounded-sm overflow-hidden text-white font-light hover:text-gray-700"
                   onClick={onClickUnFollow}
                 >
                   Hủy theo dõi
@@ -179,7 +185,7 @@ const SingleCard: React.FC<IService> = memo(
 
             <div className="col-span-2 flex justify-end pr-3 items-center">
               <button
-                className="bg-blue-solid 2xl:h-8 xl:h-6 w-fit 2xl:px-4 xl:px-3 lg:px-1.5 lg:py-0.5 2xl:text-lg xl:text-sm lg:text-xs rounded-sm overflow-hidden text-white font-light hover:text-gray-700"
+                className="flex items-center bg-blue-solid 2xl:h-8 xl:h-6 w-fit 2xl:px-4 xl:px-3 lg:px-1.5 lg:py-0.5 2xl:text-sm xl:text-xs lg:text-[10px] rounded-sm overflow-hidden text-white font-light hover:text-gray-700"
                 onClick={onBtnClick}
               >
                 {btnText || "Chỉnh sửa"}
