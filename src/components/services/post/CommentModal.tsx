@@ -13,6 +13,7 @@ import { toggleModalLogin } from "../../../redux/slices/auth";
 import { Service } from "../../../apis/common/Service";
 import { getAddressContent } from "../../../utils/getAddressContent";
 import RatingStar from "../../layouts/RatingStar";
+import * as Yup from "yup";
 
 interface ICommentModal {
   score: any;
@@ -159,6 +160,14 @@ const CommentModal: React.FC<ICommentModal> = ({
     else dispatch(toggleModalLogin(userState.showLoginForm));
   };
 
+  const validationSchema = Yup.object().shape({
+    title: Yup.string().max(30, "*Tiêu đề không được vượt quá 30 ký tự"),
+    content: Yup.string().max(
+      1000,
+      "*Nội dung đánh giá không được vượt quá 1000 ký tự"
+    ),
+  });
+
   return (
     <>
       <button
@@ -206,7 +215,7 @@ const CommentModal: React.FC<ICommentModal> = ({
                 leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                 leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
               >
-                <div className="inline-block align-bottom bg-white text-left overflow-hidden shadow-xl transform transition-all duration-500 ease-in-out 2xl:w-1100 2xl:h-630 xl:w-[940px] xl:h-[520px] lg:h-[430px] lg:w-[840px]">
+                <div className="inline-block align-bottom bg-white text-left overflow-hidden shadow-xl transform transition-all duration-500 ease-in-out 2xl:w-1100 2xl:h-650 xl:w-[940px] xl:h-[520px] lg:h-[430px] lg:w-[840px]">
                   <div className="bg-gray-light">
                     <div className="2xl:h-650 xl:h-[520px] lg:h-[430px] m:flex sm:items-start">
                       <div className="w-full h-full border-black">
@@ -453,8 +462,10 @@ const CommentModal: React.FC<ICommentModal> = ({
                                 images: "",
                               }}
                               onSubmit={onPostComment}
+                              validationSchema={validationSchema}
                             >
                               {({
+                                touched,
                                 errors,
                                 handleChange,
                                 handleBlur,
@@ -463,6 +474,11 @@ const CommentModal: React.FC<ICommentModal> = ({
                                 <Form>
                                   {Share ? (
                                     <>
+                                      {touched["title"] && errors["title"] && (
+                                        <p className="2xl:text-sm xl:text-xs lg:text-[12px] text-red-500 text-center mr-16">
+                                          {errors["title"]}
+                                        </p>
+                                      )}
                                       <div className="2xl:h-12 xl:h-8 lg:h-7 w-full">
                                         <Field
                                           type="text"

@@ -72,7 +72,7 @@ const Post: React.FC<IPost> = ({
   return (
     <>
       <ModalDeleteComment show={show} setShow={setShow} commentId={id} />
-      <div className="w-full h-fit pr-20 flex justify-center">
+      <div className="w-full pr-20 h-fit flex justify-center">
         <div className="w-full shadow-lg pt-3  border-2 border-gray-100 bg-white">
           <div className="grid grid-cols-2 border-b-2 border-b-gray-100 pb-2">
             <span className="flex ml-2.5">
@@ -132,13 +132,13 @@ const Post: React.FC<IPost> = ({
             </div>
           </div>
           <div className="border-b-2 border-b-gray-100">
-            <div className="m-4 font-bold 2xl:text-lg xl:text-sm lg:text-sm flex justify-start">
+            <div className="m-4 font-bold 2xl:text-lg xl:text-sm lg:text-sm flex justify-start break-words">
               <p>{serviceName}</p>
               <p className="mx-2">-</p>
               <p>{title}</p>
             </div>
-            <div className="flex justify-start m-4">
-              <p className="font-light pr-5 2xl:text-lg xl:text-sm">
+            <div className="m-4">
+              <p className="font-light 2xl:text-lg xl:text-sm break-words">
                 {content !== "undefined" ? content : ""}
               </p>
             </div>
