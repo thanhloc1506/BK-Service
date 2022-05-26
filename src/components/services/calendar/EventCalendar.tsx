@@ -8,6 +8,7 @@ interface IEventCalendar {
   isFirst: boolean;
   isLast: boolean;
   schedule?: any;
+  idxEvent: number;
 }
 
 const EventCalendar: React.FC<IEventCalendar> = ({
@@ -17,15 +18,20 @@ const EventCalendar: React.FC<IEventCalendar> = ({
   isFirst,
   isLast,
   schedule,
+  idxEvent,
 }) => {
   const [showEventPreview, setShowEventPreview] = useState(false);
 
   const onHoverEventSchedule = () => {
-    setShowEventPreview(true);
+    setTimeout(() => {
+      setShowEventPreview(true);
+    }, 100);
   };
 
   const onOutEventSchedule = () => {
-    setShowEventPreview(false);
+    setTimeout(() => {
+      setShowEventPreview(false);
+    }, 300);
   };
 
   if (isScheduleDay && isCurrentDay) {
@@ -33,11 +39,7 @@ const EventCalendar: React.FC<IEventCalendar> = ({
       <span className="relative">
         {showEventPreview ? (
           <div className="">
-            <PreviewSchedule
-              isFirst={isFirst}
-              isLast={isLast}
-              schedule={schedule[0]}
-            />
+            <PreviewSchedule idxEvent={idxEvent} schedules={schedule} />
           </div>
         ) : null}
         <span
@@ -56,11 +58,7 @@ const EventCalendar: React.FC<IEventCalendar> = ({
       <span className="relative">
         {showEventPreview ? (
           <div className="">
-            <PreviewSchedule
-              isFirst={isFirst}
-              isLast={isLast}
-              schedule={schedule[0]}
-            />
+            <PreviewSchedule idxEvent={idxEvent} schedules={schedule} />
           </div>
         ) : null}
         <span

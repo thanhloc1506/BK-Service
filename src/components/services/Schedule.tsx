@@ -2,6 +2,7 @@ import React, { useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Service } from "../../apis/common/Service";
 import { toggleModalLogin } from "../../redux/slices/auth";
+import { getScheduleByServiceId } from "../../redux/slices/service";
 import { RootState } from "../../redux/store";
 import Calendar from "./calendar/Calendar";
 import BookServiceModal from "./schedule/BookServiceModal";
@@ -18,6 +19,7 @@ const Schedule: React.FC<ISchedule> = ({ service, schedules }) => {
   const userState = useSelector((state: RootState) => state.user);
   const onClickOpen = () => {
     if (userState.isAuthenticated) {
+      dispatch(getScheduleByServiceId(service?._id as string));
       setOpen(true);
     } else {
       dispatch(toggleModalLogin(userState.showLoginForm));
@@ -26,7 +28,12 @@ const Schedule: React.FC<ISchedule> = ({ service, schedules }) => {
   return (
     <div className="py-5">
       <div className="flex justify-end mr-0">
-        <BookServiceModal open={open} setOpen={setOpen} service={service} />
+        <BookServiceModal
+          open={open}
+          setOpen={setOpen}
+          service={service}
+          schedules={schedules}
+        />
         <div className="shadow-xl w-[22vw] h-fit border-2 border-gray-100 bg-white">
           <div className="flex justify-center">
             <p className="2xl:text-xl xl:text-lg font-semibold pt-3">

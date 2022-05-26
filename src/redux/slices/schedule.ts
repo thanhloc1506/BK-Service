@@ -57,15 +57,14 @@ const scheduleSlice = createSlice({
       let schedules: Schedule[] = [];
       let idx = 0;
       for (const schedule of action.payload) {
-        const timeServe = moment(
-          schedule.timeServe as Date,
-          "YYYY/MM/DD HH:mm"
-        ).zone("+0700");
-        var month = timeServe.format("MM");
-        var day = timeServe.format("DD");
-        var year = timeServe.format("YYYY");
-        var hour = timeServe.format("HH");
-        var min = timeServe.format("mm");
+        const timeServe = moment(schedule.timeServe as Date)
+          .utcOffset("+0700")
+          .format("YYYY/MM/DD HH:mm");
+        var month = timeServe.split(" ")[0].split("/")[1];
+        var day = timeServe.split(" ")[0].split("/")[2];
+        var year = timeServe.split(" ")[0].split("/")[0];
+        var hour = timeServe.split(" ")[1].split(":")[0];
+        var min = timeServe.split(" ")[1].split(":")[1];
         schedules[idx] = {
           ...schedule,
           timeServe: {

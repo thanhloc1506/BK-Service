@@ -114,33 +114,55 @@ export const deepSearch = createAsyncThunk(
     });
     console.log(params);
     dispatch(showWaiting());
-    return axiosClient
-      .get<PInSearch.Data>("search", {
+
+    try {
+      const response = await axiosClient.get<PInSearch.Data>("search", {
         params,
-      })
-      .then((res) => res.data)
-      .finally(() => dispatch(hideWaiting()));
+      });
+      let services: any = [];
+      for (const service of response.data.services) {
+        const enterpriseInfo = await axiosClient.get(
+          `/enterprise/${service.enterprise}`
+        );
+        services.push({
+          ...service,
+          enterprise: enterpriseInfo.data.enterprise,
+        });
+      }
+      return { ...response.data, services };
+    } catch (error) {
+      throw error;
+    } finally {
+      dispatch(hideWaiting());
+    }
   }
 );
 
 export const search = createAsyncThunk("/search", async (text: string, api) => {
   const dispatch = api.dispatch;
   dispatch(showWaiting());
-  return axiosClient
-    .get("search", {
+  try {
+    const response = await axiosClient.get("search", {
       params: {
         text,
       },
-    })
-    .then((res: AxiosResponse<PInSearch.Data>) => {
-      return res.data;
-    })
-    .catch((error: AxiosError) => {
-      throw error;
-    })
-    .finally(() => {
-      dispatch(hideWaiting());
     });
+    let services: any = [];
+    for (const service of response.data.services) {
+      const enterpriseInfo = await axiosClient.get(
+        `/enterprise/${service.enterprise}`
+      );
+      services.push({
+        ...service,
+        enterprise: enterpriseInfo.data.enterprise,
+      });
+    }
+    return { ...response.data, services };
+  } catch (error) {
+    throw error;
+  } finally {
+    dispatch(hideWaiting());
+  }
 });
 
 export const quickSearch = createAsyncThunk(
@@ -160,12 +182,33 @@ export const quickSearch = createAsyncThunk(
         delete params[k];
       }
     });
-    return axiosClient
-      .get<PInSearch.Data>("search", {
+    // return axiosClient
+    //   .get<PInSearch.Data>("search", {
+    //     params,
+    //   })
+    //   .then((res) => res.data)
+    //   .finally(() => {});
+    dispatch(showWaiting());
+    try {
+      const response = await axiosClient.get<PInSearch.Data>("search", {
         params,
-      })
-      .then((res) => res.data)
-      .finally(() => {});
+      });
+      let services: any = [];
+      for (const service of response.data.services) {
+        const enterpriseInfo = await axiosClient.get(
+          `/enterprise/${service.enterprise}`
+        );
+        services.push({
+          ...service,
+          enterprise: enterpriseInfo.data.enterprise,
+        });
+      }
+      return { ...response.data, services };
+    } catch (error) {
+      throw error;
+    } finally {
+      dispatch(hideWaiting());
+    }
   }
 );
 
@@ -220,6 +263,7 @@ const searchSlice = createSlice({
       action: PayloadAction<PInSearch.Data>
     ) => {
       const data = action.payload;
+      console.log(data);
       state.status = "complete";
       if (data.searchText === state.currentSearchText) {
         if (data.services.length > 0) {
@@ -295,7 +339,6 @@ const searchSlice = createSlice({
       let data = action.payload;
       state.quickSearchStatus = "complete";
       if (data.searchText === state.currentQuickSearchText) {
-        console.log(data);
         if (data.services.length > 0) {
           state.dataQuickSeacrh = data;
         } else {

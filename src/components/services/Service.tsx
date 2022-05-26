@@ -10,6 +10,7 @@ import { PInScore } from "../../apis/package/in/PInScore";
 import { useDispatch } from "react-redux";
 import { unFollow } from "../../redux/slices/service";
 import ModalConfirmUnFollow from "../profile/ModalConfirmUnFollow";
+import QC from "../layouts/QC/QC";
 
 interface IService {
   data: Service;
@@ -86,9 +87,14 @@ const SingleCard: React.FC<IService> = memo(
               {/*<img src={data.avatar?.url} alt="service" className="w-72 h-40 p-3"/>*/}
             </div>
           </div>
-          <div className="grid grid-cols-6 2xl:h-[10%] xl:h-[11%] lg:h-[13%] overflow-hidden">
-            <div className="col-span-4 xl:text-xs lg:text-[13px] font-semibold 2xl:px-4 xl:px-3 lg:px-1 xl:mt-1">
-              {data.name}
+          <div className="grid grid-cols-7 2xl:h-[10%] xl:h-[11%] lg:h-[13%] overflow-hidden">
+            <div className="col-span-5 2xl:text-xs xl:text-[10px] lg:text-[9px] font-semibold 2xl:px-4 xl:px-3 lg:px-1 xl:mt-1 flex-nowrap flex">
+              {data.enterprise?.premium ? <QC /> : null}
+              <p className={data.enterprise?.premium ? "ml-1" : ""}>
+                {data.name.length < 26
+                  ? " " + data.name
+                  : " " + data.name.slice(0, 23) + "..."}
+              </p>
             </div>
             <div className="flex justify-end 2xl:p-1 xl:p-1 lg-p-0.5 2xl:mr-2 xl:mr-2 lg:mr-1 col-span-2">
               <p className="2xl:mt-1 xl:mt-0.5 lg:mt-0.5 2xl:px-2 xl:px-0.5 lg-px-0 bg-blue-200 rounded-2xl overflow-hidden text-blue-600 2xl:text-[10px] xl:text-[9px] lg:text-[8px] w-fit h-fit">
@@ -106,7 +112,11 @@ const SingleCard: React.FC<IService> = memo(
               ""
             ) : (
               <RatingStar
-                rating={(score && score.length >= 7&&score[6])? score[6].toFixed(1) : -1}
+                rating={
+                  score && score.length >= 7 && score[6]
+                    ? score[6].toFixed(1)
+                    : -1
+                }
               />
             )}
           </div>
@@ -116,11 +126,11 @@ const SingleCard: React.FC<IService> = memo(
               dangerouslySetInnerHTML={{ __html: data.shortIntroduction || "" }}
             ></p>
           </div>
-          <div className="grid grid-cols-4 row-span-1 xl:h-14 overflow-hidden lg:mt-1.5">
+          <div className="grid grid-cols-4 row-span-1 2xl:h-14 xl:h-11 lg:h-7 overflow-hidden">
             {isLoveServicePage ? (
-              <div className="col-span-2 flex justify-statrt pl-3 items-center 2xl:mt-[-15px] xl:mt-[-15px] lg:mt-[-1px]">
+              <div className="col-span-2 flex justify-statrt pl-3 items-center">
                 <button
-                  className="bg-red-400 hover:bg-red-500 2xl:h-8 xl:h-6 w-fit 2xl:px-4 xl:px-3 lg:px-1.5 lg:py-0.5 2xl:text-lg xl:text-sm lg:text-xs rounded-sm overflow-hidden text-white font-light hover:text-gray-700"
+                  className="bg-red-400 hover:bg-red-500 2xl:h-8 xl:h-6 w-fit 2xl:px-4 xl:px-3 lg:px-1.5 lg:py-0.5 2xl:text-sm xl:text-xs lg:text-[10px] rounded-sm overflow-hidden text-white font-light hover:text-gray-700"
                   onClick={onClickUnFollow}
                 >
                   Hủy theo dõi
@@ -128,7 +138,7 @@ const SingleCard: React.FC<IService> = memo(
               </div>
             ) : (
               <div className="col-span-2 grid grid-cols-2">
-                <div className="col-span-1 flex justify-center h-full ml-1 2xl:mt-3 xl:mt-2">
+                <div className="col-span-1 flex justify-center h-full ml-1 items-center">
                   <svg
                     className="xl:h-5 xl:w-5 lg:w-4 lg:h-4 text-gray-500"
                     fill="none"
@@ -142,11 +152,11 @@ const SingleCard: React.FC<IService> = memo(
                       d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
                     />
                   </svg>
-                  <p className="2xl:mt-[-4px] xl:mt-0 lg:mt-0 ml-0.5 font-light items-center 2xl:text-lg xl:text-sm lg:text-xs">
+                  <p className="flex ml-0.5 font-light items-center 2xl:text-lg xl:text-sm lg:text-xs">
                     {data.textCmtCount || 0}
                   </p>
                 </div>
-                <div className="col-span-1 flex justify-center h-full 2xl:mt-3 xl:mt-2">
+                <div className="col-span-1 flex justify-center h-full items-center">
                   <svg
                     className="xl:h-5 xl:w-5 lg:w-4 lg:h-4 text-gray-500 align-middle"
                     fill="none"
@@ -166,16 +176,16 @@ const SingleCard: React.FC<IService> = memo(
                       d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
                     />
                   </svg>
-                  <p className="ml-0.5 2xl:mt-[-4px] xl:mt-0 lg:mt-0 font-light 2xl:text-lg xl:text-sm lg:text-xs">
+                  <p className="flex items-center lg:mt-0 font-light 2xl:text-lg xl:text-sm lg:text-xs">
                     {data.imgCmtCount || 0}
                   </p>
                 </div>
               </div>
             )}
 
-            <div className="col-span-2 flex justify-end pr-3 items-center 2xl:mt-[-15px] xl:mt-[-15px] lg:mt-[-1px]">
+            <div className="col-span-2 flex justify-end pr-3 items-center">
               <button
-                className="bg-blue-solid 2xl:h-8 xl:h-6 w-fit 2xl:px-4 xl:px-3 lg:px-1.5 lg:py-0.5 2xl:text-lg xl:text-sm lg:text-xs rounded-sm overflow-hidden text-white font-light hover:text-gray-700"
+                className="flex items-center bg-blue-solid 2xl:h-8 xl:h-6 w-fit 2xl:px-4 xl:px-3 lg:px-1.5 lg:py-0.5 2xl:text-sm xl:text-xs lg:text-[10px] rounded-sm overflow-hidden text-white font-light hover:text-gray-700"
                 onClick={onBtnClick}
               >
                 {btnText || "Chỉnh sửa"}
