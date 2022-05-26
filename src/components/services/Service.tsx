@@ -87,16 +87,16 @@ const SingleCard: React.FC<IService> = memo(
               {/*<img src={data.avatar?.url} alt="service" className="w-72 h-40 p-3"/>*/}
             </div>
           </div>
-          <div className="grid grid-cols-7 2xl:h-[10%] xl:h-[11%] lg:h-[13%] overflow-hidden">
+          <div className="grid grid-cols-8 2xl:h-[10%] xl:h-[11%] lg:h-[13%] overflow-hidden">
             <div className="col-span-5 2xl:text-xs xl:text-[10px] lg:text-[9px] font-semibold 2xl:px-4 xl:px-3 lg:px-1 xl:mt-1 flex-nowrap flex">
               {data.enterprise?.premium ? <QC /> : null}
               <p className={data.enterprise?.premium ? "ml-1" : ""}>
-                {data.name.length < 26
+                {data.name.length < 25
                   ? " " + data.name
-                  : " " + data.name.slice(0, 23) + "..."}
+                  : " " + data.name.slice(0, 22) + "..."}
               </p>
             </div>
-            <div className="flex justify-end 2xl:p-1 xl:p-1 lg-p-0.5 2xl:mr-2 xl:mr-2 lg:mr-1 col-span-2">
+            <div className="flex justify-end 2xl:p-1 xl:p-1 lg-p-0.5 2xl:mr-2 xl:mr-2 lg:mr-1 col-span-3">
               <p className="2xl:mt-1 xl:mt-0.5 lg:mt-0.5 2xl:px-2 xl:px-0.5 lg-px-0 bg-blue-200 rounded-2xl overflow-hidden text-blue-600 2xl:text-[10px] xl:text-[9px] lg:text-[8px] w-fit h-fit">
                 {data.category?.category}
               </p>
