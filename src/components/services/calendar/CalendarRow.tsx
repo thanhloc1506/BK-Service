@@ -66,6 +66,7 @@ const CalendarRow: React.FC<CalendarRowProps> = ({
               currentYear == schedule.timeServe.year &&
               1 == schedule.timeServe.day
           )}
+          idxEvent={firstDay}
         />
       </td>
     );
@@ -100,6 +101,7 @@ const CalendarRow: React.FC<CalendarRowProps> = ({
                 currentYear == schedule.timeServe.year &&
                 i + 1 == schedule.timeServe.day
             )}
+            idxEvent={i}
           />
         </td>
       );
@@ -137,6 +139,7 @@ const CalendarRow: React.FC<CalendarRowProps> = ({
                 currentYear == schedule.timeServe.year &&
                 i + (7 * row - firstDay) == schedule.timeServe.day
             )}
+            idxEvent={i}
           />
         </td>
       );
