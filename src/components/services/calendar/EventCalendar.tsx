@@ -21,11 +21,15 @@ const EventCalendar: React.FC<IEventCalendar> = ({
   const [showEventPreview, setShowEventPreview] = useState(false);
 
   const onHoverEventSchedule = () => {
-    setShowEventPreview(true);
+    setTimeout(() => {
+      setShowEventPreview(true);
+    }, 100);
   };
 
   const onOutEventSchedule = () => {
-    setShowEventPreview(false);
+    setTimeout(() => {
+      setShowEventPreview(false);
+    }, 300);
   };
 
   if (isScheduleDay && isCurrentDay) {

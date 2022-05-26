@@ -4,6 +4,7 @@ import { hideWaiting, showWaiting } from "./loading";
 import moment from "moment";
 import { Service } from "../../apis/common/Service";
 import { PInSchedule } from "../../apis/package/in/PInSchedule";
+import schedule from "./schedule";
 
 export interface State {
   services: Service[];
@@ -21,6 +22,8 @@ export interface State {
   schedules: any[];
   scheduleLoading: boolean;
   currentServiceSchedules: any;
+  allSchedules: any[];
+  allSchedulesLoading: boolean;
 }
 
 const initialState: State = {
@@ -39,6 +42,8 @@ const initialState: State = {
   schedules: [],
   scheduleLoading: false,
   currentServiceSchedules: [],
+  allSchedules: [],
+  allSchedulesLoading: false,
 };
 
 export const resetState = createAsyncThunk("reset/state", () => {
@@ -150,6 +155,7 @@ export const comment = createAsyncThunk(
       const userInfoResponse = await axiosClient.get(
         `/user-info/${response.data.comment.user}`
       );
+
       const time = moment(response.data.comment.createdAt, "YYYY/MM/DD");
       var month = time.format("MM");
       var day = time.format("DD");
@@ -255,15 +261,14 @@ export const getAllSchedules = createAsyncThunk(
       const response = await axiosClient.get<PInSchedule>("/user/schedules");
       for (const schedule of response.data.schedules) {
         // if (schedule.service === serviceId) {
-        const timeServe = moment(
-          schedule.timeServe as Date,
-          "YYYY/MM/DD HH:mm"
-        ).zone("+0700");
-        var month = timeServe.format("MM");
-        var day = timeServe.format("DD");
-        var year = timeServe.format("YYYY");
-        var hour = timeServe.format("HH");
-        var min = timeServe.format("mm");
+        const timeServe = moment(schedule.timeServe as Date)
+          .utcOffset("+0700")
+          .format("YYYY/MM/DD HH:mm");
+        var month = timeServe.split(" ")[0].split("/")[1];
+        var day = timeServe.split(" ")[0].split("/")[2];
+        var year = timeServe.split(" ")[0].split("/")[0];
+        var hour = timeServe.split(" ")[1].split(":")[0];
+        var min = timeServe.split(" ")[1].split(":")[1];
         currentServiceSchedules[idx] = {
           ...schedule,
           timeServe: {
@@ -275,10 +280,12 @@ export const getAllSchedules = createAsyncThunk(
             sec: "00",
           },
           service: schedule.service.name,
+          serviceId: schedule.service._id,
         };
         idx++;
         // }
       }
+      console.log(currentServiceSchedules);
       return currentServiceSchedules;
     } catch (error) {
       throw error;
@@ -320,15 +327,14 @@ export const addSchedule = createAsyncThunk(
 
       const serviceResponse = await axiosClient.get(`/service/${serviceId}`);
 
-      const timeServe = moment(
-        response.data.schedule.timeServe,
-        "YYYY/MM/DD HH:mm"
-      ).zone("+0700");
-      var month = timeServe.format("MM");
-      var day = timeServe.format("DD");
-      var year = timeServe.format("YYYY");
-      var hourFormat = timeServe.format("HH");
-      var minFormat = timeServe.format("mm");
+      const timeServe = moment(response.data.schedule.timeServe as Date)
+        .utcOffset("+0700")
+        .format("YYYY/MM/DD HH:mm");
+      var month = timeServe.split(" ")[0].split("/")[1];
+      var day = timeServe.split(" ")[0].split("/")[2];
+      var year = timeServe.split(" ")[0].split("/")[0];
+      var hourFormat = timeServe.split(" ")[1].split(":")[0];
+      var minFormat = timeServe.split(" ")[1].split(":")[1];
       let currentServiceSchedule = {
         ...response.data.schedule,
         timeServe: {
@@ -340,6 +346,7 @@ export const addSchedule = createAsyncThunk(
           sec: "00",
         },
         service: serviceResponse.data.service.name,
+        serviceId: serviceResponse.data.service._id,
       };
 
       return currentServiceSchedule;
@@ -348,6 +355,32 @@ export const addSchedule = createAsyncThunk(
     } finally {
       dispatch(hideWaiting());
     }
+  }
+);
+
+export const getScheduleByServiceId = createAsyncThunk(
+  "get/schedule/by/serviceId",
+  async (serviceId: string, api) => {
+    const dispatch = api.dispatch;
+    dispatch(showWaiting());
+    try {
+      const schedulesOfService = await axiosClient.post(
+        "/user/schedule-by-service",
+        { serviceId }
+      );
+      return schedulesOfService.data.schedules;
+    } catch (e) {
+      throw e;
+    } finally {
+      dispatch(hideWaiting());
+    }
+  }
+);
+
+export const deleteScheduleTmp = createAsyncThunk(
+  "delete/schedule",
+  (scheduleId: string) => {
+    return scheduleId;
   }
 );
 
@@ -444,6 +477,18 @@ const serviceSlice = createSlice({
         );
       }
       state.commentLoading = false;
+    },
+    [getScheduleByServiceId.pending.toString()]: (state, action) => {
+      state.allSchedulesLoading = true;
+    },
+    [getScheduleByServiceId.fulfilled.toString()]: (state, action) => {
+      state.allSchedules = action.payload;
+      state.allSchedulesLoading = false;
+    },
+    [deleteScheduleTmp.fulfilled.toString()]: (state, action) => {
+      state.schedules = state.schedules.filter(
+        (schedule: any) => schedule._id != action.payload
+      );
     },
   },
 });
