@@ -64,9 +64,7 @@ const BookServiceModal = ({ open, setOpen, service, schedules }: IParam) => {
 
   const [date, setDate] = useState(new Date());
 
-  const [hour, setHour] = useState(
-    service?.openTime?.split(" ")[0].split(":")[0] ?? "01"
-  );
+  const [hour, setHour] = useState(String(new Date().getHours()));
 
   const [min, setMin] = useState("00");
 

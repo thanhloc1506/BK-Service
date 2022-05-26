@@ -39,7 +39,7 @@ const parseHour = (time?: string) => {
 
 const checkInRangeTime = (hour: any, isPM: boolean, open: any, close: any) => {
   let isInRangeOpen = true;
-  console.log(open);
+
   if (open.AMPM == "AM" && !isPM) {
     if (hour < open.time) {
       isInRangeOpen = false;
@@ -73,7 +73,8 @@ const getCountByServeDate = (
   isPM: boolean,
   hour: any,
   openTime?: string,
-  closeTime?: string
+  closeTime?: string,
+  defauld?: boolean
 ): boolean => {
   let count = 0;
   const bookTime = parseTime(date);
@@ -87,8 +88,8 @@ const getCountByServeDate = (
       var month = timeServe.split(" ")[0].split("/")[1];
       var day = timeServe.split(" ")[0].split("/")[2];
       var year = timeServe.split(" ")[0].split("/")[0];
-      var hourFormat = timeServe.split(" ")[1].split("/")[0];
-      var min = timeServe.split(" ")[1].split("/")[1];
+      var hourFormat = timeServe.split(" ")[1].split(":")[0];
+      var min = timeServe.split(" ")[1].split(":")[1];
 
       if (
         parseInt(year) == parseInt(bookTime.year) &&
@@ -104,7 +105,15 @@ const getCountByServeDate = (
   const open = parseHour(openTime);
   const close = parseHour(closeTime);
   const isInRangeTimeOpen = checkInRangeTime(hour, isPM, open, close);
-  return count >= 5 || !isInRangeTimeOpen;
+
+  if (defauld) return count >= 5;
+
+  return count >= 5 || !isInRangeTimeOpen || hourReal < new Date().getHours();
+};
+
+const checkValidAMPM = () => {
+  const currentHour = new Date().getHours();
+  return currentHour > 12;
 };
 
 const TimePicker: React.FC<ITimePicker> = ({
@@ -134,17 +143,23 @@ const TimePicker: React.FC<ITimePicker> = ({
   };
 
   useEffect(() => {
-    let idx = parseInt(openTime?.split(" ")[0].split(":")[0] as string);
-    setHour(String(idx));
+    let idx = new Date().getHours();
+    setHour(idx > 12 ? String(idx - 12) : String(idx));
+    setAMPM(idx > 12 ? "PM" : "AM");
+    idx = idx > 12 ? idx - 12 : idx;
     while (
       getCountByServeDate(
         date,
         serviceId,
         serviceState.allSchedules,
         AMPM == "PM",
-        String(idx)
+        String(idx),
+        openTime,
+        closeTime,
+        true
       )
     ) {
+      console.log(idx);
       setHour(String(idx + 1));
       idx += 1;
     }
@@ -172,7 +187,8 @@ const TimePicker: React.FC<ITimePicker> = ({
                   AMPM == "PM",
                   "1",
                   openTime,
-                  closeTime
+                  closeTime,
+                  false
                 )}
                 className={
                   getCountByServeDate(
@@ -182,7 +198,8 @@ const TimePicker: React.FC<ITimePicker> = ({
                     AMPM == "PM",
                     "1",
                     openTime,
-                    closeTime
+                    closeTime,
+                    false
                   )
                     ? "bg-gray-300"
                     : ""
@@ -200,7 +217,8 @@ const TimePicker: React.FC<ITimePicker> = ({
                   AMPM == "PM",
                   "2",
                   openTime,
-                  closeTime
+                  closeTime,
+                  false
                 )}
                 className={
                   getCountByServeDate(
@@ -210,7 +228,8 @@ const TimePicker: React.FC<ITimePicker> = ({
                     AMPM == "PM",
                     "2",
                     openTime,
-                    closeTime
+                    closeTime,
+                    false
                   )
                     ? "bg-gray-300"
                     : ""
@@ -228,7 +247,8 @@ const TimePicker: React.FC<ITimePicker> = ({
                   AMPM == "PM",
                   "3",
                   openTime,
-                  closeTime
+                  closeTime,
+                  false
                 )}
                 className={
                   getCountByServeDate(
@@ -238,7 +258,8 @@ const TimePicker: React.FC<ITimePicker> = ({
                     AMPM == "PM",
                     "3",
                     openTime,
-                    closeTime
+                    closeTime,
+                    false
                   )
                     ? "bg-gray-300"
                     : ""
@@ -256,7 +277,8 @@ const TimePicker: React.FC<ITimePicker> = ({
                   AMPM == "PM",
                   "4",
                   openTime,
-                  closeTime
+                  closeTime,
+                  false
                 )}
                 className={
                   getCountByServeDate(
@@ -266,7 +288,8 @@ const TimePicker: React.FC<ITimePicker> = ({
                     AMPM == "PM",
                     "4",
                     openTime,
-                    closeTime
+                    closeTime,
+                    false
                   )
                     ? "bg-gray-300"
                     : ""
@@ -284,7 +307,8 @@ const TimePicker: React.FC<ITimePicker> = ({
                   AMPM == "PM",
                   "5",
                   openTime,
-                  closeTime
+                  closeTime,
+                  false
                 )}
                 className={
                   getCountByServeDate(
@@ -294,7 +318,8 @@ const TimePicker: React.FC<ITimePicker> = ({
                     AMPM == "PM",
                     "5",
                     openTime,
-                    closeTime
+                    closeTime,
+                    false
                   )
                     ? "bg-gray-300"
                     : ""
@@ -312,7 +337,8 @@ const TimePicker: React.FC<ITimePicker> = ({
                   AMPM == "PM",
                   "6",
                   openTime,
-                  closeTime
+                  closeTime,
+                  false
                 )}
                 className={
                   getCountByServeDate(
@@ -322,7 +348,8 @@ const TimePicker: React.FC<ITimePicker> = ({
                     AMPM == "PM",
                     "6",
                     openTime,
-                    closeTime
+                    closeTime,
+                    false
                   )
                     ? "bg-gray-300"
                     : ""
@@ -340,7 +367,8 @@ const TimePicker: React.FC<ITimePicker> = ({
                   AMPM == "PM",
                   "7",
                   openTime,
-                  closeTime
+                  closeTime,
+                  false
                 )}
                 className={
                   getCountByServeDate(
@@ -350,7 +378,8 @@ const TimePicker: React.FC<ITimePicker> = ({
                     AMPM == "PM",
                     "7",
                     openTime,
-                    closeTime
+                    closeTime,
+                    false
                   )
                     ? "bg-gray-300"
                     : ""
@@ -368,7 +397,8 @@ const TimePicker: React.FC<ITimePicker> = ({
                   AMPM == "PM",
                   "8",
                   openTime,
-                  closeTime
+                  closeTime,
+                  false
                 )}
                 className={
                   getCountByServeDate(
@@ -378,7 +408,8 @@ const TimePicker: React.FC<ITimePicker> = ({
                     AMPM == "PM",
                     "8",
                     openTime,
-                    closeTime
+                    closeTime,
+                    false
                   )
                     ? "bg-gray-300"
                     : ""
@@ -396,7 +427,8 @@ const TimePicker: React.FC<ITimePicker> = ({
                   AMPM == "PM",
                   "9",
                   openTime,
-                  closeTime
+                  closeTime,
+                  false
                 )}
                 className={
                   getCountByServeDate(
@@ -406,7 +438,8 @@ const TimePicker: React.FC<ITimePicker> = ({
                     AMPM == "PM",
                     "9",
                     openTime,
-                    closeTime
+                    closeTime,
+                    false
                   )
                     ? "bg-gray-300"
                     : ""
@@ -424,7 +457,8 @@ const TimePicker: React.FC<ITimePicker> = ({
                   AMPM == "PM",
                   "10",
                   openTime,
-                  closeTime
+                  closeTime,
+                  false
                 )}
                 className={
                   getCountByServeDate(
@@ -434,7 +468,8 @@ const TimePicker: React.FC<ITimePicker> = ({
                     AMPM == "PM",
                     "10",
                     openTime,
-                    closeTime
+                    closeTime,
+                    false
                   )
                     ? "bg-gray-300"
                     : ""
@@ -452,7 +487,8 @@ const TimePicker: React.FC<ITimePicker> = ({
                   AMPM == "PM",
                   "11",
                   openTime,
-                  closeTime
+                  closeTime,
+                  false
                 )}
                 className={
                   getCountByServeDate(
@@ -473,8 +509,30 @@ const TimePicker: React.FC<ITimePicker> = ({
               <option
                 value="12"
                 selected={hour === "12"}
-                disabled={true}
-                className={true ? "bg-gray-300" : ""}
+                disabled={getCountByServeDate(
+                  date,
+                  serviceId,
+                  serviceState.allSchedules,
+                  AMPM == "PM",
+                  "12",
+                  openTime,
+                  closeTime,
+                  false
+                )}
+                className={
+                  getCountByServeDate(
+                    date,
+                    serviceId,
+                    serviceState.allSchedules,
+                    AMPM == "PM",
+                    "12",
+                    openTime,
+                    closeTime,
+                    false
+                  )
+                    ? "bg-gray-300"
+                    : ""
+                }
               >
                 12
               </option>
@@ -499,7 +557,12 @@ const TimePicker: React.FC<ITimePicker> = ({
               className="bg-transparent appearance-none outline-none 2xl:text-lg xl:text-sm lg:text-sm"
               onChange={(e: any) => onClickAMPM(e.target.value)}
             >
-              <option value="AM" selected={AMPM === "AM"}>
+              <option
+                value="AM"
+                selected={AMPM === "AM"}
+                disabled={checkValidAMPM()}
+                className={checkValidAMPM() ? "bg-gray-300" : ""}
+              >
                 AM
               </option>
               <option value="PM" selected={AMPM === "PM"}>

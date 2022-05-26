@@ -213,7 +213,7 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
                 <circle cx="12" cy="11" r="3" />{" "}
                 <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 0 1 -2.827 0l-4.244-4.243a8 8 0 1 1 11.314 0z" />
               </svg>
-              <p className="text-gray-600 text-xl font-semibold ml-5">
+              <p className="text-gray-600 2xl:text-lg lg:text-sm xl:text-xs font-semibold ml-5">
                 {addressText}
               </p>
             </div>
@@ -235,17 +235,18 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
                 {statusLoading ? null : (
                   <>
                     {status ? (
-                      <p className="text-green-400 2xl:ml-6 xl:ml-5 lg:ml-4 font-semibold 2xl:text-xl xl:text-lg lg:text-sm">
+                      <p className="text-green-400 2xl:ml-6 xl:ml-5 lg:ml-4 font-semibold 2xl:text-lg lg:text-sm xl:text-xs">
                         Đang mở cửa
                       </p>
                     ) : (
-                      <p className="text-red-400 2xl:ml-6 xl:ml-5 lg:ml-4 font-semibold 2xl:text-xl xl:text-lg lg:text-sm">
+                      <p className="text-red-400 2xl:ml-6 xl:ml-5 lg:ml-4 font-semibold 2xl:text-lg lg:text-sm xl:text-xs">
                         Đang đóng cửa
                       </p>
                     )}
 
                     <p className="text-gray-600 2xl:text-xl xl:text-lg lg:text-sm font-semibold xl:mt-0 lg:mt-0.5 ml-5">
-                      {data.openTime} - {data.closeTime}
+                      {data.openTime.toUpperCase()} -{" "}
+                      {data.closeTime.toUpperCase()}
                     </p>
                   </>
                 )}
@@ -268,7 +269,7 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
                 <path d="M11 3L20 12a1.5 1.5 0 0 1 0 2L14 20a1.5 1.5 0 0 1 -2 0L3 11v-4a4 4 0 0 1 4 -4h4" />{" "}
                 <circle cx="9" cy="9" r="2" />
               </svg>
-              <p className="text-gray-600 2xl:text-xl xl:text-lg font-semibold 2xl:ml-5 xl:ml-4 lg:ml-3 xl:mt-[-2px] 2xl:mt-0">
+              <p className="text-gray-600 2xl:text-lg lg:text-sm xl:text-xs font-semibold 2xl:ml-5 xl:ml-4 lg:ml-3 xl:mt-[-2px] 2xl:mt-0">
                 {data.minPrice}đ - {data.maxPrice}đ
               </p>
             </div>
