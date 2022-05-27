@@ -11,7 +11,6 @@ import { getAddressContent } from "../../utils/getAddressContent";
 import { useDispatch } from "react-redux";
 import { hideWaiting, showWaiting } from "../../redux/slices/loading";
 import { ModalConfirm } from "../common/ModalConfirm";
-import { deleteSchedule } from "../../redux/slices/schedule";
 import { useNavigate } from "react-router-dom";
 interface ScheduleHistoryItemProps extends React.Props<any> {
   data: ScheduleHistory;

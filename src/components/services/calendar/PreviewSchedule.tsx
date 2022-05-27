@@ -47,8 +47,8 @@ const PreviewSchedule: React.FC<IPreviewSchedule> = ({
             <div className="text-black flex">
               <span className="inline-block 2xl:text-sm xl:text-xs lg:text-[10px]">
                 Bạn có lịch hẹn với{" "}
-                <span className="text-blue-solid">{schedule.service}</span> vào
-                lúc{" "}
+                <span className="text-blue-solid">{schedule.serviceName}</span>{" "}
+                vào lúc{" "}
                 <span className="text-blue-solid">
                   {schedule.timeServe.hour}:{schedule.timeServe.min}:
                   {schedule.timeServe.sec}

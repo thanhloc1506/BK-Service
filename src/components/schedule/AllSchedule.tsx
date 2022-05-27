@@ -3,12 +3,13 @@ import { ScheduleItem } from "./ScheduleItem";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { fetchSchedule } from "../../redux/slices/schedule";
+import { getAllSchedules } from "../../redux/slices/service";
 
 export const AllSchedules = () => {
   const dispatch = useDispatch();
-  const scheduleState = useSelector((state: RootState) => state.schedule);
+  const serviceState = useSelector((state: RootState) => state.service);
   useEffect(() => {
-    dispatch(fetchSchedule());
+    dispatch(getAllSchedules(""));
   }, []);
   return (
     <div>
@@ -17,11 +18,11 @@ export const AllSchedules = () => {
           Tất cả lịch hẹn
         </p>
       </div>
-      {scheduleState.schedulesLoading ? (
+      {serviceState.scheduleLoading ? (
         ""
       ) : (
         <div className={"flex flex-col gap-2 px-32 mt-10"}>
-          {scheduleState.schedules.map((s, index) => (
+          {serviceState.schedules.map((s, index) => (
             <ScheduleItem data={s} key={s._id} />
           ))}
         </div>

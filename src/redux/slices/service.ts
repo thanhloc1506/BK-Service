@@ -1,10 +1,11 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axiosClient from "../../apis/axios";
 import { hideWaiting, showWaiting } from "./loading";
 import moment from "moment";
 import { Service } from "../../apis/common/Service";
 import { PInSchedule } from "../../apis/package/in/PInSchedule";
 import schedule from "./schedule";
+import { toastSuccess } from "../../utils/toast";
 
 export interface State {
   services: Service[];
@@ -279,7 +280,7 @@ export const getAllSchedules = createAsyncThunk(
             min,
             sec: "00",
           },
-          service: schedule.service.name,
+          serviceName: schedule.service.name,
           serviceId: schedule.service._id,
         };
         idx++;
@@ -345,7 +346,7 @@ export const addSchedule = createAsyncThunk(
           min: minFormat,
           sec: "00",
         },
-        service: serviceResponse.data.service.name,
+        serviceName: serviceResponse.data.service.name,
         serviceId: serviceResponse.data.service._id,
       };
 
@@ -355,6 +356,21 @@ export const addSchedule = createAsyncThunk(
     } finally {
       dispatch(hideWaiting());
     }
+  }
+);
+
+export const deleteSchedule = createAsyncThunk(
+  "deleteSchedule",
+  (id: string, api) => {
+    const dispatch = api.dispatch;
+    dispatch(showWaiting());
+    return axiosClient
+      .post<any>("user/unschedule", { id })
+      .then((_) => id)
+      .catch((err) => {
+        throw err;
+      })
+      .finally(() => dispatch(hideWaiting()));
   }
 );
 
@@ -485,10 +501,16 @@ const serviceSlice = createSlice({
       state.allSchedules = action.payload;
       state.allSchedulesLoading = false;
     },
-    [deleteScheduleTmp.fulfilled.toString()]: (state, action) => {
-      state.schedules = state.schedules.filter(
-        (schedule: any) => schedule._id != action.payload
-      );
+    [deleteSchedule.pending.toString()]: (state, action) => {
+      state.scheduleLoading = true;
+    },
+    [deleteSchedule.fulfilled.toString()]: (
+      state: State,
+      action: PayloadAction<string>
+    ) => {
+      // toastSuccess("Xóa lịch hẹn thành công!");
+      state.schedules = state.schedules.filter((s) => s._id !== action.payload);
+      state.scheduleLoading = false;
     },
   },
 });

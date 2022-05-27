@@ -1,8 +1,11 @@
 import React, { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useDispatch } from "react-redux";
-import { deleteSchedule } from "../../../redux/slices/schedule";
-import { addSchedule, deleteScheduleTmp } from "../../../redux/slices/service";
+import {
+  addSchedule,
+  deleteSchedule,
+  deleteScheduleTmp,
+} from "../../../redux/slices/service";
 
 export interface ModalConfirmProps {
   showConfirm: boolean;
@@ -48,7 +51,6 @@ const ModalConfirmReWrireBookService: React.FC<ModalConfirmProps> = ({
       serviceId,
     };
     await dispatch(addSchedule(scheduleForm));
-    dispatch(deleteScheduleTmp(scheduleId));
 
     await setTimeout(() => {
       setShowConfirm(false);

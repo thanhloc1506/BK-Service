@@ -30,20 +30,17 @@ export const fetchSchedule = createAsyncThunk<Schedule[]>(
   }
 );
 
-export const deleteSchedule = createAsyncThunk(
-  "deleteSchedule",
-  (id: string, api) => {
-    const dispatch = api.dispatch;
-    dispatch(showWaiting());
-    return axiosClient
-      .post<any>("user/unschedule", { id })
-      .then((_) => id)
-      .catch((err) => {
-        throw err;
-      })
-      .finally(() => dispatch(hideWaiting()));
-  }
-);
+const deleteSchedule = createAsyncThunk("deleteSchedule", (id: string, api) => {
+  const dispatch = api.dispatch;
+  dispatch(showWaiting());
+  return axiosClient
+    .post<any>("user/unschedule", { id })
+    .then((_) => id)
+    .catch((err) => {
+      throw err;
+    })
+    .finally(() => dispatch(hideWaiting()));
+});
 
 const scheduleSlice = createSlice({
   name: "schedule",
