@@ -256,6 +256,9 @@ const searchSlice = createSlice({
     clearQuickSearch(state: State) {
       state.dataQuickSeacrh = undefined;
     },
+    resetFilter(state: State){
+      state.filter = {}
+    }
   },
   extraReducers: {
     [search.fulfilled.toString()]: (
@@ -371,4 +374,5 @@ export const {
   resetQuan,
   setCurrentQuickSearchText,
   clearQuickSearch,
+  resetFilter
 } = searchSlice.actions;
