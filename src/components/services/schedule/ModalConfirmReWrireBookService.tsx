@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useDispatch } from "react-redux";
 import {
@@ -56,7 +56,7 @@ const ModalConfirmReWrireBookService: React.FC<ModalConfirmProps> = ({
       setShowConfirm(false);
     }, 300);
   };
-
+  const cancelButtonRef = useRef(null);
   return (
     <div>
       <Transition appear show={showConfirm} as={Fragment}>
@@ -64,6 +64,7 @@ const ModalConfirmReWrireBookService: React.FC<ModalConfirmProps> = ({
           as="div"
           className="fixed inset-0 z-10 overflow-y-auto"
           onClose={() => {}}
+          initialFocus={cancelButtonRef}
         >
           <div className="min-h-screen px-4 text-center">
             <Transition.Child

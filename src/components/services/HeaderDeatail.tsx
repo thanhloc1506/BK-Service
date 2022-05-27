@@ -19,12 +19,14 @@ interface IHeaderDetail {
 
 const tieuchi = ["Tin cậy", "Đáp ứng", "Đảm bảo", "Vật chất", "Thiện cảm"];
 
-const timeServe = moment(new Date(), "YYYY/MM/DD HH:mm").zone("+0700");
-var month = timeServe.format("MM");
-var day = timeServe.format("DD");
-var year = timeServe.format("YYYY");
-var hourFormat = parseInt(timeServe.format("HH"));
-var minFormat = parseInt(timeServe.format("mm"));
+const currentTime = moment(new Date())
+  .utcOffset("+0700")
+  .format("YYYY/MM/DD HH:mm");
+var month = currentTime.split(" ")[0].split("/")[1];
+var day = currentTime.split(" ")[0].split("/")[2];
+var year = currentTime.split(" ")[0].split("/")[0];
+var hourFormat = parseInt(currentTime.split(" ")[1].split(":")[0]);
+var minFormat = parseInt(currentTime.split(" ")[1].split(":")[1]);
 
 const HeaderDeatail: React.FC<IHeaderDetail> = ({
   data,
@@ -51,24 +53,24 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
     if (data.openTime == undefined || data.closeTime == undefined) {
       return;
     }
-    let tmp = parseInt(data.openTime.split(":")[0]);
-    let tmp2 = parseInt(data.closeTime.split(":")[0]);
+    let openTime = parseInt(data.openTime.split(":")[0]);
+    let closeTime = parseInt(data.closeTime.split(":")[0]);
     if (data.openTime.split(" ")[1] === "pm") {
-      tmp = tmp * 2;
+      openTime = openTime + 12;
     }
     if (data.closeTime.split(" ")[1] === "pm") {
-      tmp2 = tmp2 * 2;
+      closeTime = closeTime + 12;
     }
 
-    if (tmp < hourFormat && hourFormat < tmp2) {
+    if (hourFormat > openTime && hourFormat < closeTime) {
       setStatus(true);
       setStatusLoading(false);
       return;
     }
 
     if (
-      tmp == hourFormat &&
-      parseInt(data.openTime.split(":")[1]) < minFormat
+      openTime == hourFormat &&
+      parseInt(data.openTime.split(" ")[0].split(":")[1]) <= minFormat
     ) {
       setStatus(true);
       setStatusLoading(false);
@@ -76,8 +78,8 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
     }
 
     if (
-      tmp2 == hourFormat &&
-      parseInt(data.openTime.split(":")[1]) > minFormat
+      closeTime == hourFormat &&
+      parseInt(data.closeTime.split(" ")[0].split(":")[1]) >= minFormat
     ) {
       setStatus(true);
       setStatusLoading(false);
