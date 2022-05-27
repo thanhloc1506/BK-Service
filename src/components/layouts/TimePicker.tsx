@@ -106,9 +106,9 @@ const getCountByServeDate = (
   const close = parseHour(closeTime);
   const isInRangeTimeOpen = checkInRangeTime(hour, isPM, open, close);
 
-  if (defauld) return count >= 5;
+  if (defauld) return count >= 1;
 
-  return count >= 5 || !isInRangeTimeOpen || hourReal < new Date().getHours();
+  return count >= 1 || !isInRangeTimeOpen || hourReal < new Date().getHours();
 };
 
 const checkValidAMPM = () => {

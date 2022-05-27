@@ -13,6 +13,7 @@ import CalendarModal from "./CalendarModal";
 import { DateComponent } from "@fullcalendar/react";
 import service, { addSchedule } from "../../../redux/slices/service";
 import ModalConfirmReWrireBookService from "./ModalConfirmReWrireBookService";
+import { hideWaiting, showWaiting } from "../../../redux/slices/loading";
 
 interface IParam {
   open: boolean;
@@ -78,7 +79,7 @@ const BookServiceModal = ({ open, setOpen, service, schedules }: IParam) => {
 
   const [existScheduleId, setExistScheduleId] = useState("");
 
-  const onAddSchedule = () => {
+  const onAddSchedule = async () => {
     const dateFormat = date
       .toLocaleString("en-US", {
         timeZone: "Asia/Ho_Chi_Minh",
@@ -103,7 +104,13 @@ const BookServiceModal = ({ open, setOpen, service, schedules }: IParam) => {
       setOpen(false);
     } else {
       setExistScheduleId(isExist);
-      setShowConfirm(true);
+      setOpen(false);
+      dispatch(showWaiting());
+
+      await setTimeout(() => {
+        setShowConfirm(true);
+        dispatch(hideWaiting());
+      }, 1000);
     }
   };
 
@@ -115,8 +122,8 @@ const BookServiceModal = ({ open, setOpen, service, schedules }: IParam) => {
     <div>
       {showConfirm ? (
         <ModalConfirmReWrireBookService
-          show={showConfirm}
-          setShow={setShowConfirm}
+          showConfirm={showConfirm}
+          setShowConfirm={setShowConfirm}
           serviceId={service?._id as string}
           scheduleId={existScheduleId}
           hour={hour}

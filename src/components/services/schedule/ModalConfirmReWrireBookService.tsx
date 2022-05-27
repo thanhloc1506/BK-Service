@@ -5,8 +5,8 @@ import { deleteSchedule } from "../../../redux/slices/schedule";
 import { addSchedule, deleteScheduleTmp } from "../../../redux/slices/service";
 
 export interface ModalConfirmProps {
-  show: boolean;
-  setShow: (b: boolean) => void;
+  showConfirm: boolean;
+  setShowConfirm: (b: boolean) => void;
   serviceId: string;
   scheduleId: string;
   hour: any;
@@ -16,8 +16,8 @@ export interface ModalConfirmProps {
 }
 
 const ModalConfirmReWrireBookService: React.FC<ModalConfirmProps> = ({
-  show,
-  setShow,
+  showConfirm,
+  setShowConfirm,
   serviceId,
   scheduleId,
   hour,
@@ -27,8 +27,8 @@ const ModalConfirmReWrireBookService: React.FC<ModalConfirmProps> = ({
 }) => {
   const onCancle = () => {
     setTimeout(() => {
-      setShow(false);
-    }, 600);
+      setShowConfirm(false);
+    }, 300);
   };
 
   const dispatch = useDispatch();
@@ -51,13 +51,13 @@ const ModalConfirmReWrireBookService: React.FC<ModalConfirmProps> = ({
     dispatch(deleteScheduleTmp(scheduleId));
 
     await setTimeout(() => {
-      setShow(false);
-    }, 600);
+      setShowConfirm(false);
+    }, 300);
   };
 
   return (
     <div>
-      <Transition appear show={show} as={Fragment}>
+      <Transition appear show={showConfirm} as={Fragment}>
         <Dialog
           as="div"
           className="fixed inset-0 z-10 overflow-y-auto"
