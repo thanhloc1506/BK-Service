@@ -244,7 +244,7 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
                       </p>
                     )}
 
-                    <p className="text-gray-600 2xl:text-xl xl:text-lg lg:text-sm font-semibold xl:mt-0 lg:mt-0.5 ml-5">
+                    <p className="text-gray-600 2xl:text-lg lg:text-sm xl:text-xs font-semibold xl:mt-0 lg:mt-0.5 ml-5">
                       {data.openTime.toUpperCase()} -{" "}
                       {data.closeTime.toUpperCase()}
                     </p>

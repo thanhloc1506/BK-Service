@@ -75,7 +75,7 @@ export const SearchField = () => {
             "2xl:w-120 xl:w-[26rem] px-1 w-full outline-none bg-none bg-transparent"
           }
           type={"search"}
-          placeholder="Search..."
+          placeholder="Tìm kiếm..."
           onFocus={onFocus}
           onBlur={onBlur}
           onChange={onChange}

@@ -176,7 +176,7 @@ const SingleCard: React.FC<IService> = memo(
                       d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
                     />
                   </svg>
-                  <p className="flex items-center lg:mt-0.5 font-light 2xl:text-lg xl:text-sm lg:text-xs">
+                  <p className="flex items-center lg:ml-0.5 font-light 2xl:text-lg xl:text-sm lg:text-xs">
                     {data.imgCmtCount || 0}
                   </p>
                 </div>
