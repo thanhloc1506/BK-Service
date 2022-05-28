@@ -99,7 +99,43 @@ export const getFollowService = createAsyncThunk(
     try {
       // dispatch(showWaiting());
       const response = await axiosClient.get(`/user/followed-service`);
-      return response.data;
+
+      let services: any = [];
+      for (const service of response.data.services) {
+        const enterpriseInfo = await axiosClient.get(
+          `/enterprise/${service.enterprise}`
+        );
+
+        const scoresResponse = await axiosClient.get<PInScore>(
+          `service/${service._id}/scores`
+        );
+
+        const scores = scoresResponse.data?.score;
+
+        const ratingScore =
+          (32 * scores[0] +
+            22 * scores[1] +
+            19 * scores[2] +
+            11 * scores[3] +
+            16 * scores[4]) /
+          100;
+
+        const rankingScore =
+          (service.blogScore + 3 * service.cmtScore + 5 * ratingScore) / 9;
+
+        const sortScore =
+          (service.blogScore + 3 * service.cmtScore + 5 * ratingScore) / 9 +
+          parseInt(enterpriseInfo.data.enterprise.premium ?? "0");
+
+        services.push({
+          ...service,
+          enterprise: enterpriseInfo.data.enterprise,
+          ratingScore: ratingScore.toFixed(1),
+          sortScore: sortScore.toFixed(1),
+          rankingScore: rankingScore.toFixed(1),
+        });
+      }
+      return services;
     } catch (error) {
       console.log(error);
       throw error;
@@ -461,8 +497,8 @@ const serviceSlice = createSlice({
       state.followLoading = true;
     },
     [getFollowService.fulfilled.toString()]: (state, action) => {
-      state.followService = action.payload.services;
-      const currentFollowService = action.payload.services.filter(
+      state.followService = action.payload;
+      const currentFollowService = action.payload.filter(
         (service: any) => service._id === state.serviceId
       );
       state.isFollow = currentFollowService.length === 1;

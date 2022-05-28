@@ -69,6 +69,8 @@ const BookServiceModal = ({ open, setOpen, service, schedules }: IParam) => {
 
   const [min, setMin] = useState("00");
 
+  const [isValid, setIsValid] = useState(true);
+
   const [AMPM, setAMPM] = useState(
     service?.openTime?.split(" ")[0].toUpperCase() ?? "AM"
   );
@@ -254,6 +256,9 @@ const BookServiceModal = ({ open, setOpen, service, schedules }: IParam) => {
                           date={date}
                           openTime={service?.openTime as string}
                           closeTime={service?.closeTime as string}
+                          isValid={isValid}
+                          setIsValid={setIsValid}
+                          scheduleCountPerHour={service?.scheduleAllowedPerHour}
                         />
                       </div>
                     </div>
@@ -272,6 +277,7 @@ const BookServiceModal = ({ open, setOpen, service, schedules }: IParam) => {
                       <button
                         className="2xl:text-lg xl:text-sm lg:text-sm bg-green-500 2xl:px-5 2xl:py-1.5 xl:px-3 xl:py-1 lg:px-2 lg:py-1 rounded-sm text-gray-100 hover:text-gray-700"
                         onClick={onAddSchedule}
+                        disabled={!isValid}
                       >
                         Xác nhận
                       </button>
