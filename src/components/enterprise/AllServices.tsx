@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { hideWaiting, showWaiting } from "../../redux/slices/loading";
 import Service from "./Service";
 import service from "../../redux/slices/service";
+import { PInScore } from "../../apis/package/in/PInScore";
 
 const AllServices = () => {
   const [services, setServices] = useState<ServiceType[] | undefined>();
@@ -19,9 +20,44 @@ const AllServices = () => {
     dispatch(showWaiting());
     axiosClient
       .get<PInAllServices.Data>("/enterprise/all-services")
-      .then((res) => {
-        console.log(res);
-        setServices(res.data.services);
+      .then(async (res) => {
+        let servicesRes: any = [];
+        for (const service of res.data.services) {
+          const enterpriseInfo = await axiosClient.get(
+            `/enterprise/${service.enterprise}`
+          );
+
+          const scoresResponse = await axiosClient.get<PInScore>(
+            `service/${service._id}/scores`
+          );
+
+          const scores = scoresResponse.data?.score;
+
+          const ratingScore =
+            (32 * scores[0] +
+              22 * scores[1] +
+              19 * scores[2] +
+              11 * scores[3] +
+              16 * scores[4]) /
+            100;
+
+          const rankingScore =
+            (service.blogScore + 3 * service.cmtScore + 5 * ratingScore) / 9;
+
+          const sortScore =
+            (service.blogScore + 3 * service.cmtScore + 5 * ratingScore) / 9 +
+            parseInt(enterpriseInfo.data.enterprise.premium ?? "0");
+
+          servicesRes.push({
+            ...service,
+            enterprise: enterpriseInfo.data.enterprise,
+            ratingScore: ratingScore.toFixed(1),
+            sortScore: sortScore.toFixed(1),
+            rankingScore: rankingScore.toFixed(1),
+          });
+        }
+
+        setServices(servicesRes);
       })
       .catch((err) => console.log(err))
       .finally(() => dispatch(hideWaiting()));

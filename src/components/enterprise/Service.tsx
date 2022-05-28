@@ -122,11 +122,7 @@ const SingleCard: React.FC<IService> = ({
             ""
           ) : (
             <RatingStar
-              rating={
-                score && score.length >= 7 && score[6]
-                  ? score[6].toFixed(1)
-                  : -1
-              }
+              rating={data?.textCmtCount > 0 ? data.rankingScore : -1}
             />
           )}
         </div>

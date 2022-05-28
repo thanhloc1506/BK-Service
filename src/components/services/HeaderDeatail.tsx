@@ -242,7 +242,8 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
                     )}
 
                     <p className="text-gray-600 2xl:text-lg xl:text-sm lg:text-xs font-semibold xl:mt-0 lg:mt-0 ml-5">
-                      {data.openTime} - {data.closeTime}
+                      {data.openTime.toUpperCase()} -{" "}
+                      {data.closeTime.toUpperCase()}
                     </p>
                   </>
                 )}
