@@ -25,6 +25,8 @@ interface DataForm {
   maxPrice?: number;
   minPrice?: number;
   images?: File[];
+  scheduleAllowedPerHour: number;
+  enableSchedule: boolean;
 }
 
 const handleAddNewService = async (
@@ -41,6 +43,9 @@ const handleAddNewService = async (
   data.closeTime && formData.append("closeTime", data.closeTime);
   data.maxPrice && formData.append("maxPrice", data.maxPrice.toString());
   data.minPrice && formData.append("minPrice", data.minPrice.toString());
+  data.scheduleAllowedPerHour && formData.append("scheduleAllowedPerHour", data.scheduleAllowedPerHour.toString());
+  formData.append("enableSchedule", data.enableSchedule?"1":"0");
+  console.log(formData.get("enableSchedule"))
   if (images && images.length > 0) {
     images.map((image) => formData.append("images", image));
   }
@@ -64,7 +69,7 @@ const AddService: React.FC = () => {
   const [address, setAddress] = useState<Address>();
   const [textAddress, setTextAddress] = useState<string>("");
   const [categories, setCategories] = useState<Array<Category>>();
-  const [dataForm, setDataForm] = useState<DataForm>({});
+  const [dataForm, setDataForm] = useState<DataForm>({scheduleAllowedPerHour: 5, enableSchedule: true});
   const [newImg, setNewImg] = useState<File[] | undefined>();
   const [enableSchedule, setEnableSchedule] = useState(false);
   useEffect(() => {
@@ -252,7 +257,7 @@ const AddService: React.FC = () => {
             <input
               type="checkbox"
               className="ml-2 mt-0.5"
-              defaultChecked={true}
+              defaultChecked={dataForm.enableSchedule}
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 setDataForm((pre: DataForm) => ({
                   ...pre,
@@ -271,7 +276,7 @@ const AddService: React.FC = () => {
               type="number"
               className="input"
               step={1}
-              defaultValue={5}
+              defaultValue={dataForm.scheduleAllowedPerHour}
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 setDataForm((pre: DataForm) => ({
                   ...pre,
