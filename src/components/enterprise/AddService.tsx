@@ -66,6 +66,7 @@ const AddService: React.FC = () => {
   const [categories, setCategories] = useState<Array<Category>>();
   const [dataForm, setDataForm] = useState<DataForm>({});
   const [newImg, setNewImg] = useState<File[] | undefined>();
+  const [enableSchedule, setEnableSchedule] = useState(false);
   useEffect(() => {
     setDataForm((pre: DataForm) => ({ ...pre, address: address }));
     getAddressContent(address).then((addressContent) =>
@@ -240,6 +241,21 @@ const AddService: React.FC = () => {
                     category: value._id,
                   }));
               }}
+            />
+          </div>
+        </div>
+        <div>
+          <div className="flex items-center">
+            <p>Cho phép đặt lịch: </p>
+            <input
+              type="checkbox"
+              className="ml-2 mt-0.5"
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setDataForm((pre: DataForm) => ({
+                  ...pre,
+                  enableSchedule: e.target.checked,
+                }))
+              }
             />
           </div>
         </div>
