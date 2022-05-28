@@ -58,14 +58,14 @@ const submitChangeService = (
   data.introduction && formData.append("introduction", data.introduction);
   data.shortIntroduction &&
     formData.append("shortIntroduction", data.shortIntroduction);
-  data.enableSchedule &&
+  data.enableSchedule!=null &&
     formData.append("enableSchedule", data.enableSchedule ? "1" : "0");
   data.scheduleAllowedPerHour &&
     formData.append(
       "scheduleAllowedPerHour",
       data.scheduleAllowedPerHour.toString()
     );
-
+  console.log(formData.get("enableSchedule"))
   let removeImg = data.images
     ?.filter((image) => {
       return !oldImg?.includes(image);
@@ -401,6 +401,7 @@ export const ModalEditService = ({
                         <input
                           type="checkbox"
                           className="ml-2 mt-0.5"
+                          defaultChecked={editData?.enableSchedule}
                           onChange={(e: ChangeEvent<HTMLInputElement>) => {
                             editData &&
                               setEditData((pre) => {
@@ -423,6 +424,7 @@ export const ModalEditService = ({
                         type="number"
                         className="input"
                         step={1}
+                        defaultValue={editData?.scheduleAllowedPerHour}
                         onChange={(e: ChangeEvent<HTMLInputElement>) => {
                           editData &&
                             setEditData((pre) => {
