@@ -9,6 +9,8 @@ import { PInCategory } from "../../apis/package/in/PInCategory";
 import { ADDRESS_API_URL } from "../../constants/common";
 import { PInQuan } from "../../apis/package/in/PInQuan";
 import { PInPhuong } from "../../apis/package/in/PInPhuong";
+import { PInScore } from "../../apis/package/in/PInScore";
+import { Service } from "../../apis/common/Service";
 
 export interface Filter {
   category?: Category;
@@ -112,14 +114,54 @@ export const deepSearch = createAsyncThunk(
         delete params[k];
       }
     });
-    console.log(params);
+
     dispatch(showWaiting());
-    return axiosClient
-      .get<PInSearch.Data>("search", {
+
+    try {
+      const response = await axiosClient.get<PInSearch.Data>("search", {
         params,
-      })
-      .then((res) => res.data)
-      .finally(() => dispatch(hideWaiting()));
+      });
+      let services: any = [];
+      for (const service of response.data.services) {
+        const enterpriseInfo = await axiosClient.get(
+          `/enterprise/${service.enterprise}`
+        );
+
+        const scoresResponse = await axiosClient.get<PInScore>(
+          `service/${service._id}/scores`
+        );
+
+        const scores = scoresResponse.data?.score;
+
+        const ratingScore =
+          (32 * scores[0] +
+            22 * scores[1] +
+            19 * scores[2] +
+            11 * scores[3] +
+            16 * scores[4]) /
+          100;
+
+        const rankingScore =
+          (service.blogScore + 3 * service.cmtScore + 5 * ratingScore) / 9;
+
+        const sortScore =
+          (service.blogScore + 3 * service.cmtScore + 5 * ratingScore) / 9 +
+          parseInt(enterpriseInfo.data.enterprise.premium ?? "0");
+
+        services.push({
+          ...service,
+          enterprise: enterpriseInfo.data.enterprise,
+          ratingScore: ratingScore.toFixed(1),
+          sortScore: sortScore.toFixed(1),
+          rankingScore: rankingScore.toFixed(1),
+        });
+      }
+      return { ...response.data, services };
+    } catch (error) {
+      throw error;
+    } finally {
+      dispatch(hideWaiting());
+    }
   }
 );
 
@@ -150,9 +192,6 @@ export const quickSearch = createAsyncThunk(
     const dispatch = api.dispatch;
     if (!text) text = api.getState().search.currentQuickSearchText;
     let params: any = {
-      // category: filter.category?._id,
-      // quan: filter.quan?.district_id,
-      // huyen: filter.phuong?.ward_id,
       text: text,
     };
     Object.keys(params).forEach((k) => {
@@ -160,12 +199,51 @@ export const quickSearch = createAsyncThunk(
         delete params[k];
       }
     });
-    return axiosClient
-      .get<PInSearch.Data>("search", {
+    try {
+      const response = await axiosClient.get<PInSearch.Data>("search", {
         params,
-      })
-      .then((res) => res.data)
-      .finally(() => {});
+      });
+      let services: any = [];
+      for (const service of response.data.services) {
+        const enterpriseInfo = await axiosClient.get(
+          `/enterprise/${service.enterprise}`
+        );
+
+        const scoresResponse = await axiosClient.get<PInScore>(
+          `service/${service._id}/scores`
+        );
+
+        const scores = scoresResponse.data?.score;
+
+        const ratingScore =
+          (32 * scores[0] +
+            22 * scores[1] +
+            19 * scores[2] +
+            11 * scores[3] +
+            16 * scores[4]) /
+          100;
+
+        const rankingScore =
+          (service.blogScore + 3 * service.cmtScore + 5 * ratingScore) / 9;
+
+        const sortScore =
+          (service.blogScore + 3 * service.cmtScore + 5 * ratingScore) / 9 +
+          parseInt(enterpriseInfo.data.enterprise.premium ?? "0");
+
+        services.push({
+          ...service,
+          enterprise: enterpriseInfo.data.enterprise,
+          ratingScore: ratingScore.toFixed(1),
+          sortScore: sortScore.toFixed(1),
+          rankingScore: rankingScore.toFixed(1),
+        });
+      }
+      return { ...response.data, services };
+    } catch (error) {
+      throw error;
+    } finally {
+      dispatch(hideWaiting());
+    }
   }
 );
 
@@ -224,6 +302,7 @@ const searchSlice = createSlice({
       if (data.searchText === state.currentSearchText) {
         if (data.services.length > 0) {
           state.dataSearch = data;
+          console.log(data);
         } else {
           state.dataSearch = undefined;
         }
@@ -278,7 +357,14 @@ const searchSlice = createSlice({
         (data.searchText === undefined && state.currentSearchText === "")
       ) {
         if (data.services.length > 0) {
-          state.dataSearch = data;
+          let sortServices: Service[] = data.services;
+
+          sortServices = sortServices.sort((a, b) => {
+            return b.sortScore - a.sortScore;
+          });
+
+          state.dataSearch = { ...data, services: sortServices };
+
           state.totalPage = data.totalPage;
           state.page = data.page;
         } else {
@@ -297,7 +383,13 @@ const searchSlice = createSlice({
       if (data.searchText === state.currentQuickSearchText) {
         console.log(data);
         if (data.services.length > 0) {
-          state.dataQuickSeacrh = data;
+          let sortServices: Service[] = data.services;
+
+          sortServices = sortServices.sort((a, b) => {
+            return b.sortScore - a.sortScore;
+          });
+
+          state.dataQuickSeacrh = { ...data, services: sortServices };
         } else {
           state.dataQuickSeacrh = data;
         }

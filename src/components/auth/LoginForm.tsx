@@ -113,7 +113,7 @@ const LoginForm: React.FC = () => {
                                   type="text"
                                   id="username"
                                   name="username"
-                                  placeholder="Ten dang nhap"
+                                  placeholder="Tên đăng nhập"
                                   required
                                 />
                                 <ErrorMessage
@@ -128,7 +128,7 @@ const LoginForm: React.FC = () => {
                                   type="password"
                                   name="password"
                                   id="password"
-                                  placeholder="Mat khau"
+                                  placeholder="Mật khẩu"
                                   required
                                 />
                                 <ErrorMessage
@@ -137,7 +137,7 @@ const LoginForm: React.FC = () => {
                                   name="password"
                                 />
                               </div>
-                              <div className="flex justify-center mt-6 2xl:mr-5 lg:mt-3">
+                              <div className="flex justify-center 2xl:mt-6 xl:mt-4 lg:mt-3">
                                 <button
                                   type="submit"
                                   className="bg-blue-500 2xl:w-80 xl:w-72 lg:w-64 2xl:ml-2 xl:ml-2 lg:ml-[-30px] 2xl:p-2 xl:p-1.5 lg:p-1 text-white rounded-md overflow-hidden"
