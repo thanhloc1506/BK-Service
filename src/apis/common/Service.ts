@@ -20,6 +20,10 @@ export interface Service {
   readonly shortIntroduction?: string;
   readonly imgCmtCount?: number;
   readonly textCmtCount: number;
-  readonly blockScore?: number;
-  readonly cmtScore?: number;
+  readonly blogScore: number;
+  readonly cmtScore: number;
+  readonly enableSchedule: boolean;
+  readonly rankingScore: number;
+  readonly ratingScore: number;
+  readonly sortScore: number;
 }

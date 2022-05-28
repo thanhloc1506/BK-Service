@@ -76,6 +76,7 @@ const DetailService: React.FC = () => {
                 data={serviceState.singleService}
                 scores={score}
                 numOfComments={serviceState.comments.length}
+                rankingScore={1}
               />
             )}
           </div>

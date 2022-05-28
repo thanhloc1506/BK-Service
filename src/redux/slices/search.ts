@@ -9,6 +9,8 @@ import { PInCategory } from "../../apis/package/in/PInCategory";
 import { ADDRESS_API_URL } from "../../constants/common";
 import { PInQuan } from "../../apis/package/in/PInQuan";
 import { PInPhuong } from "../../apis/package/in/PInPhuong";
+import { Service } from "../../apis/common/Service";
+import { PInScore } from "../../apis/package/in/PInScore";
 
 export interface Filter {
   category?: Category;
@@ -124,9 +126,34 @@ export const deepSearch = createAsyncThunk(
         const enterpriseInfo = await axiosClient.get(
           `/enterprise/${service.enterprise}`
         );
+
+        const scoresResponse = await axiosClient.get<PInScore>(
+          `service/${service._id}/scores`
+        );
+
+        const scores = scoresResponse.data?.score;
+
+        const ratingScore =
+          (32 * scores[0] +
+            22 * scores[1] +
+            19 * scores[2] +
+            11 * scores[3] +
+            16 * scores[4]) /
+          100;
+
+        const rankingScore =
+          (service.blogScore + 3 * service.cmtScore + 5 * ratingScore) / 9;
+
+        const sortScore =
+          (service.blogScore + 3 * service.cmtScore + 5 * ratingScore) / 9 +
+          parseInt(enterpriseInfo.data.enterprise.premium ?? "0");
+
         services.push({
           ...service,
           enterprise: enterpriseInfo.data.enterprise,
+          ratingScore: ratingScore.toFixed(1),
+          sortScore: sortScore.toFixed(1),
+          rankingScore: rankingScore.toFixed(1),
         });
       }
       return { ...response.data, services };
@@ -138,32 +165,32 @@ export const deepSearch = createAsyncThunk(
   }
 );
 
-export const search = createAsyncThunk("/search", async (text: string, api) => {
-  const dispatch = api.dispatch;
-  dispatch(showWaiting());
-  try {
-    const response = await axiosClient.get("search", {
-      params: {
-        text,
-      },
-    });
-    let services: any = [];
-    for (const service of response.data.services) {
-      const enterpriseInfo = await axiosClient.get(
-        `/enterprise/${service.enterprise}`
-      );
-      services.push({
-        ...service,
-        enterprise: enterpriseInfo.data.enterprise,
-      });
-    }
-    return { ...response.data, services };
-  } catch (error) {
-    throw error;
-  } finally {
-    dispatch(hideWaiting());
-  }
-});
+// export const search = createAsyncThunk("/search", async (text: string, api) => {
+//   const dispatch = api.dispatch;
+//   dispatch(showWaiting());
+//   try {
+//     const response = await axiosClient.get("search", {
+//       params: {
+//         text,
+//       },
+//     });
+//     let services: any = [];
+//     for (const service of response.data.services) {
+//       const enterpriseInfo = await axiosClient.get(
+//         `/enterprise/${service.enterprise}`
+//       );
+//       services.push({
+//         ...service,
+//         enterprise: enterpriseInfo.data.enterprise,
+//       });
+//     }
+//     return { ...response.data, services };
+//   } catch (error) {
+//     throw error;
+//   } finally {
+//     dispatch(hideWaiting());
+//   }
+// });
 
 export const quickSearch = createAsyncThunk(
   "/quickSearch",
@@ -172,9 +199,6 @@ export const quickSearch = createAsyncThunk(
     const dispatch = api.dispatch;
     if (!text) text = api.getState().search.currentQuickSearchText;
     let params: any = {
-      // category: filter.category?._id,
-      // quan: filter.quan?.district_id,
-      // huyen: filter.phuong?.ward_id,
       text: text,
     };
     Object.keys(params).forEach((k) => {
@@ -182,12 +206,7 @@ export const quickSearch = createAsyncThunk(
         delete params[k];
       }
     });
-    // return axiosClient
-    //   .get<PInSearch.Data>("search", {
-    //     params,
-    //   })
-    //   .then((res) => res.data)
-    //   .finally(() => {});
+
     dispatch(showWaiting());
     try {
       const response = await axiosClient.get<PInSearch.Data>("search", {
@@ -198,9 +217,34 @@ export const quickSearch = createAsyncThunk(
         const enterpriseInfo = await axiosClient.get(
           `/enterprise/${service.enterprise}`
         );
+
+        const scoresResponse = await axiosClient.get<PInScore>(
+          `service/${service._id}/scores`
+        );
+
+        const scores = scoresResponse.data?.score;
+
+        const ratingScore =
+          (32 * scores[0] +
+            22 * scores[1] +
+            19 * scores[2] +
+            11 * scores[3] +
+            16 * scores[4]) /
+          100;
+
+        const rankingScore =
+          (service.blogScore + 3 * service.cmtScore + 5 * ratingScore) / 9;
+
+        const sortScore =
+          (service.blogScore + 3 * service.cmtScore + 5 * ratingScore) / 9 +
+          parseInt(enterpriseInfo.data.enterprise.premium ?? "0");
+
         services.push({
           ...service,
           enterprise: enterpriseInfo.data.enterprise,
+          ratingScore: ratingScore.toFixed(1),
+          sortScore: sortScore.toFixed(1),
+          rankingScore: rankingScore.toFixed(1),
         });
       }
       return { ...response.data, services };
@@ -256,32 +300,32 @@ const searchSlice = createSlice({
     clearQuickSearch(state: State) {
       state.dataQuickSeacrh = undefined;
     },
-    resetFilter(state: State){
-      state.filter = {}
-    }
+    resetFilter(state: State) {
+      state.filter = {};
+    },
   },
   extraReducers: {
-    [search.fulfilled.toString()]: (
-      state,
-      action: PayloadAction<PInSearch.Data>
-    ) => {
-      const data = action.payload;
-      console.log(data);
-      state.status = "complete";
-      if (data.searchText === state.currentSearchText) {
-        if (data.services.length > 0) {
-          state.dataSearch = data;
-        } else {
-          state.dataSearch = undefined;
-        }
-      }
-    },
-    [search.pending.toString()]: (state, action) => {
-      state.status = "loading";
-    },
-    [search.rejected.toString()]: (state, action) => {
-      state.status = "complete";
-    },
+    // [search.fulfilled.toString()]: (
+    //   state,
+    //   action: PayloadAction<PInSearch.Data>
+    // ) => {
+    //   const data = action.payload;
+    //   console.log(data);
+    //   state.status = "complete";
+    //   if (data.searchText === state.currentSearchText) {
+    //     if (data.services.length > 0) {
+    //       state.dataSearch = data;
+    //     } else {
+    //       state.dataSearch = undefined;
+    //     }
+    //   }
+    // },
+    // [search.pending.toString()]: (state, action) => {
+    //   state.status = "loading";
+    // },
+    // [search.rejected.toString()]: (state, action) => {
+    //   state.status = "complete";
+    // },
     [getAllCategory.fulfilled.toString()]: (
       state: State,
       action: PayloadAction<Category[]>
@@ -325,7 +369,14 @@ const searchSlice = createSlice({
         (data.searchText === undefined && state.currentSearchText === "")
       ) {
         if (data.services.length > 0) {
-          state.dataSearch = data;
+          let sortServices: Service[] = data.services;
+
+          sortServices = sortServices.sort((a, b) => {
+            return b.sortScore - a.sortScore;
+          });
+
+          state.dataSearch = { ...data, services: sortServices };
+
           state.totalPage = data.totalPage;
           state.page = data.page;
         } else {
@@ -343,7 +394,13 @@ const searchSlice = createSlice({
       state.quickSearchStatus = "complete";
       if (data.searchText === state.currentQuickSearchText) {
         if (data.services.length > 0) {
-          state.dataQuickSeacrh = data;
+          let sortServices: Service[] = data.services;
+
+          sortServices = sortServices.sort((a, b) => {
+            return b.sortScore - a.sortScore;
+          });
+
+          state.dataQuickSeacrh = { ...data, services: sortServices };
         } else {
           state.dataQuickSeacrh = data;
         }
@@ -374,5 +431,5 @@ export const {
   resetQuan,
   setCurrentQuickSearchText,
   clearQuickSearch,
-  resetFilter
+  resetFilter,
 } = searchSlice.actions;

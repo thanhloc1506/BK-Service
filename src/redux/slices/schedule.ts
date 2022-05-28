@@ -81,13 +81,13 @@ const scheduleSlice = createSlice({
     [fetchSchedule.pending.toString()]: (state, _action) => {
       state.schedulesLoading = true;
     },
-    [deleteSchedule.fulfilled.toString()]: (
-      state: State,
-      action: PayloadAction<string>
-    ) => {
-      toastSuccess("Xóa lịch hẹn thành công!");
-      state.schedules = state.schedules.filter((s) => s._id !== action.payload);
-    },
+    // [deleteSchedule.fulfilled.toString()]: (
+    //   state: State,
+    //   action: PayloadAction<string>
+    // ) => {
+    //   toastSuccess("Xóa lịch hẹn thành công!");
+    //   state.schedules = state.schedules.filter((s) => s._id !== action.payload);
+    // },
   },
 });
 

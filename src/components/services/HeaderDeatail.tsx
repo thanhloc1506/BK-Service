@@ -15,6 +15,7 @@ interface IHeaderDetail {
   data: Service;
   scores: number[];
   numOfComments: number;
+  rankingScore: number;
 }
 
 const tieuchi = ["Tin cậy", "Đáp ứng", "Đảm bảo", "Vật chất", "Thiện cảm"];
@@ -32,6 +33,7 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
   data,
   scores,
   numOfComments,
+  rankingScore,
 }: IHeaderDetail) => {
   const authState = useSelector((state: RootState) => state.user);
   const miniCarousel = useRef<Carousel>(null);
@@ -164,7 +166,7 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
             <div className="flex justify-start ml-10 mt-2 2xl:col-span-1 xl:col-span-1 lg:col-span-2">
               <div className="bg-blue-light rounded-full overflow-hidden 2xl:h-12 2xl:w-12 xl:h-8 xl:w-8 lg:w-8 lg:h-8">
                 <p className="flex justify-center 2xl:mt-2.5 xl:mt-1.5 lg:mt-1.5 2xl:text-xl xl:text-sm lg:text-sm font-semibold text-white">
-                  {scores && scores.length >= 5 ? scores[5].toFixed(1) : ""}
+                  {data.rankingScore ?? "7.0"}
                 </p>
               </div>
             </div>

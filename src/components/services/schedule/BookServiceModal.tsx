@@ -184,7 +184,7 @@ const BookServiceModal = ({ open, setOpen, service, schedules }: IParam) => {
                       </div>
                       <div className="pl-5">
                         <p className="2xl:text-lg xl:text-sm lg:text-sm">
-                          Số điện thoại: 0123456789
+                          Số điện thoại: {userState?.phone ?? ""}
                         </p>
                       </div>
                     </div>
