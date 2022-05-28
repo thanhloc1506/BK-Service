@@ -246,14 +246,36 @@ const AddService: React.FC = () => {
         </div>
         <div>
           <div className="flex items-center">
-            <p>Cho phép đặt lịch: </p>
+            <p className="text-sm font-medium text-gray-900">
+              Cho phép đặt lịch:{" "}
+            </p>
             <input
               type="checkbox"
               className="ml-2 mt-0.5"
+              defaultChecked={true}
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 setDataForm((pre: DataForm) => ({
                   ...pre,
                   enableSchedule: e.target.checked,
+                }))
+              }
+            />
+          </div>
+        </div>
+        <div>
+          <div className="">
+            <label className="block mb-2 text-sm font-medium text-gray-900">
+              Số lượng lịch hẹn mỗi giờ:
+            </label>
+            <input
+              type="number"
+              className="input"
+              step={1}
+              defaultValue={5}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setDataForm((pre: DataForm) => ({
+                  ...pre,
+                  scheduleAllowedPerHour: parseInt(e.target.value),
                 }))
               }
             />

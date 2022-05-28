@@ -3,9 +3,14 @@ import React from "react";
 interface IStsistical {
   score: any;
   comments: any;
+  rankingScore: any;
 }
 
-const Statistical: React.FC<IStsistical> = ({ comments, score }) => {
+const Statistical: React.FC<IStsistical> = ({
+  comments,
+  score,
+  rankingScore,
+}) => {
   return (
     <div className="mt-5">
       <div className="bg-white w-[22vw] border-2 boder-gray-100">
@@ -66,18 +71,18 @@ const Statistical: React.FC<IStsistical> = ({ comments, score }) => {
         </div>
         <div className="flex justify-center 2xl:py-5 xl:py-4 lg:py-3">
           <p className="font-bold 2xl:text-xl xl:text-lg lg:text-sm text-purple-500">
-            {score && score.length >= 6 && score[5].toFixed(1)}
+            {rankingScore ?? "7.0"}
           </p>
           <p className="2xl:text-lg xl:text:sm lg:text-sm 2xl:mt-[0.1rem] xl:mt-1 ml-2">
             điểm
           </p>
           <p className="px-2 2xl:text-xl xl:text-lg lg:text-sm">-</p>
           <p className="2xl:text-xl xl:text-lg lg:text-sm">
-            {score[5] >= 9
+            {rankingScore >= 9
               ? "Tuyệt vời"
-              : score[5] >= 7.5 && score[5] < 9
+              : rankingScore >= 7.5 && rankingScore < 9
               ? "Tốt"
-              : score[5] >= 4.5 && score[5] < 7.5
+              : rankingScore >= 4.5 && rankingScore < 7.5
               ? "Trung bình"
               : "Kém"}
           </p>

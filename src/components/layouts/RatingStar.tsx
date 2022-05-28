@@ -6,7 +6,98 @@ interface IRating {
 }
 
 const RatingStar: React.FC<IRating> = ({ rating }) => {
-  if (rating < 0) return <></>;
+  if (rating < 0)
+    return (
+      <>
+        <div className="flex">
+          <div className="2xl:mt-0.5 2xl:ml-0.5">
+            <svg
+              className="2xl:h-5 2xl:w-5 xl:w-4 xl:h-4 lg:w-3 lg:h-3 text-yellow-300"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              {" "}
+              <path stroke="none" d="M0 0h24v24H0z" />{" "}
+              <path d="M12 17.75l-6.172 3.245 1.179-6.873-4.993-4.867 6.9-1.002L12 2l3.086 6.253 6.9 1.002-4.993 4.867 1.179 6.873z" />
+            </svg>
+          </div>
+          <div className="2xl:mt-0.5 2xl:ml-0.5">
+            <svg
+              className="2xl:h-5 2xl:w-5 xl:w-4 xl:h-4 lg:w-3 lg:h-3 text-yellow-300"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              {" "}
+              <path stroke="none" d="M0 0h24v24H0z" />{" "}
+              <path d="M12 17.75l-6.172 3.245 1.179-6.873-4.993-4.867 6.9-1.002L12 2l3.086 6.253 6.9 1.002-4.993 4.867 1.179 6.873z" />
+            </svg>
+          </div>
+          <div className="2xl:mt-0.5 2xl:ml-0.5">
+            <svg
+              className="2xl:h-5 2xl:w-5 xl:w-4 xl:h-4 lg:w-3 lg:h-3 text-yellow-300"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              {" "}
+              <path stroke="none" d="M0 0h24v24H0z" />{" "}
+              <path d="M12 17.75l-6.172 3.245 1.179-6.873-4.993-4.867 6.9-1.002L12 2l3.086 6.253 6.9 1.002-4.993 4.867 1.179 6.873z" />
+            </svg>
+          </div>
+          <div className="2xl:mt-0.5 2xl:ml-0.5">
+            <svg
+              className="2xl:h-5 2xl:w-5 xl:w-4 xl:h-4 lg:w-3 lg:h-3 text-yellow-300"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              {" "}
+              <path stroke="none" d="M0 0h24v24H0z" />{" "}
+              <path d="M12 17.75l-6.172 3.245 1.179-6.873-4.993-4.867 6.9-1.002L12 2l3.086 6.253 6.9 1.002-4.993 4.867 1.179 6.873z" />
+            </svg>
+          </div>
+          <div className="2xl:mt-0.5 2xl:ml-0.5">
+            <svg
+              className="2xl:h-5 2xl:w-5 xl:w-4 xl:h-4 lg:w-3 lg:h-3 text-yellow-300"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              {" "}
+              <path stroke="none" d="M0 0h24v24H0z" />{" "}
+              <path d="M12 17.75l-6.172 3.245 1.179-6.873-4.993-4.867 6.9-1.002L12 2l3.086 6.253 6.9 1.002-4.993 4.867 1.179 6.873z" />
+            </svg>
+          </div>
+        </div>
+      </>
+    );
   if (rating > 8) {
     return (
       <div className="flex">
@@ -130,7 +221,7 @@ const RatingStar: React.FC<IRating> = ({ rating }) => {
 
   if (rating > 4) {
     return (
-      <div>
+      <div className="flex">
         <div className="2xl:mt-[-1.5px] xl:mt-[-1.5px] lg:mt-[-1px]">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -200,7 +291,7 @@ const RatingStar: React.FC<IRating> = ({ rating }) => {
   }
   if (rating > 2) {
     return (
-      <div>
+      <div className="flex">
         <div className="2xl:mt-[-1.5px] xl:mt-[-1.5px] lg:mt-[-1px]">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -277,7 +368,7 @@ const RatingStar: React.FC<IRating> = ({ rating }) => {
   }
 
   return (
-    <div>
+    <div className="flex">
       <div>
         <img
           src={solidStar}

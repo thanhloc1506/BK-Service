@@ -6,7 +6,7 @@ import Description from "../components/services/Description";
 import HeaderDeatail from "../components/services/HeaderDeatail";
 import Post from "../components/services/post/Post";
 import Statistical from "../components/services/Statistical";
-import {
+import service, {
   getComments,
   getServiceById,
   selectService,
@@ -109,7 +109,11 @@ const DetailService: React.FC = () => {
               </div>
               <div>
                 <div className="flex justify-end">
-                  <Statistical score={score} comments={serviceState.comments} />
+                  <Statistical
+                    score={score}
+                    comments={serviceState.comments}
+                    rankingScore={serviceState.singleService?.rankingScore}
+                  />
                 </div>
                 {/*<div className="mx-24 mt-4">*/}
                 {/*    <CommentModal />*/}

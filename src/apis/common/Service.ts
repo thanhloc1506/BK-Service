@@ -25,4 +25,5 @@ export interface Service {
   readonly rankingScore: number;
   readonly ratingScore: number;
   readonly sortScore: number;
+  readonly scheduleAllowedPerHour: number;
 }
