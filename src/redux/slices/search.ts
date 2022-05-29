@@ -142,11 +142,11 @@ export const deepSearch = createAsyncThunk(
           100;
 
         const rankingScore =
-          (service.blogScore + 3 * service.cmtScore + 5 * ratingScore) / 9;
+            (service.blogScore + 1.25 * (service.cmtScore + ratingScore)) / 3.5;
 
         const sortScore =
-          (service.blogScore + 3 * service.cmtScore + 5 * ratingScore) / 9 +
-          parseInt(enterpriseInfo.data.enterprise.premium ?? "0");
+            (service.blogScore + 1.25 * (service.cmtScore + ratingScore)) / 3.5 +
+            parseInt(enterpriseInfo.data.enterprise.premium ?? "0");
 
         services.push({
           ...service,
@@ -224,11 +224,11 @@ export const quickSearch = createAsyncThunk(
           100;
 
         const rankingScore =
-          (service.blogScore + 3 * service.cmtScore + 5 * ratingScore) / 9;
+            (service.blogScore + 1.25 * (service.cmtScore + ratingScore)) / 3.5;
 
         const sortScore =
-          (service.blogScore + 3 * service.cmtScore + 5 * ratingScore) / 9 +
-          parseInt(enterpriseInfo.data.enterprise.premium ?? "0");
+            (service.blogScore + 1.25 * (service.cmtScore + ratingScore)) / 3.5 +
+            parseInt(enterpriseInfo.data.enterprise.premium ?? "0");
 
         services.push({
           ...service,
@@ -290,6 +290,9 @@ const searchSlice = createSlice({
     },
     clearQuickSearch(state: State) {
       state.dataQuickSeacrh = undefined;
+    },
+    resetFilter(state: State) {
+      state.filter = {};
     },
   },
   extraReducers: {
@@ -420,4 +423,5 @@ export const {
   resetQuan,
   setCurrentQuickSearchText,
   clearQuickSearch,
+  resetFilter
 } = searchSlice.actions;
