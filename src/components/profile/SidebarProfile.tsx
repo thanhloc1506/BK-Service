@@ -76,9 +76,9 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
               : "opacity-40 pl-10"
           }`}
         >
-          <div className="2xl:ml-0 xl:ml-0.5 2xl:mt-0 xl:mt-0.5">
+          <div className="2xl:ml-0.5 xl:ml-0.5 2xl:mt-0 xl:mt-0.5">
             <svg
-              className="2xl:h-8 2xl:w-8 xl:h-6 xl:w-6 lg:w-5 lg:h-5 text-blue-solid"
+              className="2xl:h-7 2xl:w-7 xl:h-6 xl:w-6 lg:w-5 lg:h-5 text-blue-solid"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -108,10 +108,10 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
               : "opacity-40 pl-10"
           }`}
         >
-          <div className="2xl:ml-0 xl:ml-0.5 2xl:mt-0 xl:mt-0.5">
+          <div className="2xl:ml-0.5 xl:ml-0.5 2xl:mt-0 xl:mt-0.5">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="2xl:h-8 2xl:w-8 xl:h-6 xl:w-6 lg:h-5 lg:w-5 text-blue-solid"
+              className="2xl:h-7 2xl:w-7 xl:h-6 xl:w-6 lg:h-5 lg:w-5 text-blue-solid"
               viewBox="0 0 20 20"
               fill="currentColor"
             >
@@ -137,9 +137,9 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
               : "opacity-40 pl-10"
           }`}
         >
-          <div className="2xl:ml-0 xl:ml-0.5 2xl:mt-0 xl:mt-0.5">
+          <div className="2xl:ml-0.5 xl:ml-0.5 2xl:mt-0 xl:mt-0.5">
             <svg
-              className="2xl:h-8 2xl:w-8 xl:h-6 xl:w-6 lg:h-5 lg:w-5 text-blue-solid"
+              className="2xl:h-7 2xl:w-7 xl:h-6 xl:w-6 lg:h-5 lg:w-5 text-blue-solid"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -167,9 +167,9 @@ const SidebarProfile: React.FC<ISelectPage> = ({ page }: ISelectPage) => {
               : "opacity-40 pl-10"
           }`}
         >
-          <div className="2xl:ml-0 xl:ml-0.5 2xl:mt-0 xl:mt-0.5">
+          <div className="2xl:ml-0.5 xl:ml-0.5 2xl:mt-0 xl:mt-0.5">
             <svg
-              className="2xl:h-8 2xl:w-8 xl:h-6 xl:w-6 lg:w-5 lg:h-5 text-blue-solid"
+              className="2xl:h-7 2xl:w-7 xl:h-6 xl:w-6 lg:w-5 lg:h-5 text-blue-solid"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"

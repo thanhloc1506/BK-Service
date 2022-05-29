@@ -1,4 +1,4 @@
-import React, { Fragment, useRef, useState, useMemo } from "react";
+import React, { Fragment, useRef, useState, useMemo, useEffect } from "react";
 import { Transition, Dialog } from "@headlessui/react";
 import { Service } from "../../../apis/common/Service";
 import Daypicker from "../../layouts/Daypicker";
@@ -13,6 +13,7 @@ import CalendarModal from "./CalendarModal";
 import { DateComponent } from "@fullcalendar/react";
 import service, { addSchedule } from "../../../redux/slices/service";
 import ModalConfirmReWrireBookService from "./ModalConfirmReWrireBookService";
+import { hideWaiting, showWaiting } from "../../../redux/slices/loading";
 
 interface IParam {
   open: boolean;
@@ -68,6 +69,8 @@ const BookServiceModal = ({ open, setOpen, service, schedules }: IParam) => {
 
   const [min, setMin] = useState("00");
 
+  const [isValid, setIsValid] = useState(true);
+
   const [AMPM, setAMPM] = useState(
     service?.openTime?.split(" ")[0].toUpperCase() ?? "AM"
   );
@@ -78,7 +81,7 @@ const BookServiceModal = ({ open, setOpen, service, schedules }: IParam) => {
 
   const [existScheduleId, setExistScheduleId] = useState("");
 
-  const onAddSchedule = () => {
+  const onAddSchedule = async () => {
     const dateFormat = date
       .toLocaleString("en-US", {
         timeZone: "Asia/Ho_Chi_Minh",
@@ -103,7 +106,13 @@ const BookServiceModal = ({ open, setOpen, service, schedules }: IParam) => {
       setOpen(false);
     } else {
       setExistScheduleId(isExist);
-      setShowConfirm(true);
+      setOpen(false);
+      dispatch(showWaiting());
+
+      await setTimeout(() => {
+        setShowConfirm(true);
+        dispatch(hideWaiting());
+      }, 1000);
     }
   };
 
@@ -115,8 +124,8 @@ const BookServiceModal = ({ open, setOpen, service, schedules }: IParam) => {
     <div>
       {showConfirm ? (
         <ModalConfirmReWrireBookService
-          show={showConfirm}
-          setShow={setShowConfirm}
+          showConfirm={showConfirm}
+          setShowConfirm={setShowConfirm}
           serviceId={service?._id as string}
           scheduleId={existScheduleId}
           hour={hour}
@@ -177,7 +186,7 @@ const BookServiceModal = ({ open, setOpen, service, schedules }: IParam) => {
                       </div>
                       <div className="pl-5">
                         <p className="2xl:text-lg xl:text-sm lg:text-sm">
-                          Số điện thoại: 0123456789
+                          Số điện thoại: {userState?.phone ?? ""}
                         </p>
                       </div>
                     </div>
@@ -236,6 +245,12 @@ const BookServiceModal = ({ open, setOpen, service, schedules }: IParam) => {
                         </p>
                       </div>
                       <div className="pl-3">
+                        {/* {useEffect(
+                          () => (
+                            
+                          ),
+                          [hour, min, AMPM, date]
+                        )} */}
                         <TimePicker
                           hour={hour}
                           setHour={setHour}
@@ -247,6 +262,9 @@ const BookServiceModal = ({ open, setOpen, service, schedules }: IParam) => {
                           date={date}
                           openTime={service?.openTime as string}
                           closeTime={service?.closeTime as string}
+                          isValid={isValid}
+                          setIsValid={setIsValid}
+                          scheduleCountPerHour={service?.scheduleAllowedPerHour}
                         />
                       </div>
                     </div>
@@ -258,6 +276,7 @@ const BookServiceModal = ({ open, setOpen, service, schedules }: IParam) => {
                       setOpen={setShowCalendar}
                       date={date}
                       setDate={setDate}
+                      setIsValid={setIsValid}
                     />
                   </div>
                   <div className="border-t-2 border-t-gray-100 mt-2">
@@ -265,6 +284,7 @@ const BookServiceModal = ({ open, setOpen, service, schedules }: IParam) => {
                       <button
                         className="2xl:text-lg xl:text-sm lg:text-sm bg-green-500 2xl:px-5 2xl:py-1.5 xl:px-3 xl:py-1 lg:px-2 lg:py-1 rounded-sm text-gray-100 hover:text-gray-700"
                         onClick={onAddSchedule}
+                        disabled={!isValid}
                       >
                         Xác nhận
                       </button>

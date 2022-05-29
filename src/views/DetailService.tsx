@@ -76,6 +76,7 @@ const DetailService: React.FC = () => {
                 data={serviceState.singleService}
                 scores={score}
                 numOfComments={serviceState.comments.length}
+                rankingScore={1}
               />
             )}
           </div>
@@ -139,7 +140,11 @@ const DetailService: React.FC = () => {
               {/* fixed z-10 top-40 left-[65.6%] */}
               <div className="">
                 <div className="flex justify-end">
-                  <Statistical score={score} comments={serviceState.comments} />
+                  <Statistical
+                    score={score}
+                    comments={serviceState.comments}
+                    rankingScore={serviceState?.singleService?.rankingScore}
+                  />
                 </div>
                 <div className="flex justify-end mt-4">
                   <CommentModal

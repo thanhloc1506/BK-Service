@@ -5,11 +5,7 @@ import Pagination from "../components/layouts/Pagination/Pagination";
 import SideBarHomePage from "../components/layouts/SideBarHomePage";
 import SingleCard from "../components/services/SingleCard";
 import { RootState } from "../redux/store";
-import {
-  deepSearch,
-  search,
-  setCurrentSearchText,
-} from "../redux/slices/search";
+import { deepSearch, setCurrentSearchText } from "../redux/slices/search";
 import { logout } from "../redux/slices/auth";
 import cookies from "js-cookie";
 import { useLocation, useNavigate } from "react-router-dom";

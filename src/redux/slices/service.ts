@@ -1,10 +1,12 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axiosClient from "../../apis/axios";
 import { hideWaiting, showWaiting } from "./loading";
 import moment from "moment";
 import { Service } from "../../apis/common/Service";
 import { PInSchedule } from "../../apis/package/in/PInSchedule";
 import schedule from "./schedule";
+import { toastSuccess } from "../../utils/toast";
+import { PInScore } from "../../apis/package/in/PInScore";
 
 export interface State {
   services: Service[];
@@ -97,7 +99,45 @@ export const getFollowService = createAsyncThunk(
     try {
       // dispatch(showWaiting());
       const response = await axiosClient.get(`/user/followed-service`);
-      return response.data;
+
+      let services: any = [];
+      for (const service of response.data.services) {
+        const enterpriseInfo = await axiosClient.get(
+          `/enterprise/${service.enterprise}`
+        );
+
+        const scoresResponse = await axiosClient.get<PInScore>(
+          `service/${service._id}/scores`
+        );
+
+        const scores = scoresResponse.data?.score;
+
+        const ratingScore =
+          (32 * scores[0] +
+            22 * scores[1] +
+            19 * scores[2] +
+            11 * scores[3] +
+            16 * scores[4]) /
+          100;
+
+        const rankingScore =
+          (service.blogScore + (2.5 * (service.cmtScore + ratingScore)) / 2) /
+          3.5;
+
+        const sortScore =
+          (service.blogScore + (2.5 * (service.cmtScore + ratingScore)) / 2) /
+            3.5 +
+          parseInt(enterpriseInfo.data.enterprise.premium ?? "0");
+
+        services.push({
+          ...service,
+          enterprise: enterpriseInfo.data.enterprise,
+          ratingScore: ratingScore.toFixed(1),
+          sortScore: sortScore.toFixed(1),
+          rankingScore: rankingScore.toFixed(1),
+        });
+      }
+      return services;
     } catch (error) {
       console.log(error);
       throw error;
@@ -114,7 +154,47 @@ export const getServiceById = createAsyncThunk(
     try {
       dispatch(showWaiting());
       const response = await axiosClient.get(`/service/${serviceId}`);
-      return response.data;
+
+      let service: any = response.data.service;
+
+      const enterpriseInfo = service.enterprise;
+
+      const scoresResponse = await axiosClient.get<PInScore>(
+        `service/${service._id}/scores`
+      );
+
+      const scores = scoresResponse.data?.score;
+
+      const ratingScore =
+        (32 * scores[0] +
+          22 * scores[1] +
+          19 * scores[2] +
+          11 * scores[3] +
+          16 * scores[4]) /
+        100;
+
+      const rankingScore =
+        (service.blogScore + (2.5 * (service.cmtScore + ratingScore)) / 2) /
+        3.5;
+
+      console.log(rankingScore);
+
+      console.log(rankingScore);
+
+      const sortScore =
+        (service.blogScore + (2.5 * (service.cmtScore + ratingScore)) / 2) /
+          3.5 +
+        parseInt(enterpriseInfo.premium ?? "0");
+
+      service = {
+        ...service,
+        enterprise: enterpriseInfo,
+        ratingScore: ratingScore.toFixed(1),
+        sortScore: sortScore.toFixed(1),
+        rankingScore: rankingScore.toFixed(1),
+      };
+
+      return service;
     } catch (error) {
       console.log(error);
       throw error;
@@ -165,6 +245,7 @@ export const comment = createAsyncThunk(
         user: userInfoResponse.data.user,
         userLiked: false,
         time: `${day}/${month}/${year}`,
+        numOfUserLiked: 0,
       };
 
       return commentResponses;
@@ -259,6 +340,7 @@ export const getAllSchedules = createAsyncThunk(
       let currentServiceSchedules: any = [];
       let idx = 0;
       const response = await axiosClient.get<PInSchedule>("/user/schedules");
+
       for (const schedule of response.data.schedules) {
         // if (schedule.service === serviceId) {
         const timeServe = moment(schedule.timeServe as Date)
@@ -279,7 +361,7 @@ export const getAllSchedules = createAsyncThunk(
             min,
             sec: "00",
           },
-          service: schedule.service.name,
+          serviceName: schedule.service.name,
           serviceId: schedule.service._id,
         };
         idx++;
@@ -345,7 +427,7 @@ export const addSchedule = createAsyncThunk(
           min: minFormat,
           sec: "00",
         },
-        service: serviceResponse.data.service.name,
+        serviceName: serviceResponse.data.service.name,
         serviceId: serviceResponse.data.service._id,
       };
 
@@ -355,6 +437,21 @@ export const addSchedule = createAsyncThunk(
     } finally {
       dispatch(hideWaiting());
     }
+  }
+);
+
+export const deleteSchedule = createAsyncThunk(
+  "deleteSchedule",
+  (id: string, api) => {
+    const dispatch = api.dispatch;
+    dispatch(showWaiting());
+    return axiosClient
+      .post<any>("user/unschedule", { id })
+      .then((_) => id)
+      .catch((err) => {
+        throw err;
+      })
+      .finally(() => dispatch(hideWaiting()));
   }
 );
 
@@ -406,8 +503,8 @@ const serviceSlice = createSlice({
       state.followLoading = true;
     },
     [getFollowService.fulfilled.toString()]: (state, action) => {
-      state.followService = action.payload.services;
-      const currentFollowService = action.payload.services.filter(
+      state.followService = action.payload;
+      const currentFollowService = action.payload.filter(
         (service: any) => service._id === state.serviceId
       );
       state.isFollow = currentFollowService.length === 1;
@@ -417,7 +514,7 @@ const serviceSlice = createSlice({
       state.serviceLoading = true;
     },
     [getServiceById.fulfilled.toString()]: (state, action) => {
-      state.singleService = action.payload.service;
+      state.singleService = action.payload;
       state.serviceLoading = false;
     },
     [unFollow.pending.toString()]: (state, _action) => {
@@ -485,10 +582,16 @@ const serviceSlice = createSlice({
       state.allSchedules = action.payload;
       state.allSchedulesLoading = false;
     },
-    [deleteScheduleTmp.fulfilled.toString()]: (state, action) => {
-      state.schedules = state.schedules.filter(
-        (schedule: any) => schedule._id != action.payload
-      );
+    [deleteSchedule.pending.toString()]: (state, action) => {
+      state.scheduleLoading = true;
+    },
+    [deleteSchedule.fulfilled.toString()]: (
+      state: State,
+      action: PayloadAction<string>
+    ) => {
+      // toastSuccess("Xóa lịch hẹn thành công!");
+      state.schedules = state.schedules.filter((s) => s._id !== action.payload);
+      state.scheduleLoading = false;
     },
   },
 });

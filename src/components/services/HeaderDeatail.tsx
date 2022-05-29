@@ -15,21 +15,25 @@ interface IHeaderDetail {
   data: Service;
   scores: number[];
   numOfComments: number;
+  rankingScore: number;
 }
 
 const tieuchi = ["Tin cậy", "Đáp ứng", "Đảm bảo", "Vật chất", "Thiện cảm"];
 
-const timeServe = moment(new Date(), "YYYY/MM/DD HH:mm").zone("+0700");
-var month = timeServe.format("MM");
-var day = timeServe.format("DD");
-var year = timeServe.format("YYYY");
-var hourFormat = parseInt(timeServe.format("HH"));
-var minFormat = parseInt(timeServe.format("mm"));
+const currentTime = moment(new Date())
+  .utcOffset("+0700")
+  .format("YYYY/MM/DD HH:mm");
+var month = currentTime.split(" ")[0].split("/")[1];
+var day = currentTime.split(" ")[0].split("/")[2];
+var year = currentTime.split(" ")[0].split("/")[0];
+var hourFormat = parseInt(currentTime.split(" ")[1].split(":")[0]);
+var minFormat = parseInt(currentTime.split(" ")[1].split(":")[1]);
 
 const HeaderDeatail: React.FC<IHeaderDetail> = ({
   data,
   scores,
   numOfComments,
+  rankingScore,
 }: IHeaderDetail) => {
   const authState = useSelector((state: RootState) => state.user);
   const miniCarousel = useRef<Carousel>(null);
@@ -51,24 +55,24 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
     if (data.openTime == undefined || data.closeTime == undefined) {
       return;
     }
-    let tmp = parseInt(data.openTime.split(":")[0]);
-    let tmp2 = parseInt(data.closeTime.split(":")[0]);
+    let openTime = parseInt(data.openTime.split(":")[0]);
+    let closeTime = parseInt(data.closeTime.split(":")[0]);
     if (data.openTime.split(" ")[1] === "pm") {
-      tmp = tmp * 2;
+      openTime = openTime + 12;
     }
     if (data.closeTime.split(" ")[1] === "pm") {
-      tmp2 = tmp2 * 2;
+      closeTime = closeTime + 12;
     }
 
-    if (tmp < hourFormat && hourFormat < tmp2) {
+    if (hourFormat > openTime && hourFormat < closeTime) {
       setStatus(true);
       setStatusLoading(false);
       return;
     }
 
     if (
-      tmp == hourFormat &&
-      parseInt(data.openTime.split(":")[1]) < minFormat
+      openTime == hourFormat &&
+      parseInt(data.openTime.split(" ")[0].split(":")[1]) <= minFormat
     ) {
       setStatus(true);
       setStatusLoading(false);
@@ -76,8 +80,8 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
     }
 
     if (
-      tmp2 == hourFormat &&
-      parseInt(data.openTime.split(":")[1]) > minFormat
+      closeTime == hourFormat &&
+      parseInt(data.closeTime.split(" ")[0].split(":")[1]) >= minFormat
     ) {
       setStatus(true);
       setStatusLoading(false);
@@ -162,7 +166,7 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
             <div className="flex justify-start ml-10 mt-2 2xl:col-span-1 xl:col-span-1 lg:col-span-2">
               <div className="bg-blue-light rounded-full overflow-hidden 2xl:h-12 2xl:w-12 xl:h-8 xl:w-8 lg:w-8 lg:h-8">
                 <p className="flex justify-center 2xl:mt-2.5 xl:mt-1.5 lg:mt-1.5 2xl:text-xl xl:text-sm lg:text-sm font-semibold text-white">
-                  {scores && scores.length >= 5 ? scores[5].toFixed(1) : ""}
+                  {data.rankingScore ?? "7.0"}
                 </p>
               </div>
             </div>
@@ -244,7 +248,7 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
                       </p>
                     )}
 
-                    <p className="text-gray-600 2xl:text-xl xl:text-lg lg:text-sm font-semibold xl:mt-0 lg:mt-0.5 ml-5">
+                    <p className="text-gray-600 2xl:text-lg lg:text-sm xl:text-xs font-semibold xl:mt-0 lg:mt-0.5 ml-5">
                       {data.openTime.toUpperCase()} -{" "}
                       {data.closeTime.toUpperCase()}
                     </p>

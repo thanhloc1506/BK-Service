@@ -640,7 +640,7 @@ const InfoUser: React.FC = () => {
               <div className="pl-10">
                 <textarea
                   className={
-                    "text-gray-400 xl:text-sm lg:text-xs w-[12vw] bg-transparent outline-none resize-none"
+                    "text-gray-400 xl:text-sm lg:text-xs w-[12vw] bg-transparent outline-none resize-none break-words h-10"
                   }
                   value={address.value}
                   disabled

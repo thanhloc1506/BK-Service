@@ -12,6 +12,7 @@ import { SearchField } from "./SearchField";
 import Loading from "../../views/Loading";
 import { DEFAULT_AVATAR } from "../../constants/common";
 import { ModalNoti } from "../noti/ModalNoti";
+import {resetFilter} from "../../redux/slices/search";
 
 const Navbar: React.FC = () => {
   const authState = useSelector((state: RootState) => state.user);
@@ -29,6 +30,7 @@ const Navbar: React.FC = () => {
   const navigate = useNavigate();
 
   const goToHomepage = () => {
+    dispatch(resetFilter());
     navigate("/");
   };
 

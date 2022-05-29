@@ -11,7 +11,6 @@ import { getAddressContent } from "../../utils/getAddressContent";
 import { useDispatch } from "react-redux";
 import { hideWaiting, showWaiting } from "../../redux/slices/loading";
 import { ModalConfirm } from "../common/ModalConfirm";
-import { deleteSchedule } from "../../redux/slices/schedule";
 import { useNavigate } from "react-router-dom";
 interface ScheduleHistoryItemProps extends React.Props<any> {
   data: ScheduleHistory;
@@ -137,11 +136,11 @@ export const ScheduleHistoryItem: React.FC<ScheduleHistoryItemProps> = ({
             ) : (
               <button
                 className={
-                  "w-3/4 text-amber-500 bg-yellow-100 hover:bg-amber-200 focus:ring-4 focus:outline-none focus:ring-amber-100 font-medium rounded-lg  text-center py-3"
+                  "px-1 w-full text-amber-500 bg-yellow-100 hover:bg-amber-200 focus:ring-4 focus:outline-none focus:ring-amber-100 font-medium rounded-lg  text-center 2xl:py-2 xl:py-1 lg:py-0.5"
                 }
                 onClick={() => navigate(`/detailService/${data.service._id}`)}
               >
-                <BsFillStarFill className={"inline mr-2"} />
+                <BsFillStarFill className={"inline mr-1 mt-[-5px]"} />
                 <p className={"inline 2xl:text-lg xl:text-sm lg:text-xs"}>
                   Đánh giá ngay
                 </p>

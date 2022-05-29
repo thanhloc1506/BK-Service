@@ -7,8 +7,8 @@ import { getAddressContent } from "../../utils/getAddressContent";
 import { useDispatch } from "react-redux";
 import { hideWaiting, showWaiting } from "../../redux/slices/loading";
 import { ModalConfirm } from "../common/ModalConfirm";
-import { deleteSchedule } from "../../redux/slices/schedule";
 import service from "../../assets/service/service.png";
+import { deleteSchedule } from "../../redux/slices/service";
 
 interface ScheduleItemProps extends React.Props<any> {
   data: Schedule;

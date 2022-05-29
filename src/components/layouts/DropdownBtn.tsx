@@ -53,7 +53,7 @@ const DropdownBtn = () => {
         <Menu.Items className="origin-top-right absolute right-0 mt-7 ml-16 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="py-1">
             <Menu.Item>
-              {({ active }) => (
+              {({ active }: any) => (
                 <div
                   className={classNames(
                     active ? "bg-gray-100 text-gray-900" : "text-gray-700",
@@ -61,12 +61,12 @@ const DropdownBtn = () => {
                   )}
                   onClick={goToProfile}
                 >
-                  Account settings
+                  Thông tin tài khoản
                 </div>
               )}
             </Menu.Item>
             <Menu.Item>
-              {({ active }) => (
+              {({ active }: any) => (
                 <a
                   href="#"
                   className={classNames(
@@ -74,13 +74,13 @@ const DropdownBtn = () => {
                     "block px-4 py-2 text-sm flex justify-end"
                   )}
                 >
-                  Support
+                  Hỗ trợ
                 </a>
               )}
             </Menu.Item>
 
             <Menu.Item>
-              {({ active }) => (
+              {({ active }: any) => (
                 <button
                   className={classNames(
                     active ? "bg-gray-100 text-gray-900" : "text-gray-700",
@@ -88,7 +88,7 @@ const DropdownBtn = () => {
                   )}
                   onClick={onClickSignOut}
                 >
-                  Sign out
+                  Đăng xuất
                 </button>
               )}
             </Menu.Item>

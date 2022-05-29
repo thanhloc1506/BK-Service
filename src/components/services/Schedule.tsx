@@ -18,12 +18,28 @@ const Schedule: React.FC<ISchedule> = ({ service, schedules }) => {
   const dispatch = useDispatch();
   const userState = useSelector((state: RootState) => state.user);
   const onClickOpen = () => {
-    if (userState.isAuthenticated) {
-      dispatch(getScheduleByServiceId(service?._id as string));
-      setOpen(true);
-    } else {
-      dispatch(toggleModalLogin(userState.showLoginForm));
+    if (service?.enableSchedule) {
+      if (userState.isAuthenticated) {
+        dispatch(getScheduleByServiceId(service?._id as string));
+        setOpen(true);
+      } else {
+        dispatch(toggleModalLogin(userState.showLoginForm));
+      }
     }
+  };
+
+  const [showTooltip, setShowToolTip] = useState(false);
+
+  const onHoverBtnSchedule = () => {
+    setTimeout(() => {
+      setShowToolTip(true);
+    }, 300);
+  };
+
+  const onOutBtnSchedule = () => {
+    setTimeout(() => {
+      setShowToolTip(false);
+    }, 300);
   };
   return (
     <div className="py-5">
@@ -58,13 +74,23 @@ const Schedule: React.FC<ISchedule> = ({ service, schedules }) => {
               []
             )}
           </div>
-          <div className="2xl:pr-4 xl:pr-3 lg:pr-2 pb-5 pt-2 flex justify-end">
+          <div className="2xl:pr-4 xl:pr-3 lg:pr-2 pb-5 pt-2 flex justify-end relative">
             <button
               className="bg-blue-500 text-white hover:text-gray-700 rounded-sm 2xl:text-sm xl:text-sm lg:text-xs 2xl:px-3 2xl:py-1.5 xl:px-2.5 xl:py-1 lg:px-2 lg:py-1"
               onClick={onClickOpen}
+              // disabled={!service?.enableSchedule ?? false}
+              onMouseOver={onHoverBtnSchedule}
+              onMouseOut={onOutBtnSchedule}
             >
               Đặt lịch
             </button>
+            {showTooltip && !service?.enableSchedule ? (
+              <div className="bg-orange-50 w-fit h-fit rounded-lg absolute top-12 right-0 px-1">
+                <p className="2xl:text-sm xl:text-xs lg:text-[10px] font-light">
+                  *Tính năng đặt lịch không khả dụng
+                </p>
+              </div>
+            ) : null}
           </div>
         </div>
       </div>

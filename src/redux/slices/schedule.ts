@@ -30,20 +30,17 @@ export const fetchSchedule = createAsyncThunk<Schedule[]>(
   }
 );
 
-export const deleteSchedule = createAsyncThunk(
-  "deleteSchedule",
-  (id: string, api) => {
-    const dispatch = api.dispatch;
-    dispatch(showWaiting());
-    return axiosClient
-      .post<any>("user/unschedule", { id })
-      .then((_) => id)
-      .catch((err) => {
-        throw err;
-      })
-      .finally(() => dispatch(hideWaiting()));
-  }
-);
+const deleteSchedule = createAsyncThunk("deleteSchedule", (id: string, api) => {
+  const dispatch = api.dispatch;
+  dispatch(showWaiting());
+  return axiosClient
+    .post<any>("user/unschedule", { id })
+    .then((_) => id)
+    .catch((err) => {
+      throw err;
+    })
+    .finally(() => dispatch(hideWaiting()));
+});
 
 const scheduleSlice = createSlice({
   name: "schedule",
@@ -84,13 +81,13 @@ const scheduleSlice = createSlice({
     [fetchSchedule.pending.toString()]: (state, _action) => {
       state.schedulesLoading = true;
     },
-    [deleteSchedule.fulfilled.toString()]: (
-      state: State,
-      action: PayloadAction<string>
-    ) => {
-      toastSuccess("Xóa lịch hẹn thành công!");
-      state.schedules = state.schedules.filter((s) => s._id !== action.payload);
-    },
+    // [deleteSchedule.fulfilled.toString()]: (
+    //   state: State,
+    //   action: PayloadAction<string>
+    // ) => {
+    //   toastSuccess("Xóa lịch hẹn thành công!");
+    //   state.schedules = state.schedules.filter((s) => s._id !== action.payload);
+    // },
   },
 });
 

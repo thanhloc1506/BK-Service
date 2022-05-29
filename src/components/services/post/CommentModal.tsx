@@ -13,6 +13,7 @@ import { toggleModalLogin } from "../../../redux/slices/auth";
 import { Service } from "../../../apis/common/Service";
 import { getAddressContent } from "../../../utils/getAddressContent";
 import RatingStar from "../../layouts/RatingStar";
+import * as Yup from "yup";
 
 interface ICommentModal {
   score: any;
@@ -159,6 +160,14 @@ const CommentModal: React.FC<ICommentModal> = ({
     else dispatch(toggleModalLogin(userState.showLoginForm));
   };
 
+  const validationSchema = Yup.object().shape({
+    title: Yup.string().max(30, "*Tiêu đề không được vượt quá 30 ký tự"),
+    content: Yup.string().max(
+      1000,
+      "*Nội dung đánh giá không được vượt quá 1000 ký tự"
+    ),
+  });
+
   return (
     <>
       <button
@@ -206,7 +215,7 @@ const CommentModal: React.FC<ICommentModal> = ({
                 leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                 leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
               >
-                <div className="inline-block align-bottom bg-white text-left overflow-hidden shadow-xl transform transition-all duration-500 ease-in-out 2xl:w-1100 2xl:h-630 xl:w-[940px] xl:h-[520px] lg:h-[430px] lg:w-[840px]">
+                <div className="inline-block align-bottom bg-white text-left overflow-hidden shadow-xl transform transition-all duration-500 ease-in-out 2xl:w-1100 2xl:h-650 xl:w-[940px] xl:h-[540px] lg:h-[440px] lg:w-[840px]">
                   <div className="bg-gray-light">
                     <div className="2xl:h-650 xl:h-[520px] lg:h-[430px] m:flex sm:items-start">
                       <div className="w-full h-full border-black">
@@ -225,14 +234,14 @@ const CommentModal: React.FC<ICommentModal> = ({
                               />
                             </div>
                             <div className="flex 2xl:mt-5 xl:mt-3 lg:mt-2">
-                              <div className="bg-blue-400 rounded-full overflow-hidden 2xl:h-12 2xl:w-12 xl:w-10 xl:h-10 lg:w-8 lg:h-8">
-                                <p className="flex justify-center 2xl:mt-3 xl:mt-2.5 lg:mt-2 2xl:text-lg xl:text-sm lg:text-xs font-semibold text-white">
+                              <div className="bg-blue-400 rounded-full overflow-hidden 2xl:h-10 2xl:w-10 xl:w-9 xl:h-9 lg:w-8 lg:h-8">
+                                <p className="flex justify-center 2xl:mt-2.5 xl:mt-2 lg:mt-1.5 2xl:text-sm xl:text-xs lg:text-[10px] font-semibold text-white">
                                   {score &&
                                     score.length >= 6 &&
                                     score[5].toFixed(1)}
                                 </p>
                               </div>
-                              <div className="ml-3 2xl:mt-1 xl:mt-0 lg:mt-0">
+                              <div className="ml-3 2xl:mt-0 xl:mt-0 lg:mt-0">
                                 <div className="flex">
                                   <p className="font-semibold 2xl:text-sm xl-text-sm lg:text-xs">
                                     {enterprise?.fullName
@@ -250,7 +259,7 @@ const CommentModal: React.FC<ICommentModal> = ({
                               </div>
                             </div>
                             <div className="2xl:mt-6 xl:mt-3 lg:mt-2">
-                              <div className="border-2 border-gray-300 w-full 2xl:h-72 xl:h-64  bg-white">
+                              <div className="border-2 border-gray-300 w-full 2xl:h-[18.5rem] xl:h-64  bg-white">
                                 <div className="2xl:p-1.5 xl:p-1 lg:p-0.5 flex justify-center">
                                   <p className="font-medium 2xl:text-lg xl:text-sm lg:text-xs">
                                     {comments.length} Bình luận
@@ -453,8 +462,10 @@ const CommentModal: React.FC<ICommentModal> = ({
                                 images: "",
                               }}
                               onSubmit={onPostComment}
+                              validationSchema={validationSchema}
                             >
                               {({
+                                touched,
                                 errors,
                                 handleChange,
                                 handleBlur,
@@ -463,6 +474,11 @@ const CommentModal: React.FC<ICommentModal> = ({
                                 <Form>
                                   {Share ? (
                                     <>
+                                      {touched["title"] && errors["title"] && (
+                                        <p className="2xl:text-sm xl:text-xs lg:text-[12px] text-red-500 text-center flex justify-start">
+                                          {errors["title"]}
+                                        </p>
+                                      )}
                                       <div className="2xl:h-12 xl:h-8 lg:h-7 w-full">
                                         <Field
                                           type="text"
@@ -475,8 +491,15 @@ const CommentModal: React.FC<ICommentModal> = ({
                                           onBlur={handleBlur}
                                         />
                                       </div>
+                                      {touched["content"] &&
+                                        errors["content"] && (
+                                          <p className="2xl:text-sm xl:text-xs lg:text-[12px] text-red-500 text-center flex justify-start">
+                                            {errors["content"]}
+                                          </p>
+                                        )}
                                       <div className="w-full">
-                                        <textarea
+                                        <Field
+                                          component="textarea"
                                           className="mt-0.5 px-3 py-1.5 w-full block 2xl:pb-96 xl:pb-80 lg:pb-[15.7rem] text-gray-700 bg-clip-padding transition ease-in-out m-0 focus:text-gray-700 focus:outline-none resize-none 2xl:text-lg xl:text-sm lg:text-xs"
                                           id="content"
                                           name="content"

@@ -51,9 +51,9 @@ const Notifications = () => {
                   <NotiCard
                     content={getContentNoti(n)}
                     img={
-                      n.service.images && n.service.images.length > 0
-                        ? n.service.images[0].url
-                        : ""
+                      n.service?.images && n.service?.images.length > 0
+                        ? n.service?.images[0]?.url
+                        : "https://paroda.vn/media/2021/08/customer-service.jpg"
                     }
                     time={getTimeText(n.date)}
                     hadRead={n.hadRead}
@@ -73,20 +73,20 @@ const getContentNoti = (noti: PInNotification.Notification): ReactNode => {
       return (
         <span className="2xl:text-lg xl:text-sm lg:text-xs">
           <span>Bạn đã theo dõi dịch vụ </span>
-          <span className="font-semibold">{noti.service.name} </span>
+          <span className="font-semibold">{noti.service?.name} </span>
         </span>
       );
     case NotiType.UNFOLLOWED:
       return (
         <span className="2xl:text-lg xl:text-sm lg:text-xs">
           <span>Bạn đã hủy theo dõi dịch vụ </span>
-          <span className="font-semibold">{noti.service.name} </span>
+          <span className="font-semibold">{noti.service?.name} </span>
         </span>
       );
     case NotiType.ENTERPRISE_DELETE_SCHEDULE:
       return (
         <span>
-          <span className="font-semibold">{noti.service.name} </span>
+          <span className="font-semibold">{noti.service?.name} </span>
           <span>đã hủy lịch hẹn với bạn</span>
         </span>
       );
@@ -94,7 +94,7 @@ const getContentNoti = (noti: PInNotification.Notification): ReactNode => {
       return (
         <span className="2xl:text-lg xl:text-sm lg:text-xs">
           <span>Bạn vừa hoàn thành sử dụng dịch vụ </span>
-          <span className="font-semibold">{noti.service.name} </span>
+          <span className="font-semibold">{noti.service?.name} </span>
           <span>
             . Hãy cho chúng tôi biết đánh giá của bạn về chất lượng dịch vụ nhé!
           </span>

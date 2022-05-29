@@ -1,12 +1,15 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useDispatch } from "react-redux";
-import { deleteSchedule } from "../../../redux/slices/schedule";
-import { addSchedule, deleteScheduleTmp } from "../../../redux/slices/service";
+import {
+  addSchedule,
+  deleteSchedule,
+  deleteScheduleTmp,
+} from "../../../redux/slices/service";
 
 export interface ModalConfirmProps {
-  show: boolean;
-  setShow: (b: boolean) => void;
+  showConfirm: boolean;
+  setShowConfirm: (b: boolean) => void;
   serviceId: string;
   scheduleId: string;
   hour: any;
@@ -16,8 +19,8 @@ export interface ModalConfirmProps {
 }
 
 const ModalConfirmReWrireBookService: React.FC<ModalConfirmProps> = ({
-  show,
-  setShow,
+  showConfirm,
+  setShowConfirm,
   serviceId,
   scheduleId,
   hour,
@@ -27,8 +30,8 @@ const ModalConfirmReWrireBookService: React.FC<ModalConfirmProps> = ({
 }) => {
   const onCancle = () => {
     setTimeout(() => {
-      setShow(false);
-    }, 600);
+      setShowConfirm(false);
+    }, 300);
   };
 
   const dispatch = useDispatch();
@@ -48,20 +51,20 @@ const ModalConfirmReWrireBookService: React.FC<ModalConfirmProps> = ({
       serviceId,
     };
     await dispatch(addSchedule(scheduleForm));
-    dispatch(deleteScheduleTmp(scheduleId));
 
     await setTimeout(() => {
-      setShow(false);
-    }, 600);
+      setShowConfirm(false);
+    }, 300);
   };
-
+  const cancelButtonRef = useRef(null);
   return (
     <div>
-      <Transition appear show={show} as={Fragment}>
+      <Transition appear show={showConfirm} as={Fragment}>
         <Dialog
           as="div"
           className="fixed inset-0 z-10 overflow-y-auto"
           onClose={() => {}}
+          initialFocus={cancelButtonRef}
         >
           <div className="min-h-screen px-4 text-center">
             <Transition.Child
