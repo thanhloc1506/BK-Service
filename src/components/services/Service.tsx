@@ -108,13 +108,7 @@ const SingleCard: React.FC<IService> = memo(
               alt="rating"
               className="xl:w-[40%] xl:h-[65%] lg:h-[60%%] xl:mt-[2%] lg:mt[3%]"
             /> */}
-            {scoreLoading ? (
-              ""
-            ) : (
-              <RatingStar
-                rating={data?.textCmtCount > 0 ? data.rankingScore : -1}
-              />
-            )}
+            {scoreLoading ? "" : <RatingStar rating={data.rankingScore ?? 7} />}
           </div>
           <div className="px-4 py-2 2xl:h-[25%] xl:h-[25%] lg:h-[28%] overflow-hidden border-y-2 border-gray-200">
             <p
