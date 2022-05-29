@@ -61,7 +61,7 @@ const Homepage: React.FC = () => {
                 )}
               </div>
               {searchState.dataSearch ? (
-                <div className="flex justify-end 2xl:pr-20 xl:pr-16 lg-pr-10 mt-10">
+                <div className="flex justify-end mt-10">
                   <Pagination itemsPerPage={4} />
                 </div>
               ) : null}

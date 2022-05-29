@@ -14,6 +14,7 @@ import { selectPageEnterprise } from "../../redux/slices/enterprise";
 import { RiNotification2Line, RiNotification3Line } from "react-icons/ri";
 import { ModalNoti } from "../Noti/ModalNoti";
 import { DEFAULT_AVATAR } from "../../constants/common";
+import {resetFilter} from "../../redux/slices/search";
 
 const Navbar: React.FC = () => {
   const authState = useSelector((state: RootState) => state.user);
@@ -31,6 +32,7 @@ const Navbar: React.FC = () => {
   const navigate = useNavigate();
 
   const goToHomepage = () => {
+    dispatch(resetFilter());
     navigate("/");
   };
 

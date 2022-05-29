@@ -6,6 +6,7 @@ import { RootState } from "../../redux/store";
 import { PInNotification } from "../../apis/package/in/PInNoti";
 import { NotiType } from "../../apis/common/NotiType";
 import { readAllNoti } from "../../redux/slices/noti";
+import { DEFAULT_AVATAR } from "../../constants/common";
 
 export const ModalNoti = () => {
   const [showing, setShowing] = useState(false);
@@ -171,7 +172,7 @@ export const NotiContent = () => {
             return (
               <NotiItem
                 content={getContentNoti(n)}
-                img={n.user.avatar?.url}
+                img={n.user.avatar?.url ?? DEFAULT_AVATAR}
                 time={getTimeText(n.date)}
                 key={index}
                 hadRead={n.hadRead}
@@ -210,7 +211,7 @@ export const NotiItem = ({
       >
         <div className={"col-span-1"}>
           <img
-            src={img}
+            src={img ?? DEFAULT_AVATAR}
             className={
               "2xl:w-14 2xl:h-14 xl:w-12 xl:h-12 lg:w-10 lg:h-10 rounded"
             }

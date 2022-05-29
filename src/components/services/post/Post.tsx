@@ -90,7 +90,7 @@ const Post: React.FC<IPost> = ({
                 }
               >
                 <p className="flex items-center 2xl:text-lg xl:text-sm lg:text-sm text-white">
-                  {rating}
+                  {rating.toFixed(1)}
                 </p>
               </div>
             </div>
