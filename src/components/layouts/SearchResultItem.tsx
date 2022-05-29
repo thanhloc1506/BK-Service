@@ -55,7 +55,9 @@ export const SearchResultItem = ({ data }: SearchResultItemProp) => {
           <p>Địa chỉ: {address} </p>
         </div>
         <div>
-          <p className={"italic text-sm"}>Đánh giá: {score}/10.0</p>
+          <p className={"italic text-sm"}>
+            Đánh giá: {data?.rankingScore ?? score}/10.0
+          </p>
         </div>
       </div>
     </div>
