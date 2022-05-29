@@ -116,7 +116,7 @@ const getContentNoti = (noti: PInNotification.Notification): ReactNode => {
           <span className="font-semibold">
             {noti.user.fullName ? noti.user.fullName : noti.user.username}
           </span>
-          <span>với dịch vụ </span>
+          <span> với dịch vụ </span>
           <span className="font-semibold">{noti.service.name} </span>
           <span>của bạn đã hoàn thành.</span>
         </span>
