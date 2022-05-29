@@ -42,10 +42,12 @@ const AllServices = () => {
             100;
 
           const rankingScore =
-            (service.blogScore + 3 * service.cmtScore + 5 * ratingScore) / 9;
+            (service.blogScore + (2.5 * (service.cmtScore + ratingScore)) / 2) /
+            3.5;
 
           const sortScore =
-            (service.blogScore + 3 * service.cmtScore + 5 * ratingScore) / 9 +
+            (service.blogScore + (2.5 * (service.cmtScore + ratingScore)) / 2) /
+              3.5 +
             parseInt(enterpriseInfo.data.enterprise.premium ?? "0");
 
           servicesRes.push({

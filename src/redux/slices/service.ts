@@ -67,12 +67,14 @@ export const getServiceById = createAsyncThunk(
         100;
 
       const rankingScore =
-        (service.blogScore + 3 * service.cmtScore + 5 * ratingScore) / 9;
+        (service.blogScore + (2.5 * (service.cmtScore + ratingScore)) / 2) /
+        3.5;
 
       console.log(rankingScore);
 
       const sortScore =
-        (service.blogScore + 3 * service.cmtScore + 5 * ratingScore) / 9 +
+        (service.blogScore + (2.5 * (service.cmtScore + ratingScore)) / 2) /
+          3.5 +
         parseInt(enterpriseInfo.premium ?? "0");
 
       service = {
