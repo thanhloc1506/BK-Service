@@ -317,7 +317,7 @@ function MenuRating() {
             <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left ring rounded-lg  cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
               <span className="block truncate">
                 {filter.rating === "-1" || filter.rating === undefined
-                  ? "Chọn Đánh giá"
+                  ? "Chọn đánh giá"
                   : `${filter.rating} Sao`}
               </span>
               <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
@@ -361,7 +361,7 @@ function MenuRating() {
                           }`}
                         >
                           {rating === "-1" || rating === undefined
-                            ? "Chọn Đánh giá"
+                            ? "Chọn đánh giá"
                             : `${rating} Sao`}
                         </span>
                         {selected ? (
