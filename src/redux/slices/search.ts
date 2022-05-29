@@ -142,7 +142,6 @@ export const deepSearch = createAsyncThunk(
           100;
 
         const rankingScore =
-<<<<<<< HEAD
           (service.blogScore + (2.5 * (service.cmtScore + ratingScore)) / 2) /
           3.5;
 
@@ -150,13 +149,6 @@ export const deepSearch = createAsyncThunk(
           (service.blogScore + (2.5 * (service.cmtScore + ratingScore)) / 2) /
             3.5 +
           parseInt(enterpriseInfo.data.enterprise.premium ?? "0");
-=======
-            (service.blogScore + 1.25 * (service.cmtScore + ratingScore)) / 3.5;
-
-        const sortScore =
-            (service.blogScore + 1.25 * (service.cmtScore + ratingScore)) / 3.5 +
-            parseInt(enterpriseInfo.data.enterprise.premium ?? "0");
->>>>>>> 31924f3ce732884f664598bd87db20588f8c344c
 
         services.push({
           ...service,
@@ -435,5 +427,5 @@ export const {
   resetQuan,
   setCurrentQuickSearchText,
   clearQuickSearch,
-  resetFilter
+  resetFilter,
 } = searchSlice.actions;
