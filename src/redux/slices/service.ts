@@ -121,10 +121,10 @@ export const getFollowService = createAsyncThunk(
           100;
 
         const rankingScore =
-          (service.blogScore + 3 * service.cmtScore + 5 * ratingScore) / 9;
+          (service.blogScore + 3 * service.cmtScore + 3 * ratingScore) / 7;
 
         const sortScore =
-          (service.blogScore + 3 * service.cmtScore + 5 * ratingScore) / 9 +
+          (service.blogScore + 3 * service.cmtScore + 3 * ratingScore) / 7 +
           parseInt(enterpriseInfo.data.enterprise.premium ?? "0");
 
         services.push({
@@ -172,12 +172,12 @@ export const getServiceById = createAsyncThunk(
         100;
 
       const rankingScore =
-        (service.blogScore + 3 * service.cmtScore + 5 * ratingScore) / 9;
+        (service.blogScore + 3 * service.cmtScore + 3 * ratingScore) / 7;
 
       console.log(rankingScore);
 
       const sortScore =
-        (service.blogScore + 3 * service.cmtScore + 5 * ratingScore) / 9 +
+        (service.blogScore + 3 * service.cmtScore + 3 * ratingScore) / 7 +
         parseInt(enterpriseInfo.premium ?? "0");
 
       service = {

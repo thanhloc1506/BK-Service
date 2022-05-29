@@ -5,6 +5,7 @@ import { toggleLikeComment } from "../../../redux/slices/service";
 import { RootState } from "../../../redux/store";
 import defaultAvatar from "../../../assets/admin/users.png";
 import ModalDeleteComment from "./ModalDeleteComment";
+import { toggleModalLogin } from "../../../redux/slices/auth";
 
 interface IPost {
   avatar: string;
@@ -46,8 +47,8 @@ const Post: React.FC<IPost> = ({
       : false
   );
   const onClickLike = () => {
-    dispatch(toggleLikeComment(id));
     if (userState.isAuthenticated) {
+      dispatch(toggleLikeComment(id));
       if (isLike) {
         if (Number.isInteger(numOfLike)) setNumOfLike(numOfLike - 1);
         else setTmpLike(0);
@@ -56,6 +57,8 @@ const Post: React.FC<IPost> = ({
         else setTmpLike(1);
       }
       setIsLike(!isLike);
+    } else {
+      dispatch(toggleModalLogin(userState.showLoginForm));
     }
   };
 

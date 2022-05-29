@@ -7,6 +7,7 @@ interface ICalendarModal {
   setOpen: any;
   date: any;
   setDate: any;
+  setIsValid: any;
 }
 
 const CalendarModal: React.FC<ICalendarModal> = ({
@@ -14,6 +15,7 @@ const CalendarModal: React.FC<ICalendarModal> = ({
   setOpen,
   date,
   setDate,
+  setIsValid,
 }) => {
   const cancelButtonRef = useRef(null);
   return (

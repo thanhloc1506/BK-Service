@@ -1,4 +1,4 @@
-import React, { Fragment, useRef, useState, useMemo } from "react";
+import React, { Fragment, useRef, useState, useMemo, useEffect } from "react";
 import { Transition, Dialog } from "@headlessui/react";
 import { Service } from "../../../apis/common/Service";
 import Daypicker from "../../layouts/Daypicker";
@@ -245,6 +245,12 @@ const BookServiceModal = ({ open, setOpen, service, schedules }: IParam) => {
                         </p>
                       </div>
                       <div className="pl-3">
+                        {/* {useEffect(
+                          () => (
+                            
+                          ),
+                          [hour, min, AMPM, date]
+                        )} */}
                         <TimePicker
                           hour={hour}
                           setHour={setHour}
@@ -270,6 +276,7 @@ const BookServiceModal = ({ open, setOpen, service, schedules }: IParam) => {
                       setOpen={setShowCalendar}
                       date={date}
                       setDate={setDate}
+                      setIsValid={setIsValid}
                     />
                   </div>
                   <div className="border-t-2 border-t-gray-100 mt-2">

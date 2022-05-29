@@ -89,11 +89,11 @@ const getCountByServeDate = (
       const timeServe = moment(schedule.timeServe as Date)
         .utcOffset("+0700")
         .format("YYYY/MM/DD HH:mm");
-      var month = timeServe.split(" ")[0].split("/")[1];
-      var day = timeServe.split(" ")[0].split("/")[2];
-      var year = timeServe.split(" ")[0].split("/")[0];
-      var hourFormat = timeServe.split(" ")[1].split(":")[0];
-      var min = timeServe.split(" ")[1].split(":")[1];
+      let month = timeServe.split(" ")[0].split("/")[1];
+      let day = timeServe.split(" ")[0].split("/")[2];
+      let year = timeServe.split(" ")[0].split("/")[0];
+      let hourFormat = timeServe.split(" ")[1].split(":")[0];
+      let min = timeServe.split(" ")[1].split(":")[1];
 
       if (
         parseInt(year) == parseInt(bookTime.year) &&
@@ -101,11 +101,11 @@ const getCountByServeDate = (
         parseInt(day) == parseInt(bookTime.day) &&
         parseInt(hourFormat) == parseInt(hourReal)
       ) {
+        console.log(bookTime);
         count += 1;
       }
     }
   }
-
   const open = parseHour(openTime);
   const close = parseHour(closeTime);
   const isInRangeTimeOpen = checkInRangeTime(hour, isPM, open, close);
@@ -113,17 +113,33 @@ const getCountByServeDate = (
   const scheduleAllowedPerHour = scheduleCountPerHour ?? 5;
 
   if (defauld) return count >= scheduleAllowedPerHour;
-
+  // console.log(
+  //   new Date().getFullYear(),
+  //   parseInt(bookTime.year),
+  //   new Date().getMonth(),
+  //   parseInt(bookTime.month),
+  //   new Date().getDate(),
+  //   parseInt(bookTime.day)
+  // );
   return (
     count >= scheduleAllowedPerHour ||
     !isInRangeTimeOpen ||
-    hourReal < new Date().getHours()
+    (hourReal < new Date().getHours() &&
+      new Date().getFullYear() == parseInt(bookTime.year) &&
+      new Date().getMonth() + 1 == parseInt(bookTime.month) &&
+      new Date().getDate() == parseInt(bookTime.day))
   );
 };
 
-const checkValidAMPM = () => {
+const checkValidAMPM = (date: any) => {
   const currentHour = new Date().getHours();
-  return currentHour > 12;
+  const bookTime = parseTime(date);
+  return (
+    currentHour > 12 &&
+    new Date().getFullYear() == parseInt(bookTime.year) &&
+    new Date().getMonth() + 1 == parseInt(bookTime.month) &&
+    new Date().getDate() == parseInt(bookTime.day)
+  );
 };
 
 const TimePicker: React.FC<ITimePicker> = ({
@@ -143,8 +159,11 @@ const TimePicker: React.FC<ITimePicker> = ({
 }) => {
   const serviceState = useSelector((state: RootState) => state.service);
 
+  const [tmpHour, setTmpHour] = useState(hour);
+
   const onClickHour = (value: string) => {
     setHour(value);
+    setTmpHour(value);
   };
 
   const onClickMin = (value: string) => {
@@ -182,6 +201,11 @@ const TimePicker: React.FC<ITimePicker> = ({
       parseHour(closeTime).AMPM == "PM"
         ? parseHour(closeTime).time + 12
         : parseHour(closeTime).time;
+    setIsValid(true);
+    // console.log(realDefauldHour, realCloseTime);
+
+    const realBookHour =
+      AMPM == "PM" ? parseInt(tmpHour) + 12 : parseInt(tmpHour);
     if (
       realDefauldHour > realCloseTime &&
       date.getDate() == new Date().getDate() &&
@@ -192,7 +216,7 @@ const TimePicker: React.FC<ITimePicker> = ({
       setIsValid(false);
     }
     console.log(isValid);
-  }, []);
+  }, [date]);
 
   return (
     <div>
@@ -615,8 +639,8 @@ const TimePicker: React.FC<ITimePicker> = ({
               <option
                 value="AM"
                 selected={AMPM === "AM"}
-                disabled={checkValidAMPM()}
-                className={checkValidAMPM() ? "bg-gray-300" : ""}
+                disabled={checkValidAMPM(date)}
+                className={checkValidAMPM(date) ? "bg-gray-300" : ""}
               >
                 AM
               </option>
