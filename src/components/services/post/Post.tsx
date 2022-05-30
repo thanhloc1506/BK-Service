@@ -163,7 +163,7 @@ const Post: React.FC<IPost> = ({
                       className="max-h-12 max-w-40 z-30 cursor-pointer"
                       src={srcImage.url}
                       alt="thumb"
-                      onClick={() => setImage(images[index].url)}
+                      onClick={() => setImage(images[index]?.url)}
                     />
                   </div>
                 ))}

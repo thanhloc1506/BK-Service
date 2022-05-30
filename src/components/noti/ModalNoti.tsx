@@ -156,7 +156,7 @@ export const NotiContent = () => {
                     content={getContentNoti(n)}
                     img={
                       n.service.images && n.service.images.length > 0
-                        ? n.service.images[0].url
+                        ? n.service.images[0]?.url
                         : "https://paroda.vn/media/2021/08/customer-service.jpg"
                     }
                     time={getTimeText(n.date)}

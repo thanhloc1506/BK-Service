@@ -367,7 +367,7 @@ export const getAllSchedules = createAsyncThunk(
         idx++;
         // }
       }
-      console.log(currentServiceSchedules);
+
       return currentServiceSchedules;
     } catch (error) {
       throw error;

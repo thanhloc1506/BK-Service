@@ -95,7 +95,7 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
       <div className="grid grid-cols-5 bg-white border-2 border-gray-50">
         <ModalImage
           defaultIndex={curIndexImage}
-          listImages={data.images?.map((e) => e.url) || [""]}
+          listImages={data.images?.map((e) => e?.url) || [""]}
           onChangeImage={(i) => {
             miniCarousel.current && miniCarousel.current.moveTo(i);
           }}
@@ -125,7 +125,7 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
                     return (
                       <div key={index} className={"overflow-hidden"}>
                         <img
-                          src={e.url}
+                          src={e?.url}
                           className={
                             "max-w-full 2xl:max-h-64 xl:max-h-56 lg:max-h-52"
                           }
