@@ -21,7 +21,7 @@ interface IHeaderDetail {
 const tieuchi = ["Tin cậy", "Đáp ứng", "Đảm bảo", "Vật chất", "Thiện cảm"];
 
 const currentTime = moment(new Date())
-  .utcOffset("+0700")
+  // .utcOffset("+0700")
   .format("YYYY/MM/DD HH:mm");
 var month = currentTime.split(" ")[0].split("/")[1];
 var day = currentTime.split(" ")[0].split("/")[2];
