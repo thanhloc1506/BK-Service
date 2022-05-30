@@ -20,7 +20,7 @@ interface IHeaderDetail {
 const tieuchi = ["Tin cậy", "Đáp ứng", "Đảm bảo", "Vật chất", "Thiện cảm"];
 
 const currentTime = moment(new Date())
-  .utcOffset("+0700")
+  // .utcOffset("+0700")
   .format("YYYY/MM/DD HH:mm");
 var month = currentTime.split(" ")[0].split("/")[1];
 var day = currentTime.split(" ")[0].split("/")[2];
@@ -249,7 +249,7 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
                 )}
               </div>
             </div>
-            <div className="flex justify-start 2xl:ml-12 xl:ml-[2.9rem] lg:ml-[2.8rem] 2xl:mt-1 xl:mt-0 lg:mt-1">
+            <div className="flex justify-start 2xl:ml-12 xl:ml-[2.9rem] lg:ml-[2.8rem] 2xl:mt-1 xl:mt-2 lg:mt-1">
               <svg
                 className="2xl:h-7 2xl:w-7 xl:h-6 xl:w-6 lg:h-5 lg:w-5 text-gray-600"
                 width="24"
@@ -266,7 +266,7 @@ const HeaderDeatail: React.FC<IHeaderDetail> = ({
                 <path d="M11 3L20 12a1.5 1.5 0 0 1 0 2L14 20a1.5 1.5 0 0 1 -2 0L3 11v-4a4 4 0 0 1 4 -4h4" />{" "}
                 <circle cx="9" cy="9" r="2" />
               </svg>
-              <p className="text-gray-600 2xl:text-lg xl:text-sm lg:text-xs font-semibold 2xl:ml-5 xl:ml-4 lg:ml-3 xl:mt-[-2px] 2xl:mt-0">
+              <p className="text-gray-600 2xl:text-lg xl:text-sm lg:text-xs font-semibold 2xl:ml-5 xl:ml-4 lg:ml-3 xl:mt-[2px] 2xl:mt-0">
                 {data.minPrice}đ - {data.maxPrice}đ
               </p>
             </div>
