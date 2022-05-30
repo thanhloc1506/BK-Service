@@ -152,11 +152,11 @@ export const deepSearch = createAsyncThunk(
         const sortScore =
           (service.blogScore + (2.5 * (service.cmtScore + ratingScore)) / 2) /
             3.5 +
-          parseInt(enterpriseInfo.data.enterprise?.premium || "0");
+          parseInt(enterpriseInfo?.premium || "0");
 
         services.push({
           ...service,
-          enterprise: enterpriseInfo.data.enterprise,
+          enterprise: enterpriseInfo,
           ratingScore: ratingScore.toFixed(1),
           sortScore: sortScore.toFixed(1),
           rankingScore: rankingScore.toFixed(1),
@@ -252,11 +252,11 @@ export const quickSearch = createAsyncThunk(
         const sortScore =
           (service.blogScore + (2.5 * (service.cmtScore + ratingScore)) / 2) /
             3.5 +
-          parseInt(enterpriseInfo.data.enterprise.premium ?? "0");
+          parseInt(enterpriseInfo.premium ?? "0");
 
         services.push({
           ...service,
-          enterprise: enterpriseInfo.data.enterprise,
+          enterprise: enterpriseInfo,
           ratingScore: ratingScore.toFixed(1),
           sortScore: sortScore.toFixed(1),
           rankingScore: rankingScore.toFixed(1),
