@@ -19,7 +19,7 @@ const IconQC = () => {
     <div onMouseOver={onHoverEvent} onMouseOut={onOutEvent}>
       {show ? (
         <div className="absolute bg-orange-50 w-36 h-4 px-2 top-4 left-4 rounded-lg font-light">
-          Đây là dịch vụ dùng QC
+          Dịch vụ dùng QC
         </div>
       ) : (
         ""
