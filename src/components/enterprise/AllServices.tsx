@@ -78,7 +78,7 @@ const AllServices = () => {
     );
     try {
       const response = await axiosClient.post(
-        `http://127.0.0.1:3007/service/${serviceId}/delete`
+        `/service/${serviceId}/delete`
       );
     } catch (e) {
       throw e;
