@@ -102,6 +102,7 @@ const BookServiceModal = ({ open, setOpen, service, schedules }: IParam) => {
         dateFormat,
         serviceId: service?._id,
       };
+      console.log(scheduleForm);
       dispatch(addSchedule(scheduleForm));
       setOpen(false);
     } else {
