@@ -21,14 +21,8 @@ import { Address } from "../../apis/common/Address";
 import { getAddressContent } from "../../utils/getAddressContent";
 
 const SEX = [
-  {
-    name: "Nam",
-    value: 0,
-  },
-  {
-    name: "Nữ",
-    value: 1,
-  },
+  "Nam",
+    "Nữ"
 ];
 
 const InfoUser: React.FC = () => {
@@ -57,6 +51,12 @@ const InfoUser: React.FC = () => {
   useEffect(() => {
     setEmail((pre: any) => ({ ...pre, value: state.user?.email }));
   }, [state.user?.email]);
+
+  useEffect(()=>{
+    if(state.user?.gender){
+      setSex(state.user?.gender);
+    }
+  }, [state.user?.gender]);
   const onClickModify = () => {
     setModify((pre) => !pre);
     dispatch(showWaiting());
@@ -64,6 +64,7 @@ const InfoUser: React.FC = () => {
       .put("/user/update-profile", {
         fullName: name,
         birthday: birthday,
+        gender: sex
       })
       .then((res: AxiosResponse<PInProfile>) => {
         dispatch(updateProfile(res.data.user));
@@ -372,7 +373,7 @@ const InfoUser: React.FC = () => {
                 >
                   <div className="relative">
                     <Listbox.Button className="relative w-[50vh] h-10 px-5 mt-2 ml-16 text-left bg-white rounded-xl border-2 border-gray-200 cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
-                      <span className={"m-auto"}>{sex.name}</span>
+                      <span className={"m-auto"}>{sex}</span>
                       <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                         <SelectorIcon
                           className="w-5 h-5 text-gray-400"
@@ -406,7 +407,7 @@ const InfoUser: React.FC = () => {
                                     selected ? "font-medium" : "font-normal"
                                   }`}
                                 >
-                                  {s.name}
+                                  {s}
                                 </span>
                                 {selected ? (
                                   <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">

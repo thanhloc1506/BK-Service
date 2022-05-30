@@ -12,4 +12,5 @@ export interface User {
   readonly birthday: string;
   readonly phone: string;
   readonly address: Address;
+  readonly gender: string;
 }
