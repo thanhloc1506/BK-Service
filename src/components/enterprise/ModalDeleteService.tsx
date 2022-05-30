@@ -67,7 +67,7 @@ const ModalDeleteService: React.FC<ModalConfirmProps> = ({
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900"
                 >
-                  Xác nhận xóa bình luận:
+                  Xác nhận xóa dịch vụ:
                 </Dialog.Title>
 
                 <div className="mt-8 flex justify-between px-16">
