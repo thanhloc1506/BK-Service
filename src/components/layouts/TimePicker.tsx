@@ -87,7 +87,7 @@ const getCountByServeDate = (
   for (const schedule of allSchedules) {
     if (serviceId === schedule.service) {
       const timeServe = moment(schedule.timeServe as Date)
-        .utcOffset("+0700")
+        // .utcOffset("+0700")
         .format("YYYY/MM/DD HH:mm");
       let month = timeServe.split(" ")[0].split("/")[1];
       let day = timeServe.split(" ")[0].split("/")[2];

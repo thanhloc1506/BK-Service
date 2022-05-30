@@ -55,7 +55,7 @@ const scheduleSlice = createSlice({
       let idx = 0;
       for (const schedule of action.payload) {
         const timeServe = moment(schedule.timeServe as Date)
-          .utcOffset("+0700")
+          // .utcOffset("+0700")
           .format("YYYY/MM/DD HH:mm");
         var month = timeServe.split(" ")[0].split("/")[1];
         var day = timeServe.split(" ")[0].split("/")[2];

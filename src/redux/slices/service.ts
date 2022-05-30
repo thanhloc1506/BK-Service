@@ -344,7 +344,7 @@ export const getAllSchedules = createAsyncThunk(
       for (const schedule of response.data.schedules) {
         // if (schedule.service === serviceId) {
         const timeServe = moment(schedule.timeServe as Date)
-          .utcOffset("+0700")
+          // .utcOffset("+0700")
           .format("YYYY/MM/DD HH:mm");
         var month = timeServe.split(" ")[0].split("/")[1];
         var day = timeServe.split(" ")[0].split("/")[2];
@@ -410,7 +410,7 @@ export const addSchedule = createAsyncThunk(
       const serviceResponse = await axiosClient.get(`/service/${serviceId}`);
 
       const timeServe = moment(response.data.schedule.timeServe as Date)
-        .utcOffset("+0700")
+        // .utcOffset("+0700")
         .format("YYYY/MM/DD HH:mm");
       var month = timeServe.split(" ")[0].split("/")[1];
       var day = timeServe.split(" ")[0].split("/")[2];
