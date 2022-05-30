@@ -122,15 +122,19 @@ export const deepSearch = createAsyncThunk(
         params,
       });
       let services: any = [];
-      for (const service of response.data.services) {
-        const enterpriseInfo = await axiosClient.get(
-          `/enterprise/${service.enterprise}`
-        );
+      let serviceScore: any = [];
+      let promise = [];
+      for(let i = 0; i< response.data.services.length; i++) {
+        promise.push(axiosClient.get<PInScore>(
+            `service/${response.data.services[i]._id}/scores`
+        ));
+      }
+      serviceScore = await Promise.all(promise);
+      for (let i = 0; i< response.data.services.length; i++) {
+        let service = response.data.services[i];
+        const enterpriseInfo = service.enterprise;
 
-        const scoresResponse = await axiosClient.get<PInScore>(
-          `service/${service._id}/scores`
-        );
-
+        const scoresResponse = serviceScore[i];
         const scores = scoresResponse.data?.score;
 
         const ratingScore =
@@ -148,7 +152,7 @@ export const deepSearch = createAsyncThunk(
         const sortScore =
           (service.blogScore + (2.5 * (service.cmtScore + ratingScore)) / 2) /
             3.5 +
-          parseInt(enterpriseInfo.data.enterprise.premium ?? "0");
+          parseInt(enterpriseInfo.data.enterprise?.premium || "0");
 
         services.push({
           ...service,
@@ -158,8 +162,10 @@ export const deepSearch = createAsyncThunk(
           rankingScore: rankingScore.toFixed(1),
         });
       }
+      console.log(services)
       return { ...response.data, services };
     } catch (error) {
+      console.log(error)
       throw error;
     } finally {
       dispatch(hideWaiting());
@@ -215,14 +221,19 @@ export const quickSearch = createAsyncThunk(
         params,
       });
       let services: any = [];
-      for (const service of response.data.services) {
-        const enterpriseInfo = await axiosClient.get(
-          `/enterprise/${service.enterprise}`
-        );
+      let serviceScore: any = [];
+      let promise = [];
+      for(let i = 0; i< response.data.services.length; i++) {
+        promise.push(axiosClient.get<PInScore>(
+            `service/${response.data.services[i]._id}/scores`
+        ));
+      }
+      serviceScore = await Promise.all(promise);
+      for (let i = 0; i< response.data.services.length; i++) {
+        let service = response.data.services[i];
+        const enterpriseInfo = service.enterprise;
 
-        const scoresResponse = await axiosClient.get<PInScore>(
-          `service/${service._id}/scores`
-        );
+        const scoresResponse = serviceScore[i];
 
         const scores = scoresResponse.data?.score;
 
