@@ -12,6 +12,8 @@ import { useDispatch } from "react-redux";
 import { hideWaiting, showWaiting } from "../../redux/slices/loading";
 import { ModalConfirm } from "../common/ModalConfirm";
 import { useNavigate } from "react-router-dom";
+import { DEFAULT_AVATAR } from "../../constants/common";
+
 interface ScheduleHistoryItemProps extends React.Props<any> {
   data: ScheduleHistory;
 }
@@ -60,7 +62,7 @@ export const ScheduleHistoryItem: React.FC<ScheduleHistoryItemProps> = ({
       >
         <div className={"col-span-1 h-32 w-32 m-auto"}>
           <img
-            src={data.user.avatar.url}
+            src={data.user?.avatar?.url ?? DEFAULT_AVATAR}
             alt=""
             className={"w-[100%] h-[100%] rounded-full border-2"}
           />
@@ -90,7 +92,9 @@ export const ScheduleHistoryItem: React.FC<ScheduleHistoryItemProps> = ({
               </div>
               <div>
                 <BsTelephone className={"inline m-auto mr-2"} size={22} />
-                <p className={"inline"}>{data.user.phone}</p>
+                <p className={"inline 2xl:text-lg xl:text-sm lg:text-xs"}>
+                  {data.user.phone}
+                </p>
               </div>
             </div>
             <div className={"flex flex-col gap-2 pl-3"}>
@@ -105,13 +109,13 @@ export const ScheduleHistoryItem: React.FC<ScheduleHistoryItemProps> = ({
               </div>
               <div>
                 <GrLocation className={"inline m-auto mr-2"} size={22} />
-                <p className={"inline 2xl:text-xl xl:text-sm lg:text-xs"}>
+                <p className={"inline 2xl:text-lg xl:text-sm lg:text-xs"}>
                   {serviceAddress}
                 </p>
               </div>
               <div>
                 <BsTelephone className={"inline m-auto mr-2"} size={22} />
-                <p className={"inline 2xl:text-xl xl:text-sm lg:text-xs"}>
+                <p className={"inline 2xl:text-lg xl:text-sm lg:text-xs"}>
                   {data.service.phone}
                 </p>
               </div>

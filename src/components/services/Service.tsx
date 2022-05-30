@@ -67,7 +67,7 @@ const SingleCard: React.FC<IService> = memo(
                       return (
                         <div key={index} className={"rounded overflow-hidden"}>
                           <img
-                            src={e.url}
+                            src={e?.url}
                             className={"2xl:w-72 2xl:h-40 xl:w-full xl:h-full"}
                           />
                         </div>

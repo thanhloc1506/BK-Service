@@ -45,7 +45,7 @@ const SingleCard: React.FC<ICategory> = ({
             src={
               (service.images &&
                 service.images?.length > 0 &&
-                service.images[0].url) ||
+                service.images[0]?.url) ||
               serviceImg
             }
             alt="service"
