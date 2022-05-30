@@ -33,7 +33,7 @@ export const SearchResultItem = ({ data }: SearchResultItemProp) => {
         <img
           src={
             data && data.images && data.images.length > 0
-              ? data?.images[0].url
+              ? data?.images[0]?.url
               : ""
           }
           className={"w-32 h-32 rounded"}
